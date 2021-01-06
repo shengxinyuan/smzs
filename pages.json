@@ -3,23 +3,102 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "首页",
+				"navigationStyle":"custom"
+				// "app-plus":{
+				// 	"titleNView":{
+				// 		"type": "transparent",
+				// 		"searchInput": {
+				// 			"backgroundColor": "rgba(231, 231, 231,.7)",
+				// 			"borderRadius": "16px",
+				// 			"placeholder": "请输入地址 如：大钟寺",
+				// 			"disabled": true,
+				// 			"placeholderColor": "#606266"
+				// 		},
+				// 		"buttons": [{
+				// 				"fontSrc": "/static/yticon.ttf",
+				// 				"text": "\ue60d",
+				// 				"fontSize": "26",
+				// 				"color": "#303133",
+				// 				"float": "left",
+				// 				"background": "rgba(0,0,0,0)"
+				// 			},
+				// 			{
+				// 				"fontSrc": "/static/yticon.ttf",
+				// 				"text": "\ue744",
+				// 				"fontSize": "27",
+				// 				"color": "#303133",
+				// 				"background": "rgba(0,0,0,0)",
+				// 				"redDot": true
+				// 			}
+				// 		]
+				// 	}
+				// }
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				// "navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+			"path": "pages/login/register",
+			"style": {
+				// "navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+			"path": "pages/login/forget",
+			"style": {
+				"navigationBarTitleText": "修改密码"
 			}
 		}
 	    ,{
             "path" : "pages/classify/classify",
-            "style" : {}
+            "style" : {
+				"navigationStyle":"custom"
+			}
         }
         ,{
             "path" : "pages/selts/selts",
-            "style" : {}
+            "style" : {
+				"navigationStyle":"custom"
+			}
         }
         ,{
             "path" : "pages/my/my",
-            "style" : {}
+            "style" : {
+				"navigationStyle":"custom"
+			}
         }
         ,{
             "path" : "pages/cart/cart",
+            "style" : {
+				"navigationStyle":"custom"
+			}
+        },{
+            "path" : "pages/cart/payment",
+            "style" : {
+				"navigationBarTitleText":"确认订单"
+			}
+        }
+        ,{
+            "path" : "components/zs-tabbar/zs-tabbar",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/message/message",
+            "style" : {
+				"navigationBarTitleText":"消息"
+			}
+        }
+        ,{
+            "path" : "components/zs-title/zs-title",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-classifytype/zs-classifytype",
             "style" : {}
         }
     ],
@@ -28,5 +107,9 @@
 		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
+		"zs-(.*)": "@/components/zs-$1/zs-$1.vue"
 	}
 }
