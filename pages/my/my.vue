@@ -4,49 +4,256 @@
 		<zs-tabbar :tab_ind="5"></zs-tabbar>
 		<!-- tabbar -->
 		<!-- 头部 -->
-		<view class="header" >
+		<view class="header" :style="{ 'background-color': backgroundColor }">
 			<view class="header_va">
-				
 			</view>
+			
 			<view class="rig" >
-				<view class="" 	style="margin-right: 40rpx;">
-					<u-icon name="setting" size="36"></u-icon> 设置
+				<view class="" 	style="margin-right: 40rpx;" @click="go_pages('./setting')">
+					<u-icon name="setting" size="46"></u-icon> 设置
 				</view>
-				<view class="">
-					<u-icon name="chat" size="36"></u-icon> 消息
+				<view class="" @click="go_pages('../information/information')">
+					<u-icon name="chat" size="46"></u-icon> 消息
 				</view>
 			</view>
 		</view>
 		<!-- 内容 -->
 		<view class="my_cont">
+			<!-- //个人 -->
 			<view class="userinfo">
-				<view class="userinfo_img">
-					<image src="../../static/index/bann1.png" class="user_imga" mode=""></image>
-					<image src="../../static/userimg.png" class="user_imgb" mode=""></image>
+				<view class="userinfo_ch">
+					<view class="userinfo_img">
+						<image src="../../static/index/bann1.png" class="user_imga" mode=""></image>
+						<image src="../../static/userimg.png" class="user_imgb" v-show="huiy_show" mode=""></image>
+					</view>
+					<view class="userinfo_text">
+						<view class="text_top">
+							<view class="user_name">要有光</view>
+							<view class="user_qda" v-if="qiandao_if" @click="qiandao"><u-icon name="order"></u-icon>立即签到</view>
+							<view class="user_qda" v-else><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
+						</view>
+						<view class="user_phone">
+							手机号：15666666666
+						</view>
+						<view class="user_invite">
+							<view @click="qrcode_show = true">
+								邀请码<u-icon name="arrow-right"></u-icon>
+							</view>
+							<view @click="copy_yqm(15647)">
+								复制邀请码<u-icon name="arrow-right"></u-icon>
+							</view>
+							<view @click="my_yaoq">
+								我的邀请人
+							</view>
+						</view>
+					</view>
 				</view>
-				<view class="userinfo_text">
-					<view class="text_top">
-						<view class="user_name">要有光</view>
-						<view class="user_qda" v-if="false"><u-icon name="order"></u-icon>立即签到</view>
-						<view class="user_qda" v-else><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
+				<!-- 统计 -->
+				<view class="statistics">
+					<view class="statistics_it">
+						<view class="it_num">15</view>
+						<view class="it_name">我的收藏</view>
 					</view>
-					<view class="user_phone">
-						手机号：15666666666
+					<view class="statistics_it">
+						<view class="it_num">185</view>
+						<view class="it_name">我的足迹</view>
 					</view>
-					<view class="user_invite">
-						<view>
-							邀请码<u-icon name="arrow-right"></u-icon>
+					<view class="statistics_it">
+						<view class="it_num">19</view>
+						<view class="it_name">优惠券</view>
+					</view>
+					<view class="statistics_it">
+						<view class="it_num">156</view>
+						<view class="it_name">我的金币</view>
+					</view>
+				</view>
+				<!-- 会员 -->
+				<view class="posi_hy" v-if="huiy_show">
+					<view class="posi_hy_it">
+						<view class="">
+							
 						</view>
-						<view>
-							复制邀请码<u-icon name="arrow-right"></u-icon>
-						</view>
-						<view @click="my_yaoq">
-							我的邀请人
+						<view class="">
+							商城设置 <u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
+					<view class="posi_hy_it">
+						<view class="">
+							<image class="imagea" src="../../static/my/dianpu.png" mode=""></image>店铺管理
+						</view>
+						<view class="">
+							商城金价
+						</view>
+					</view>
+					<view class="posi_hy_it">
+						<view class="">
+							<image class="imagea" src="../../static/my/dianpu.png" mode=""></image>引流拓客
+						</view>
+						<view class="">
+							社区营销<u-icon name="arrow-right" color="#606c90"></u-icon>
+						</view>
+					</view>
+					<image class="imageb" src="../../static/my/hiuy.png" mode=""></image>
+				</view>
+				<!-- 非会员 -->
+				<view class="posi_hy" v-else>
+					<view class="posi_hy_it">
+						<view class="">
+							
+						</view>
+						<view class="">
+							自购省分享赚 <u-icon name="arrow-right" color="#606c90"></u-icon>
+						</view>
+					</view>
+					<view class="posi_hy_it">
+						<view class="">
+							<image class="imagea" src="../../static/my/dianpu.png" mode=""></image>独立店铺
+						</view>
+						<view class="">
+							金价可控<u-icon name="arrow-right" color="#606c90"></u-icon>
+						</view>
+					</view>
+					<view class="posi_hy_it">
+						<view class="">
+							<image class="imagea" src="../../static/my/dianpu.png" mode=""></image>订单回流
+						</view>
+						<view class="">
+							一件代发<u-icon name="arrow-right" color="#606c90"></u-icon>
+						</view>
+					</view>
+					<image class="imageb" src="../../static/my/kaitunhy.png" mode=""></image>
 				</view>
 			</view>
+			<!-- //订单 -->
+			<view class="padding_cont">
+				<view class="orders">
+					<view style="display: flex;justify-content: space-between;margin-bottom: 38rpx;">
+						<view style="font-size: 34rpx;">
+							我的订单
+						</view>
+						<view style="color: #999;">
+							全部订单 ＞
+						</view>
+					</view>
+					<view style="display: flex;">
+						<view class="orders_it" v-for="(it,ind) in order" :key="ind">
+							<image :src="it.img" mode=""></image>
+							<view class="">
+								{{it.name}}
+							</view>
+						</view>
+					</view>
+				</view>
+				<!-- //钱包 -->
+				<view class="orders_b">
+					<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
+						<view style="font-size: 34rpx;">
+							<image src="../../static/my/wellet.png" mode=""></image> 我的钱包
+						</view>
+						<view style="color: #999;">
+							查看收益 ＞
+						</view>
+					</view>
+					<view style="display: flex;justify-content: space-around;">
+						<view class="orders_it" v-for="(it,ind) in wallet" :key="ind">
+							<view class="it_num">
+								{{it.num}}
+							</view>
+							<view class="">
+								{{it.name}}
+							</view>
+						</view>
+					</view>
+				</view>
+				<!-- //我的团队 -->
+				<view class="orders_c">
+					<view class="orders_c_child">
+						<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
+							<view style="font-size: 34rpx;">
+								<image src="../../static/my/tuandui.png" mode=""></image> 我的团队
+							</view>
+						</view>
+						<view style="display: flex;justify-content: space-around;">
+							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
+								<view class="it_num">
+									10人
+								</view>
+								<view class="">
+									累计
+								</view>
+							</view>
+							<view class="orders_it">
+								<view class="it_num">
+									8人
+								</view>
+								<view class="">
+									今日新增
+								</view>
+							</view>
+						</view>
+					</view>
+					<!-- //城市 -->
+					<view class="orders_c_child">
+						<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
+							<view style="font-size: 34rpx;">
+								<image src="../../static/my/city.png" mode=""></image> 城市合伙人中心
+							</view>
+						</view>
+						<view class="order_childs_a" v-if="huiy_show">
+							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
+								<view class="it_num">
+									10人
+								</view>
+								<view class="">
+									累计
+								</view>
+							</view>
+							<view class="orders_it">
+								<view class="it_num">
+									80000
+								</view>
+								<view class="">
+									本月收益
+								</view>
+							</view>
+						</view>
+						<view class="order_childs_a" v-else>
+							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
+								<view class="it_num">
+									8市
+								</view>
+								<view class="">
+									已申请
+								</view>
+							</view>
+							<view class="orders_it">
+								<view class="it_num_but">
+									立即加入＞
+								</view>
+								<view class="">
+									诚邀加盟
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<!-- 店铺管理 -->
+				<zs-store-admin></zs-store-admin>
+				<!-- 综合管理 -->
+				<zs-synth-admin></zs-synth-admin>
+				
+			</view>
+			<!-- 为您推荐 -->
+			<image class="tuij" src="../../static/my/tuijain_bgimg.png" mode=""></image>
+			<!-- 商品列表 -->
+			<view style="padding: 0 3%;">
+				<zs-shopping-list></zs-shopping-list>
+			</view>
 		</view>
+		<!-- 签到 -->
+		<zs-popup v-if="qd_show" :king="'金币'" :king_nam="'+'+ 5" :bgimage="bgimage" @nopop="no_pop"></zs-popup>
+		<!-- //二维码 -->
+		<zs-popup v-if="qrcode_show" :bgimage="qrcode_image" @nopop="no_pop"></zs-popup>
 		<!-- 我的邀请人 -->
 		<u-popup v-model="show" mode="center">
 			<view class="my_yaoq">
@@ -73,10 +280,72 @@
 	export default {
 		data() {
 			return {
+				backgroundColor:"",//导航背景
+				huiy_show:true,//会员状态
 				show:false,//我的邀请人
+				bgimage:'url(../../static/my/qiandao.png)',
+				qd_show:false,//popup组件显示
+				qiandao_if:true,//签到按钮状态
+				qrcode_show:false,//二维码显示
+				qrcode_image:'url(../../static/my/qrcode.png)',
+				order:[
+					{
+						img:'../../static/my/daifu.png',
+						name:'待付款'
+					},
+					{
+						img:'../../static/my/daifa.png',
+						name:'待发货'
+					},
+					{
+						img:'../../static/my/daishou.png',
+						name:'待收货'
+					},
+					{
+						img:'../../static/my/daipinj.png',
+						name:'待评价'
+					},
+					{
+						img:'../../static/my/shouhou.png',
+						name:'待售后'
+					},
+				],
+				wallet:[
+					{
+						num:260,
+						name:"待返利(元)"
+					},
+					{
+						num:680,
+						name:"可提现(元)"
+					},
+					{
+						num:2450,
+						name:"累计返现(元)"
+					}
+				],
+				
+			}
+		},
+		//下拉刷新
+		onPullDownRefresh(){
+			
+		},
+		//页面滑动
+		onPageScroll(e){
+			// console.log(e)
+			if(e.scrollTop >120){
+				this.backgroundColor = '#ffdc59'
+			}else{
+				this.backgroundColor = ''
+
 			}
 		},
 		methods: {
+			//页面跳转
+			go_pages(e){
+				this.com.navto(e)
+			},
 			//我的邀请人
 			my_yaoq(){
 				this.show = true
@@ -86,7 +355,26 @@
 				uni.makePhoneCall({
 					phoneNumber:e
 				})
+			},
+			//签到
+			qiandao(){
+				this.qd_show = true
+			},
+			//关闭组件
+			no_pop(){
+				this.qd_show = false
+				this.qrcode_show = false
+			},
+			copy_yqm(e){
+				console.log(e)
+				uni.setClipboardData({
+				    data: e,
+				    success: function () {
+				        console.log('success');
+				    }
+				});
 			}
+			
 			
 		}
 	}
@@ -98,10 +386,124 @@
 	}
 </style>
 <style lang="scss" scoped>
+	.tuij{
+		width: 100%;height: 80rpx;
+	}
+	.padding_cont{
+		width: 100%;
+		padding: 3%;
+		
+		.orders{
+			padding: 30rpx;background-color: white;margin-top: 56rpx;border-radius: 20rpx;
+			.orders_it{
+				width: 20%;text-align: center;
+				image{
+					width: 70rpx;height: 60rpx; 
+				}
+				view{
+					margin-top: 16rpx;
+				}
+				
+			}
+		}
+		.orders_b{
+			padding: 30rpx;background-color: white;margin-top: 20rpx;border-radius: 20rpx;
+			image{
+				width: 36rpx;height: 36rpx;margin-right: 12rpx;
+			}
+			.orders_it{
+				width: 30%;text-align: center;
+				
+				view{
+					margin-top: 16rpx;
+				}
+				.it_num{
+					font-size: 36rpx;color: #293d79;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+				}
+			}
+		}
+		.orders_c{
+			width: 100%;margin-top: 20rpx;display: flex;justify-content: space-between;
+			.orders_c_child{
+				width: 49%;background-color: white;padding: 30rpx;border-radius: 20rpx;
+				.order_childs_a{
+					display: flex;justify-content: space-around;
+					.it_num_but{
+						background-color: #e45050;color: #fff;border-radius: 20rpx;
+					}
+				}
+			}
+			
+			image{
+				width: 36rpx;height: 36rpx;margin-right: 12rpx;
+			}
+			.orders_it{
+				width: 50%;text-align: center;
+				
+				view{
+					margin-top: 16rpx;
+				}
+				.it_num{
+					font-size: 36rpx;color: #293d79;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+				}
+			}
+		}
+		.orders_d{
+			padding: 30rpx;background-color: white;margin-top: 26rpx;border-radius: 20rpx;
+			background-image: url(../../static/my/dianbu_bgimage.png);
+			background-size: 100% 100%;
+			.orders_it{
+				width: 20%;text-align: center;
+				image{
+					width: 70rpx;height: 60rpx; 
+				}
+				view{
+					margin-top: 16rpx;
+				}
+				
+			}
+		}
+	}
+	
+	//会员
+	.posi_hy{
+		width: 90%;height: 100rpx;background-color: #1f3167;margin-left: 5%;border-radius: 16rpx;
+		display: flex;justify-content: space-around;padding-top: 6rpx;
+		position: relative;
+		.imageb{
+			position: absolute;left: -20rpx;top: 6rpx;height: 50rpx;width: 220rpx;
+		}
+		.posi_hy_it{
+			width: 30%;text-align: center;
+			.imagea{
+				width: 34rpx;height: 34rpx;margin: 0 10rpx;
+			}
+			view:nth-child(1){
+				padding-top: 6rpx;
+				color: #fff0a6;
+				height: 46rpx;
+			}
+			view:nth-child(2){
+				color: #606c90;
+				line-height: 48rpx;
+			}
+		}
+	}
+	//数据统计
+	.statistics{
+		width: 100%;height: 116rpx;
+		margin-top: 22rpx;display: flex;
+		.statistics_it{
+			width: 25%;text-align: center;
+			.it_num{
+				line-height: 60rpx;font-size: 34rpx;
+			}
+		}
+	}
 	//邀请人弹框
 	.my_yaoq{
 		width: 500rpx;text-align: center;
-		padding: 40rpx;
+		padding: 40rpx;border-radius: 20rpx;
 		.my_yaoq_name{
 			font-size: 34rpx;
 		}
@@ -123,20 +525,24 @@
 		}
 	}
 	.my_cont{
-		width: 100%;
+		width: 100%;padding-bottom: 136rpx;
 		.userinfo{
 			padding-top: 150rpx;width: 100%;height: 500rpx;
 			background-image: url(../../static/my/backimg.png);
 			background-size: 100% 100%;
-			display: flex;
+			
 			position: relative;
+			.userinfo_ch{
+				display: flex;
+			}
 			.userinfo_img{
 				width: 24%;height: 160rpx;margin-left: 50rpx;
+				padding-top: 20rpx;
 				.user_imga{
-					width: 140rpx;height: 140rpx;border-radius: 50%;
+					width: 120rpx;height: 120rpx;border-radius: 50%;
 				}
 				.user_imgb{
-					width: 200rpx;height: 200rpx;position: absolute;left: 10rpx;top: 100rpx;
+					width: 170rpx;height: 180rpx;position: absolute;left: 10rpx;top: 120rpx;
 				}
 			}
 			.userinfo_text{

@@ -1,6 +1,6 @@
 <template>
 	<view class="cont">
-		<view class="cont_item" v-for="(it,ind) in 6" :key="ind">
+		<view class="cont_item" v-for="(it,ind) in 6" :key="ind" @click="go_shopdetail(1)">
 			<image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image>
 			<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
 			<view class="it_tit">
@@ -27,6 +27,11 @@
 			return {
 				
 			};
+		},
+		methods:{
+			go_shopdetail(e){
+				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
+			}
 		}
 	}
 </script>

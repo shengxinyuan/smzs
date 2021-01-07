@@ -1,0 +1,109 @@
+<template>
+	<view class="cont">
+		<view class="items" @click="go_set(6)">
+			<view class="items_l">
+				实名认证
+			</view>
+			<view class="items_r">
+				未认证 <text class="views"></text> <u-icon name="arrow-right"></u-icon>
+			</view>
+		</view>
+		<view class="items" v-for="(it,ind) in list" :key="ind" @click="go_set(ind)">
+			<view class="items_l">
+				{{it.tit}}
+			</view>
+			<view class="items_r">
+				<u-icon name="arrow-right"></u-icon>
+			</view>
+		</view>
+		<!-- 按钮 -->
+		<view class="log_out" @click="log_outs">
+			退出登录
+		</view>
+	</view>
+</template>
+
+<script>
+	export default{
+		data(){
+			return{
+				list:[
+					{tit:"账号安全"},
+					{tit:"个人信息"},
+					{tit:"分享APP"},
+					{tit:"新手教程"},
+					{tit:"帮助与客服"},
+					{tit:"关于我们"},
+				]
+			}
+		},
+		methods:{
+			//退出
+			log_outs(){
+				uni.showModal({
+					title:"温馨提示",
+					content:"您要退出当前账号吗？",
+					success:function(res) {
+						var that = this
+						if (res.confirm) {
+							uni.removeStorageSync('token')
+							uni.removeStorageSync('member_info')
+							uni.removeStorageSync('user_infotit')
+							uni.reLaunch({
+								url:'../login/login'
+							})
+						}else if(res.cancel) {
+						    console.log("取消")
+						}
+					}.bind(this)
+					
+				})
+			},
+			//
+			go_set(e){
+				if(e == 0){
+					
+				}else if(e == 1){
+					
+				}else if(e == 2){
+					
+				}else if(e == 3){
+					
+				}else if(e == 4){
+					
+				}else if(e == 5){
+					
+				}else if(e == 6){ //实名认证
+					
+				}
+			}
+		}
+	}
+</script>
+<style>
+	page{
+		background-color: #F1F1F1;
+	}
+</style>
+<style lang="scss" scoped>
+	.log_out{
+		width: 90%;padding: 20rpx;border-radius: 50rpx;border: 1rpx solid #dd2626;
+		font-size: 32rpx;color: #dd2626;text-align: center;
+		position: fixed;left: 5%;bottom: 10%;
+	}
+	.items{
+		padding: 0 3%;
+		display: flex;justify-content: space-between;border-bottom: 1rpx solid #eee;line-height: 90rpx;
+		font-size: 32rpx;background-color: #fff;
+		.items_r{
+			color: #999;
+			.views{
+				display: inline-block;margin: 0 20rpx;
+				width: 16rpx;height: 16rpx;background-color: red;border-radius: 50%;
+			}
+		}
+	}
+	.items:nth-child(5){
+		margin: 40rpx 0;
+	}
+</style>

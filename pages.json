@@ -4,7 +4,9 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
-				"navigationStyle":"custom"
+				"navigationStyle":"custom",
+				"enablePullDownRefresh":true,
+				"backgroundTextStyle":"light"
 				// "app-plus":{
 				// 	"titleNView":{
 				// 		"type": "transparent",
@@ -35,11 +37,27 @@
 				// 	}
 				// }
 			}
+		},{
+			"path": "pages/index/shop_detail",
+			"style": {
+				// "navigationBarTitleText": "uni-app"
+				"navigationStyle":"custom"
+			}
 		},
 		{
 			"path": "pages/login/login",
 			"style": {
 				// "navigationBarTitleText": "uni-app"
+			}
+		},{
+			"path": "pages/information/information",
+			"style": {
+				"navigationBarTitleText":"消息"
+			}
+		},{
+			"path": "pages/information/newList",
+			"style": {
+				"navigationBarTitleText":"消息列表"
 			}
 		},
 		{
@@ -69,7 +87,14 @@
         ,{
             "path" : "pages/my/my",
             "style" : {
-				"navigationStyle":"custom"
+				"navigationStyle":"custom",
+				"enablePullDownRefresh":true,
+				"backgroundTextStyle":"light"
+			}
+        },{
+            "path" : "pages/my/setting",
+            "style" : {
+				"navigationBarTitleText":"系统设置"
 			}
         }
         ,{
@@ -99,6 +124,26 @@
         }
         ,{
             "path" : "components/zs-classifytype/zs-classifytype",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-popup/zs-popup",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-store-admin/zs-store-admin",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-synth-admin/zs-synth-admin",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-share/zs-share",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/information/information",
             "style" : {}
         }
     ],

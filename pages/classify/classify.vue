@@ -7,7 +7,7 @@
 					<u-icon name="camera" size="44" color="#666666"></u-icon>
 				</view>
 			</view>
-			<view class="rig" :style="{'color': headcolor}">
+			<view class="rig" :style="{'color': headcolor}"  @click="go_pages('../information/information')">
 				 <u-icon name="chat" size="50"></u-icon>消息
 			</view>
 		</view>
@@ -66,6 +66,11 @@
 			this.loadData();
 		},
 		methods: {
+			//页面跳转
+			go_pages(e){
+				this.com.navto(e)
+			},
+			
 			async loadData(){
 				let list = await Json.cateList
 				list.forEach(item=>{

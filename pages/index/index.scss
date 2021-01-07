@@ -65,17 +65,14 @@
 		/* width: 160rpx;
 	*/
 		margin-left: 18px;
-		image{
+		.city_a{
 			width: 66rpx;height: 66rpx;border-radius: 50%;
 			margin-top: 8rpx;
-		}
-		.city_a{
-			position: relative;
 		}
 		.city_b{
 			position: absolute;
 			width: 90rpx;height: 90rpx;
-			left: 18rpx;top: 34rpx;
+			left: 18rpx;top: 40rpx;
 		}
 	}
 	.input-view {

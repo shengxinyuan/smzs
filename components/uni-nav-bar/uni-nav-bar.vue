@@ -210,7 +210,7 @@
 	.uni-navbar--fixed {
 		position: fixed;
 		z-index: 998;
-		background-image: url(../../static/index/headback.png);
+		// background-image: url(../../static/index/headback.png);
 		background-size: 100% 100%;
 	}
 
