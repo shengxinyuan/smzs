@@ -7,7 +7,7 @@
 					<u-icon name="camera" size="44" color="#666666"></u-icon>
 				</view>
 			</view>
-			<view class="rig" :style="{'color': headcolor}"  @click="go_pages('../information/information')">
+			<view class="rig"   @click="go_pages('../information/information')">
 				 <u-icon name="chat" size="50"></u-icon>消息
 			</view>
 		</view>

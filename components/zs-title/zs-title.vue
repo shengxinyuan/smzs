@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="con">
-			<view class="jint">
+			<view class="jint" v-show="page_show">
 				
 			</view>
 			<view class="title">
@@ -25,7 +25,10 @@
 		},
 		props:{
 			titleRed:{},
-			title:{}
+			title:{},
+			page_show:{
+				default:false
+			}
 		},
 		methods: {
 			

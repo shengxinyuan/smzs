@@ -93,7 +93,7 @@
 							社区营销<u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
-					<image class="imageb" src="../../static/my/hiuy.png" mode=""></image>
+					<image class="imageb" src="../../static/my/hiuy.png" mode="" @click="go_pages('./vip_member')"></image>
 				</view>
 				<!-- 非会员 -->
 				<view class="posi_hy" v-else>
@@ -121,7 +121,7 @@
 							一件代发<u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
-					<image class="imageb" src="../../static/my/kaitunhy.png" mode=""></image>
+					<image class="imageb" src="../../static/my/kaitunhy.png" mode="" @click="go_pages('./vip_member')"></image>
 				</view>
 			</view>
 			<!-- //订单 -->
@@ -145,7 +145,7 @@
 					</view>
 				</view>
 				<!-- //钱包 -->
-				<view class="orders_b">
+				<view class="orders_b" @click="go_pages('./wallets')">
 					<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
 						<view style="font-size: 34rpx;">
 							<image src="../../static/my/wellet.png" mode=""></image> 我的钱包
@@ -334,7 +334,7 @@
 		//页面滑动
 		onPageScroll(e){
 			// console.log(e)
-			if(e.scrollTop >120){
+			if(e.scrollTop >10){
 				this.backgroundColor = '#ffdc59'
 			}else{
 				this.backgroundColor = ''
@@ -342,6 +342,7 @@
 			}
 		},
 		methods: {
+			
 			//页面跳转
 			go_pages(e){
 				this.com.navto(e)
@@ -467,7 +468,7 @@
 	
 	//会员
 	.posi_hy{
-		width: 90%;height: 100rpx;background-color: #1f3167;margin-left: 5%;border-radius: 16rpx;
+		width: 90%;height: 110rpx;background-color: #1f3167;margin-left: 5%;border-radius: 16rpx;
 		display: flex;justify-content: space-around;padding-top: 6rpx;
 		position: relative;
 		.imageb{
@@ -485,7 +486,7 @@
 			}
 			view:nth-child(2){
 				color: #606c90;
-				line-height: 48rpx;
+				line-height: 50rpx;
 			}
 		}
 	}

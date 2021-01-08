@@ -1,6 +1,6 @@
 <template>
 	<view class="cont">
-		<view class="items" @click="go_set(6)">
+		<view class="items" @click="go_set(99)">
 			<view class="items_l">
 				实名认证
 			</view>
@@ -34,6 +34,7 @@
 					{tit:"新手教程"},
 					{tit:"帮助与客服"},
 					{tit:"关于我们"},
+					{tit:"意见反馈"},
 				]
 			}
 		},
@@ -73,7 +74,9 @@
 					
 				}else if(e == 5){
 					
-				}else if(e == 6){ //实名认证
+				}else if(e == 6){ 
+					this.com.navto('./fankui')
+				}else if(e == 99){ //实名认证
 					
 				}
 			}

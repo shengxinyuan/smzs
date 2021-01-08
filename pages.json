@@ -96,8 +96,77 @@
             "style" : {
 				"navigationBarTitleText":"系统设置"
 			}
-        }
-        ,{
+        },{
+            "path" : "pages/my/fankui",
+            "style" : {
+				"navigationBarTitleText":"意见反馈"
+			}
+        },{
+            "path" : "pages/my/wallets",
+            "style" : {
+				"navigationBarTitleText":"我的钱包",
+				"navigationBarBackgroundColor":"#21346b",
+				"navigationBarTextStyle":"white",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"text":"说明",
+								"fontSize":"34rpx"
+							}
+						]
+					}
+				}
+			}
+        },{
+            "path" : "pages/my/wallets_theory",
+            "style" : {
+				"navigationBarTitleText":"提现说明"
+			}
+        },{
+            "path" : "pages/my/withdraw",
+            "style" : {
+				"navigationBarTitleText":"提现",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"text":"明细",
+								"fontSize":"34rpx"
+							}
+						]
+					}
+				}
+			}
+        },{
+            "path" : "pages/my/recharge",
+            "style" : {
+				"navigationBarTitleText":"充值",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"text":"明细",
+								"fontSize":"34rpx"
+							}
+						]
+					}
+				}
+			}
+        },{
+            "path" : "pages/my/particulars",
+            "style" : {
+				"navigationStyle":"custom"
+			}
+			
+        },{
+            "path" : "pages/my/vip_member",
+            "style" : {
+				"navigationBarTitleText":"超级会员",
+				"navigationBarBackgroundColor":"#242c2e",
+				"navigationBarTextStyle":"white"
+			}
+        },{
             "path" : "pages/cart/cart",
             "style" : {
 				"navigationStyle":"custom"
@@ -144,6 +213,14 @@
         }
         ,{
             "path" : "pages/information/information",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-text/zs-text",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-wallets/zs-wallets",
             "style" : {}
         }
     ],

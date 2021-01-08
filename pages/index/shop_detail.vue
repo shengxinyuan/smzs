@@ -102,7 +102,7 @@
 		</view>
 		<!-- //推荐 -->
 		<image style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="../../static/my/tuijain_bgimg.png" mode=""></image>
-		<view style="padding: 0 3%;">
+		<view style="padding: 0 3%;margin-bottom: 120rpx;">
 			<zs-shopping-list></zs-shopping-list> 
 		</view>
 		
