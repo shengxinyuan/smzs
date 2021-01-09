@@ -242,6 +242,7 @@
 		image{
 			width: 140upx;
 			height: 140upx;
+			background-color: #F1F1F1;
 		}
 	}
 </style>

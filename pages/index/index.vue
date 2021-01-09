@@ -4,7 +4,7 @@
 		<view class="header" :style="{ 'background-color': backgroundColor }">
 			<view class="city">
 				<image src="../../static/logo.png" mode="aspectFill" class="city_a"></image>
-				<image src="../../static/userimg.png" mode="aspectFill" class="city_b"></image>
+				<image src="../../static/userimg.png" mode="widthFix" class="city_b"></image>
 			</view>
 			<view class="input-view" :style="{'backgroundColor' : indexbackcolor}">
 				<view class=""  @click="saoma">
@@ -21,7 +21,8 @@
 		</view>
 		<!-- banner部分 -->
 		<view class="page_cont">
-			 <swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500">
+			 <swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500"
+			 :easing-function="linear">
 				<swiper-item v-for="(it,ind) in bann" :key="ind">
 					<image :src="it.a" mode="aspectFill"></image>
 				</swiper-item>
@@ -30,9 +31,11 @@
 				<view :class="swiperCurrent == ind ? 'bann_h_act' : 'bann_h'" v-for="(its,ind) in bann" :key="ind"></view>
 			</view>
 			<view class="trumpet">
-				<swiper class="swiper_three" :vertical="true" :autoplay="true" :circular="true" :interval="3000" :duration="300">
+				<text><u-icon name="shopping-cart-fill" color="white" size="36"></u-icon></text>
+				<swiper class="swiper_three"  :autoplay="true" :circular="true" :interval="3000" :duration="100" disable-touch="true"><!-- 5000 4800 -->
+					
 					<swiper-item v-for="(it,ind) in 3" :key="ind">
-						<u-icon name="shopping-cart-fill" color="white" size="36"></u-icon>
+						
 						是嘎达嘎：电话跨服哈哈收到回话规划{{ind}}
 					</swiper-item>
 				</swiper>

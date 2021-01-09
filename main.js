@@ -11,17 +11,9 @@ Vue.use(uView)
 import com from 'utils/common.js'
 Vue.prototype.com = com
 
-import Json from './Json.js'
+import api from './api.js'
+Vue.prototype.$api = api
 
-const json = type=>{
-	//模拟异步请求数据
-	return new Promise(resolve=>{
-		setTimeout(()=>{
-			resolve(Json[type]);
-		}, 500)
-	})
-}
-Vue.prototype.$api = json
 const app = new Vue({
     ...App
 })

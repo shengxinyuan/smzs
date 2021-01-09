@@ -63,9 +63,9 @@
 			//
 			go_set(e){
 				if(e == 0){
-					
+					this.com.navto('./user_set')
 				}else if(e == 1){
-					
+					this.com.navto('./user_text')
 				}else if(e == 2){
 					
 				}else if(e == 3){
@@ -77,7 +77,7 @@
 				}else if(e == 6){ 
 					this.com.navto('./fankui')
 				}else if(e == 99){ //实名认证
-					
+					this.com.navto('./Certification')
 				}
 			}
 		}
@@ -91,13 +91,13 @@
 <style lang="scss" scoped>
 	.log_out{
 		width: 90%;padding: 20rpx;border-radius: 50rpx;border: 1rpx solid #dd2626;
-		font-size: 32rpx;color: #dd2626;text-align: center;
+		font-size: 30rpx;color: #dd2626;text-align: center;
 		position: fixed;left: 5%;bottom: 10%;
 	}
 	.items{
 		padding: 0 3%;
 		display: flex;justify-content: space-between;border-bottom: 1rpx solid #eee;line-height: 90rpx;
-		font-size: 32rpx;background-color: #fff;
+		font-size: 30rpx;background-color: #fff;
 		.items_r{
 			color: #999;
 			.views{

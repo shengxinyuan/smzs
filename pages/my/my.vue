@@ -69,12 +69,12 @@
 				</view>
 				<!-- 会员 -->
 				<view class="posi_hy" v-if="huiy_show">
-					<view class="posi_hy_it">
+					<view class="posi_hy_it" @click="go_pages('./vip_member')">
 						<view class="">
-							
+							<image class="imageb" src="../../static/my/hiuy.png" mode="" ></image>
 						</view>
 						<view class="">
-							商城设置 <u-icon name="arrow-right" color="#606c90"></u-icon>
+							我的会员 <u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
 					<view class="posi_hy_it">
@@ -82,7 +82,7 @@
 							<image class="imagea" src="../../static/my/dianpu.png" mode=""></image>店铺管理
 						</view>
 						<view class="">
-							商城金价
+							商城金价 <u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
 					<view class="posi_hy_it">
@@ -93,13 +93,13 @@
 							社区营销<u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
-					<image class="imageb" src="../../static/my/hiuy.png" mode="" @click="go_pages('./vip_member')"></image>
+					
 				</view>
 				<!-- 非会员 -->
 				<view class="posi_hy" v-else>
-					<view class="posi_hy_it">
+					<view class="posi_hy_it" @click="go_pages('./vip_member')">
 						<view class="">
-							
+							<image class="imageb" src="../../static/my/kaitunhy.png" mode="" ></image>
 						</view>
 						<view class="">
 							自购省分享赚 <u-icon name="arrow-right" color="#606c90"></u-icon>
@@ -121,14 +121,14 @@
 							一件代发<u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
-					<image class="imageb" src="../../static/my/kaitunhy.png" mode="" @click="go_pages('./vip_member')"></image>
+					
 				</view>
 			</view>
 			<!-- //订单 -->
 			<view class="padding_cont">
 				<view class="orders">
 					<view style="display: flex;justify-content: space-between;margin-bottom: 38rpx;">
-						<view style="font-size: 34rpx;">
+						<view style="font-size: 30rpx;">
 							我的订单
 						</view>
 						<view style="color: #999;">
@@ -147,7 +147,7 @@
 				<!-- //钱包 -->
 				<view class="orders_b" @click="go_pages('./wallets')">
 					<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
-						<view style="font-size: 34rpx;">
+						<view style="font-size: 30rpx;">
 							<image src="../../static/my/wellet.png" mode=""></image> 我的钱包
 						</view>
 						<view style="color: #999;">
@@ -167,9 +167,9 @@
 				</view>
 				<!-- //我的团队 -->
 				<view class="orders_c">
-					<view class="orders_c_child">
+					<view class="orders_c_child" @click="go_pages('./my_team')"> 
 						<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
-							<view style="font-size: 34rpx;">
+							<view style="font-size: 30rpx;">
 								<image src="../../static/my/tuandui.png" mode=""></image> 我的团队
 							</view>
 						</view>
@@ -195,7 +195,7 @@
 					<!-- //城市 -->
 					<view class="orders_c_child">
 						<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
-							<view style="font-size: 34rpx;">
+							<view style="font-size: 30rpx;">
 								<image src="../../static/my/city.png" mode=""></image> 城市合伙人中心
 							</view>
 						</view>
@@ -234,7 +234,7 @@
 									诚邀加盟
 								</view>
 							</view>
-						</view>
+						</view> 
 					</view>
 				</view>
 				<!-- 店铺管理 -->
@@ -399,7 +399,7 @@
 			.orders_it{
 				width: 20%;text-align: center;
 				image{
-					width: 70rpx;height: 60rpx; 
+					width: 50rpx;height: 44rpx;
 				}
 				view{
 					margin-top: 16rpx;
@@ -419,7 +419,7 @@
 					margin-top: 16rpx;
 				}
 				.it_num{
-					font-size: 36rpx;color: #293d79;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+					font-size: 32rpx;color: #293d79;white-space: nowrap;text-overflow: ellipsis;overflow: hidden; 
 				}
 			}
 		}
@@ -445,7 +445,7 @@
 					margin-top: 16rpx;
 				}
 				.it_num{
-					font-size: 36rpx;color: #293d79;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+					font-size: 28rpx;color: #293d79;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 				}
 			}
 		}
@@ -483,6 +483,7 @@
 				padding-top: 6rpx;
 				color: #fff0a6;
 				height: 46rpx;
+				
 			}
 			view:nth-child(2){
 				color: #606c90;
@@ -494,10 +495,11 @@
 	.statistics{
 		width: 100%;height: 116rpx;
 		margin-top: 22rpx;display: flex;
+		margin-bottom: 16rpx;
 		.statistics_it{
 			width: 25%;text-align: center;
 			.it_num{
-				line-height: 60rpx;font-size: 34rpx;
+				line-height: 60rpx;font-size: 30rpx;
 			}
 		}
 	}
@@ -537,7 +539,7 @@
 				display: flex;
 			}
 			.userinfo_img{
-				width: 24%;height: 160rpx;margin-left: 50rpx;
+				width: 20%;height: 160rpx;margin-left: 50rpx;
 				padding-top: 20rpx;
 				.user_imga{
 					width: 120rpx;height: 120rpx;border-radius: 50%;

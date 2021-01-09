@@ -392,19 +392,19 @@ const orderList = [{
 ]
 const cateList = [{
 		id: 1,
-		name: '手机数码'
+		name: '黄金制品'
 	},
 	{
 		id: 2,
-		name: '礼品鲜花'
+		name: '钻石制品'
 	},
 	{
 		id: 3,
-		name: '男装女装'
+		name: '铂金首饰'
 	},
 	{
 		id: 4,
-		name: '母婴用品'
+		name: '白银专区'
 	},
 	{
 		id: 5,

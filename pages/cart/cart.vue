@@ -5,7 +5,7 @@
 				购物车
 			</view>
 			<view class="rig" >
-				 <u-icon name="map" size="36"></u-icon> 收货地址: 德成嘉园广场十九楼万禾网络科技
+				 <u-icon name="map" size="36"></u-icon> 收货地址: 相城区德成嘉园广场十九楼万禾网络科技
 			</view>
 		</view>
 		<view  v-if="page_show">

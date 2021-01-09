@@ -97,11 +97,47 @@
 				"navigationBarTitleText":"系统设置"
 			}
         },{
+            "path" : "pages/my/user_set",
+            "style" : {
+				"navigationBarTitleText":"账号安全"
+			}
+        },{
+            "path" : "pages/my/user_text",
+            "style" : {
+				"navigationBarTitleText":"个人信息"
+			}
+        },{
+            "path" : "pages/my/Certification",
+            "style" : {
+				"navigationBarTitleText":"身份认证"
+			}
+        },{
             "path" : "pages/my/fankui",
             "style" : {
 				"navigationBarTitleText":"意见反馈"
 			}
         },{
+            "path" : "pages/my/my_team",
+            "style" : {
+				"navigationBarTitleText":"我的团队"
+			}
+        },{
+            "path" : "pages/my/area_team",
+            "style" : {
+				"navigationBarTitleText":"区域团队"
+			}
+        },{
+            "path" : "pages/my/receiving",
+            "style" : {
+				"navigationBarTitleText":"地址"
+			}
+        },{
+            "path" : "pages/my/addAddress",
+            "style" : {
+				"navigationBarTitleText":"新增地址"
+			}
+        },
+		{
             "path" : "pages/my/wallets",
             "style" : {
 				"navigationBarTitleText":"我的钱包",
@@ -221,6 +257,10 @@
         }
         ,{
             "path" : "components/zs-wallets/zs-wallets",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-button/zs-button",
             "style" : {}
         }
     ],

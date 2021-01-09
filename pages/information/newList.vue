@@ -1,12 +1,17 @@
 <template>
 	<view style="padding: 3%;">
-		<view class="items" >
+		<view class="items" v-if="true">
 			<view class="items_time">
 				2021-01-07 17:57
 			</view>
 			<view class="items_cont">
 				<view class="items_cont_text">
-					文章内容
+					文章内容.........................
+					文章内容.........................
+					文章内容.........................
+					文章内容.........................
+					文章内容.........................
+					文章内容.........................
 				</view>
 				<view class="items_cont_child" @click="inform_detail(1)">
 					<view class="child_l">
@@ -17,6 +22,9 @@
 					</view>
 				</view>
 			</view>
+		</view>
+		<view style="padding-top: 150rpx;" v-else>
+			<u-empty text="暂无消息" mode="message"></u-empty>
 		</view>
 	</view>
 </template>

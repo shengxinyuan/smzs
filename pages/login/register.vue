@@ -16,7 +16,7 @@
 				<input type="text" value="" placeholder="输入邀请码"/>
 			</view>
 			<view class="write">
-				所在地区 <view class="choose" @click="show = true">请选择:{{regions}}<u-icon name="arrow-right" color="#999" size="38"></u-icon></view>
+				所在地区 <view class="choose" @click="show = true">{{regions}}<u-icon name="arrow-right" color="#999" size="38"></u-icon></view>
 			</view>
 			<u-picker v-model="show" mode="region" :params="params" @confirm="yes_addres" cancel-text="所在地区"></u-picker>
 			<view class="login_s">登录</view>
@@ -44,7 +44,7 @@
 		data() {
 			return {
 				show:false,
-				regions:'',
+				regions:'请选择:',
 				params: {
 					province: true,
 					city: true,

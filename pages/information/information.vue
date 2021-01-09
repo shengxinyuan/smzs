@@ -67,8 +67,8 @@
 				padding: 20rpx 24rpx;
 				width: 100%;
 				border-bottom: 1rpx solid #f6f6f6;
-				height: 120rpx;
-				line-height: 120rpx;
+				height: 140rpx;
+				line-height: 140rpx;
 				align-items: center;
 				display: flex;
 				justify-content: space-between;
@@ -78,8 +78,8 @@
 					align-items: center;
 					display: flex;
 					image{
-					    width: 90rpx;
-					    height: 90rpx;
+					    width: 100rpx;
+					    height: 100rpx;
 					    border-radius: 50%;
 						margin-right: 10rpx;
 				    }

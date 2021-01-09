@@ -42,9 +42,9 @@
 	.trumpet{
 		width: 92%;height: 56rpx;line-height: 66rpx;padding-left: 20rpx;
 		background-color: rgba(255,255,255,0.4);
-		position: absolute;left: 4%;bottom: 0;color: white;
+		position: absolute;left: 4%;bottom: 0;color: white;display: flex;
 		.swiper_three{
-			height: 56rpx;
+			height: 56rpx;width: 92%;margin-left: 1%;
 		}
 	}
 }
@@ -72,7 +72,7 @@
 		.city_b{
 			position: absolute;
 			width: 90rpx;height: 90rpx;
-			left: 18rpx;top: 40rpx;
+			left: 18rpx;top: 36rpx;
 		}
 	}
 	.input-view {
@@ -127,7 +127,7 @@
 				.tabs_tr{
 					display: flex;
 					view{
-						width: 20%;text-align: center;height: 80rpx;line-height: 82rpx;background-color: #fff0d7;
+						width: 20%;text-align: center;height: 68rpx;line-height: 70rpx;background-color: #fff0d7;
 						margin: 2rpx;border-radius: 4rpx;
 						white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 					}
@@ -135,7 +135,7 @@
 				.tabs_td{
 					display: flex;
 					view{
-						width: 20%;text-align: center;height: 80rpx;line-height: 82rpx;background-color: #fffcf7;
+						width: 20%;text-align: center;height: 68rpx;line-height: 70rpx;background-color: #fffcf7;
 						margin: 2rpx;border-radius: 4rpx;
 						white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 					}

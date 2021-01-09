@@ -55,10 +55,10 @@
 			height: 280rpx;
 		}
 		.it_tit{
-			font-size: 32rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 60rpx;
+			font-size: 30rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 60rpx;
 		}
 		.it_price{
-			font-weight: bold;font-size: 32rpx;
+			font-weight: bold;font-size: 30rpx;line-height: 60rpx;
 		}
 		.it_selt{
 			width: 100%;display: flex;justify-content: space-between;

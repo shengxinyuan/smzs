@@ -2,7 +2,7 @@
 	<view>
 		<view class="orders_d">
 			<view style="display: flex;justify-content: space-between;margin-bottom: 10rpx;">
-				<view style="font-size: 34rpx;">
+				<view style="font-size: 30rpx;">
 					店铺管理
 				</view>
 			</view>
@@ -69,7 +69,7 @@
 	.orders_it{
 		width: 25%;text-align: center;margin: 16rpx 0;
 		image{
-			width: 64rpx;height: 68rpx; 
+			width: 54rpx;height: 58rpx; 
 		}
 		view{
 			margin-top: 16rpx;

@@ -89,13 +89,13 @@
 			<!-- 回答 -->
 			<view class="answer"> 
 				<view class="answer_title">
-					享批发价
-				</view>
-				<view class="answer_names">
 					{{answer_name}}
 				</view>
+				<view class="answer_names">
+					专享特权
+				</view>
 				<view class="answer_cont">
-					操蛋的代码，精神压榨
+					操蛋的，精神不好
 				</view>
 			</view>
 		</view>
