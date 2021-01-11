@@ -205,14 +205,16 @@
 	}
 </style>
 <style lang="scss" scoped>
+	.box{
+		padding: 3%;
+	}
 	.personal{
-		width: 680rpx;
+		width: 100%;
 		background-color: #fff;
 		border-radius: 14rpx;
-		margin: 20rpx auto 0;
 		display: flex;
 		flex-wrap: wrap;
-		padding: 0 30rpx;
+		padding: 0 3%;
 		.per_list{
 			width: 100%;
 			height: 100rpx;

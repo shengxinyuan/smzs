@@ -69,7 +69,7 @@
 				}else if(e == 2){
 					
 				}else if(e == 3){
-					
+					this.com.navto('./olie_course')
 				}else if(e == 4){
 					
 				}else if(e == 5){

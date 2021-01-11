@@ -22,7 +22,7 @@
 			<!-- //个人 -->
 			<view class="userinfo">
 				<view class="userinfo_ch">
-					<view class="userinfo_img">
+					<view class="userinfo_img" @click="go_pages('./user_text')">
 						<image src="../../static/index/bann1.png" class="user_imga" mode=""></image>
 						<image src="../../static/userimg.png" class="user_imgb" v-show="huiy_show" mode=""></image>
 					</view>
@@ -50,15 +50,15 @@
 				</view>
 				<!-- 统计 -->
 				<view class="statistics">
-					<view class="statistics_it">
+					<view class="statistics_it" @click="go_pages('./collect')">
 						<view class="it_num">15</view>
 						<view class="it_name">我的收藏</view>
 					</view>
-					<view class="statistics_it">
+					<view class="statistics_it" @click="go_pages('./my_footprint')">
 						<view class="it_num">185</view>
 						<view class="it_name">我的足迹</view>
 					</view>
-					<view class="statistics_it">
+					<view class="statistics_it" @click="go_pages('./discoupcoupon')">
 						<view class="it_num">19</view>
 						<view class="it_name">优惠券</view>
 					</view>
@@ -566,8 +566,7 @@
 					font-size: 26rpx;
 					display: flex;justify-content: space-around;
 					view{
-						// white-space: nowrap;
-						background-color: #ffe379;border-radius: 20rpx;padding: 2rpx 12rpx;
+						background-color: #ffe388;border-radius: 20rpx;padding: 2rpx 12rpx;
 					}
 				}
 			}

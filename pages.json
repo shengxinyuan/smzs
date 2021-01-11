@@ -160,6 +160,11 @@
 				"navigationBarTitleText":"提现说明"
 			}
         },{
+            "path" : "pages/my/olie_course",
+            "style" : {
+				"navigationBarTitleText":"新手教程"
+			}
+        },{
             "path" : "pages/my/withdraw",
             "style" : {
 				"navigationBarTitleText":"提现",
@@ -192,6 +197,42 @@
         },{
             "path" : "pages/my/particulars",
             "style" : {
+				"navigationStyle":"custom"
+			}
+			
+        },{
+            "path" : "pages/my/discontcoupon",
+            "style" : {
+				"navigationBarTitleText":"我的优惠券"
+			}
+			
+        },{
+            "path" : "pages/my/discount_select",
+            "style" : {
+				"navigationBarTitleText":"选择优惠券"
+			}
+			
+        },{
+            "path" : "pages/my/my_footprint",
+            "style" : {
+				"navigationBarTitleText":"我的足迹"
+			}
+			
+        },{
+            "path" : "pages/my/collect",
+            "style" : {
+				// "navigationBarTitleText":"我的收藏",
+				// "app-plus":{
+				// 	"titleNView":{
+				// 		"buttons":[
+				// 			{
+				// 				"text":"管理",
+				// 				"float":"right",
+				// 				"fontSize":"34rpx"
+				// 			}
+				// 		]
+				// 	}
+				// }
 				"navigationStyle":"custom"
 			}
 			
@@ -249,7 +290,9 @@
         }
         ,{
             "path" : "pages/information/information",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"消息"
+			}
         }
         ,{
             "path" : "components/zs-text/zs-text",
@@ -261,6 +304,14 @@
         }
         ,{
             "path" : "components/zs-button/zs-button",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-inputs/zs-inputs",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-collect-list/zs-collect-list",
             "style" : {}
         }
     ],

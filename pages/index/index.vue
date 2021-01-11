@@ -21,8 +21,7 @@
 		</view>
 		<!-- banner部分 -->
 		<view class="page_cont">
-			 <swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500"
-			 :easing-function="linear">
+			 <swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500">
 				<swiper-item v-for="(it,ind) in bann" :key="ind">
 					<image :src="it.a" mode="aspectFill"></image>
 				</swiper-item>

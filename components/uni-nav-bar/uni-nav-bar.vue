@@ -28,8 +28,8 @@
 					</view>
 					
 					<!-- 优先显示图标 -->
-					<view class="uni-navbar-btn-text uni-navbar__content_view" v-if="rightText.length && !rightIcon.length">
-						消息
+					<view class="uni-navbar-btn-text uni-navbar__content_view" v-if="rightText.length && !rightIcon.length" :style="{'color': textcolor}">
+						{{rightText}}
 					</view>
 					<slot name="right" />
 				</view>
@@ -53,6 +53,10 @@
 			uniIcons
 		},
 		props: {
+			textcolor:{
+				type: String,
+				default: ""
+			},
 			title: {
 				type: String,
 				default: ""
@@ -118,7 +122,7 @@
 	$nav-height: 44px;
 	.uni-nav-bar-text {
 		/* #ifdef APP-PLUS */
-		font-size: 34rpx;
+		font-size: 36rpx;
 		/* #endif */
 		/* #ifndef APP-PLUS */
 		font-size: $uni-font-size-lg;

@@ -112,7 +112,6 @@
 <style>
 	page{
 		background-color: #f6f6f6;
-		font-size: 26rpx;
 	}
 </style>
 <style lang="scss" scoped>

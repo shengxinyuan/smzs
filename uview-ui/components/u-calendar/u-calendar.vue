@@ -1,5 +1,5 @@
 <template>
-	<u-popup closeable :maskCloseAble="maskCloseAble" mode="bottom" :popup="false" v-model="value" length="auto"
+	<u-popup closeable :maskCloseAble="maskCloseAble" mode="top" :popup="false" v-model="value" length="auto"
 	 :safeAreaInsetBottom="safeAreaInsetBottom" @close="close" :z-index="uZIndex" :border-radius="borderRadius" :closeable="closeable">
 		<view class="u-calendar">
 			<view class="u-calendar__header">
@@ -45,12 +45,12 @@
 				</view>
 				<view class="u-calendar__content__bg-month">{{month}}</view>
 			</view>
-			<view class="u-calendar__bottom">
+			<view class="u-calendar__bottom" v-if="false">
 				<view class="u-calendar__bottom__choose">
 					<text>{{mode == 'date' ? activeDate : startDate}}</text>
 					<text v-if="endDate">至{{endDate}}</text>
 				</view>
-				<view class="u-calendar__bottom__btn">
+				<view class="u-calendar__bottom__btn" >
 					<u-button :type="btnType" shape="circle" size="default" @click="btnFix(false)">确定</u-button>
 				</view>
 			</view>
@@ -223,7 +223,7 @@
 			// 顶部的提示文字
 			toolTip: {
 				type: String,
-				default: '选择日期'
+				// default: '选择日期'
 			}
 		},
 		data() {
