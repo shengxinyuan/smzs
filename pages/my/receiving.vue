@@ -3,10 +3,8 @@
 	<view class="content">
 		
 		<view class="conent_box" v-if="page_list.length != 0">
-			<u-swipe-action :show="it.show" :index="index" class="address_box"
-				v-for="(it, index) in page_list" :key="it.id" 
-				@click="del(it.id)" @open="open"
-				:options="options">
+			<u-swipe-action v-for="(it, index) in page_list" :key="it.id" :show="it.show" :index="index"
+			 class="address_box" @click="del(it.id)" @open="open" :options="options">
 				<view class="address_box_child">
 					<view class="child_l">
 						<view >{{it.contact}}   {{it.mobile}} 
@@ -57,6 +55,16 @@
 			this.page_t()
 		},
 		methods: {
+			// 打开一个的时候，关闭其他
+			open(index) {
+				// 先将正在被操作的swipeAction标记为打开状态，否则由于props的特性限制，
+				// 原本为'false'，再次设置为'false'会无效
+				this.list[index].show = true;
+				this.list.map((val, idx) => {
+					if(index != idx) this.list[idx].show = false;
+				})
+			},
+			
 			page_t(){
 				this.$api.get('address').then(res=>{
 					console.log(res)

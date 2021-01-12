@@ -45,8 +45,8 @@
 				</view>
 				<view class="u-calendar__content__bg-month">{{month}}</view>
 			</view>
-			<view class="u-calendar__bottom" v-if="false">
-				<view class="u-calendar__bottom__choose">
+			<view class="u-calendar__bottom">
+				<view class="u-calendar__bottom__choose"  v-show="false">
 					<text>{{mode == 'date' ? activeDate : startDate}}</text>
 					<text v-if="endDate">至{{endDate}}</text>
 				</view>

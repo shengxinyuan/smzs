@@ -29,7 +29,7 @@
 					<view class="userinfo_text">
 						<view class="text_top">
 							<view class="user_name">要有光</view>
-							<view class="user_qda" v-if="qiandao_if" @click="qiandao"><u-icon name="order"></u-icon>立即签到</view>
+							<view class="user_qda" v-if="!qiandao_if" @click="qiandao"><u-icon name="order"></u-icon>立即签到</view>
 							<view class="user_qda" v-else><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
 						</view>
 						<view class="user_phone">
@@ -55,14 +55,14 @@
 						<view class="it_name">我的收藏</view>
 					</view>
 					<view class="statistics_it" @click="go_pages('./my_footprint')">
-						<view class="it_num">185</view>
+						<view class="it_num">18</view>
 						<view class="it_name">我的足迹</view>
 					</view>
 					<view class="statistics_it" @click="go_pages('./discoupcoupon')">
-						<view class="it_num">19</view>
+						<view class="it_num">9</view>
 						<view class="it_name">优惠券</view>
 					</view>
-					<view class="statistics_it">
+					<view class="statistics_it" @click="go_pages('./gold')">
 						<view class="it_num">156</view>
 						<view class="it_name">我的金币</view>
 					</view>
@@ -334,12 +334,12 @@
 		//页面滑动
 		onPageScroll(e){
 			// console.log(e)
-			if(e.scrollTop >10){
-				this.backgroundColor = '#ffdc59'
-			}else{
-				this.backgroundColor = ''
+			// if(e.scrollTop >20){
+				this.backgroundColor = 'rgba(255,220,89, ' + e.scrollTop / 80 + ')' 
+			// }else{
+				// this.backgroundColor = ''
 
-			}
+			// }
 		},
 		methods: {
 			
@@ -556,6 +556,7 @@
 						font-size: 34rpx;font-weight: bold;
 					}
 					.user_qda{
+						font-size: 26rpx;
 						background-color: #1d2f65;color: #e1cea5;border-radius: 50rpx;line-height: 48rpx;padding: 0 10rpx;
 					}
 				}
