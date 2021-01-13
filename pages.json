@@ -219,6 +219,12 @@
 			}
 			
         },{
+            "path" : "pages/my/city_partnerCenter",
+            "style" : {
+				"navigationStyle":"custom"
+			}
+			
+        },{
             "path" : "pages/my/my_footprint",
             "style" : {
 				"navigationBarTitleText":"我的足迹",

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="inp">
+		<view class="inp" :style="{padding: padding}">
 			<input type="text" :placeholder="texts" v-model="value" @confirm="go_search"/>
 			<view class="inp_but" @click="go_search">
 				搜索
@@ -17,7 +17,8 @@
 			};
 		},
 		props:{
-			texts:{default:'搜索'}
+			texts:{default:'搜索'},
+			padding:{default:'5%'}
 		},
 		methods:{
 			go_search(){
@@ -29,7 +30,7 @@
 
 <style lang="scss" scoped>
 .inp{
-	width: 100%;padding: 0 5%;display: flex;line-height: 70rpx;
+	width: 100%;display: flex;line-height: 70rpx;
 	input{
 		width: 85%;background-color: #fff;border-radius:  40rpx 0 0 40rpx;padding-left: 24rpx;
 		line-height: 70rpx;height: 70rpx;font-size: 28rpx;

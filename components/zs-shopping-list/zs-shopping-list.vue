@@ -1,7 +1,7 @@
 <template>
 	<view class="cont">
 		<view class="cont_item" v-for="(it,ind) in 6" :key="ind" @click="go_shopdetail(1)">
-			<image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image>
+			<image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
 			<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
 			<view class="it_tit">
 				黄金手镯 18k金 钻石挚爱
@@ -46,7 +46,7 @@
 		margin-top: 20rpx;overflow: hidden; padding: 2%;
 		position: relative;
 		.imagea{
-			width: 70rpx;height: 82rpx;
+			width: 70rpx;height: 84rpx;
 			position: absolute;left: 22rpx;top: 0;
 			z-index: 20;
 		}

@@ -3,8 +3,7 @@
 		<input type="text" v-model="search" placeholder="搜索手机号或邀请码、回车搜索" @confirm="go_search"/> 
 		
 		<view class="qh_but">
-			<view class="qh_but_l" :class="{'avt':but_ind == 1}" @click="but_ind_cli(1)">区域合伙人 </view>
-			<view class="qh_but_l" :class="{'avt':but_ind == 2}" @click="but_ind_cli(2)">全部用户</view>
+			<view class="qh_but_l" :class="{avtive:but_ind == ind}" v-for="(it,ind) in list" :key="ind" @click="but_ind_cli(ind)" >{{it.naem}} </view>
 		</view>
 		<!-- //列表 -->
 		<view class="list" v-if="but_ind == 1">
@@ -40,7 +39,11 @@
 				num:15121,
 				num_vip:2400,
 				names:"王志刚",
-				but_ind:1
+				but_ind:0,
+				list:[
+					{name:'区域合伙人'},
+					{name:'全部用户'}
+				]
 			}
 		},
 		computed:{
@@ -80,10 +83,21 @@
 		margin-top: 30rpx;
 		.qh_but_l{
 			width: 50%;text-align: center;
-		}
-		.avt{
-			border-radius: 50rpx;font-weight: bold;color: #2b3e7b;
-			text-decoration: underline;
+			// &.active{
+			// 	font-weight: bold;
+			// 	background: #f8f8f8;
+			// 	&:before{
+			// 		content: '';
+			// 		position: absolute;
+			// 		left: 35%;
+			// 		top: 50%;
+			// 		transform: translateY(-50%);
+			// 		height: 60upx;
+			// 		width: 70upx;
+			// 		background-color: #2d407a;
+			// 		opacity: .8;
+			// 	}
+			// }
 		}
 	}
 	.list{

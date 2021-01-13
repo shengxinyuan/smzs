@@ -1,6 +1,6 @@
 <template>
 	<view style="padding: 3%;">
-		<input type="text" v-model="search" placeholder="搜索手机号或邀请码、回车搜索" @confirm="go_search"/> 
+		<zs-inputs @searchClick="go_search" :texts="'搜索手机号或邀请码'" :padding='0'></zs-inputs>
 		<view class="data_statis">
 			<view class="statis_l">
 				<view class="statis_l_t">

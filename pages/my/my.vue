@@ -58,7 +58,7 @@
 						<view class="it_num">18</view>
 						<view class="it_name">我的足迹</view>
 					</view>
-					<view class="statistics_it" @click="go_pages('./discoupcoupon')">
+					<view class="statistics_it" @click="go_pages('./discontcoupon')">
 						<view class="it_num">9</view>
 						<view class="it_name">优惠券</view>
 					</view>
@@ -199,7 +199,7 @@
 								<image src="../../static/my/city.png" mode=""></image> 城市合伙人中心
 							</view>
 						</view>
-						<view class="order_childs_a" v-if="huiy_show">
+						<view class="order_childs_a" v-if="huiy_show" @click="go_pages('./city_partnerCenter')">
 							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
 								<view class="it_num">
 									10人
