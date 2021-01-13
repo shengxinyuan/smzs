@@ -13,6 +13,9 @@
 </script>
 
 <style lang="scss">
+	uni-checkbox .uni-checkbox-input{
+		border-radius: 50%;
+	}
 	/*每个页面公共css */
 	@import "uview-ui/index.scss";
 	

@@ -21,8 +21,7 @@
 		</view>
 		<!-- banner部分 -->
 		<view class="page_cont">
-			 <swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500"
-			 :easing-function="linear">
+			 <swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500">
 				<swiper-item v-for="(it,ind) in bann" :key="ind">
 					<image :src="it.a" mode="aspectFill"></image>
 				</swiper-item>
@@ -217,15 +216,18 @@
 		},
 		onPageScroll(e){
 			// console.log(e)
-			if(e.scrollTop >240){
-				this.backgroundColor = '#fff'
-				this.headcolor = '#000'
-				this.indexbackcolor = 'rgba(0,0,0,0.2)'//导航栏搜索框背景色
-			}else{
-				this.backgroundColor = ''
+			this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')'
+			this.headcolor = 'rgba(0,0,0,'+e.scrollTop / 180 +')'
+			this.indexbackcolor = 'rgba(241,241,241,'+e.scrollTop / 180 +')'//导航栏搜索框背景色
+			if(e.scrollTop <20){
 				this.headcolor = '#fff'
 				this.indexbackcolor ='rgba(255,2555,255,0.28)'//导航栏搜索框背景色
 			}
+			// else{
+			// 	this.backgroundColor = ''
+			// 	this.headcolor = '#fff'
+			// 	this.indexbackcolor ='rgba(255,2555,255,0.28)'//导航栏搜索框背景色
+			// }
 		},
 		components: {uniNavBar,dragButton},
 		onLoad() {

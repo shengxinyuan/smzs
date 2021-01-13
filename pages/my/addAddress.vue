@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="p2">
-			<view class="item" url="./applyRefund">
+			<view class="item" >
 				<text>收件人</text>
 				<view class="right">
 					<input type="text" v-model="editForm.username" placeholder="请输入收件人姓名" />
@@ -16,14 +16,27 @@
 			<view class="item ">
 				<text>地区</text>
 				<view class="right" >
-					<input type="text" v-model="regions" placeholder="请选择" :disabled="true" @click="show = true"/>
+					<input type="text" v-model="regions" placeholder="请选择 ＞" :disabled="true" @click="show = true"/>
 				</view>
 				<u-picker v-model="show" mode="region" @confirm="yes_addres"></u-picker>
 			</view>
 			<view class="item ">
 				<text>详细地址</text>
 				<view class="right">
-					<input type="text" v-model="editForm.address"  placeholder="请填写详细地址" />
+					<textarea  v-model="editForm.address" nowrap="10" placeholder="请填写详细地址" />
+				</view>
+			</view>
+			<view class="item ">
+				<text>地址标签</text>
+				<view class="right">
+					<view :class="{act:labind == 1}" @click="label(1)">家</view>
+					<view :class="{act:labind == 2}" @click="label(2)">公司</view>
+				</view>
+			</view>
+			<view class="item ">
+				<text>寄件人实名认证</text>
+				<view class="right">
+					<input type="text" :disabled="true"  placeholder="顺丰邮件必需实名认证,否则不能收件! ＞" />
 				</view>
 			</view>
 			<view class="item item-bd" v-if="address_id == 0 ? true : false">
@@ -62,6 +75,7 @@
 				address_type:0,
 				address_id:0,
 				address_mor:0,
+				labind:0
 			}
 		},
 		onLoad(op) {
@@ -82,6 +96,10 @@
 			
 		},
 		methods:{
+			//标签
+			label(e){
+				this.labind = e
+			},
 			//地区
 			yes_addres(e){
 				this.province = e.province.label
@@ -142,47 +160,42 @@
 	}
 </style>
 <style lang="scss">
-	page {
-		background-color: #f6f6f6;
-	}
-
 	.content {
+		width: 100%;
 		.p2{
-			background-color: #fff;
-			border-radius: 20rpx;
-			padding: 0 30rpx;
-			width: 700rpx;
-			margin: 15rpx auto;
+
 			.item{
+				width: 100%;line-height: 88rpx;padding: 0 20rpx;
 				display: flex;
 				justify-content: space-between;
-				height: 88rpx;
-				line-height: 88rpx;
-				border-bottom: 2rpx solid #eee;
+				background-color: #fff;
+				border-bottom: 2rpx solid #F6F6F6;
 				.right{
 					display: flex;
 					align-items: center;
 					display: flex;
-					input{
-						font-size: 26rpx;
+					textarea{
+						width: 540rpx;padding: 28rpx 0;font-size: 28rpx;
+						height: 180rpx;
 					}
-					.pickerBox{
-						font-size: 26rpx;
-						color: #999;
-						display: flex;
-						height: 88rpx;
-						line-height: 88rpx;
-						text{
-							height: 88rpx;
-							line-height: 88rpx;
-							white-space:nowrap;
-							text-overflow:ellipsis;
-							overflow:hidden;
-							font-size: 22rpx;
-							color: #000000;
-						}
+					input{
+						width: 480rpx;
+						font-size: 28rpx;text-align: right;
+					}
+					view{
+						width: 140rpx;
+						height: 60rpx;line-height: 60rpx;border-radius: 50rpx;border: 1px solid #999;color: #999;text-align: center;margin: 0 20rpx;
+					}
+					.act{
+						color: #1e2f64;border: 1px solid #1e2f64;
 					}
 				}
+			}
+			.item:nth-child(5){
+				margin-top: 24rpx;
+			}
+			.item:last-child{
+				margin-top: 24rpx;
 			}
 			.item-bd{
 				border-bottom: none;
