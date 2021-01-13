@@ -25,4 +25,10 @@
 	  url('//at.alicdn.com/t/font_2039522_7vyftouomsp.ttf') format('truetype'),
 	  url('//at.alicdn.com/t/font_2039522_7vyftouomsp.svg#iconfont') format('svg');
 	}
+	
+	.zl-page{
+		width: 100%;
+		height: 100vh;
+		background-color: #F8F8F8;
+	}
 </style>

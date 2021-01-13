@@ -263,6 +263,24 @@
             "path" : "components/zs-button/zs-button",
             "style" : {}
         }
+        ,{
+            "path" : "pages/vip-confirm-order/vip-confirm-order",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "确认订单"
+            }
+            
+        }
+        ,{
+            "path" : "pages/vip-confirm-order/added-services",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "增值服务",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
