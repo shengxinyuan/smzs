@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="go_buts" @click="but_cli">
+		<view class="go_buts"  @click="but_cli">
 			{{buttitle}}
 		</view>
 	</view>
@@ -18,8 +18,10 @@
 				default:"保存"
 			}
 		},
-		but_cli(){
-			this.$emit('but_cli')
+		methods:{
+			but_cli(){
+				this.$emit('but_cli',1)
+			}
 		}
 	}
 </script>

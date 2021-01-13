@@ -43,8 +43,14 @@
 				// "navigationBarTitleText": "uni-app"
 				"navigationStyle":"custom"
 			}
-		},
-		{
+		},{
+			"path": "pages/index/seckill",
+			"style": {
+				"navigationBarTitleText":"限时秒杀",
+				"navigationBarBackgroundColor":"#e8372f",
+				"navigationBarTextStyle":"white"
+			}
+		},{
 			"path": "pages/login/login",
 			"style": {
 				// "navigationBarTitleText": "uni-app"
@@ -219,6 +225,12 @@
 			}
 			
         },{
+            "path" : "pages/my/goto_vip",
+            "style" : {
+				"navigationBarTitleText":"立即加入"
+			}
+			
+        },{
             "path" : "pages/my/city_partnerCenter",
             "style" : {
 				"navigationStyle":"custom"
@@ -351,6 +363,14 @@
         }
         ,{
             "path" : "components/zs-collect-list/zs-collect-list",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-shoplist-type/zs-shoplist-type",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-shoplist-seckill/zs-shoplist-seckill",
             "style" : {}
         }
     ],
