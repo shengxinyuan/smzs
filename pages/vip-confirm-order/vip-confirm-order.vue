@@ -89,7 +89,7 @@
 							<view class="hang-sign-title">挂签</view>
 							<view class="hang-sign-text" @click="openPopup01">价格&样本</view>
 							<view class="hang-sign-switch">
-								<u-switch v-model="checked" size="32" active-color="#2d407a" inactive-color="#cccccc"></u-switch>
+								<u-switch v-model="checked" size="26" active-color="#2d407a" inactive-color="#cccccc"></u-switch>
 							</view>
 						</view>
 						<view class="log-box hang-sign">
@@ -104,7 +104,7 @@
 							<view class="hang-sign-title">证书</view>
 							<view class="hang-sign-text">价格&样本</view>
 							<view class="hang-sign-switch">
-								<u-switch v-model="checked02" size="32" active-color="#2d407a" inactive-color="#cccccc"></u-switch>
+								<u-switch v-model="checked02" size="26" active-color="#2d407a" inactive-color="#cccccc"></u-switch>
 							</view>
 						</view>
 						<view class="log-box zhengshu">

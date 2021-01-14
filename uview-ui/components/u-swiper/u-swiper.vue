@@ -16,8 +16,7 @@
 					}">
 					<image class="u-swiper-image" :src="item[name] || item" :mode="imgMode"></image>
 					<view v-if="title && item.title" class="u-swiper-title u-line-1" :style="[{
-							'padding-bottom': titlePaddingBottom
-						}, titleStyle]">
+							'padding-bottom': titlePaddingBottom}, titleStyle]">
 						{{ item.title }}
 					</view>
 				</view>
@@ -83,7 +82,7 @@
 			// 是否显示title标题
 			title: {
 				type: Boolean,
-				default: false
+				default: true
 			},
 			// 用户自定义的指示器的样式
 			indicator: {
@@ -320,7 +319,6 @@
 		box-sizing: content-box;
 		position: relative;
 	}
-
 	.u-swiper-title {
 		position: absolute;
 		background-color: rgba(0, 0, 0, 0.3);
