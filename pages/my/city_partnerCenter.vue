@@ -8,7 +8,7 @@
 				<view class="head_center">
 					城市合伙人中心
 				</view>
-				<view class="head_right" @click="go_search">
+				<view class="head_right" @click="go_search('./area_team')">
 					区域团队
 				</view>
 			</view>
@@ -145,8 +145,8 @@
 		},
 		methods:{
 			//区域团队
-			go_search(){
-				this.com.navto('./area_team')
+			go_search(e){
+				this.com.navto(e)
 			},
 			//选择月份
 			confirmMonth(e){
@@ -154,9 +154,9 @@
 				let year = time.getFullYear()
 				let month = time.getMonth() +1
 				if(e.year > year){
-					this.com.msg('只能查看历史记录')
+					this.com.msg('只能查看往年记录')
 				}else{
-					console.log(e)
+					this.com.msg(e.year+'-'+e.month)
 				}
 			},
 			//点击选项
@@ -171,7 +171,9 @@
 				}
 			},
 			gotoppage(){
-				uni.navigateBack()
+				uni.navigateBack({
+					
+				})
 			}
 		}
 	}

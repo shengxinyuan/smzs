@@ -53,9 +53,7 @@
 		methods:{
 			//搜索
 			searchClick(e){
-				if(e == ''){
-					this.com.msg('搜索内容不能为空~')
-				}
+				
 			},
 			//类型
 			type_cli(e){

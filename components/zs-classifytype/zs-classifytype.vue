@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="shai" @click="shaix">
-			筛选<image src="../../static/loudou.png" mode=""></image>
+			<text>筛选</text><image src="../../static/loudou.png" mode=""></image>
 		</view>
 			<u-popup v-model="show" mode="right">
 				<view class="popups">出淤泥而不染，濯清涟而不妖</view>
@@ -26,7 +26,9 @@
 
 <style lang="scss" scoped>
 .shai{
+	display: flex;
 	image{
+		padding-top: 28rpx;
 		width: 30rpx;height: 30rpx;margin: 4rpx;
 	}
 }

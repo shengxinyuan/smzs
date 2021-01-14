@@ -76,17 +76,17 @@
 					<view class="nine_g_child_tit">
 						黄金
 					</view>
-					<view class="nine_g_child_cla">
+					<!-- <view class="nine_g_child_cla">
 						高保值 更安全
-					</view>
+					</view> -->
 					<image src="../../static/nine.png" mode=""></image>
 				</view>
 			</view>
 			<!-- 活动专区 -->
 			<view class="seckill-section">
 				<zs-title :title="'活动专区'" :page_show="true"></zs-title>
-				<view class="s-header">
-					<view class="s-header_a">
+				<view class="s-header" @click="go_pages('./seckill')">
+					<view class="s-header_a" > 
 						<image class="s-img" src="/static/xians_seckill.png" mode="widthFix"></image>
 						<view class="s-header_child">
 							<text class="hour timer">{{end_seckill}}</text>

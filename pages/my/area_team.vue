@@ -1,14 +1,15 @@
 <template>
 	<view style="padding: 3%;">
-		<input type="text" v-model="search" placeholder="搜索手机号或邀请码、回车搜索" @confirm="go_search"/> 
+		<zs-inputs @searchClick="go_search" :texts="'搜索手机号或邀请码'" :padding='0'></zs-inputs>
 		
 		<view class="qh_but">
-			<view class="qh_but_l" :class="{avtive:but_ind == ind}" v-for="(it,ind) in list" :key="ind" @click="but_ind_cli(ind)" >{{it.naem}} </view>
+			<view class="qh_but_l" :class="{active:but_ind == ind}" v-for="(it,ind) in list" :key="ind" @click="but_ind_cli(ind)" >
+			{{it.name}} </view>
 		</view>
 		<!-- //列表 -->
 		<view class="list" v-if="but_ind == 1">
 			<view class="list_item" v-for="(it,ind) in 6" :key="ind">
-				<image src="../../static/kefu.png" mode=""></image>
+				<image src="../../static/kefu.png" mode=""></image> 
 				<view class="list_item_name">
 					{{names_com}}
 				</view>
@@ -35,7 +36,6 @@
 	export default{
 		data(){
 			return{
-				search:'',
 				num:15121,
 				num_vip:2400,
 				names:"王志刚",
@@ -59,9 +59,8 @@
 			}
 		},
 		methods:{
-			go_search(){
-				this.com.msg(this.search)
-				this.search = ''
+			go_search(e){
+				
 			},
 			//团队切换
 			but_ind_cli(e){
@@ -81,23 +80,25 @@
 	.qh_but{
 		width: 100%;display: flex;margin-bottom: 30rpx;line-height: 68rpx;border-radius: 50rpx;
 		margin-top: 30rpx;
+		
 		.qh_but_l{
 			width: 50%;text-align: center;
-			// &.active{
-			// 	font-weight: bold;
-			// 	background: #f8f8f8;
-			// 	&:before{
-			// 		content: '';
-			// 		position: absolute;
-			// 		left: 35%;
-			// 		top: 50%;
-			// 		transform: translateY(-50%);
-			// 		height: 60upx;
-			// 		width: 70upx;
-			// 		background-color: #2d407a;
-			// 		opacity: .8;
-			// 	}
-			// }
+			position: relative;
+			&.active{
+				font-weight: bold;
+				// background: #f8f8f8;
+				&:before{
+					content: '';
+					position: absolute;
+					left: 35%;
+					top: 90%;
+					transform: translateY(-50%);
+					height: 6rpx;
+					width: 30%;
+					background-color: #2d407a;
+					opacity: .8;
+				}
+			}
 		}
 	}
 	.list{

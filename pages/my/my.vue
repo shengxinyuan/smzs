@@ -226,9 +226,9 @@
 									已申请
 								</view>
 							</view>
-							<view class="orders_it">
+							<view class="orders_it" @click="go_pages('./goto_vip')">
 								<view class="it_num_but">
-									立即加入＞
+									立即加入
 								</view>
 								<view class="">
 									诚邀加盟
@@ -247,7 +247,8 @@
 			<image class="tuij" src="../../static/my/tuijain_bgimg.png" mode=""></image>
 			<!-- 商品列表 -->
 			<view style="padding: 0 3%;">
-				<zs-shopping-list></zs-shopping-list>
+				<!-- <zs-shopping-list></zs-shopping-list> -->
+				<zs-shoplist-type></zs-shoplist-type>
 			</view>
 		</view>
 		<!-- 签到 -->
@@ -281,7 +282,7 @@
 		data() {
 			return {
 				backgroundColor:"",//导航背景
-				huiy_show:true,//会员状态
+				huiy_show:false,//会员状态
 				show:false,//我的邀请人
 				bgimage:'url(../../static/my/qiandao.png)',
 				qd_show:false,//popup组件显示
@@ -430,7 +431,7 @@
 				.order_childs_a{
 					display: flex;justify-content: space-around;
 					.it_num_but{
-						background-color: #e45050;color: #fff;border-radius: 20rpx;
+						background-color: #e45050;color: #fff;border-radius: 20rpx;padding-bottom: 4rpx;
 					}
 				}
 			}
