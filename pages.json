@@ -353,6 +353,134 @@
             "path" : "components/zs-collect-list/zs-collect-list",
             "style" : {}
         }
+        ,{
+            "path" : "pages/selected-topics/selected-topics",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "精选专题",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/selected-topics/selection-details",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "精选专题详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/community/community",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "社区营销",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/community/talk",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "引流拓客",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/set-shop",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "金店管理",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/shop-name",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "品牌名称",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/shop-signature",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "金店签名",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/service-tel",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "客服电话",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#ffffff"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/shop-address",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商城地址",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/service-code",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商城客服二维码",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/shop-data",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "金店数据",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/shop-certificate",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商城证书",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/shop-gold-price",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商城金价",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
