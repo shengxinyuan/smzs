@@ -7,7 +7,7 @@
 				</view>
 			</view>
 			<view style="display: flex;flex-wrap: wrap;">
-				<view class="orders_it" v-for="(it,ind) in store_admin" :key="ind">
+				<view class="orders_it" v-for="(it,ind) in store_admin" :key="ind" @click="go_page(ind)">
 					<image :src="it.img" mode=""></image>
 					<view class="">
 						{{it.name}}
@@ -53,6 +53,25 @@
 					}
 				]
 			};
+		},
+		methods:{
+			go_page(e){
+				if(e==0){
+					
+				}else if(e==1){
+					
+				}else if(e==2){
+					this.com.navto('../../pages/my/olie_course')
+				}else if(e==3){
+					this.com.navto('../../pages/my/fankui')
+				}else if(e==4){
+					
+				}else if(e==5){
+					
+				}else if(e==6){
+					
+				}
+			}
 		}
 	}
 </script>

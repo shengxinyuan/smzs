@@ -10,20 +10,29 @@
 					<view class="it_tit">
 						24K黄金手镯 18k金 钻石挚爱一生
 					</view>
+					<view class="seckill_pic">
+						秒杀价
+					</view>
+					<view class="it_selt_r">
+						剩余512件
+					</view>
 					<view class="it_text_cen">
-						<view class="it_price">
-							￥2298
+						<view style="display: flex;padding-top: 6rpx;">
+							<view class="it_price">
+								￥2298
+							</view>
+							<view class="it_selt_l">
+								<text>￥1980</text>
+							</view>
 						</view>
-						<view class="it_selt_l">
-							<text>￥1980</text><image src="../../static/pifa.png" mode=""></image>
+						<view class="go_seck">
+							去抢购
 						</view>
 					</view>
 					<!-- <view class="it_label">
 						<view>精品</view>
 					</view> -->
-					<view class="it_selt_r">
-						已售45512件
-					</view>
+					
 				</view>
 			</view>
 		</view>
@@ -71,7 +80,7 @@
 
 <style lang="scss" scoped>
 .cont_list_two{
-	width: 100%;
+	width: 100%;padding-bottom: 60rpx;
 	.cont_item{
 		width: 100%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
@@ -94,21 +103,26 @@
 			.it_tit{
 				font-size: 30rpx;width: 96%;height: 80rpx;overflow: hidden;
 			}
+			.seckill_pic{
+				display: inline-block;font-size: 26rpx;color: white;margin-top: 15rpx;
+				padding: 0 16rpx;background-color: #e8372f;
+			}
 			.it_text_cen{
-				display: flex;white-space: nowrap;
+				display: flex;white-space: nowrap;justify-content: space-between;
 				margin: 8rpx 0;
 				.it_price{
-					font-weight: bold;font-size: 30rpx;line-height: 60rpx;
-					width: 150rpx;
+					font-weight: bold;font-size: 30rpx;
+					width: 150rpx;color: #e8372f;
 				}
 				.it_selt_l{
-					padding-top: 10rpx;display: flex;
+					padding-top: 4rpx;display: flex;
 					text{
-						color: #ea5b72;font-size: 26rpx;
+						font-size: 26rpx;color: #999;text-decoration: line-through;
 					}
-					image{
-						width: 80rpx; height: 28rpx;margin-top: 6rpx;
-					}
+					
+				}
+				.go_seck{
+					display: inline-block;padding: 6rpx 20rpx 8rpx 20rpx;border-radius: 50rpx;background-color: #e8372f;color: white;
 				}
 			}
 			.it_label{
@@ -120,7 +134,7 @@
 				}
 			}
 			.it_selt_r{
-				color: #998;line-height: 50rpx;font-size: 26rpx;margin-top: 12rpx;
+				color: #998;font-size: 26rpx;margin-top: 14rpx;
 				
 			}
 		}

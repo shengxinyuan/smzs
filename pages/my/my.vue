@@ -127,7 +127,7 @@
 			<!-- //订单 -->
 			<view class="padding_cont">
 				<view class="orders">
-					<view style="display: flex;justify-content: space-between;margin-bottom: 38rpx;">
+					<view style="display: flex;justify-content: space-between;margin-bottom: 38rpx;"  @click="go_order(0,0)">
 						<view style="font-size: 30rpx;">
 							我的订单
 						</view>
@@ -136,7 +136,7 @@
 						</view>
 					</view>
 					<view style="display: flex;">
-						<view class="orders_it" v-for="(it,ind) in order" :key="ind">
+						<view class="orders_it" v-for="(it,ind) in order" :key="ind"  @click="go_order(it.type,it.ind)">
 							<image :src="it.img" mode=""></image>
 							<view class="">
 								{{it.name}}
@@ -292,23 +292,23 @@
 				order:[
 					{
 						img:'../../static/my/daifu.png',
-						name:'待付款'
+						name:'待付款',type:10,ind:1
 					},
 					{
 						img:'../../static/my/daifa.png',
-						name:'待发货'
+						name:'待发货',type:20,ind:2
 					},
 					{
 						img:'../../static/my/daishou.png',
-						name:'待收货'
+						name:'待收货',type:30,ind:3
 					},
 					{
 						img:'../../static/my/daipinj.png',
-						name:'待评价'
+						name:'待评价',type:40,ind:4
 					},
 					{
 						img:'../../static/my/shouhou.png',
-						name:'待售后'
+						name:'售后',type:60,ind:6
 					},
 				],
 				wallet:[
@@ -343,7 +343,10 @@
 			// }
 		},
 		methods: {
-			
+			//订单详情
+			go_order(e,ind){
+				this.com.navto('./order?state='+e+'&index='+ind)
+			},
 			//页面跳转
 			go_pages(e){
 				this.com.navto(e)

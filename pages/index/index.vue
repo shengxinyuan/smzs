@@ -194,8 +194,8 @@
 </template>
 
 <script>
-	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
-	import dragButton from "@/components/drag-button/drag-button.vue";
+	// import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	// import dragButton from "@/components/drag-button/drag-button.vue";
 	export default {
 		data() {
 			return {
@@ -208,28 +208,25 @@
 				backgroundColor:'',//标题栏背景色
 				headcolor:'#fff',//消息颜色
 				indexbackcolor:'rgba(255,2555,255,0.28)',//导航栏搜索框背景色
-				end_time:'1610912417',//秒杀到期
-				end_seckill:'00:00:00:00',//倒计时
+				end_time:'1611912417',//秒杀到期
+				end_seckill:'00天00:00:00',//倒计时
 				nav_ind:0,//导航
 				show:true
 			}
 		},
 		onPageScroll(e){
 			// console.log(e)
-			this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')'
-			this.headcolor = 'rgba(0,0,0,'+e.scrollTop / 180 +')'
-			this.indexbackcolor = 'rgba(241,241,241,'+e.scrollTop / 180 +')'//导航栏搜索框背景色
-			if(e.scrollTop <20){
+			
+			if(e.scrollTop < 20){
 				this.headcolor = '#fff'
 				this.indexbackcolor ='rgba(255,2555,255,0.28)'//导航栏搜索框背景色
+			}else{
+				this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')'
+				this.headcolor = 'rgba(0,0,0,'+e.scrollTop / 180 +')'
+				this.indexbackcolor = 'rgba(241,241,241,'+e.scrollTop / 180 +')'//导航栏搜索框背景色
 			}
-			// else{
-			// 	this.backgroundColor = ''
-			// 	this.headcolor = '#fff'
-			// 	this.indexbackcolor ='rgba(255,2555,255,0.28)'//导航栏搜索框背景色
-			// }
 		},
-		components: {uniNavBar,dragButton},
+		// components: {uniNavBar},
 		onLoad() {
 			this.ent_time_s()
 		},

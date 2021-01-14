@@ -44,6 +44,11 @@
 				"navigationStyle":"custom"
 			}
 		},{
+			"path": "pages/index/evaluate",
+			"style": {
+				"navigationBarTitleText": "评价列表"
+			}
+		},{
 			"path": "pages/index/seckill",
 			"style": {
 				"navigationBarTitleText":"限时秒杀",
@@ -171,6 +176,11 @@
 				"navigationBarTitleText":"新手教程"
 			}
         },{
+            "path" : "pages/my/orderDetails",
+            "style" : {
+				"navigationBarTitleText":"订单详情"
+			}
+        },{
             "path" : "pages/my/withdraw",
             "style" : {
 				"navigationBarTitleText":"提现",
@@ -234,6 +244,12 @@
             "path" : "pages/my/city_partnerCenter",
             "style" : {
 				"navigationStyle":"custom"
+			}
+			
+        },{
+            "path" : "pages/my/order",
+            "style" : {
+				"navigationBarTitleText":"我的订单"
 			}
 			
         },{
@@ -371,6 +387,14 @@
         }
         ,{
             "path" : "components/zs-shoplist-seckill/zs-shoplist-seckill",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-order-list/zs-order-list",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-order-df/zs-order-df",
             "style" : {}
         }
     ],

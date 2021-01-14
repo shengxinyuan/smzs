@@ -13,7 +13,7 @@
 		</view>
 		
 		<scroll-view scroll-y class="left-aside">
-			<view v-for="item in flist" :key="item.id" class="f-item b-b" :class="{active: item.id === currentId}" @click="tabtap(item)">
+			<view v-for="item in flist" :key="item.id" class="f-item b-b" :class="{active: currentId == item.id}" @click="tabtap(item)">
 				{{item.name}}
 			</view>
 		</scroll-view>
@@ -100,6 +100,7 @@
 				}
 				let scrollTop = e.detail.scrollTop;
 				let tabs = this.slist.filter(item=>item.top <= scrollTop).reverse();
+				// console.log(tabs)
 				if(tabs.length > 0){
 					this.currentId = tabs[0].pid;
 				}

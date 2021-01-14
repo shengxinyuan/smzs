@@ -1,6 +1,20 @@
 <template>
 	<view class="container">
-		<view class="header_bait"></view>
+		<view class="header_bait" :style="{'background-color': bgcolor,'opacity':opacity}">
+			<view class="toubu">
+				<view class="header_left" @click="goto_top">
+					<u-icon name="arrow-left" size="54"></u-icon>
+				</view>
+				<view class="center">
+					<view class="center_it" :class="{active:head_ind == ind}" v-for="(it,ind) in headlist" :key="ind" @click="head_nav_cli(ind)"> 
+						{{it.name}}
+					</view>
+				</view>
+				<view class="head_share" @click="share">
+					<u-icon name="zhuanfa" size="54"></u-icon>
+				</view>
+			</view>
+		</view>
 		<view class="header">
 			<view class="header_left" @click="goto_top">
 				<u-icon name="arrow-left" size="60"></u-icon>
@@ -9,11 +23,11 @@
 				<u-icon name="zhuanfa" size="60"></u-icon>
 			</view>
 		</view>
-		
+		<!-- banner轮播 -->
 		<view class="carousel">
-			<swiper indicator-dots :circular="true" :autoplay="true" :duration="400" :interval="3000">
+			<swiper :circular="true" :autoplay="true" :duration="400" :interval="3000"  @change="swiperChange">
 				<swiper-item class="swiper-item" v-for="(item,index) in imgList" :key="index">
-					<view class="image-wrapper">
+					<view class="image-wrapper" @click="banner_cli">
 						<image
 							:src="item.src" 
 							class="loaded" 
@@ -22,107 +36,125 @@
 					</view>
 				</swiper-item>
 			</swiper>
-		</view>
-		
-		<view class="introduce-section">
-			<text class="title">恒源祥2019春季长袖白色t恤 新款春装</text>
-			<view class="price-box">
-				<text class="price-tip">¥</text>
-				<text class="price">341.6</text>
-				<text class="m-price">¥488</text>
-				<text class="coupon-tip">7折</text>
+			<view class="swiper-dots">
+				<text class="num">{{swiperCurrent+1}}</text>
+				<text class="sign">/</text>
+				<text class="num">{{imgList.length}}</text>
 			</view>
-			<view class="bot-row">
+		</view>
+		<!-- 横条 -->
+		<view class="trabecula">
+			市场平均料价：430元/g <text style="margin-left: 20rpx;"> 工费：0元/g</text> 
+		</view>
+		<view class="introduce-section">
+			
+			<view class="price-box">
+				<view class="price-box_l">
+					<text class="price-tip">¥</text>
+					<text class="price">341.6</text>起
+					<text class="m-price">¥488</text>
+					<!-- <text class="coupon-tip">7折</text> -->
+				</view>
+				<view class="price-box_r">
+					<image src="../../static/index/search_icon.png" mode=""></image>
+					<view>一键比价</view>
+				</view>
+			</view>
+			<!-- <view class="bot-row">
 				<text>销量: 108</text>
 				<text>库存: 4690</text>
 				<text>浏览量: 768</text>
+			</view> -->
+		</view>
+		<view class="shop_names">
+			花月佳期 繁华如梦 足金黄金项链 吊坠 F22544454346348 45cm 约10克
+		</view>
+		<view class="shopping_text">
+			<view class="text-item">
+				<view class="">
+					开通超级会员，预估额外省 <text style="color: #df3636;"> 886 </text>
+				</view>
+				<view class="text-item_r">
+					立即开通 ＞
+				</view>
+			</view>
+			<view class="shop_introduce"> 
+				商品介绍 但就是夸大冯家街道上看看第三方国家法规但就是夸大冯家街道上看看第三方国家法规但就是夸大冯家街道上看看第三方国家法规
+			</view>
+			<view class="Rapid_delivery">
+				<u-icon name="car-fill" style="margin-right: 10rpx;"></u-icon>急速出货  16:30前下单当日货品可发货，定制产品除外。
 			</view>
 		</view>
-		
-		
-		<view class="c-list">
-			<view class="c-row b-b" @click="toggleSpec">
-				<text class="tit">购买类型</text>
-				<view class="con">
-					<text class="selected-text" v-for="(sItem, sIndex) in specSelected" :key="sIndex">
-						{{sItem.name}}
-					</text>
-				</view>
-				<text class="yticon icon-you"></text>
-			</view>
-			<view class="c-row b-b">
-				<text class="tit">优惠券</text>
-				<text class="con t-r red">领取优惠券</text>
-				<text class="yticon icon-you"></text>
-			</view>
-			<view class="c-row b-b">
-				<text class="tit">促销活动</text>
-				<view class="con-list">
-					<text>新人首单送20元无门槛代金券</text>
-					<text>订单满50减10</text>
-					<text>订单满100减30</text>
-					<text>单笔购买满两件免邮费</text>
-				</view>
-			</view>
-			<view class="c-row b-b">
-				<text class="tit">服务</text>
-				<view class="bz-list con">
-					<text>7天无理由退换货 ·</text>
-					<text>假一赔十 ·</text>
-				</view>
+		<!-- 规格 -->
+		<view class="specification">
+			<view class="child" v-for="(it,ind) in 5">
+				款号：C-5D8E
 			</view>
 		</view>
-		
 		<!-- 评价 -->
-		<view class="eva-section">
-			<view class="e-header">
-				<text class="tit">评价</text>
-				<text>(86)</text>
-				<text class="tip">好评率 100%</text>
-				<text class="yticon icon-you"></text>
+		<view class="eva-section" id="evaluate">
+			<view class="section_title" @click="goto_page('./evaluate')">
+				<view class="tit_l">
+					<text></text>
+					宝贝评价（100）
+				</view>
+				<view style="color: #999;">
+					查看更多＞
+				</view>
 			</view> 
 			<view class="eva-box">
-				<image class="portrait" src="http://img3.imgtn.bdimg.com/it/u=1150341365,1327279810&fm=26&gp=0.jpg" mode="aspectFill"></image>
-				<view class="right">
-					<text class="name">Leo yo</text>
-					<text class="con">商品收到了，79元两件，质量不错，试了一下有点瘦，但是加个外罩很漂亮，我很喜欢</text>
-					<view class="bot">
-						<text class="attr">购买类型：XL 红色</text>
-						<text class="time">2019-04-01 19:21</text>
+				<view class="eval_con" v-for="it in 2">
+					<view class="order_head">
+						<view class="img">
+							<image src="../../static/kefu.png" mode="aspectFill"></image>
+							<view class="shop_name">你的名字</view>
+						</view>
+						<view class="shop_name_f">
+							
+						</view>
+						<view class="order_time">2021-1-15</view>
+					</view>
+					<view class="order_con">
+						打定金交付吉萨大
+					</view>
+					<view class="order_img">
+						<image v-for="img in 3" src="../../static/index/section.png" mode="aspectFill" ></image>
 					</view>
 				</view>
 			</view>
 		</view>
 		
-		<view class="detail-desc">
+		<view class="detail-desc" id="detail">
 			<view class="d-header">
-				<text>图文详情</text>
+				<text>宝贝详情</text>
 			</view>
 			<u-parse :html="desc"></u-parse>
 		</view>
 		<!-- //推荐 -->
-		<image style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="../../static/my/tuijain_bgimg.png" mode=""></image>
-		<view style="padding: 0 3%;margin-bottom: 120rpx;">
-			<zs-shopping-list></zs-shopping-list> 
+		<view id="tuijina">
+			<image  style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="../../static/my/tuijain_bgimg.png" mode=""></image>
+			<view style="padding: 0 3%;margin-bottom: 120rpx;" >
+				<zs-shopping-list></zs-shopping-list> 
+			</view>
 		</view>
 		
 		<view class="add_bottom">
 			<view class="add_con">
-				<view class="three_icons" @click="go_custr">
+				<view class="three_icons" >
 					<u-icon name="kefu-ermai" color="#ccc" size="38" class="s_icon"></u-icon>
 					<view>客服</view>
 				</view>
-				<view class="three_icons" @click="goto_car">
+				<view class="three_icons" >
 					<u-icon name="shopping-cart" color="#ccc" size="38" class="s_icon"></u-icon>
 					<view>购物车</view>
 				</view>
 				<view class="three_icons">
 					<view  v-if="true">
-						<u-icon class="s_icon" name="star-fill" color="#DD524D" size="38" @click="like_collect"  ></u-icon>
+						<u-icon class="s_icon" name="star-fill" color="#DD524D" size="38"   ></u-icon> <!-- @click="like_collect" -->
 						<view style="color: #DD524D;">已收藏</view>
 					</view>
 					<view v-else >
-						<u-icon class="s_icon" name="star" color="#ccc" size="38"  @click="like_collect"></u-icon>
+						<u-icon class="s_icon" name="star" color="#ccc" size="38" ></u-icon> <!-- @click="like_collect" -->
 						<view>收藏</view>
 					</view>
 					
@@ -137,12 +169,7 @@
 		
 		
 		<!-- 规格-模态层弹窗 -->
-		<view 
-			class="popup spec" 
-			:class="specClass"
-			@touchmove.stop.prevent="stopPrevent"
-			@click="toggleSpec"
-		>
+		<view class="popup spec" :class="specClass" @touchmove.stop.prevent="stopPrevent" @click="toggleSpec">
 			<!-- 遮罩层 -->
 			<view class="mask"></view>
 			<view class="layer attr-content" @click.stop="stopPrevent">
@@ -177,10 +204,7 @@
 			</view>
 		</view>
 		<!-- 分享 -->
-		<zs-share 
-			ref="share" 
-			:contentHeight="400"
-		></zs-share>
+		<zs-share ref="share" :contentHeight="400"></zs-share>
 	</view>
 </template>
 
@@ -188,20 +212,23 @@
 	export default{
 		data() {
 			return {
+				bgcolor:'',//背景色
+				opacity: 0,//透明度
+				head_ind:0,//头部样式
 				specClass: 'none',
 				specSelected:[],
-				
+				swiperCurrent: 0,
 				favorite: true,
 				shareList: [],
 				imgList: [
 					{
-						src: 'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg'
+						src: '../../static/index/bann1.png' 
 					},
 					{
-						src: 'https://gd3.alicdn.com/imgextra/i3/TB1RPFPPFXXXXcNXpXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg'
+						src: '../../static/vip-order/img_02.png'
 					},
 					{
-						src: 'https://gd2.alicdn.com/imgextra/i2/38832490/O1CN01IYq7gu1UGShvbEFnd_!!38832490.jpg_400x400.jpg'
+						src: '../../static/index/bann2.png'
 					}
 				],
 				desc: `
@@ -222,6 +249,12 @@
 						id: 2,
 						name: '颜色',
 					},
+				],
+				headlist:[
+					{name:'商品'},
+					{name:'评价'},
+					{name:'详情'},
+					{name:'推荐'}
 				],
 				specChildList: [
 					{
@@ -269,8 +302,42 @@
 						pid: 2,
 						name: '草木绿',
 					},
-				]
+				],
+				pingl:0,//评论
+				tuij:0,//推荐
+				detail_shop:0,//商品详情
 			};
+		},
+		onPageScroll(e) {
+			this.opacity = e.scrollTop / 180 //头部渐入渐出
+			if(e.scrollTop === this.pingl){
+				this.head_ind = 1
+			}else if(e.scrollTop == this.tuij){
+				this.head_ind = 3
+			}else if(e.scrollTop == this.detail_shop){
+				this.head_ind = 2
+			}else if(e.scrollTop == 0){
+				this.head_ind = 0 
+			}
+		},
+		mounted() {
+			var query = uni.createSelectorQuery()
+			//获取对应模块到顶部的距离
+			//评论
+			query.select('#evaluate').boundingClientRect((res) => {
+				// console.log(res)
+				this.pingl = res.top -100 
+			}).exec()
+			// 推荐
+			query.select('#tuijina').boundingClientRect((res) => {
+				console.log(res)
+				this.tuij = res.top -100
+			}).exec()
+			// 详情
+			query.select('#detail').boundingClientRect((res) => {
+				// console.log(res)
+				this.detail_shop = res.top -100
+			}).exec()
 		},
 		async onLoad(options){
 			
@@ -280,7 +347,6 @@
 				this.$api.msg(`点击了${id}`);
 			}
 			
-			
 			//规格 默认选中第一条
 			this.specList.forEach(item=>{
 				for(let cItem of this.specChildList){
@@ -289,10 +355,60 @@
 						this.specSelected.push(cItem);
 						break; //forEach不能使用break
 					}
-				}
+				} 
 			})
 		},
 		methods:{
+			goto_page(e){
+				this.com.navto(e)
+			},
+			//点击头部
+			head_nav_cli(e){
+				this.head_ind = e
+				let that = this
+				if(e == 0){
+					uni.pageScrollTo({
+					    scrollTop: 0,
+					    duration: 200
+					});
+				}else if(e == 1){
+					uni.pageScrollTo({
+					    scrollTop: that.pingl,
+					    duration: 200
+					});
+				}else if(e == 2){
+					uni.pageScrollTo({
+					    scrollTop: that.detail_shop,
+					    duration: 200
+					});
+				}else if(e == 3){
+					uni.pageScrollTo({
+					    scrollTop: that.tuij,
+					    duration: 200
+					});
+				}
+				
+			},
+			//轮播指示点
+			swiperChange(e) {
+				const index = e.detail.current;
+				this.swiperCurrent = index;
+			},
+			//点击轮播
+			banner_cli(){
+				let arr = [];
+				this.imgList.forEach(i=>{
+					arr.push(i.src)
+				})
+				 uni.previewImage({
+					urls: arr,
+					loop:true
+				});
+			},
+			//加购物车/购买
+			payment_yes(e){
+				
+			},
 			//返回上一页
 			goto_top(){
 				uni.navigateBack()
@@ -356,18 +472,49 @@
 	}
 </style>
 <style lang="scss" scoped>
+	
+	
 	page{
 		
 		padding-bottom: 160upx;
-		padding-top: 60rpx;
 	}
 	.header_bait{
-		width: 100%;height: 60rpx;background-color: white;
+		width: 100%;height: 150rpx;background-color: white;padding-top: 60rpx;
 		position: fixed;left: 0;top: 0;z-index: 99;
+		.toubu{
+			padding: 0 16rpx;
+			line-height: 100rpx;
+			display: flex;justify-content: space-between;
+			.center{
+				width: 60%;line-height: 78rpx;font-size: 32rpx;display: flex;
+				.center_it{
+					width: 25%;text-align: center;
+					position: relative;
+					&.active{
+						color: #2d407a;
+						&:before{
+							content: '';
+							position: absolute;
+							left: 22%;
+							bottom: 20%;
+							transform: translateY(-50%);
+							height: 7rpx;
+							width: 56%;
+							background-color: #2d407a;
+							border-radius: 0 4px 4px 0;
+							opacity: .8;
+						}
+					}
+				}
+			}
+			.head_share{
+				
+			}
+		}
 	}
 	.header{
 		width: 100%;height: 100rpx;display: flex;justify-content: space-between;padding: 0 4%;
-		position: absolute;left: 0;top: 66rpx;z-index: 20;
+		position: absolute;left: 0;top: 66rpx;z-index: 20; 
 		
 		.header_left{
 			text-align: center;padding-top: 12rpx;
@@ -382,6 +529,11 @@
 	.carousel {
 		height: 722upx;
 		position:relative;
+		.swiper-dots{
+			position: absolute;right: 30rpx;bottom: 20rpx;
+			background-color: rgba(0,0,0,0.4);display: inline-block;padding: 4rpx 18rpx 6rpx 18rpx;border-radius: 50rpx;
+			color: #fff;
+		}
 		swiper{
 			height: 100%;
 		}
@@ -402,11 +554,14 @@
 		}
 		
 	}
-	
+	.trabecula{
+		width: 100%;background-color: #1e2f65;height: 70rpx;color: #fff;line-height: 70rpx;
+		padding: 0 3%;
+	}
 	/* 标题简介 */
 	.introduce-section{
 		background: #fff;
-		padding: 20upx 30upx;
+		padding: 10rpx 30upx;
 		
 		.title{
 			font-size: 32upx;
@@ -415,20 +570,32 @@
 			line-height: 50upx;
 		}
 		.price-box{
-			display:flex;
+			display:flex;justify-content: space-between;
 			align-items:baseline;
-			height: 64upx;
-			padding: 10upx 0;
 			font-size: 26upx;
 			/* color:$uni-color-primary; */
+			.price-box_l{
+				padding-top: 20rpx;
+			}
+			.price-box_r{
+				width: 100rpx;text-align: center;
+				image{
+					width: 40rpx;height: 40rpx;
+				}
+				view{
+					font-size: 24rpx;
+				}
+			}
 		}
 		.price{
-			/* font-size: $font-lg + 2upx; */
+			font-size: 38rpx;font-weight: bold;
+			margin: 0 16rpx 0 14rpx; 
 		}
 		.m-price{
-			margin:0 12upx;
+			margin-left: 30rpx;
+			color: #e8372f;
 			/* color: $font-color-light; */
-			text-decoration: line-through;
+			// text-decoration: line-through;
 		}
 		.coupon-tip{
 			align-items: center;
@@ -451,104 +618,101 @@
 			}
 		}
 	}
-	
-	.c-list{
-		/* font-size: $font-sm + 2upx; */
-		/* color: $font-color-base; */
-		background: #fff;
-		.c-row{
-			display:flex;
-			align-items:center;
-			padding: 20upx 30upx;
-			position:relative;
+	.shop_names{
+		background-color: white;;overflow: hidden;line-height: 50rpx;font-size: 32rpx;font-weight: bold;
+		padding: 0 0 20rpx 3%;
+	}
+	.shopping_text{
+		background-color: white;background-color: #fff;padding: 0 3%;
+		.text-item{
+			font-weight: bold;display: flex;justify-content: space-between;background-color: #f6f8ff;line-height: 68rpx;
+			padding: 0 20rpx;color: #333;border-radius: 8rpx;
 		}
-		.tit{
-			width: 140upx;
+		.shop_introduce{
+			font-size: 28rpx;color: #333;line-height: 42rpx;padding: 10rpx 0;
 		}
-		.con{
-			flex: 1;
-			/* color: $font-color-dark; */
-			.selected-text{
-				margin-right: 10upx;
-			}
-		}
-		.bz-list{
-			height: 40upx;
-			/* font-size: $font-sm+2upx; */
-			/* color: $font-color-dark; */
-			text{
-				display: inline-block;
-				margin-right: 30upx;
-			}
-		}
-		.con-list{
-			flex: 1;
-			display:flex;
-			flex-direction: column;
-			/* color: $font-color-dark; */
-			line-height: 40upx;
-		}
-		.red{
-			/* color: $uni-color-primary; */
+		.Rapid_delivery{
+			color: #999;line-height: 70rpx;white-space: nowrap;
 		}
 	}
-	
+	// 规格
+	.specification{
+		width: 100%;display: flex;flex-wrap: wrap;font-size: 28rpx;margin: 20rpx 0;background-color: white;padding: 0 3%;
+		line-height: 70rpx;
+		.child{
+			width: 35%;white-space: nowrap;
+		}
+		.child:nth-child(3n+3){
+			width: 30%;white-space: nowrap;
+		}
+	}
 	/* 评价 */
 	.eva-section{
-		display: flex;
-		flex-direction: column;
+		
 		padding: 20upx 30upx;
 		background: #fff;
 		margin-top: 16upx;
-		.e-header{
-			display: flex;
-			align-items: center;
-			height: 70upx;
-			/* font-size: $font-sm + 2upx; */
-			/* color: $font-color-light; */
-			.tit{
-				/* font-size: $font-base + 2upx; */
-				/* color: $font-color-dark; */
-				margin-right: 4upx;
-			}
-			.tip{
-				flex: 1;
-				text-align: right;
-			}
-			.icon-you{
-				margin-left: 10upx;
-			}
-		}
-	}
-	.eva-box{
-		display: flex;
-		padding: 20upx 0;
-		.portrait{
-			flex-shrink: 0;
-			width: 80upx;
-			height: 80upx;
-			border-radius: 100px;
-		}
-		.right{
-			flex: 1;
-			display: flex;
-			flex-direction: column;
-			/* font-size: $font-base; */
-			/* color: $font-color-base; */
-			padding-left: 26upx;
-			.con{
-				/* font-size: $font-base; */
-				/* color: $font-color-dark; */
-				padding: 20upx 0;
-			}
-			.bot{
+		.section_title{
+			width: 100%;display: flex;justify-content: space-between;padding-bottom: 20rpx;
+			line-height: 44rpx;
+			.tit_l{
 				display: flex;
-				justify-content: space-between;
-				/* font-size: $font-sm; */
-				/* color:$font-color-light; */
+				text{
+					display: inline-block;width: 12rpx;height: 100%;background-image: linear-gradient(#445589,#fff);
+					margin-right: 16rpx;
+				}
+			}
+		}
+		.eva-box{
+			width: 100%;
+			.eval_con{
+				width: 100%;
+				display: flex;background-color: white;padding: 2%;
+				flex-wrap: wrap;border-bottom: 1rpx solid #f6f6f6;
+				.order_head{
+					width: 100%;
+					height: 80rpx;
+					display: flex;
+					justify-content: space-between;
+					.img{
+						display: flex;
+						image{
+							width: 80rpx;
+							height: 80rpx;border-radius: 80rpx;
+							// background-color: pink;
+						}
+						.shop_name{
+							width: 180rpx;line-height: 80rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+							font-size: 28rpx;margin-left: 20rpx; 
+							font-weight: bold;
+						}
+					}
+					.order_time{
+						width: 40%;
+						line-height: 70rpx;text-align: right;
+						font-size: 26rpx;
+						color: #999;
+					}
+				}
+				.order_con{
+					width: 100%;
+					font-size: 30rpx;
+					line-height: 52rpx;
+					padding: 6rpx 0;
+				}
+				.order_img{
+					width: 100%;
+					display: flex; 
+					image{
+						width: 216rpx;
+						height: 216rpx;
+						margin: 10rpx;
+					}
+				}
 			}
 		}
 	}
+	
 	/*  详情 */
 	.detail-desc{
 		background: #fff;
