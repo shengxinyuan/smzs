@@ -6,7 +6,7 @@
 					<view class="title">今日商城金价</view>
 					<view class="price">
 						<text class="rmb">￥</text>
-						<text class="money">636.8</text>
+						<text class="money">{{todayPrice}}</text>
 					</view>
 				</view>
 				<view class="head-box-right">
@@ -15,11 +15,11 @@
 						<radio-group @change="radioChange">
 							<view class="radio-box">
 								<label class="radio">
-									<radio value="r1" checked="true" :color="Color" :style="styleSize" />与采购系统同步</label>
+									<radio value="r1" checked="true" :color="Color" :style="styleSize" />{{radio01}}</label>
 							</view>
 							<view class="radio-box" @click="openPopup">
 								<label class="radio oneself-set">
-									<radio value="r2" :color="Color" :style="styleSize" />自己设置</label>
+									<radio value="r2" :color="Color" :style="styleSize" />{{radio02}}</label>
 							</view>
 						</radio-group>
 					</view>
@@ -28,7 +28,7 @@
 			<u-table class="table" font-size="26" padding="34upx 0" border-color="#f6f6f6">
 				<u-tr v-for="(tableItem,tableIndex) in tableList" :key="tableIndex">
 					<u-td>
-						<view class="table-td" @click="skipGoldPrices(tableItem)">
+						<view class="table-td" @click="skipGoldPrices01(tableItem)">
 							<view>{{tableItem.title01}}</view>
 							<view>
 								<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
@@ -36,7 +36,7 @@
 						</view>
 					</u-td>
 					<u-td>
-						<view class="table-td">
+						<view class="table-td" @click="skipGoldPrices02(tableItem)">
 							<view>{{tableItem.title02}}</view>
 							<view>
 								<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
@@ -53,11 +53,11 @@
 				<view class="popup-box-up">
 					<view class="popup-title">设置金价更新</view>
 					<view class="popup-set">
-						<view style="width: 80%;">
+						<view style="width: 78%;">
 							<view class="set-box">
 								<view class="set-title">浮动范围值：</view>
 								<view class="set-text">
-									<view>±</view>
+									<view class="text-one symbol">±</view>
 									<input class="input" :value="value01" type="number" />
 									<view>元</view>
 								</view>
@@ -65,7 +65,7 @@
 							<view class="set-box">
 								<view class="set-title">更 新 间 隔：</view>
 								<view class="set-text">
-									<view>每</view>
+									<view class="text-one">每</view>
 									<input class="input" :value="value02" type="number" />
 									<view>小时</view>
 								</view>
@@ -78,10 +78,10 @@
 				</view>
 				<view class="popup-box-down">
 					<view>
-						<text>
-							*浮动范围：当采购系统金价高于或低于您设置的数字是整数且不能小于1，商城金价将更新金价。
-							*更新间隔：按您设置的间隔时间更新金价，间隔时间必须是整数且不能小于1。
-						</text>
+						<text>{{explainText01}}</text>
+					</view>
+					<view>
+						<text>{{explainText02}}</text>
 					</view>
 				</view>
 			</view>
@@ -93,6 +93,9 @@
 	export default {
 		data() {
 			return {
+				todayPrice:'636.8',
+				radio01:'与采购系统同步',
+				radio02:'自己设置',
 				Color: '#f1ac29',
 				styleSize: 'transform:scale(0.7)',
 				tableList: [{
@@ -110,7 +113,8 @@
 					},
 					{
 						title01: '3D硬金倍率',
-						title02: '古法金倍率'
+						title02: '古法金倍率',
+						url02:'gold-ratio'
 					},
 					{
 						title01: '人气爆款倍率',
@@ -127,7 +131,9 @@
 				],
 				popupShow: false,
 				value01:'1',
-				value02:'2'
+				value02:'2',
+				explainText01:'*浮动范围：当采购系统金价高于或低于您设置的数字是整数且不能小于1，商城金价将更新金价。',
+				explainText02:'*更新间隔：按您设置的间隔时间更新金价，间隔时间必须是整数且不能小于1。'
 			}
 		},
 		methods: {
@@ -145,9 +151,14 @@
 			skipBackPage(){
 				this.popupShow = false
 			},
-			skipGoldPrices(tableItem){
+			skipGoldPrices01(tableItem){
 				uni.navigateTo({
 					url:tableItem.url01
+				})
+			},
+			skipGoldPrices02(tableItem){
+				uni.navigateTo({
+					url:tableItem.url02
 				})
 			}
 		}
@@ -257,7 +268,7 @@
 				margin-bottom: 30upx;
 
 				.set-title {
-					width: 40%;
+					width: 35%;
 					font-size: 26upx;
 					color: #575c5e;
 				}
@@ -268,9 +279,16 @@
 					color: #666666;
 					display: flex;
 					align-items: center;
+					
+					.text-one{
+						width: 10%;
+					}
+					.symbol{
+						font-size: 36upx;
+					}
 
 					.input {
-						width: 62%;
+						width: 60%;
 						height: 52upx;
 						margin: 0 10upx;
 						font-size: 28upx;

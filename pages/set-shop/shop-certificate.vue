@@ -66,7 +66,7 @@
 	}
 	
 	.zl-down{
-		padding: 30upx;
+		padding: 10upx 30upx;
 	}
 
 	.hang-sign-box {
@@ -75,6 +75,7 @@
 		align-items: center;
 		font-size: 28upx;
 		font-weight: bold;
+		margin-top: 20upx;
 
 		.hang-sign-switch {
 			display: flex;

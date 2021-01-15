@@ -1,7 +1,7 @@
 <template>
 	<view class="zl-page zl-box">
 		<view class="add-box">
-			<view class="add-min-box">
+			<view class="add-min-box" @click="skipAddAlipay">
 				<view class="add-btn one">
 					<u-icon class="icon jiahao" name="plus"></u-icon>
 				</view>
@@ -27,7 +27,11 @@
 			}
 		},
 		methods: {
-			
+			skipAddAlipay(){
+				uni.navigateTo({
+					url:'add-alipay'
+				})
+			}
 		}
 	}
 </script>

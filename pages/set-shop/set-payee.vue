@@ -7,7 +7,7 @@
 				</view>
 				<view class="weixin-title">微信收款码</view>
 			</view>
-			<view class="right">
+			<view class="right" @click="openPopup">
 				<view class="right-title">预览</view>
 				<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 			</view>
@@ -19,11 +19,29 @@
 				</view>
 				<view class="weixin-title">支付宝收款码</view>
 			</view>
-			<view class="right">
+			<view class="right" @click="skipAddPayeeCode">
 				<view class="add-title">去添加</view>
 				<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 			</view>
 		</view>
+		
+		<!-- 预览 弹出层 -->
+		<u-popup v-model="popupShow" mode="center" border-radius="10" :closeable="false" width="550" :zoom="false">
+			<view class="popup-box">
+				<view class="popup-up-box">
+					<view class="title">微信收款码</view>
+					<view class="right" @click="skipAddPayeeCode">
+						<text class="change">修改</text>
+						<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+					</view>
+				</view>
+				<view class="popup-down-box">
+					<view class="payee-code">
+						<image src="../../static/set-shop/skma.png" mode="widthFix"></image>
+					</view>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -31,11 +49,18 @@
 	export default {
 		data() {
 			return {
-
+				popupShow: false
 			}
 		},
 		methods: {
-
+			openPopup(){
+				this.popupShow = true
+			},
+			skipAddPayeeCode(){
+				uni.navigateTo({
+					url:'add-payee-code'
+				})
+			}
 		}
 	}
 </script>
@@ -94,6 +119,41 @@
 			.add-title{
 				font-size: 26upx;
 				color: #cccccc;
+			}
+		}
+	}
+	.popup-box{
+		
+		.popup-up-box{
+			height: 88upx;
+			padding: 0 30upx;
+			background-color: #F6F6F6;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.title{
+				font-size: 30upx;
+			}
+			.right{
+				.change{
+					font-size: 30upx;
+					color: #043843;
+					margin-right: 10upx;
+				}
+				.icon{
+					font-size: 30upx;
+					color: #cccccc;
+				}
+			}
+		}
+		.popup-down-box{
+			padding: 30upx;
+			.payee-code{
+				width: 100%;
+				display: flex;
+				image{
+					width: 100%;
+				}
 			}
 		}
 	}

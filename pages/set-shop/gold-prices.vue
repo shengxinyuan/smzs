@@ -42,7 +42,7 @@
 			</view>
 		</block>
 		<view class="explain">
-			<view class="explain-title">说明</view>
+			<view class="explain-title">{{explainTitle}}</view>
 			<view>
 				<view>
 					{{explain01}}
@@ -56,7 +56,7 @@
 			</view>
 		</view>
 		<view class="bottom-btn">
-			<button class="btn" @click="skipShopGoldPrice">保存</button>
+			<button class="btn" @click="skipShopGoldPrice">{{btnName}}</button>
 		</view>
 	</view>
 </template>
@@ -90,9 +90,11 @@
 						sumPrice02: '8.2'
 					}
 				],
+				explainTitle:'说明',
 				explain01:'1、倍率设置：APP端的批发拿货价x您设置的倍率=您的商城售价',
 				explain02:'2、XXX倍率修改后，本平台仍将显示您的拿货成本价格；',
-				explain03:'3、修改的倍率仅用于您的批发商商城'
+				explain03:'3、修改的倍率仅用于您的批发商商城',
+				btnName:'保存'
 			}
 		},
 		methods: {
@@ -241,14 +243,12 @@
 
 	.bottom-btn {
 		width: 100%;
-		padding: 0 30upx;
+		padding: 20upx 30upx;
 		position: fixed;
-		bottom: 20upx;
+		bottom: 0;
 		left: 0;
 
 		.btn {
-			height: 78upx;
-			line-height: 78upx;
 			font-size: 30upx;
 			color: #FFFFFF;
 			background-image: linear-gradient(90deg,
