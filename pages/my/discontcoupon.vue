@@ -7,32 +7,39 @@
 			</view>
 		</view>
 		<!-- 未使用 -->
-		<view v-if="current==0? true:false">
-			<view class="p2 common" v-for="it in unused">
-				<view class="i1">￥{{it.price}}</view>
+		<view v-if="current==0? true:false" style="padding: 3%;">
+			<view class="p2 common" v-for="it in 2">
+				<view class="i1">￥10
+				<view>满一百可用</view></view>
 				<view class="i2">
-					<view>优惠券满{{it.money}}使用</view>
-					<view>{{it.start_time}} 至 {{it.end_time}}</view>
+					<view>平台通用抵用券	</view>
+					<view>有效期：2020-12-12-2021-6-12</view>
+					<view>适用范围：黄金等贵金属可用</view>
 				</view>
+				
 			</view>
 		</view>
 		<!-- 已使用 -->
-		<view v-else-if="current==1? true:false">
-			<view class="p4 common" v-for="it in yishiy">
-				<view class="i1">￥{{it.price}}</view>
+		<view v-else-if="current==1? true:false" style="padding: 3%;">
+			<view class="p4 common" v-for="it in 3">
+				<view class="i1">￥10
+				<view>满一百可用</view></view>
 				<view class="i2">
-					<view>优惠券满{{it.money}}使用</view>
-					<view>{{it.start_time}} 至 {{it.end_time}}</view>
+					<view>平台通用抵用券	</view>
+					<view>有效期：2020-12-12-2021-6-12</view>
+					<view>适用范围：黄金等贵金属可用</view>
 				</view>
 			</view>
 		</view>
 		<!-- 已过期 -->
-		<view v-else>
-			<view class="p4 common" v-for="it in stale">
-				<view class="i1">已过期</view>
+		<view v-else style="padding: 3%;">
+			<view class="p4 common" v-for="it in 4">
+				<view class="i1">￥10
+				<view>满一百可用</view></view>
 				<view class="i2">
-					<view>优惠券满{{it.money}}使用</view>
-					<view>{{it.start_time}} 至 {{it.end_time}}</view>
+					<view>平台通用抵用券	</view>
+					<view>有效期：2020-12-12-2021-6-12</view>
+					<view>适用范围：黄金等贵金属可用</view>
 				</view>
 			</view>
 		</view>
@@ -105,33 +112,44 @@
 		}
 		.p2{
 			background: url(../../static/my/discount_coupon.png);
+			
 		}
 		.p4{
 			background: url(../../static/my/discount2.png);
+			background-size: 100% 100%;
 		}
 		.common{
-			margin: 20rpx 30rpx;
 			background-size: 100% 100%;
-			width: 690rpx;
+			width: 100%;
 			height: 195rpx;
 			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 0 102rpx 0 30rpx;
+			// justify-content: space-between;
+			// align-items: center;
+			padding: 0 30rpx;
+			margin: 15rpx 0;
 			box-sizing: border-box;
-			color: #fff;
+			
 			.i1{
-				font-size: 44rpx;
+				width: 38%;margin-top: 40rpx;
+				font-size: 44rpx; color: #fff;
+				view{
+					font-size: 28rpx;line-height: 60rpx;
+				}
 			}
 			.i2{
-				view:nth-child(2){
-					font-size: 40rpx;
+				margin-top: 38rpx;
+				
+				view:nth-child(1){
+					font-size: 34rpx;font-weight: bold;
 				}
 				view:nth-child(2){
-					margin-top: 45rpx;
-					font-size: 24rpx;
+					font-size: 26rpx;color: #999;line-height: 66rpx;white-space: nowrap;
+				}
+				view:nth-child(3){
+					font-size: 28rpx;color: #999;white-space: nowrap; 
 				}
 			}
+			
 		}
 	}
 </style>

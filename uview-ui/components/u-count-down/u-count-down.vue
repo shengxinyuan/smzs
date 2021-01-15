@@ -102,7 +102,7 @@ export default {
 		// 分隔符颜色
 		separatorColor: {
 			type: String,
-			default: "#303133"
+			default: "#fff"
 		},
 		// 字体颜色
 		color: {
@@ -284,6 +284,7 @@ export default {
 		display: inline-flex;		
 		/* #endif */
 		align-items: center;
+		
 	}
 
 	.u-countdown-item {
