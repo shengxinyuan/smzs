@@ -590,6 +590,25 @@
         ,{
             "path" : "components/zs-texture/zs-texture",
             "style" : {}
+			
+		},{
+            "path" : "pages/set-shop/add-payee-code",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加支付宝收款码",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/add-alipay",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加支付宝",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
         }
     ],
 	"globalStyle": {
