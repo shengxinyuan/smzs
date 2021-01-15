@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 自定义头部 -->
 		<view class="header" :style="{ 'background-color': backgroundColor }">
-			<view class="city">
+			<view class="city" @click="page_my">
 				<image src="../../static/logo.png" mode="aspectFill" class="city_a"></image>
 				<image src="../../static/userimg.png" mode="widthFix" class="city_b"></image>
 			</view>
@@ -72,7 +72,7 @@
 			</view>
 			<!-- 九宫格 -->
 			<view class="nine_g">
-				<view class="nine_g_child" v-for="(it,ind) in 8">
+				<view class="nine_g_child" v-for="(it,ind) in 8" :key="ind" @click="go_pages('./nine_nav')">
 					<view class="nine_g_child_tit">
 						黄金
 					</view>
@@ -101,7 +101,7 @@
 						<view 
 							v-for="(item, index) in 10" :key="index"
 							class="floor-item"
-							@click="navToDetailPage(item)"
+							@click="go_pages('./shop_detail')"
 						>
 							<image src="../../static/index/bann1.png" mode=""></image>
 							<view class="title">￥99.99</view>
@@ -113,7 +113,7 @@
 			<!-- 拼团 -->
 			<view class="seckill-section">
 				
-				<view class="s-header">
+				<view class="s-header" @click="go_pages('./group_book')">
 					<view class="s-header_a">
 						<image class="s-img" src="/static/roll.png" mode="widthFix"></image>
 						<view class="s-header_child">
@@ -126,10 +126,9 @@
 				</view>
 				<scroll-view class="floor-list" scroll-x>
 					<view class="scoll-wrapper">
-						<view 
-							v-for="(item, index) in 10" :key="index"
+						<view v-for="(item, index) in 10" :key="index"
 							class="floor-item"
-							@click="navToDetailPage(item)"
+							@click="go_pages('./shop_detail')"
 						>
 							<image src="../../static/index/bann1.png" mode=""></image>
 							<view class="title">￥99.99</view>
@@ -216,14 +215,12 @@
 		},
 		onPageScroll(e){
 			// console.log(e)
-			
-			if(e.scrollTop < 20){
+			this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')'
+			this.headcolor = 'rgba(0,0,0,'+e.scrollTop / 180 +')'
+			this.indexbackcolor = 'rgba(241,241,241,'+e.scrollTop / 180 +')'//导航栏搜索框背景色	
+			if(e.scrollTop < 40){
 				this.headcolor = '#fff'
 				this.indexbackcolor ='rgba(255,2555,255,0.28)'//导航栏搜索框背景色
-			}else{
-				this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')'
-				this.headcolor = 'rgba(0,0,0,'+e.scrollTop / 180 +')'
-				this.indexbackcolor = 'rgba(241,241,241,'+e.scrollTop / 180 +')'//导航栏搜索框背景色
 			}
 		},
 		// components: {uniNavBar},
@@ -234,6 +231,10 @@
 			
 		},
 		methods: {
+			//个人中心
+			page_my(){
+				this.com.rel('../my/my')
+			},
 			//页面跳转
 			go_pages(e){
 				this.com.navto(e)

@@ -119,6 +119,8 @@
 <style lang="scss" scoped>
 //筛选条件
 .head{
+	position: absolute;
+	left: 0;top: 0;
 	width: 100%;height: 88rpx;display: flex;background-color: #fff;color: #555555;
 	.head_left{
 		line-height: 88rpx;

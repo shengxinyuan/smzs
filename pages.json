@@ -56,6 +56,18 @@
 				"navigationBarTextStyle":"white"
 			}
 		},{
+			"path": "pages/index/nine_nav",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},{
+			"path": "pages/index/group_book",
+			"style": {
+				"navigationBarTitleText":"超值拼团",
+				"navigationBarBackgroundColor":"#e8372f",
+				"navigationBarTextStyle":"white"
+			}
+		},{
 			"path": "pages/login/login",
 			"style": {
 				// "navigationBarTitleText": "uni-app"
@@ -244,6 +256,12 @@
             "path" : "pages/my/goto_vip",
             "style" : {
 				"navigationBarTitleText":"立即加入"
+			}
+			
+        },{
+            "path" : "pages/my/logistr",
+            "style" : {
+				"navigationBarTitleText":"物流信息"
 			}
 			
         },{
@@ -568,6 +586,10 @@
 				"navigationBarBackgroundColor":"#FFFFFF"
             }
             
+        }
+        ,{
+            "path" : "components/zs-texture/zs-texture",
+            "style" : {}
         }
     ],
 	"globalStyle": {

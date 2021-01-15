@@ -246,7 +246,7 @@
 			<!-- 为您推荐 -->
 			<image class="tuij" src="../../static/my/tuijain_bgimg.png" mode=""></image>
 			<!-- 商品列表 -->
-			<view style="padding: 0 3%;">
+			<view style="padding: 0 3%;position: relative;padding-top: 80rpx;">
 				<!-- <zs-shopping-list></zs-shopping-list> -->
 				<zs-shoplist-type></zs-shoplist-type>
 			</view>

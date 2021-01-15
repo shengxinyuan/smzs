@@ -144,7 +144,7 @@
 					<u-icon name="kefu-ermai" color="#ccc" size="38" class="s_icon"></u-icon>
 					<view>客服</view>
 				</view>
-				<view class="three_icons" >
+				<view class="three_icons" @click="goto_cart">
 					<u-icon name="shopping-cart" color="#ccc" size="38" class="s_icon"></u-icon>
 					<view>购物车</view>
 				</view>
@@ -359,6 +359,11 @@
 			})
 		},
 		methods:{
+			//购物车
+			goto_cart(){
+				this.com.rel('../cart/cart')
+			},
+			
 			goto_page(e){
 				this.com.navto(e)
 			},
