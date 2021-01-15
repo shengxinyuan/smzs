@@ -13,17 +13,20 @@
 					<text class="sure" v-if="item.status == 50 && item.return_type == 2">已拒绝</text>
 					<text class="sure" v-if="item.status == 50 && item.return_type == 3">售后成功</text> -->
 				</view>
-				<view class="shop_list" v-if="item.data[0]" v-for="(its,ind) in item.data[0]">
-					<image v-if="its.goods" src="../../static/index/section.png" mode="aspectFill" @click="order_detail(item.id,10)"></image>
-					<view class="list_right" v-if="its.goods">
-						<view @click="order_detail(item.id)">
-							<view class="title">足金项链 环环相扣</view>
-							<view class="Specifications">金重：5.8g<text class="num"> 款号：0141448</text></view>
-							<view class="price">￥1888</view>
+				<view v-if="item.data[0]">
+					<view class="shop_list"  v-for="(its,ind) in item.data[0]">
+						<image v-if="its.goods" src="../../static/index/section.png" mode="aspectFill" @click="order_detail(item.id,10)"></image>
+						<view class="list_right" v-if="its.goods">
+							<view @click="order_detail(item.id)">
+								<view class="title">足金项链 环环相扣</view>
+								<view class="Specifications">金重：5.8g<text class="num"> 款号：0141448</text></view>
+								<view class="price">￥1888</view>
+							</view>
+							
 						</view>
-						
 					</view>
 				</view>
+				
 				<view class="around">
 					<view class="">
 						共{{item.count}}件商品

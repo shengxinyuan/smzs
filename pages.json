@@ -235,6 +235,12 @@
 			}
 			
         },{
+            "path" : "pages/my/payments",
+            "style" : {
+				"navigationStyle":"custom"
+			}
+			
+        },{
             "path" : "pages/my/goto_vip",
             "style" : {
 				"navigationBarTitleText":"立即加入"
