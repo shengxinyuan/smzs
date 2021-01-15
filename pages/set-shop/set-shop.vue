@@ -93,7 +93,7 @@
 			</view>
 		</view>
 		<view class="box-there">
-			<view class="zl-heads">
+			<view class="zl-heads" @click="skipSetPayee">
 				<view class="heads">
 					<text>收款设置</text>
 				</view>
@@ -101,7 +101,7 @@
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
-			<view class="zl-heads">
+			<view class="zl-heads" @click="skipSetWithdraw">
 				<view class="heads">
 					<text>提现设置</text>
 				</view>
@@ -167,6 +167,16 @@
 			skipShopGoldPrice(){
 				uni.navigateTo({
 					url:'shop-gold-price'
+				})
+			},
+			skipSetPayee(){
+				uni.navigateTo({
+					url:'set-payee'
+				})
+			},
+			skipSetWithdraw(){
+				uni.navigateTo({
+					url:'set-withdraw'
 				})
 			}
 		}
