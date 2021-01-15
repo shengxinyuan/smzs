@@ -529,6 +529,46 @@
             "path" : "components/zs-order-df/zs-order-df",
             "style" : {}
         }
+        ,{
+            "path" : "pages/set-shop/set-payee",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "收款设置",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/set-withdraw",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "提现设置",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/gold-prices",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "足金金价",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/gold-ratio",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "古法金倍率",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
