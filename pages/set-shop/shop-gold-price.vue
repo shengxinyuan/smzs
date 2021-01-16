@@ -63,7 +63,7 @@
 								</view>
 							</view>
 							<view class="set-box">
-								<view class="set-title">更 新 间 隔：</view>
+								<view class="set-title">更新间隔：</view>
 								<view class="set-text">
 									<view class="text-one">每</view>
 									<input class="input" :value="value02" type="number" />

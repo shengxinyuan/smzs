@@ -610,6 +610,55 @@
 				"navigationBarBackgroundColor":"#FFFFFF"
             }
         }
+        ,{
+            "path" : "pages/set-shop/add-bank-card",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加银行卡",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-shop/set-withdraws",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "提现设置",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/community/shop-code",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "店铺二维码",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/community/my-gold-prices",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "周大福珠宝",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/community/platform-gold-prices",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

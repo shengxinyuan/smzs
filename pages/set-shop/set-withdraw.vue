@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		<view class="add-box">
-			<view class="add-min-box two">
+			<view class="add-min-box two" @click="skipAddBankCard">
 				<view class="add-btn two">
 					<u-icon class="icon jiahao" name="plus"></u-icon>
 				</view>
@@ -30,6 +30,11 @@
 			skipAddAlipay(){
 				uni.navigateTo({
 					url:'add-alipay'
+				})
+			},
+			skipAddBankCard(){
+				uni.navigateTo({
+					url:'add-bank-card'
 				})
 			}
 		}

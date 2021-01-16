@@ -8,6 +8,10 @@
 			<u-tabs :list="list" :is-scroll="true" :current="current" @change="changeTabs" :height="height" :font-size="28"
 			 :bar-width="30" :bar-height="4" :active-color="activeColor" :bg-color="bgColor"></u-tabs>
 		</view>
+		<view style="padding: 0 3%;position: relative;padding-top: 80rpx;">
+			<!-- <zs-shopping-list></zs-shopping-list> -->
+			<zs-shoplist-type></zs-shoplist-type>
+		</view>
 	</view>
 </template>
 
