@@ -238,7 +238,7 @@
 					</view>
 				</view>
 				<!-- 店铺管理 -->
-				<zs-store-admin></zs-store-admin>
+				<zs-store-admin :skip='huiy_show'></zs-store-admin>
 				<!-- 综合管理 -->
 				<zs-synth-admin></zs-synth-admin>
 				
@@ -282,7 +282,7 @@
 		data() {
 			return {
 				backgroundColor:"",//导航背景
-				huiy_show:false,//会员状态
+				huiy_show:true,//会员状态
 				show:false,//我的邀请人
 				bgimage:'url(../../static/my/qiandao.png)',
 				qd_show:false,//popup组件显示
@@ -351,6 +351,7 @@
 			go_pages(e){
 				this.com.navto(e)
 			},
+			
 			//我的邀请人
 			my_yaoq(){
 				this.show = true

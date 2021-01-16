@@ -7,7 +7,7 @@
 				</view>
 			</view>
 			<view style="display: flex;flex-wrap: wrap;">
-				<view class="orders_it" v-for="(it,ind) in store_admin" :key="ind">
+				<view class="orders_it" v-for="(it,ind) in store_admin" :key="ind" @click="goto_vip_set(ind)">
 					<image :src="it.img" mode=""></image>
 					<view class="">
 						{{it.name}}
@@ -57,6 +57,40 @@
 					}
 				]
 			};
+		},
+		props:{
+			skip:{
+				type: Boolean,
+			}
+		},
+		methods:{
+			goto_vip_set(ind){
+				if(this.skip == true){
+					if(ind == 2){
+						this.com.navto('../../pages/set-shop/set-shop')
+					} else if(ind == 3){
+						this.com.navto('../../pages/community/shop-code')
+					} else if(ind == 5){
+						this.com.navto('../../pages/community/talk')
+					} else if(ind == 6){
+						this.com.navto('../../pages/community/community')
+					} else if(ind == 7){
+						this.com.navto('../../pages/selected-topics/selected-topics')
+					} else if(ind == 4){
+						this.com.navto('../../pages/community/my-gold-prices')
+					}
+				} else{
+					uni.showModal({
+						content:"你还不是VIP,是否开通?",
+						success(a) {
+							if(a.confirm){
+								this.com.navto('./vip_member')
+							}
+						}
+					})
+				}
+			
+			},
 		}
 	}
 </script>

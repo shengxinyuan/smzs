@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="swiper-box">
-			<u-swiper :list="list" mode="rect" height="400"></u-swiper>
+			<u-swiper :list="list" mode="rect" height="400" name="img" :title="true"></u-swiper>
 		</view>
 		<view class="yltk-bars-list">
 			<block v-for="(barsItem,barsIndex) in barsList" :key="barsIndex">
@@ -40,15 +40,15 @@
 		data() {
 			return {
 				list: [{
-						image: '../../static/community/shipin_01.png',
+						img: '../../static/community/shipin_01.png',
 						title: '拓客文章标题拓客文章标题拓客文章标题'
 					},
 					{
-						image: '../../static/community/shipin_02.png',
+						img: '../../static/community/shipin_02.png',
 						title: '拓客文章标题拓客文章标题拓客文章标题'
 					},
 					{
-						image: '../../static/community/shipin_01.png',
+						img: '../../static/community/shipin_01.png',
 						title: '拓客文章标题拓客文章标题拓客文章标题'
 					}
 				],

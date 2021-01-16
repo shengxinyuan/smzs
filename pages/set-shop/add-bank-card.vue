@@ -2,11 +2,11 @@
 	<view class="zl-box">
 		<view class="add-box">
 			<view class="add-min-box">
-				<view class="title">支付宝账号：</view>
+				<view class="title">银行卡账号：</view>
 				<input class="input" :value="valueId" type="text" :placeholder="placeholder01" />
 			</view>
 			<view class="add-min-box">
-				<view class="title">支付宝姓名：</view>
+				<view class="title">银行卡姓名：</view>
 				<input class="input" :value="valueName" type="text" :placeholder="placeholder02" />
 			</view>
 			<view class="add-min-box">
@@ -30,7 +30,7 @@
 		data() {
 			return {
 				valueId:'',
-				placeholder01:'请输入支付宝账号',
+				placeholder01:'请输入银行卡账号',
 				valueName:'',
 				placeholder02:'请输入账号真实姓名',
 				valueTelephone:'',
