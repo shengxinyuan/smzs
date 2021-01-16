@@ -66,6 +66,16 @@
 			this.loadData();
 		},
 		methods: {
+			//拍照
+			camear(){
+				uni.chooseImage({
+				    count: 6, //默认9
+				    sourceType: ['camera'], //从相册选择
+				    success: function (res) {
+				        console.log(JSON.stringify(res.tempFilePaths));
+				    }
+				}); 
+			},
 			//页面跳转
 			go_pages(e){
 				this.com.navto(e)

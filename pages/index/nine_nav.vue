@@ -1,7 +1,7 @@
 <template>
 	<view style="padding-top: 145rpx;">
 		<view class="header" >
-			<view class="header_l">
+			<view class="header_l" @click="gototop">
 				<u-icon name="arrow-left" size="50" color="#FFF"/>
 			</view>
 			<view class="input-view" >
@@ -16,10 +16,8 @@
 		</view>
 		<view class="contes">
 			
-			<view style="padding: 0 3%;">
 				<!-- <zs-shopping-list></zs-shopping-list> -->
 				<zs-shoplist-type></zs-shoplist-type>
-			</view>
 		</view>
 	</view>
 </template>
@@ -32,7 +30,10 @@
 			}
 		},
 		methods:{
-			
+			//上一页
+			gototop(){
+				uni.navigateBack({})
+			}
 		}
 	}
 </script>
@@ -73,8 +74,8 @@
 		position: fixed;left: 0;top: 145rpx;z-index: 888;
 	}
 	.contes{
+		width: 100%;
 		background-color: #F6F6F6;
-		padding-top: 80rpx;margin-top: 80rpx;padding-bottom: 60rpx;
-		position: relative;
+		margin-top: 80rpx;padding-bottom: 60rpx;
 	}
 </style>

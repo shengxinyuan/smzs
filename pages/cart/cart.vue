@@ -4,13 +4,15 @@
 			<view class="header_va">
 				购物车
 			</view>
-			<view class="rig" >
+			<view class="rig" @click="go_address">
 				 <u-icon name="map" size="36"></u-icon> 收货地址: 相城区德成嘉园广场十九楼万禾网络科技
 			</view>
 		</view>
+		<!-- 加载页 -->
 		<view  v-if="page_show">
 			<view class="cart_shopping">
-				<view v-if="cart_show">
+				<!-- 空状态 -->
+				<view v-if="!cart_show">
 					<view class="cart_shop_item" v-for="(it,ind) in 5" :key="ind">
 						<view class="cart_shop_item_child">
 							<view class="cart_shop_item_l">
@@ -65,7 +67,7 @@
 				</view>
 			</view>
 			<!-- 、、小结 -->
-			<view v-if="cart_show">
+			<view v-if="!cart_show">
 				<view class="js_canchu">
 					金料： 18748.00 工费：84.00 金重： 34.89g
 				</view>
@@ -106,7 +108,9 @@
 			}
 		},
 		methods: {
-
+			go_address(){
+				this.com.navto('../my/receiving')
+			}
 		}
 	}
 </script>

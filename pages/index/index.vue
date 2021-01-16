@@ -30,7 +30,7 @@
 				<view :class="swiperCurrent == ind ? 'bann_h_act' : 'bann_h'" v-for="(its,ind) in bann" :key="ind"></view>
 			</view>
 			<view class="trumpet">
-				<text><u-icon name="shopping-cart-fill" color="white" size="36"></u-icon></text>
+				<u-icon name="shopping-cart-fill" color="white" size="36"></u-icon>
 				<swiper class="swiper_three"  :autoplay="true" :circular="true" :interval="3000" :duration="100" disable-touch="true"><!-- 5000 4800 -->
 					
 					<swiper-item v-for="(it,ind) in 3" :key="ind">
@@ -103,7 +103,7 @@
 							class="floor-item"
 							@click="go_pages('./shop_detail')"
 						>
-							<image src="../../static/index/bann1.png" mode=""></image>
+							<image src="../../static/community/list_03.png" mode=""></image>
 							<view class="title">￥99.99</view>
 							<view class="price">￥{{ 99.8 }}</view>
 						</view>
@@ -115,7 +115,7 @@
 				
 				<view class="s-header" @click="go_pages('./group_book')">
 					<view class="s-header_a">
-						<image class="s-img" src="/static/roll.png" mode="widthFix"></image>
+						<image class="s-img" src="/static/roll.png" mode="aspectFill"></image>
 						<view class="s-header_child">
 							<text class="hour timer">物有所值</text>
 						</view>
@@ -130,7 +130,7 @@
 							class="floor-item"
 							@click="go_pages('./shop_detail')"
 						>
-							<image src="../../static/index/bann1.png" mode=""></image>
+							<image src="../../static/community/list_01.png" mode="aspectFill"></image>
 							<view class="title">￥99.99</view>
 							<view class="price">￥{{ 99.8 }}</view>
 						</view>
@@ -155,7 +155,7 @@
 			<!-- 精选专题 -->
 			<view class="choiceness">
 				<view class="choiceness_child">
-					<view class="choiceness_item" v-for="it in 4">
+					<view class="choiceness_item" v-for="(it,ind) in 4" :key="ind" @click="special_cli(ind)">
 						<image src="../../static/index/banner1.png" mode="aspectFill"></image>
 						<view class="item_tit">
 							定制专区
@@ -215,7 +215,7 @@
 		},
 		onPageScroll(e){
 			// console.log(e)
-			this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')'
+			this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')' 
 			this.headcolor = 'rgba(0,0,0,'+e.scrollTop / 180 +')'
 			this.indexbackcolor = 'rgba(241,241,241,'+e.scrollTop / 180 +')'//导航栏搜索框背景色	
 			if(e.scrollTop < 40){
@@ -245,6 +245,10 @@
 			},
 			// 搜索
 			search(){
+				
+			},
+			//拍照
+			camear(){
 				uni.chooseImage({
 				    count: 6, //默认9
 				    sourceType: ['camera'], //从相册选择
@@ -262,10 +266,17 @@
 				    }
 				});
 			},
-			//拍照
-			camear(){
-				 plus.camera.getCamera( index );
+			//专题点击
+			special_cli(e){
+				console.log(e)
+				//定制
+				if(e == 0){
+					this.com.navto('./customization')
+				}else{
+					this.com.navto('./Selected_topics')
+				}
 			},
+			
 			//轮播指示点
 			swiperChange(e) {
 				const index = e.detail.current;
