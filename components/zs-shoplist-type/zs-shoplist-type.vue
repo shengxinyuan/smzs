@@ -116,11 +116,14 @@
 	}
 </script>
 
+<style>
+	page{
+		background-color: #F6F6F6;
+	}
+</style>
 <style lang="scss" scoped>
 //筛选条件
 .head{
-	position: absolute;
-	left: 0;top: 0;
 	width: 100%;height: 88rpx;display: flex;background-color: #fff;color: #555555;
 	.head_left{
 		line-height: 88rpx;
@@ -159,7 +162,7 @@
 }
 
 .cont_list_two{
-	width: 100%;
+	width: 100%;padding: 0 3%;
 	.cont_item{
 		width: 100%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
@@ -217,7 +220,8 @@
 }
 .cont_list{
 	width: 100%;
-	display: flex;flex-wrap: wrap;
+	display: flex;flex-wrap: wrap;padding: 0 3%;
+	
 	.cont_item{
 		width: 49%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;

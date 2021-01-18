@@ -129,12 +129,12 @@
 		background-size: 100% 100%;
 		// box-shadow: 0 0 6upx rgba(0, 0, 0, 0.4);
 		color: $uni-text-color-inverse;
-		width: 130upx;
-		height: 130upx;
+		width: 120upx;
+		height:120upx;
 		border-radius: 50%;
 		font-size: $uni-font-size-sm;
 		position: fixed;
-		z-index: 999999;
+		z-index: 999;
 		
 		&.transition {
 			transition: left .3s ease,top .3s ease;

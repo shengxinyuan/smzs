@@ -39,7 +39,7 @@
 					<input type="text" :disabled="true"  placeholder="顺丰邮件必需实名认证,否则不能收件! ＞" />
 				</view>
 			</view>
-			<view class="item item-bd" v-if="address_id == 0 ? true : false">
+			<view class="item item-bd"> <!-- v-if="address_id == 0 ? true : false" -->
 				<text>设置默认地址</text>
 				<view class="right">
 					<switch :checked="address_mor==1?true:false" style="transform:scale(0.9)" @change="Change" color="#1e2f64" />

@@ -2,7 +2,7 @@
 	<!-- 我的地址 -->
 	<view class="content">
 		
-		<view class="conent_box" v-if="page_list.length != 0">
+		<view class="conent_box" v-if="list_show">
 			<u-swipe-action v-for="(it, index) in page_list" :key="it.id" :show="it.show" :index="index"
 			 class="address_box" @click="del(it.id)" @open="open" :options="options">
 				<view class="address_box_child">
@@ -48,7 +48,8 @@
 							backgroundColor: '#dd524d'
 						}
 					}
-				]
+				],
+				list_show:true
 			}
 		},
 		onShow() {
@@ -70,6 +71,11 @@
 					console.log(res)
 					if(res.status == 1){
 						this.page_list = res.data.data
+						if(res.data.data.length != 0){
+							this.list_show = true
+						}else{
+							this.list_show = false
+						}
 					}
 				})
 			},
