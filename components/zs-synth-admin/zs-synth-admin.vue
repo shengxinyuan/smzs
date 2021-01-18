@@ -25,7 +25,7 @@
 				store_admin:[
 					{
 						img:'../../static/my/app_share.png',
-						name:"我的店铺"
+						name:"app分享"
 					},
 					{
 						img:'../../static/my/Platform.png',
@@ -57,9 +57,9 @@
 		methods:{
 			go_page(e){
 				if(e==0){
-					
+					this.com.navto('../../pages/community/shop-code')
 				}else if(e==1){
-					
+					this.com.navto('../../pages/community/platform-ask')
 				}else if(e==2){
 					this.com.navto('../../pages/my/olie_course')
 				}else if(e==3){
@@ -69,7 +69,7 @@
 				}else if(e==5){
 					
 				}else if(e==6){
-					
+					this.com.navto('../../pages/community/platform-gold-prices')
 				}
 			}
 		}

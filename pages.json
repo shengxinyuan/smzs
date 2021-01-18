@@ -676,8 +676,39 @@
             "path" : "pages/community/platform-gold-prices",
             "style" :                                                                                    
             {
+                "navigationBarTitleText": "平台金价",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/shop-orders/shop-orders",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商城订单",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/community/platform-ask",
+            "style" :                                                                                    
+            {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"navigationStyle":"custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/shop-orders/order-submit-success",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单提交成功",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
             }
         }
         ,{

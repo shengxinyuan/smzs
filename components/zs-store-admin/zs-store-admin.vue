@@ -78,16 +78,18 @@
 						this.com.navto('../../pages/selected-topics/selected-topics')
 					} else if(ind == 4){
 						this.com.navto('../../pages/community/my-gold-prices')
-					}
-				} else{
-					uni.showModal({
-						content:"你还不是VIP,是否开通?",
-						success(a) {
-							if(a.confirm){
-								this.com.navto('./vip_member')
+					} else if(ind == 1){
+						this.com.navto('../../pages/shop-orders/shop-orders')
+					}else{
+						uni.showModal({
+							content:"你还不是VIP,是否开通?",
+							success(a) {
+								if(a.confirm){
+									this.com.navto('./vip_member')
+								}
 							}
-						}
-					})
+						})
+					}
 				}
 			
 			},
