@@ -9,7 +9,7 @@
 			 :bar-width="34" :bar-height="4" :active-color="activeColor" :style="{'border-radius':borderRadius}"></u-tabs>
 
 			<!-- 邮寄 -->
-			<view class="tabs-first-box" v-if="isShow01">
+			<view class="tabs-first-box" v-if="isShow01"> 
 				<!-- 邮寄地址 -->
 				<view class="first-box-one">
 					<view>

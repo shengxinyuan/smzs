@@ -12,7 +12,7 @@
 				</view>
 				<view class="head_left_child" :class="{active:heat_ind == 2}" v-else @click="shai_cli(2,1)">
 					价格
-					<u-icon name="arrow-down" ></u-icon>
+					<u-icon name="arrow-down" v-if="price_type == 1" ></u-icon>
 				</view>
 			</view>
 			<view class="head_right">
@@ -87,7 +87,7 @@
 				],
 				type:0,//商品列表
 				heat_ind: -1,// 导航
-				price_type:2
+				price_type:0
 			};
 		},
 		methods:{

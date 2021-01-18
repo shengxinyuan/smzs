@@ -25,7 +25,7 @@
 									</u-checkbox>
 								</u-checkbox-group>
 							</view>
-							<view class="cart_shop_item_c">
+							<view class="cart_shop_item_c" @click="go_shopdetail(1)">
 								<image src="../../static/index/bann1.png" mode="aspectFill"></image>
 							</view>
 							<view class="cart_shop_item_r">
@@ -110,7 +110,11 @@
 		methods: {
 			go_address(){
 				this.com.navto('../my/receiving')
-			}
+			},
+			//详情
+			go_shopdetail(e){
+				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
+			},
 		}
 	}
 </script>
@@ -185,7 +189,7 @@
 				margin: 0 10rpx;
 			}
 			.jis_butcolor{
-				padding: 0 40rpx;color: #fff;border-radius: 50rpx;
+				padding: 0 30rpx;color: #fff;border-radius: 50rpx;
 				margin-top: 15rpx;
 				height: 70rpx;
 				line-height: 70rpx;

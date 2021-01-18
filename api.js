@@ -1,4 +1,4 @@
-const commoneUrl  = "http://hbcw.nxm.wanheweb.com/api/"; //公共路径 
+const commoneUrl  = "http://zhuanshi.nxm.wanheweb.com/api/"; //公共路径 
 var that = this
 //post请求封装
 function postRequest(url,data){
@@ -48,7 +48,7 @@ function getRequest(url,data){
 				method:"GET",
 				dataType:'json',
 				header:{
-					'content-type': 'application/json','token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIhQCMkJSomIiwiYXVkIjoiIiwiaWF0IjoxNjEwMTgxMzc1LCJuYmYiOjE2MTAxODEzNzgsImV4cCI6MTYxMjE4MTM3NSwiZGF0YSI6eyJ1aWQiOjgwfX0.Gqm8XoBPZe1UgLyPGt_jtkEXMLiyglpsJ-XxPLXihCI'},
+					'content-type': 'application/json','token':uni.getStorageSync('token')},
 				success:function(res){
 					resolve(res.data);
 					if(res.data.message == 'token error'){

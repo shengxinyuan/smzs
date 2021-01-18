@@ -70,7 +70,7 @@
 			花月佳期 繁华如梦 足金黄金项链 吊坠 F22544454346348 45cm 约10克
 		</view>
 		<view class="shopping_text">
-			<view class="text-item">
+			<view class="text-item" v-if="!vip_type">
 				<view class="">
 					开通超级会员，预估额外省 <text style="color: #df3636;"> 886 </text>
 				</view>
@@ -173,7 +173,7 @@
 			<!-- 遮罩层 -->
 			<view class="mask"></view>
 			<view class="layer attr-content" @click.stop="stopPrevent">
-				<view class="a-t">
+				<!-- <view class="a-t">
 					<image src="https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg"></image>
 					<view class="right">
 						<text class="price">¥328.00</text>
@@ -185,22 +185,44 @@
 							</text>
 						</view>
 					</view>
-				</view>
+				</view> -->
 				<view v-for="(item,index) in specList" :key="index" class="attr-list">
 					<text>{{item.name}}</text>
 					<view class="item-list">
-						<text 
-							v-for="(childItem, childIndex) in specChildList" 
-							v-if="childItem.pid === item.id"
+						<text v-for="(childItem, childIndex) in specChildList" 
+							v-if="childItem.pid === item.id && childItem.pid !=3"
 							:key="childIndex" class="tit"
 							:class="{selected: childItem.selected}"
 							@click="selectSpec(childIndex, childItem.pid)"
 						>
 							{{childItem.name}}
 						</text>
+						
 					</view>
 				</view>
-				<button class="btn" @click="toggleSpec">完成</button>
+				<view v-for="(it, ind) in former" :key="ind" :class="{jactive:jg_ind == it.id}" class="jg_sty" @click="zhifu(it.id)">
+					<view class="jg_sty_t">
+						<view>
+							足金：{{it.type}}
+						</view>
+						<view>
+							金重：{{it.weight}}
+						</view>
+					</view>
+					<view>
+						NO编号：1541544
+					</view>
+					<view class="jg_sty_b">
+						<view>
+							附加工费：11.2
+						</view>
+						<view>
+							￥<text>2899.00</text>
+						</view>
+					</view>
+				</view>
+				<button class="btn" @click="shop_pay(1)" v-if="shop_type == 1">完成</button>
+				<button class="btn" @click="shop_pay(2)" v-else>加入购物车</button>
 			</view>
 		</view>
 		<!-- 分享 -->
@@ -212,6 +234,9 @@
 	export default{
 		data() {
 			return {
+				vip_type:true,//会员状态
+				shop_type:0,//按钮状态
+				jg_ind:-1,//
 				bgcolor:'',//背景色
 				opacity: 0,//透明度
 				head_ind:0,//头部样式
@@ -248,6 +273,10 @@
 					{	
 						id: 2,
 						name: '颜色',
+					},
+					{
+						id: 3,
+						name: '成色',
 					},
 				],
 				headlist:[
@@ -302,6 +331,27 @@
 						pid: 2,
 						name: '草木绿',
 					},
+					{
+						id: 10,
+						pid: 3,
+						name: '草木绿',
+						type:"条码：10185474",
+						weight:"1.530g"
+					},
+					{
+						id: 11,
+						pid: 3,
+						name: '草木绿',
+						type:"条码：10185474",
+						weight:"1.530g"
+					},
+					{
+						id: 12,
+						pid: 3,
+						name: '草木绿',
+						type:"条码：10185474",
+						weight:"1.530g"
+					},
 				],
 				pingl:0,//评论
 				tuij:0,//推荐
@@ -318,6 +368,19 @@
 				this.head_ind = 2
 			}else if(e.scrollTop == 0){
 				this.head_ind = 0 
+			}
+		},
+		computed:{
+			former(){
+				let arr = []
+				this.specChildList.forEach(i=>{
+					
+					if(i.pid == 3){
+						arr.push(i)
+						console.log(arr)
+					}
+				})
+				return arr
 			}
 		},
 		mounted() {
@@ -359,6 +422,16 @@
 			})
 		},
 		methods:{
+			//购买/加购物车
+			shop_pay(e){ //e  1是购买 2 加购物车
+				if(e == 1){
+					this.com.navto('../vip-confirm-order/vip-confirm-order')
+				}
+			},
+			//结果
+			zhifu(e){
+				this.jg_ind = e
+			},
 			//购物车
 			goto_cart(){
 				this.com.rel('../cart/cart')
@@ -385,8 +458,9 @@
 					uni.pageScrollTo({
 					    scrollTop: that.detail_shop,
 					    duration: 200
-					});
+					})
 				}else if(e == 3){
+					console.log(e)
 					uni.pageScrollTo({
 					    scrollTop: that.tuij,
 					    duration: 200
@@ -396,10 +470,10 @@
 			},
 			//轮播指示点
 			swiperChange(e) {
-				const index = e.detail.current;
-				this.swiperCurrent = index;
+				// console.log(e)
+				this.swiperCurrent = e.detail.current
 			},
-			//点击轮播
+			//点击轮播图放大
 			banner_cli(){
 				let arr = [];
 				this.imgList.forEach(i=>{
@@ -412,14 +486,15 @@
 			},
 			//加购物车/购买
 			payment_yes(e){
-				
+				this.shop_type = e
+				this.toggleSpec()
 			},
 			//返回上一页
 			goto_top(){
 				uni.navigateBack()
 			},
 			//规格弹窗开关
-			toggleSpec() {
+			toggleSpec(){
 				if(this.specClass === 'show'){
 					this.specClass = 'hide';
 					setTimeout(() => {
@@ -439,16 +514,17 @@
 				})
 
 				this.$set(list[index], 'selected', true);
-				//存储已选择
-				/**
-				 * 修复选择规格存储错误
-				 * 将这几行代码替换即可
-				 * 选择的规格存放在specSelected中
-				 */
+				// 存储已选择
+				// *
+				//  * 修复选择规格存储错误
+				//  * 将这几行代码替换即可
+				//  * 选择的规格存放在specSelected中
+				
 				this.specSelected = []; 
 				list.forEach(item=>{ 
 					if(item.selected === true){ 
 						this.specSelected.push(item); 
+						console.log(this.specSelected)
 					} 
 				})
 				
@@ -753,6 +829,8 @@
 	/* 规格选择弹窗 */
 	.attr-content{
 		padding: 10upx 30upx;
+		max-height: 70vh;
+		overflow-y: scroll;
 		.a-t{
 			display: flex;
 			image{
@@ -786,6 +864,36 @@
 			/* color: $font-color-base; */
 			padding-top: 30upx;
 			padding-left: 10upx;
+			
+		}
+		.jg_sty{
+			padding: 18rpx;
+			width: 100%;background-color: #eee;border-radius: 10rpx;margin: 16rpx 0;
+			border: 1rpx solid #eee;
+			&.jactive{
+				background-color: #f6f8ff;border: 1rpx solid #263974;
+			}
+			.jg_sty_t{
+				display: flex;
+				view{
+					margin: 10rpx;width: 50%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+				}
+				view:nth-child(1){
+					margin: 10rpx 0;
+				}
+			}
+			.jg_sty_b{
+				display: flex;justify-content: space-between;
+				view{
+					margin-top: 10rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+				}
+				view:nth-child(2){
+					color: #ef2d2d;
+					text{
+						font-size: 34rpx;font-weight: bold;
+					}
+				}
+			}
 		}
 		.item-list{
 			padding: 20upx 0 0;
@@ -801,13 +909,13 @@
 				border-radius: 100upx;
 				min-width: 60upx;
 				height: 60upx;
-				padding: 0 20upx;
+				padding: 0 40upx;
 				/* font-size: $font-base; */
 				/* color: $font-color-dark; */
 			}
 			.selected{
-				background: #fbebee;
-				/* color: $uni-color-primary; */
+				background: #f6f8ff;border: 2rpx solid #2d407a;
+				color: #2d407a;
 			}
 		}
 	}
@@ -850,18 +958,16 @@
 			background-color: rgba(0, 0, 0, 0.4);
 		}
 		.layer {
-			position: fixed;
-			z-index: 99;
-			bottom: 0;
+			position: fixed;z-index: 99;bottom: 0;
 			width: 100%;
-			min-height: 40vh;
+			
 			border-radius: 10upx 10upx 0 0;
 			background-color: #fff;
 			.btn{
-				height: 66upx;
+				height: 66upx;width: 91%;
 				line-height: 66upx;
 				border-radius: 100upx;
-				/* background: $uni-color-primary; */
+				background: #273b76;
 				/* font-size: $font-base + 2upx; */
 				color: #fff;
 				margin: 30upx auto 20upx;

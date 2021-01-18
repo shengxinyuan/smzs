@@ -73,7 +73,7 @@
 				}else if(e == 4){
 					
 				}else if(e == 5){
-					
+					this.com.navto('../../pages/my/aboutus')
 				}else if(e == 6){ 
 					this.com.navto('./fankui')
 				}else if(e == 99){ //实名认证

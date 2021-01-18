@@ -65,7 +65,7 @@
 				}else if(e==3){
 					this.com.navto('../../pages/my/fankui')
 				}else if(e==4){
-					
+					this.com.navto('../../pages/my/aboutus')
 				}else if(e==5){
 					
 				}else if(e==6){

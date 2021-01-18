@@ -3,27 +3,30 @@
 		<view style="width: 100%;">
 			<view class="title">注册</view>
 			<view class="write">
-				<input type="text" value="" placeholder="输入手机号" maxlength="11"/>
+				<input type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
 			</view>
 			<view class="write">
-				<input type="text" value="" placeholder="输入验证码"/>
-				<text class="give">获取验证码</text>
+				<input type="text" v-model="code" placeholder="输入验证码"/>
+				<text class="give" v-if="code_show" @click="acquireCode">{{code_tit}}</text>
+				<text style="margin-right: 20rpx;" v-else>{{ time }}s</text>
 			</view>
 			<view class="write">
-				<input type="text" value="" placeholder="输入密码"/>
+				<input type="text" v-model="pass" placeholder="输入密码"/>
 			</view>
 			<view class="write">
-				<input type="text" value="" placeholder="输入邀请码"/>
+				<input type="text" v-model="invcode" placeholder="输入邀请码"/>
 			</view>
 			<view class="write">
 				所在地区 <view class="choose" @click="show = true">{{regions}}<u-icon name="arrow-right" color="#999" size="38"></u-icon></view>
 			</view>
 			<u-picker v-model="show" mode="region" :params="params" @confirm="yes_addres" cancel-text="所在地区"></u-picker>
-			<view class="login_s">登录</view>
+			
+			<view class="login_s" @click="app_register">注册</view>
+			
 			<view class="agreement">
 				<u-checkbox-group class="radio">
 					<u-checkbox size="45" shape="circle" v-model="checked"  active-color="#1E3066"></u-checkbox>
-					阅读并同意<text>《平台服务政策》</text>及<text>《隐私政策》</text>
+					阅读并同意<text @click="agreement(1)">《平台服务协议》</text>及<text @click="agreement(0)">《隐私政策》</text>
 				</u-checkbox-group>
 			</view>
 			<view class="three_s">
@@ -54,11 +57,71 @@
 				city:'',//市
 				area:'',//区
 				checked:false,
+				phone:'',
+				code:'',
+				pass:'',//密码
+				invcode:'',//邀请码
+				code_tit:'获取验证码',
+				time:60,
+				code_show:true,//提示语显示
 			}
 		},
 		onLoad() {
 		},
 		methods:{
+			//获取验证码
+			acquireCode(){
+				if(this.phone == '' || !(/^1[3456789]\d{9}$/).test(this.phone)){
+					this.com.msg('请检查手机号')
+				}else{
+					this.time = 60
+					this.code_show = false
+					let setInt = setInterval(()=>{
+						if(this.time ==0){
+							this.code_tit = "再次获取"
+							this.code_show = true
+						}else{
+							this.time -=1
+						}
+					},1000)
+					this.$api.get('messagecode',{mobile:this.phone}).then(res=>{
+						console.log(res)
+					})
+				}
+				
+			},
+			app_register(){
+				let data = {
+					mobile:this.phone,
+					password:this.pass,
+					note:this.code,
+					bn:this.invcode,
+					province:this.province,
+					city:this.city,
+					area:this.area
+				}
+				if(this.checked == false){
+					this.com.msg('请阅读并同意下方协议')
+				}else{
+					this.$api.post('register',data).then(res=>{
+						console.log(res)
+						if(res.state == 1){
+							this.com.msg('注册成功')
+							this.com.two_back()
+						}else{
+							this.com.msg(res.message)
+						}
+					})
+				}
+			},
+			//协议
+			agreement(e){
+				if(e==1){
+					this.com.navto("./fuwu")
+				}else{
+					this.com.navto("./yinsi")
+				}
+			},
 			//选择所在地区地区
 			yes_addres(e){
 				this.province = e.province.label

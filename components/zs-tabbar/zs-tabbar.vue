@@ -17,12 +17,12 @@
 					</view>
 				</view>
 			</view>
-			<view class="tab_c" @click="cli_tab(3)">
+			<view class="tab_c" @click="cli_tab(3)"> 
 				<view class="tab_c_child">
 					<image src="../../static/tabbar/shopsale.png" mode=""></image>
-					<view :class="tab_ind == 3 ? 'act_s' : ''">
+					<!-- <view :class="tab_ind == 3 ? 'act_s' : ''">
 						福利商城
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<view class="tab_l">
@@ -64,7 +64,8 @@
 				}else if(e==2){
 					this.com.rel("../../pages/classify/classify")
 				}else if(e==3){
-					this.com.rel("../../pages/selts/selts")
+					this.com.msg('敬请期待~')
+					// this.com.rel("../../pages/selts/selts")
 				}else if(e==4){
 					this.com.rel("../../pages/cart/cart")
 				}else if(e==5){
@@ -81,7 +82,7 @@
 		position: fixed;left: 0;bottom: 0;
 		width: 100%;height: 110rpx;
 		background: url(../../static/tabbar/backimg.png);
-		background-size: 100%;
+		background-size: 100% 100%;
 		display: flex;
 		.tab_l{
 			padding: 26rpx 20rpx 6rpx 10rpx;
@@ -105,7 +106,7 @@
 			.tab_c_child{
 				position: absolute;left: 5rpx ;top: -30rpx;
 				image{
-					width: 100rpx;height: 98rpx;
+					width: 100rpx;height: 98rpx;border-radius: 50%;
 				}
 			}
 			

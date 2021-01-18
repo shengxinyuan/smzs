@@ -172,14 +172,18 @@
 			</scroll-view>
 			<view class="classify">
 				<view class="classify_l">
-					综合排序
+					<u-dropdown>
+						<u-dropdown-item v-model="value1" title="综合排序" :options="options1"></u-dropdown-item>
+						
+					</u-dropdown>
 				</view>
 				<view class="classify_c">
 					全部分类
 				</view>
 				<view class="classify_r">
 					<zs-classifytype></zs-classifytype>
-				</view>
+				</view> 
+				
 			</view>
 			<!-- 商品列表 -->
 			<zs-shopping-list></zs-shopping-list>
@@ -210,7 +214,21 @@
 				end_time:'1611912417',//秒杀到期
 				end_seckill:'00天00:00:00',//倒计时
 				nav_ind:0,//导航
-				show:true
+				show:true,
+				value1: 1,
+				options1: [{
+						label: '默认排序',
+						value: 1,
+					},
+					{
+						label: '距离优先',
+						value: 2,
+					},
+					{
+						label: '价格优先',
+						value: 3,
+					}
+				],
 			}
 		},
 		onPageScroll(e){
@@ -350,6 +368,9 @@
 	.classify{
 		width: 100%;height: 90rpx;line-height: 90rpx;
 		display: flex;justify-content: space-between;
+		.classify_l{
+			width: 35%;z-index: 22;
+		}
 	}
 	@import './index.scss'
 	

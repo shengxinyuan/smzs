@@ -1,22 +1,78 @@
 <template>
 	<view class="forget">
 		<view style="width: 100%;">
-			<view class="phone">
+			<view class="phone" v-if="type == 2">
 				账号：156 4785 4568
 			</view>
 			<view class="write">
-				<input type="text" value="" placeholder="输入手机号" maxlength="11"/>
+				<input type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
+			</view>
+			<view class="write">
+				<input type="text" v-model="note" placeholder="输入验证码"/>
+				<text class="give" v-if="code_show" @click="acquireCode">{{code_tit}}</text>
+				<text style="margin-right: 20rpx;" v-else>{{ time }}s</text>
 			</view>
 			<view class="write" style="border: none;">
-				<input type="text" value="" placeholder="输入验证码"/>
-				<text class="give">获取验证码</text>
+				<input type="text" v-model="pass" placeholder="输入新密码"/>
 			</view>
-			<view class="login_s">确定</view>
+			<view class="login_s" @click="changepassword">确定</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	export default{
+		data(){
+			return{
+				type:0,//1 登录跳 2 个人跳
+				phone:'',
+				pass:'',
+				note:'',
+				code:"",//获取到的验证码
+				code_tit:'获取验证码',
+				time:60,
+				code_show:true,//提示语显示
+			}
+		},
+		onLoad(op) {
+			this.type = op.type
+		},
+		methods:{
+			//获取验证码
+			acquireCode(){
+				if(this.phone == '' || !(/^1[3456789]\d{9}$/).test(this.phone)){
+					this.com.msg('请检查手机号')
+				}else{
+					this.time = 60
+					this.code_show = false
+					let setInt = setInterval(()=>{
+						if(this.time ==0){
+							this.code_tit = "再次获取"
+							this.code_show = true
+						}else{
+							this.time -=1
+						}
+					},1000)
+					this.$api.get('messagecode',{mobile:this.phone}).then(res=>{
+						console.log(res)
+					})
+				}
+				
+			},
+			//修改
+			changepassword(){
+				let data = {
+					mobile:this.phone,
+					password:this.pass,
+					note:this.note
+				}
+				this.$api.post('changepassword',data).then(res=>{
+					console.log(res)
+					this.com.msg(res.message)
+				})
+			}
+		}
+	}
 </script>
 
 <style lang="scss" scoped>
