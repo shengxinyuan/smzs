@@ -78,6 +78,11 @@
 						this.com.navto('../../pages/selected-topics/selected-topics')
 					} else if(ind == 4){
 						this.com.navto('../../pages/community/my-gold-prices')
+					} else if(ind == 1){
+						this.com.navto('../../pages/shop-orders/shop-orders')
+						uni.navigateTo({
+							url:''
+						})
 					}
 				} else{
 					uni.showModal({

@@ -1,0 +1,56 @@
+<template>
+	<view>
+		<view class="submit-success-box-one">
+			<view class="one-title">订单提交成功~</view>
+			<view class="orders-number">
+				<view>订单编号：2010101054086116</view>
+				<view class="copy">复制</view>
+			</view>
+		</view>
+		<view class="submit-success-box-two">
+			<view class="two-title">支付金额</view>
+			<view class="prices">
+				<text class="rmb">￥</text>
+				<text class="integer">2117</text>
+				<text class="fractional-part">.00</text>
+			</view>
+		</view>
+		<view class="submit-success-box-there">
+			<view>
+				<image src="../../static/shop-orders/wxzf.png" mode="widthFix"></image>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style lang="scss">
+	.prices {
+		color: #ea3a4a;
+	
+		.rmb {
+			font-size: 32upx;
+		}
+	
+		.integer {
+			font-size: 48upx;
+			font-weight: bold;
+		}
+	
+		.fractional-part {
+			font-size: 32upx;
+		}
+	}
+</style>
