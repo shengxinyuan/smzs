@@ -78,18 +78,18 @@
 						</view>
 					</view>
 					<view class="posi_hy_it">
-						<view class="">
+						<view class="" @click="skipSetShop">
 							<image class="imagea" src="../../static/my/dianpu.png" mode=""></image>店铺管理
 						</view>
-						<view class="">
+						<view class="" @click="skipShopGoldPrice">
 							商城金价 <u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
 					<view class="posi_hy_it">
-						<view class="">
+						<view class="" @click="skipTalk">
 							<image class="imagea" src="../../static/my/dianpu.png" mode=""></image>引流拓客
 						</view>
-						<view class="">
+						<view class="" @click="skipCommunity">
 							社区营销<u-icon name="arrow-right" color="#606c90"></u-icon>
 						</view>
 					</view>
@@ -404,9 +404,27 @@
 				        console.log('success');
 				    }
 				});
+			},
+			skipSetShop(){
+				uni.navigateTo({
+					url:'../set-shop/set-shop'
+				})
+			},
+			skipShopGoldPrice(){
+				uni.navigateTo({
+					url:'../set-shop/shop-gold-price'
+				})
+			},
+			skipTalk(){
+				uni.navigateTo({
+					url:'../community/talk'
+				})
+			},
+			skipCommunity(){
+				uni.navigateTo({
+					url:'../community/community'
+				})
 			}
-			
-			
 		}
 	}
 </script>

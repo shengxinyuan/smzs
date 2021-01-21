@@ -82,7 +82,7 @@
 					</u-checkbox-group>
 					<view class="jis_right">
 						<view style="color: #999;"><!-- <u-icon name="trash" size="40"></u-icon> -->删除选中</view>
-						<view class="jis_butcolor">去结算</view>
+						<view class="jis_butcolor" @click="skipVipConfirmOrder">去结算</view>
 					</view>
 				</view>
 			</view>
@@ -115,6 +115,11 @@
 			go_shopdetail(e){
 				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
 			},
+			skipVipConfirmOrder(){
+				uni.navigateTo({
+					url:'../vip-confirm-order/vip-confirm-order'
+				})
+			}
 		}
 	}
 </script>

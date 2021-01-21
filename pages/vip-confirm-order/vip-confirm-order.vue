@@ -182,7 +182,7 @@
 						<view>金币抵扣</view>
 						<view>-￥{{goldBuckle}}</view>
 					</view>
-					<view class="first-box-six-min-v">
+					<view class="first-box-six-min-v" @click="skipDiscountSelect">
 						<view>优惠券</view>
 						<view class="min-v-right">
 							<view class="min-v-text">￥{{coupon}}</view>
@@ -540,6 +540,11 @@
 			skipAddedServices(){
 				uni.navigateTo({
 					url:'added-services'
+				})
+			},
+			skipDiscountSelect(){
+				uni.navigateTo({
+					url:'../my/discount_select'
 				})
 			}
 		}
