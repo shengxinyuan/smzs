@@ -140,7 +140,7 @@
  			padding: 0 25rpx 0 35rpx;
  			background-color: #fff;color: #999999;
  			text-align: center;
-			// position: fixed;left: 0;top: 0;z-index: 20;
+			position: fixed;left: 0;top: 0;z-index: 20;
  			.title {
  				font-size: 30rpx;color: #000000;
  				font-weight: bold;

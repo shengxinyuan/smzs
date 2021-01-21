@@ -17,28 +17,25 @@
 					<u-icon name="volume-fill" size="30"></u-icon>
 					100金币=1元，可用金币抵扣指定商品类型订单金额。
 				</view>
-				<image src="../../static/go.png" mode="" @click="go_page('../selts/selts')"></image>
+				<!-- <image src="../../static/go.png" mode="" @click="go_page('../selts/selts')"></image> -->
 			</view>
 		</view>
 		<image class="gold_statimg" src="../../static/my/gold_statis.png" mode=""></image>
 		<view class="list">
-			<view class="lsit_item" v-for="(it,ind) in 5" :key="ind">
+			<view class="lsit_item" v-for="(it,ind) in golds.data" :key="ind">
 				<view class="it_l">
-					<view class="it_l_top"  v-if="ind % 2 == 1">
-						签到
-					</view>
-					<view class="it_l_top" v-else>
-						购买商品
+					<view class="it_l_top">
+						{{it.title}}
 					</view>
 					<view class="it_l_but">
-						2021-1-13 08：49：50
+						{{it.create_time}}
 					</view>
 				</view>
-				<view class="it_r" :class="{act:ind % 2 == 1}" v-if="ind % 2 == 1">
-					+10金币
+				<view class="it_r" :class="{act:it.type == 1}" v-if="it.type == 1">
+					+{{it.gold}}金币
 				</view>
 				<view class="it_r" v-else>
-					-50金币
+					-{{it.gold}}金币
 				</view>
 			</view>
 		</view>
@@ -50,7 +47,8 @@
 		data(){
 			return{
 				background:'',
-				num:299990
+				num:299990,
+				golds:''
 			}
 		},
 		onPageScroll(e) {
@@ -59,10 +57,10 @@
 		},
 		computed:{
 			num_s(){
-				let arr = this.num
+				let arr = this.golds.gold
 				let att =0
-				if(this.num >= 100000){ 
-					att =this.num /10000
+				if(this.golds.gold >= 100000){ 
+					att =this.golds.gold /10000
 					arr = Math.floor(att * 100) / 100 
 					return arr+'万'
 				}else{
@@ -71,7 +69,18 @@
 				
 			},
 		},
+		onLoad() {
+			this.page_reader()
+		},
 		methods:{
+			page_reader(){
+				this.$api.get('gold').then(res=>{
+					console.log(res)
+					if(res.status==1){
+						this.golds = res.data
+					}
+				})
+			},
 			//页面跳转
 			go_page(e){
 				this.com.rel(e)

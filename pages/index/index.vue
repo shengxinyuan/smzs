@@ -22,20 +22,19 @@
 		<!-- banner部分 -->
 		<view class="page_cont">
 			 <swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500">
-				<swiper-item v-for="(it,ind) in bann" :key="ind">
-					<image :src="it.a" mode="aspectFill"></image>
+				<swiper-item v-for="(it,ind) in index_data.flash" :key="ind">
+					<image :src="it.image" mode="aspectFill"></image>
 				</swiper-item>
 			</swiper>
 			<view class="swiper-dots">
-				<view :class="swiperCurrent == ind ? 'bann_h_act' : 'bann_h'" v-for="(its,ind) in bann" :key="ind"></view>
+				<view :class="swiperCurrent == ind ? 'bann_h_act' : 'bann_h'" v-for="(its,ind) in index_data.flash" :key="ind"></view>
 			</view>
 			<view class="trumpet">
 				<u-icon name="shopping-cart-fill" color="white" size="36"></u-icon>
 				<swiper class="swiper_three"  :autoplay="true" :circular="true" :interval="3000" :duration="100" disable-touch="true"><!-- 5000 4800 -->
 					
-					<swiper-item v-for="(it,ind) in 3" :key="ind">
-						
-						是嘎达嘎：电话跨服哈哈收到回话规划{{ind}}
+					<swiper-item v-for="(it,ind) in index_data.order" :key="ind">
+						{{it.member}}：{{it.title}}
 					</swiper-item>
 				</swiper>
 				
@@ -72,9 +71,9 @@
 			</view>
 			<!-- 九宫格 -->
 			<view class="nine_g">
-				<view class="nine_g_child" v-for="(it,ind) in 8" :key="ind" @click="go_pages('./nine_nav')">
+				<view class="nine_g_child" v-for="(it,ind) in index_data.label" :key="ind" @click="go_pages('./nine_nav')">
 					<view class="nine_g_child_tit">
-						黄金
+						{{it.title}}
 					</view>
 					<!-- <view class="nine_g_child_cla">
 						高保值 更安全
@@ -85,7 +84,7 @@
 			<!-- 活动专区 -->
 			<view class="seckill-section">
 				<zs-title :title="'活动专区'" :page_show="true"></zs-title>
-				<view v-if="true">
+				<view v-if="index_data.type_seconds_kill ==1">
 					<view class="s-header" @click="go_pages('./seckill')">
 						<view class="s-header_a" > 
 							<image class="s-img" src="/static/xians_seckill.png" mode="widthFix"></image>
@@ -100,18 +99,19 @@
 					<scroll-view class="floor-list" scroll-x>
 						<view class="scoll-wrapper">
 							<view 
-								v-for="(item, index) in 10" :key="index"
+								v-for="(item, index) in index_data.kill.data" :key="index"
 								class="floor-item"
 								@click="go_pages('./shop_detail')"
 							>
 								<image src="../../static/community/list_03.png" mode=""></image>
-								<view class="title">￥99.99</view>
-								<view class="price">￥{{ 99.8 }}</view>
+								<view class="title">￥{{item.price}}</view>
+								<view class="price">￥{{ item.price_make }}</view>
 							</view>
 						</view>
 					</scroll-view>
 				</view>
-				<view >
+				<!-- 团购 -->
+				<view v-if="index_data.type_group ==1">
 					<view class="s-header" @click="go_pages('./group_book')">
 						<view class="s-header_a">
 							<image class="s-img" src="/static/roll.png" mode="widthFix"></image>
@@ -125,13 +125,13 @@
 					</view>
 					<scroll-view class="floor-list" scroll-x>
 						<view class="scoll-wrapper">
-							<view v-for="(item, index) in 10" :key="index"
+							<view v-for="(item, index) in index_data.group" :key="index"
 								class="floor-item"
 								@click="go_pages('./shop_detail')"
 							>
 								<image src="../../static/community/list_01.png" mode="aspectFill"></image>
-								<view class="title">￥99.99</view>
-								<view class="price">￥{{ 99.8 }}</view>
+								<view class="title">￥{{item.price}}</view>
+								<view class="price">￥{{ item.price_make }}</view>
 							</view>
 						</view>
 					</scroll-view>
@@ -143,13 +143,13 @@
 			<view class="seckill-section_mz">
 				<zs-title :title="'每周上新'"></zs-title>
 				<swiper class="swiper_two" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500">
-					<swiper-item v-for="(it,ind) in bann" :key="ind">
-						<image :src="it.a" mode="aspectFill"></image>
+					<swiper-item v-for="(it,ind) in index_data.news" :key="ind">
+						<image :src="it.image" mode="aspectFill"></image>
 						<view class="swiper_item_tit">
-							千足金 生肖手链转运牛年限定 牛转乾坤
+							{{it.title}}
 						</view>
 						<view class="swiper_item_cont">
-							可爱卡通风格，元气满满 的话噶时光法定股本比较常见之间相互补充的话噶时光法定股本比较常见之间相互补充的话噶时光法定股本比较常见之间相互补充
+							<u-parse :html="it.content"></u-parse>
 						</view>
 					</swiper-item>
 				</swiper>
@@ -170,7 +170,10 @@
 			</view>
 			<!-- 筛选 -->
 			 <scroll-view class="scroll-view_H" scroll-x="true" >
-				<view id="demo1" class="nav_swiper" :class="{active: ind == nav_ind }" @click="nac_cla(ind)" v-for="(it,ind) in 8" :key="ind">爆款</view>
+				<view id="demo1" class="nav_swiper" :class="{active: it.id == nav_ind }" @click="nac_cla(it.id)"
+					v-for="(it,ind) in index_data.cates" :key="ind">
+					{{it.title}}
+				</view>
 			</scroll-view>
 			
 			<!-- 商品列表 -->
@@ -178,7 +181,7 @@
 			
 		</view>
 		<view class="classify">
-			<zs-shoplist-type  ></zs-shoplist-type>
+			<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="nav_ind" @shop_confim="shop_confim"></zs-shoplist-type>
 			
 		</view>
 		 <drag-button :isDock="true" :existTabBar="true" @btnClick="btnClick" />
@@ -204,24 +207,14 @@
 				backgroundColor:'',//标题栏背景色
 				headcolor:'#fff',//消息颜色
 				indexbackcolor:'rgba(255,2555,255,0.28)',//导航栏搜索框背景色
-				end_time:'1611912417',//秒杀到期
+				end_time:'',//秒杀到期
 				end_seckill:'00天00:00:00',//倒计时
 				nav_ind:0,//导航
 				show:true,
 				value1: 1,
-				options1: [{
-						label: '默认排序',
-						value: 1,
-					},
-					{
-						label: '距离优先',
-						value: 2,
-					},
-					{
-						label: '价格优先',
-						value: 3,
-					}
-				],
+				index_data:'',//首页数据
+				shop_list:'',
+				list:''
 			}
 		},
 		// mounted() {
@@ -246,16 +239,36 @@
 		},
 		// components: {uniNavBar},
 		onLoad() {
-			this.ent_time_s()
+			this.ent_time_s()//倒计时
 			this.page_render()
 		},
 		onShow() {
 			
 		},
+		watch:{
+			// shop_list(a,b){
+			// 	console.log(a)
+			// }
+		},
 		methods: {
 			page_render(){
 				this.$api.get('index').then(res=>{
+					console.log(res.data)
+					if(res.status == 1){
+						this.index_data = res.data
+						this.end_time = res.data.kill.title
+						this.nav_ind = res.data.cates[0].id
+						this.nac_cla(res.data.cates[0].id)
+					}
+				})
+			},
+			// 确定筛选
+			shop_confim(e){
+				this.$api.post('goods',e).then(res=>{
 					console.log(res)
+					if(res.status == 1){
+						this.shop_list = res.data.data
+					}
 				})
 			},
 			//个人中心
@@ -302,6 +315,7 @@
 				}else{
 					this.com.navto('./Selected_topics')
 				}
+				
 			},
 			
 			//轮播指示点
@@ -312,6 +326,20 @@
 			//导航栏点击
 			nac_cla(e){
 				this.nav_ind = e
+				//商品
+				this.$api.post('goods',{cate_fist_id:this.nav_ind}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_list = res.data.data
+					}
+				})
+				//筛选条件
+				this.$api.get('screen',{cate_id:this.nav_ind}).then(res=>{
+					// console.log(res)
+					if(res.status == 1){
+						this.list = res.data
+					}
+				})
 			},
 			//秒杀倒计时
 			ent_time_s(){

@@ -23,7 +23,7 @@
 	export default {
 		data() {
 			return {
-				action: 'http://www.miaorongdun.com/api/uploads',//上传图片
+				action: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',//上传图片
 				lists: [],
 				imgLists:'',
 				desc:'',
@@ -71,13 +71,10 @@
 						title:'反馈内容为空',
 						icon:'none'
 					})
-				}else if(this.phone ==''||this.phone.length < 11){
-					this.com.msg('手机号有误')
 				}else{
 					let datas = {
 						remark:this.desc,
 						album:this.imgLists,
-						mobile:this.phone
 					}
 					this.$api.post('feedback',datas).then(res=>{
 						console.log(res)

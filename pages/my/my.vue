@@ -23,14 +23,15 @@
 			<view class="userinfo">
 				<view class="userinfo_ch">
 					<view class="userinfo_img" @click="go_pages('./user_text')">
-						<image :src="menber.avatar" class="user_imga" mode=""></image>
+						<!-- <image :src="menber.avatar" class="user_imga" mode=""></image> -->
+						<image  src="../../static/community/photo.png"  class="user_imga" mode=""></image>
 						<image src="../../static/userimg.png" class="user_imgb" v-show="huiy_show" mode=""></image>
 					</view>
 					<view class="userinfo_text">
 						<view class="text_top">
 							<view class="user_name">{{menber.nickname}}</view>
-							<view class="user_qda" v-if="!qiandao_if" @click="qiandao"><u-icon name="order"></u-icon>立即签到</view>
-							<view class="user_qda" v-else><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
+							<view class="user_qda" v-if="!menber.if_sign" @click="qiandao(1)"><u-icon name="order"></u-icon>立即签到</view>
+							<view class="user_qda" v-else @click="qiandao(2)"><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
 						</view>
 						<view class="user_phone">
 							手机号：15666666666
@@ -51,7 +52,7 @@
 				<!-- 统计 -->
 				<view class="statistics">
 					<view class="statistics_it" @click="go_pages('./collect')">
-						<view class="it_num">15</view>
+						<view class="it_num">{{menber.collect}}</view>
 						<view class="it_name">我的收藏</view>
 					</view>
 					<view class="statistics_it" @click="go_pages('./my_footprint')">
@@ -59,11 +60,11 @@
 						<view class="it_name">我的足迹</view>
 					</view>
 					<view class="statistics_it" @click="go_pages('./discontcoupon')">
-						<view class="it_num">9</view>
+						<view class="it_num">{{menber.coupon}}</view>
 						<view class="it_name">优惠券</view>
 					</view>
 					<view class="statistics_it" @click="go_pages('./gold')">
-						<view class="it_num">156</view>
+						<view class="it_num">{{menber.gold}}</view>
 						<view class="it_name">我的金币</view>
 					</view>
 				</view>
@@ -246,9 +247,9 @@
 			<!-- 为您推荐 -->
 			<image class="tuij" src="../../static/my/tuijain_bgimg.png" mode=""></image>
 			<!-- 商品列表 -->
-			<view style="position: relative;">
-				<!-- <zs-shopping-list></zs-shopping-list> -->
-				<zs-shoplist-type></zs-shoplist-type>
+			<view style="position: relative;padding: 0 3%;">
+				<zs-shopping-list></zs-shopping-list>
+				
 			</view>
 		</view>
 		<!-- 签到 -->
@@ -348,11 +349,11 @@
 			let vip = uni.getStorageSync('viptype')
 			// console.log(vip)
 			// 会员
-			if(vip){
-				this.huiy_show = true
-			}else{
-				this.huiy_show = false
-			}
+			// if(vip){
+			// 	this.huiy_show = true
+			// }else{
+			// 	this.huiy_show = false
+			// }
 		},
 		methods: {
 			page_info(){
@@ -385,11 +386,15 @@
 				})
 			},
 			//签到
-			qiandao(){
-				this.qd_show = true	
-				this.$api.put('gold').then(res=>{
-					console.log(res)
-				})
+			qiandao(e){
+				if(e==1){
+					this.qd_show = true
+					this.$api.put('gold').then(res=>{
+						console.log(res)
+					})
+				}else{
+					this.com.msg('您已经签到过了')
+				}
 			},
 			//关闭组件
 			no_pop(){

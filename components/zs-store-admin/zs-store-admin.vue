@@ -65,6 +65,7 @@
 		},
 		methods:{
 			goto_vip_set(ind){
+				let that = this
 				if(this.skip == true){
 					if(ind == 2){
 						this.com.navto('../../pages/set-shop/set-shop')
@@ -85,7 +86,7 @@
 							content:"你还不是VIP,是否开通?",
 							success(a) {
 								if(a.confirm){
-									this.com.navto('./vip_member')
+									that.com.navto('../../pages/my/vip_member')
 								}
 							}
 						})

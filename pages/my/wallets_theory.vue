@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<zs-text :content="'<p>提现说明</p>'"></zs-text>
+		<zs-text :content="cont"></zs-text>
 		
 	</view>
 </template>
@@ -9,8 +9,12 @@
 	export default{
 		data(){
 			return{
-				
+				cont:''
 			}
+		},
+		onLoad(op){
+			this.cont = op.cont
+			console.log(op)
 		},
 		methods:{
 			

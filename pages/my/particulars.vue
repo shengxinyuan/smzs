@@ -37,7 +37,8 @@
 		data(){
 			return{
 				title:'',
-				type:0
+				type:0,
+				list:[]
 			}
 		},
 		onLoad(op) {
@@ -52,8 +53,17 @@
 			}else if(op.type == 4){
 				this.title = '充值明细'
 			} 
+			this.page_reader()
 		},
 		methods:{
+			page_reader(){
+				this.$api.post('money',{type:this.type}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.money = res.data
+					}
+				})
+			},
 			goto_top(){
 				uni.navigateBack()
 			}

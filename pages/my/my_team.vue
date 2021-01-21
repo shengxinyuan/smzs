@@ -25,12 +25,12 @@
 		</view>
 		<!-- //列表 -->
 		<view class="list" v-if="but_ind == 1">
-			<view class="list_item" v-for="(it,ind) in 6" :key="ind">
-				<image src="../../static/kefu.png" mode=""></image>
+			<view class="list_item" v-for="(it,ind) in team_data.first" :key="ind">
+				<image :src="it.avatar" mode=""></image>
 				<view class="list_item_name">
-					{{names_com}}
+					{{it.usename}}
 				</view>
-				<text class="list_item_vip" v-if="ind % 2 == 0">
+				<text class="list_item_vip" v-if="vip">
 					超级会员
 				</text>
 			</view>
@@ -39,9 +39,9 @@
 			<view class="list_item" v-for="(it,ind) in 3" :key="ind">
 				<image src="../../static/kefu.png" mode=""></image>
 				<view class="list_item_name">
-					{{names_com}}
+					{{it.usename}}
 				</view>
-				<text class="list_item_vip" v-if="ind % 4 == 0">
+				<text class="list_item_vip" v-if="vip">
 					超级会员
 				</text>
 			</view>
@@ -53,53 +53,77 @@
 	export default{
 		data(){
 			return{
-				search:'',
 				num:15121,
 				num_vip:2400,
 				names:"王志刚",
-				but_ind:1
+				but_ind:1,
+				team_data:''
 			}
 		},
 		computed:{
 			num_s(){
-				let arr = this.num
+				let arr = this.team_data.ordinary
 				let att =0
-				if(this.num >= 10000){
-					att = this.num /10000
+				if(this.team_data.ordinary >= 10000){
+					att = this.team_data.ordinary /10000
 					arr = att.toFixed(2)+'万'
 				}
 				return arr
 			},
 			num_two(){
-				let arr = this.num_vip
+				let arr = this.team_data.vip
 				let att =0
-				if(this.num_vip >= 10000){
-					att = this.num_vip /10000
+				if(this.team_data.vip >= 10000){
+					att = this.team_data.vip /10000
 					arr = att.toFixed(2)+'万'
 				}
 				return arr
 			},
-			names_com(){
-				let arr =""
-				if(this.names.length >= 2 && this.names.length < 4){
-					arr = this.names.replace(/^./g, '*');
-				}else if(this.names.length >= 4){
-					arr = this.names.replace(/^../g, '**');
-				}
-				return arr
+			//会员到期时间
+			vip(){
+				let arr = ''
+				let date = new Date().getTime()
+				this.team_data.first.forEach(i=>{
+					arr = i.vip_time *1000
+					if(date < arr){
+						return true
+					}else{
+						return false
+					}
+				})
 			}
 		},
+		onLoad() {
+			this.page_render()
+		},
 		methods:{
-			go_search(){
-				
-				if(this.search == ''){
-					this.com.navto('./area_team')
-				}else{
-					this.com.msg(this.search)
-					this.com.navto('./area_team')
-				}
-				this.search = ''
-				
+			page_render(){
+				let arr = ''
+				this.$api.get('team').then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.team_data = res.data
+						 res.data.first.forEach(i=>{
+							this.names = i.nickname
+							if(this.names.length >= 2 && this.names.length < 4){
+								arr = this.names.replace(/^./g, '*');
+							}else if(this.names.length >= 4 && this.names.length < 11){
+								arr = this.names.replace(/^../g, '**');
+							}else if(this.names.length >= 11){
+								arr = this.names.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+							}
+							i.usename = arr
+						})
+					}
+				})
+			},
+			go_search(e){
+				this.$api.post('team',{key:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.navto('./search_team?list='+JSON.stringify(res.data))
+					}
+				})
 			},
 			//团队切换
 			but_ind_cli(e){

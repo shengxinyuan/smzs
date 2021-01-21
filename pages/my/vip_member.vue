@@ -21,7 +21,7 @@
 						{{it.name}}
 					</view>
 				</view>
-			</view>
+			</view> 
 			<!-- 小喇叭 -->
 			<view class="trumpet">
 				<image src="../../static/my/trumpet.png" mode=""></image>

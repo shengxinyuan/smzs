@@ -13,7 +13,7 @@
 		</view>
 		<view class="contes">
 			<zs-shoplist-type :tops="'145rpx'" :paddingTop="'80rpx'" :shop_list="shop_list" :lists="list" :fixed="'fixed'"
-			:cate_fist_id="cate_id"
+			:cate_fist_id="cate_id" @shop_confim="shop_confim"
 			></zs-shoplist-type>
 		</view>
 	</view>
@@ -36,6 +36,7 @@
 		methods:{
 			//页面渲染
 			page_render(){
+				//筛选条件
 				this.$api.get('screen',{cate_id:this.cate_id}).then(res=>{
 					// console.log(res)
 					if(res.status == 1){
@@ -43,6 +44,15 @@
 					}
 				})
 				this.$api.post('goods',{cate_fist_id:this.cate_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_list = res.data.data
+					}
+				})
+			},
+			// 确定筛选
+			shop_confim(e){
+				this.$api.post('goods',e).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.shop_list = res.data.data

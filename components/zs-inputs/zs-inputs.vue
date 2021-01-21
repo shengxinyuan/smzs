@@ -25,7 +25,7 @@
 				if(this.value == ''){
 					this.com.msg('搜索内容不能为空~')
 				}else{
-					this.com.msg(this.value)
+					// this.com.msg(this.value)
 				}
 				this.$emit('searchClick',this.value)
 			}

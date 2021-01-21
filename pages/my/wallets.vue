@@ -6,7 +6,7 @@
 					 可提现金额(元)
 				</view>
 				<view class="rent_l_but">
-					68500.10
+					{{stdata.money}}
 				</view>
 			</view>
 			<view class="wallet_rent_r">
@@ -20,11 +20,9 @@
 		</view>
 		<!-- 统计 -->
 		<view class="num_t">
-			<view class="num_t_item" v-for="(it,ind) in 3" :key="ind" >
-				<view v-if="ind == 0">总收入(元)</view> 
-				<view v-if="ind == 1">待返利(元)</view> 
-				<view v-if="ind == 2">已提现(元)</view> 
-				<view> 68550.00 </view>
+			<view class="num_t_item" v-for="(it,ind) in list" :key="ind" >
+				<view > {{it.name}}</view> 
+				<view> {{it.price}} </view>
 			</view>
 		</view>
 		<!-- 列表 -->
@@ -73,12 +71,40 @@
 	export default{
 		data(){
 			return{
+				stdata:'',
+				list:[]
 			}
 		},
 		onNavigationBarButtonTap(e) {
-			this.com.navto("wallets_theory")
+			this.com.navto("wallets_theory?cont="+this.stdata.data)
+		},
+		onShow() {
+		 	this.money()
 		},
 		methods:{
+			//钱包
+			money(){
+				this.$api.get('money').then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.stdata = res.data
+						this.list = [
+							{
+								name:'总收入(元)',
+								price:res.data.total_money
+							},
+							{
+								name:'待返利(元)',
+								price:res.data.rebate_money
+							},
+							{
+								name:'已提现(元)',
+								price:res.data.have_withdrawal
+							}
+						]
+					}
+				})
+			},
 			go_pages(e){
 				this.com.navto(e) 
 			}

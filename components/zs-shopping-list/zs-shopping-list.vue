@@ -1,20 +1,20 @@
 <template>
 	<view class="cont">
-		<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
+		<view class="cont_item" v-for="(it,ind) in 6" :key="ind" @click="go_shopdetail(it.id)" >
 			<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
 			<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
 			<view class="it_tit">
-				{{it.title}}
+				纯金项链
 			</view>
 			<view class="it_price">
-				￥{{ it.price }}
+				￥{{ 1988 }}
 			</view>
 			<view class="it_selt">
 				<view class="it_selt_l">
-					<text>￥{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
+					<text>￥{{ 1688 }}</text><image src="../../static/pifa.png" mode=""></image>
 				</view>
 				<view class="it_selt_r">
-					已售{{it.sale}}件
+					已售{{ 99 }}件
 				</view>
 			</view>
 		</view>

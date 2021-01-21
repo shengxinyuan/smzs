@@ -739,6 +739,12 @@
 				"navigationStyle":"custom"
 			}
         }
+        ,{
+            "path" : "pages/my/search_team",
+            "style" : {
+				"navigationBarTitleText":"搜索"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

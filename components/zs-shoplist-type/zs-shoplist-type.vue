@@ -137,7 +137,7 @@
 		props:{
 			tops:{default:0},//定位
 			paddingTop:{default:0},//上内
-			lists:{},//商品筛选
+			lists:{},//商品筛选条件
 			fixed:{default:'none'},
 			shop_list:{},
 			cate_fist_id:{}
@@ -198,7 +198,20 @@
 			},
 			//确定
 			shop_confim(){
-				this.shop_remder()
+				let data = {
+					sale:this.sale,
+					price:this.price_type,
+					key:this.key, //	关键字
+					cate_id:this.cate_id,//分类id
+					cate_fist_id:this.cate_fist_id,//筛选分类
+					shop_label_cate_id:this.shop_label_cate_id,//筛选款式
+					shop_label_texture_id:this.shop_label_texture_id,//筛选材质
+					sku_value:this.sku_value, //筛选时sku的值
+					shop_subject_id: this.shop_subject_id,//专题
+					min_g:this.min_g, //最小重量
+					max_g:this.max_g, //最大重量
+				}
+				this.$emit('shop_confim',data)
 				this.show = false
 			},
 			//筛选
@@ -238,7 +251,7 @@
 				}
 			},
 			//筛选点击
-				shai_cli(e,type){
+			shai_cli(e,type){
 				console.log(e)
 				this.heat_ind = e
 				//销量
