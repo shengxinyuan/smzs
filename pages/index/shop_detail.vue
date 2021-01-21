@@ -36,24 +36,27 @@
 					</view>
 				</swiper-item>
 			</swiper>
-			<view class="swiper-dots">
+			<!-- <view class="swiper-dots">
 				<text class="num">{{swiperCurrent+1}}</text>
 				<text class="sign">/</text>
 				<text class="num">{{imgList.length}}</text>
-			</view>
+			</view> -->
 		</view>
 		<!-- 横条 -->
 		<view class="trabecula">
-			市场平均料价：430元/g <text style="margin-left: 20rpx;"> 工费：0元/g</text> 
+			市场平均料价：{{shop_det.average_price}}元/g <text style="margin-left: 20rpx;"> 工费：{{shop_det.wage}}元/g</text> 
 		</view>
 		<view class="introduce-section">
 			
 			<view class="price-box">
-				<view class="price-box_l">
+				<view class="price-box_l" v-if="vip_type">
 					<text class="price-tip">¥</text>
-					<text class="price">341.6</text>起
-					<text class="m-price">¥488</text>
-					<!-- <text class="coupon-tip">7折</text> -->
+					<text class="price">{{shop_det.price}}</text>起
+					<text class="m-price">¥{{shop_det.price_vip}}</text>
+				</view>
+				<view class="price-box_l" style="color: #e8372f;" v-else>
+					<text class="price-tip">¥</text>
+					<text class="price">{{shop_det.price_vip}}</text>起
 				</view>
 				<view class="price-box_r">
 					<image src="../../static/index/search_icon.png" mode=""></image>
@@ -67,10 +70,10 @@
 			</view> -->
 		</view>
 		<view class="shop_names">
-			花月佳期 繁华如梦 足金黄金项链 吊坠 F22544454346348 45cm 约10克
+			<text>正品</text> {{shop_det.title}}
 		</view>
 		<view class="shopping_text">
-			<view class="text-item" v-if="!vip_type">
+			<view class="text-item" v-if="vip_type">
 				<view class="">
 					开通超级会员，预估额外省 <text style="color: #df3636;"> 886 </text>
 				</view>
@@ -79,16 +82,16 @@
 				</view>
 			</view>
 			<view class="shop_introduce"> 
-				商品介绍 但就是夸大冯家街道上看看第三方国家法规但就是夸大冯家街道上看看第三方国家法规但就是夸大冯家街道上看看第三方国家法规
+				{{shop_det.remark}}
 			</view>
 			<view class="Rapid_delivery">
-				<u-icon name="car-fill" style="margin-right: 10rpx;"></u-icon>急速出货  16:30前下单当日货品可发货，定制产品除外。
+				<!-- <u-icon name="car-fill" style="margin-right: 10rpx;"></u-icon>急速出货  16:30前下单当日货品可发货，定制产品除外。 -->
 			</view>
 		</view>
 		<!-- 规格 -->
 		<view class="specification">
-			<view class="child" v-for="(it,ind) in 5">
-				款号：C-5D8E
+			<view class="child" v-for="(it,ind) in stynumber">
+				{{it.name}}：{{it.num}}
 			</view>
 		</view>
 		<!-- 评价 -->
@@ -128,13 +131,13 @@
 			<view class="d-header">
 				<text>宝贝详情</text>
 			</view>
-			<u-parse :html="desc"></u-parse>
+			<u-parse :html="shop_det.content"></u-parse>
 		</view>
 		<!-- //推荐 -->
 		<view id="tuijina">
 			<image  style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="../../static/my/tuijain_bgimg.png" mode=""></image>
 			<view style="padding: 0 3%;margin-bottom: 120rpx;" >
-				<zs-shopping-list></zs-shopping-list> 
+				<zs-shopping-list :shop_list="shop_list"></zs-shopping-list> 
 			</view>
 		</view>
 		
@@ -149,12 +152,12 @@
 					<view>购物车</view>
 				</view>
 				<view class="three_icons">
-					<view  v-if="true">
-						<u-icon class="s_icon" name="star-fill" color="#DD524D" size="38"   ></u-icon> <!-- @click="like_collect" -->
+					<view  v-if="shop_det.T_F_collect" @click="like_collect(shop_det.id)">
+						<u-icon class="s_icon" name="star-fill" color="#DD524D" size="38"   ></u-icon> 
 						<view style="color: #DD524D;">已收藏</view>
 					</view>
-					<view v-else >
-						<u-icon class="s_icon" name="star" color="#ccc" size="38" ></u-icon> <!-- @click="like_collect" -->
+					<view v-else @click="like_collect(shop_det.id)">
+						<u-icon class="s_icon" name="star" color="#ccc" size="38" ></u-icon> 
 						<view>收藏</view>
 					</view>
 					
@@ -234,7 +237,7 @@
 	export default{
 		data() {
 			return {
-				vip_type:true,//会员状态
+				vip_type:false,//会员状态
 				shop_type:0,//按钮状态
 				jg_ind:-1,//
 				bgcolor:'',//背景色
@@ -356,15 +359,20 @@
 				pingl:0,//评论
 				tuij:0,//推荐
 				detail_shop:0,//商品详情
+				shop_id:0,
+				shop_det:'',//商品信息
+				stynumber:[],//款号等
+				shop_list:'',//推荐
+				member:'',//个人信息
 			};
 		},
 		onPageScroll(e) {
 			this.opacity = e.scrollTop / 180 //头部渐入渐出
-			if(e.scrollTop === this.pingl){
+			if(e.scrollTop >= this.pingl && e.scrollTop<= this.detail_shop){
 				this.head_ind = 1
-			}else if(e.scrollTop == this.tuij){
+			}else if(e.scrollTop > this.tuij){
 				this.head_ind = 3
-			}else if(e.scrollTop == this.detail_shop){
+			}else if(e.scrollTop >= this.detail_shop &&e.scrollTop <= this.tuij){
 				this.head_ind = 2
 			}else if(e.scrollTop == 0){
 				this.head_ind = 0 
@@ -377,7 +385,7 @@
 					
 					if(i.pid == 3){
 						arr.push(i)
-						console.log(arr)
+						// console.log(arr)
 					}
 				})
 				return arr
@@ -393,7 +401,7 @@
 			}).exec()
 			// 推荐
 			query.select('#tuijina').boundingClientRect((res) => {
-				console.log(res)
+				// console.log(res)
 				this.tuij = res.top -100
 			}).exec()
 			// 详情
@@ -402,14 +410,14 @@
 				this.detail_shop = res.top -100
 			}).exec()
 		},
-		async onLoad(options){
-			
+		onLoad(options){
+			console.log(options)
 			//接收传值,id里面放的是标题，因为测试数据并没写id 
-			let id = options.id;
-			if(id){
-				this.$api.msg(`点击了${id}`);
-			}
+			this.shop_id = options.shop_id;
+			this.page_render()
 			
+			this.member = uni.getStorageSync('member_info')
+			console.log(this.member)
 			//规格 默认选中第一条
 			this.specList.forEach(item=>{
 				for(let cItem of this.specChildList){
@@ -422,6 +430,52 @@
 			})
 		},
 		methods:{
+			page_render(){
+				this.$api.get('goods/'+this.shop_id+'&member_id='+this.member.id).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_det = res.data
+						this.stynumber = [
+							{
+								name:'款号',
+								num:res.data.model_no
+							},
+							{
+								name:'销量',
+								num:res.data.sale
+							},
+							{
+								name:'库存',
+								num:res.data.stock
+							},
+							{
+								name:'成色',
+								num:res.data.texture
+							},
+							{
+								name:'金重',
+								num:res.data.min_g+'-'+res.data.max_g
+							}
+						]
+					}
+				})
+				//推荐商品
+				this.$api.post('goods',{is_recommend:1}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_list =res.data.data
+					}
+				})
+			},
+			//收藏
+			like_collect(e){
+				this.$api.put('collect',{id:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.page_render()
+					}
+				})
+			},
 			//购买/加购物车
 			shop_pay(e){ //e  1是购买 2 加购物车
 				if(e == 1){
@@ -470,7 +524,7 @@
 			},
 			//轮播指示点
 			swiperChange(e) {
-				// console.log(e)
+				console.log(e)
 				this.swiperCurrent = e.detail.current
 			},
 			//点击轮播图放大
@@ -702,6 +756,10 @@
 	.shop_names{
 		background-color: white;;overflow: hidden;line-height: 50rpx;font-size: 32rpx;font-weight: bold;
 		padding: 0 0 20rpx 3%;
+		text{
+			display: inline-block;font-size: 24rpx;font-weight: none;background-color: #df3636;padding: 0 4rpx;color: white;
+			height: 36rpx;line-height: 36rpx;border-radius: 6rpx;
+		}
 	}
 	.shopping_text{
 		background-color: white;background-color: #fff;padding: 0 3%;
@@ -719,12 +777,12 @@
 	// 规格
 	.specification{
 		width: 100%;display: flex;flex-wrap: wrap;font-size: 28rpx;margin: 20rpx 0;background-color: white;padding: 0 3%;
-		line-height: 70rpx;
+		line-height: 70rpx;color: #666;
 		.child{
-			width: 35%;white-space: nowrap;
+			width: 35%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 		}
 		.child:nth-child(3n+3){
-			width: 30%;white-space: nowrap;
+			width: 30%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 		}
 	}
 	/* 评价 */

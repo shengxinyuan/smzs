@@ -2,8 +2,8 @@
 	<view class="register">
 		<view style="width: 100%;">
 			<view class="head">
-				<view :class="['title',Inv==0?'choose':'']" @click="Inv=0">验证码登录</view>
-				<view :class="['title',Inv==1?'choose':'']" @click="Inv=1">账号密码登录</view>
+				<view :class="['title',Inv==0?'choose':'']" @click="qieh(0)">验证码登录</view>
+				<view :class="['title',Inv==1?'choose':'']" @click="qieh(1)">账号密码登录</view>
 			</view>
 			<!-- 验证码登录 -->
 			<view class="choose_ka" v-show="Inv == 0">
@@ -11,7 +11,7 @@
 					<input type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
 				</view>
 				<view class="write">
-					<input type="text" v-model="note" placeholder="输入验证码"/>
+					<input type="text" v-model="note" @confirm="app_login" placeholder="输入验证码"/>
 					<text class="give" v-if="code_show" @click="acquireCode">{{code_tit}}</text>
 					<text style="margin-right: 20rpx;" v-else>{{ time }}s</text>
 				</view>
@@ -25,7 +25,7 @@
 					<input type="text" v-model="phone" placeholder="输入账号" maxlength="11"/>
 				</view>
 				<view class="write">
-					<input type="password" v-model="pass" placeholder="输入密码"/>
+					<input type="password" v-model="pass" @confirm="app_login" placeholder="输入密码"/>
 				</view>
 				<view class="other">
 					<text @click="go_register">注册</text>
@@ -78,6 +78,14 @@
 			}
 		},
 		methods:{
+			qieh(e){
+				this.Inv = e
+				if(e == 0){
+					this.pass =''
+				}else{
+					this.note = ''
+				}
+			},
 			//同意协议
 			yesag(){
 				uni.setStorageSync("type",1)
@@ -118,6 +126,14 @@
 					this.$api.post('login',{mobile:this.phone,password:this.pass,note:this.note}).then(res=>{
 						console.log(res)
 						if(res.status == 1){
+							let date = new Date().getTime()
+							let end = res.data.member_info.vip_time
+							if(end  <= date){
+								uni.setStorageSync("viptype", false)
+							}else{
+								uni.setStorageSync("viptype", true)
+							}
+							
 							uni.setStorageSync("token",res.data.token)
 							uni.setStorageSync("member_info",res.data.member_info)
 							uni.showToast({

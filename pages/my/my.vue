@@ -23,12 +23,12 @@
 			<view class="userinfo">
 				<view class="userinfo_ch">
 					<view class="userinfo_img" @click="go_pages('./user_text')">
-						<image src="../../static/index/bann1.png" class="user_imga" mode=""></image>
+						<image :src="menber.avatar" class="user_imga" mode=""></image>
 						<image src="../../static/userimg.png" class="user_imgb" v-show="huiy_show" mode=""></image>
 					</view>
 					<view class="userinfo_text">
 						<view class="text_top">
-							<view class="user_name">要有光</view>
+							<view class="user_name">{{menber.nickname}}</view>
 							<view class="user_qda" v-if="!qiandao_if" @click="qiandao"><u-icon name="order"></u-icon>立即签到</view>
 							<view class="user_qda" v-else><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
 						</view>
@@ -39,7 +39,7 @@
 							<view @click="qrcode_show = true">
 								邀请码<u-icon name="arrow-right"></u-icon>
 							</view>
-							<view @click="copy_yqm(15647)">
+							<view @click="copy_yqm(menber.bn)">
 								复制邀请码<u-icon name="arrow-right"></u-icon>
 							</view>
 							<view @click="my_yaoq">
@@ -246,7 +246,7 @@
 			<!-- 为您推荐 -->
 			<image class="tuij" src="../../static/my/tuijain_bgimg.png" mode=""></image>
 			<!-- 商品列表 -->
-			<view style="margin-top: 20rpx;">
+			<view style="position: relative;">
 				<!-- <zs-shopping-list></zs-shopping-list> -->
 				<zs-shoplist-type></zs-shoplist-type>
 			</view>
@@ -259,16 +259,16 @@
 		<u-popup v-model="show" mode="center">
 			<view class="my_yaoq">
 				<view class="my_yaoq_name">
-					邀请人: 今
+					邀请人: {{menber.recommend_name}}
 				</view>
 				<view class="my_yaoq_phone">
-					联系电话: 15555555555
+					联系电话: {{menber.recommend_phone}}
 				</view>
 				<view class="my_yaoq_typebut">
 					<view @click="show = false">
 						返回
 					</view>
-					<view @click="kao_yqr(1567484)">
+					<view @click="kao_yqr(menber.recommend_phone)">
 						拨打电话
 					</view>
 				</view>
@@ -286,9 +286,9 @@
 				show:false,//我的邀请人
 				bgimage:'url(../../static/my/qiandao.png)',
 				qd_show:false,//popup组件显示
-				qiandao_if:true,//签到按钮状态
+				qiandao_if:false,//签到按钮状态
 				qrcode_show:false,//二维码显示
-				qrcode_image:'url(../../static/my/qrcode.png)',
+				qrcode_image:'',
 				order:[
 					{
 						img:'../../static/my/daifu.png',
@@ -325,7 +325,8 @@
 						name:"累计返现(元)"
 					}
 				],
-				
+				menber:'',//个人信息
+				end_time:1613701693,//vip到期
 			}
 		},
 		//下拉刷新
@@ -342,7 +343,28 @@
 
 			// }
 		},
+		onShow() {
+			this.page_info()
+			let vip = uni.getStorageSync('viptype')
+			// console.log(vip)
+			// 会员
+			if(vip){
+				this.huiy_show = true
+			}else{
+				this.huiy_show = false
+			}
+		},
 		methods: {
+			page_info(){
+				this.$api.get('member').then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.menber = res.data
+						this.qrcode_image = res.data.qrcode
+						
+					}
+				})
+			},
 			//订单详情
 			go_order(e,ind){
 				this.com.navto('./order?state='+e+'&index='+ind)
@@ -364,7 +386,10 @@
 			},
 			//签到
 			qiandao(){
-				this.qd_show = true
+				this.qd_show = true	
+				this.$api.put('gold').then(res=>{
+					console.log(res)
+				})
 			},
 			//关闭组件
 			no_pop(){

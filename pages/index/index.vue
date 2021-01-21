@@ -85,58 +85,60 @@
 			<!-- 活动专区 -->
 			<view class="seckill-section">
 				<zs-title :title="'活动专区'" :page_show="true"></zs-title>
-				<view class="s-header" @click="go_pages('./seckill')">
-					<view class="s-header_a" > 
-						<image class="s-img" src="/static/xians_seckill.png" mode="widthFix"></image>
-						<view class="s-header_child">
-							<text class="hour timer">{{end_seckill}}</text>
+				<view v-if="true">
+					<view class="s-header" @click="go_pages('./seckill')">
+						<view class="s-header_a" > 
+							<image class="s-img" src="/static/xians_seckill.png" mode="widthFix"></image>
+							<view class="s-header_child">
+								<text class="hour timer">{{end_seckill}}</text>
+							</view>
+						</view>
+						<view style="color: #a6a6a6;">
+							更多好货 <u-icon name="arrow-right-double"></u-icon>
 						</view>
 					</view>
-					<view style="color: #a6a6a6;">
-						更多好货 <u-icon name="arrow-right-double"></u-icon>
-					</view>
+					<scroll-view class="floor-list" scroll-x>
+						<view class="scoll-wrapper">
+							<view 
+								v-for="(item, index) in 10" :key="index"
+								class="floor-item"
+								@click="go_pages('./shop_detail')"
+							>
+								<image src="../../static/community/list_03.png" mode=""></image>
+								<view class="title">￥99.99</view>
+								<view class="price">￥{{ 99.8 }}</view>
+							</view>
+						</view>
+					</scroll-view>
 				</view>
-				<scroll-view class="floor-list" scroll-x>
-					<view class="scoll-wrapper">
-						<view 
-							v-for="(item, index) in 10" :key="index"
-							class="floor-item"
-							@click="go_pages('./shop_detail')"
-						>
-							<image src="../../static/community/list_03.png" mode=""></image>
-							<view class="title">￥99.99</view>
-							<view class="price">￥{{ 99.8 }}</view>
+				<view >
+					<view class="s-header" @click="go_pages('./group_book')">
+						<view class="s-header_a">
+							<image class="s-img" src="/static/roll.png" mode="widthFix"></image>
+							<view class="s-header_child">
+								<text class="hour timer">物有所值</text>
+							</view>
+						</view>
+						<view style="color: #a6a6a6;">
+							更多好货 <u-icon name="arrow-right-double"></u-icon>
 						</view>
 					</view>
-				</scroll-view>
+					<scroll-view class="floor-list" scroll-x>
+						<view class="scoll-wrapper">
+							<view v-for="(item, index) in 10" :key="index"
+								class="floor-item"
+								@click="go_pages('./shop_detail')"
+							>
+								<image src="../../static/community/list_01.png" mode="aspectFill"></image>
+								<view class="title">￥99.99</view>
+								<view class="price">￥{{ 99.8 }}</view>
+							</view>
+						</view>
+					</scroll-view>
+				</view>
 			</view>
 			<!-- 拼团 -->
-			<view class="seckill-section">
-				
-				<view class="s-header" @click="go_pages('./group_book')">
-					<view class="s-header_a">
-						<image class="s-img" src="/static/roll.png" mode="aspectFill"></image>
-						<view class="s-header_child">
-							<text class="hour timer">物有所值</text>
-						</view>
-					</view>
-					<view style="color: #a6a6a6;">
-						更多好货 <u-icon name="arrow-right-double"></u-icon>
-					</view>
-				</view>
-				<scroll-view class="floor-list" scroll-x>
-					<view class="scoll-wrapper">
-						<view v-for="(item, index) in 10" :key="index"
-							class="floor-item"
-							@click="go_pages('./shop_detail')"
-						>
-							<image src="../../static/community/list_01.png" mode="aspectFill"></image>
-							<view class="title">￥99.99</view>
-							<view class="price">￥{{ 99.8 }}</view>
-						</view>
-					</view>
-				</scroll-view>
-			</view>
+			
 			<!-- 每周上新 -->
 			<view class="seckill-section_mz">
 				<zs-title :title="'每周上新'"></zs-title>
@@ -170,23 +172,13 @@
 			 <scroll-view class="scroll-view_H" scroll-x="true" >
 				<view id="demo1" class="nav_swiper" :class="{active: ind == nav_ind }" @click="nac_cla(ind)" v-for="(it,ind) in 8" :key="ind">爆款</view>
 			</scroll-view>
-			<view class="classify">
-				<view class="classify_l">
-					<u-dropdown>
-						<u-dropdown-item v-model="value1" title="综合排序" :options="options1"></u-dropdown-item>
-						
-					</u-dropdown>
-				</view>
-				<view class="classify_c">
-					全部分类
-				</view>
-				<view class="classify_r">
-					<zs-classifytype></zs-classifytype>
-				</view> 
-				
-			</view>
+			
 			<!-- 商品列表 -->
-			<zs-shopping-list></zs-shopping-list>
+			<!-- <zs-shopping-list></zs-shopping-list> -->
+			
+		</view>
+		<view class="classify">
+			<zs-shoplist-type  ></zs-shoplist-type>
 			
 		</view>
 		 <drag-button :isDock="true" :existTabBar="true" @btnClick="btnClick" />
@@ -202,6 +194,7 @@
 	export default {
 		data() {
 			return {
+				tops:0,
 				bann: [
 					{a:"../../static/index/bann1.png"},
 					{a:"../../static/index/bann2.png"},
@@ -231,6 +224,16 @@
 				],
 			}
 		},
+		// mounted() {
+		// 	var query = uni.createSelectorQuery()
+		// 	//获取对应模块到顶部的距离
+		// 	//评论
+		// 	query.select('.classify').boundingClientRect((res) => {
+		// 		console.log(res)
+		// 		this.pingl = Math.floor(res.top)
+		// 		console.log(this.pingl)
+		// 	}).exec()
+		// },
 		onPageScroll(e){
 			// console.log(e)
 			this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')' 
@@ -244,11 +247,17 @@
 		// components: {uniNavBar},
 		onLoad() {
 			this.ent_time_s()
+			this.page_render()
 		},
 		onShow() {
 			
 		},
 		methods: {
+			page_render(){
+				this.$api.get('index').then(res=>{
+					console.log(res)
+				})
+			},
 			//个人中心
 			page_my(){
 				this.com.rel('../my/my')
@@ -366,11 +375,8 @@
 		}
 	}
 	.classify{
-		width: 100%;height: 90rpx;line-height: 90rpx;
-		display: flex;justify-content: space-between;
-		.classify_l{
-			width: 35%;z-index: 22;
-		}
+		width: 100%;
+		margin-bottom: 150rpx;background-color: #F6F6F6;
 	}
 	@import './index.scss'
 	

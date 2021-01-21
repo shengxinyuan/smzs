@@ -1,19 +1,18 @@
 <template>
 	<view class="cont">
-		<view class="head">
+		<view class="head" :style="{position: fixed,left: 0,top: tops}">
 			<view class="head_left">
-				<view class="head_left_child" :class="{active:ind == heat_ind}" v-for="(it,ind) in list" :key="ind" @click="shai_cli(ind,it.id)">
-					{{it.name}}
-					<view v-if="ind == 2">{{it.name}} <u-icon></u-icon></view>
+				<view class="head_left_child" :class="{active:heat_ind == 1}" @click="shai_cli(1,sale)">
+					热销
+					<u-icon name="arrow-up" v-if="sale == 1" ></u-icon>
+					<u-icon name="arrow-down" v-if="sale == 2"></u-icon>
 				</view>
-				<view class="head_left_child" :class="{active:heat_ind == 2}" v-if="price_type == 2" @click="shai_cli(2,2)">
+				<view class="head_left_child" :class="{active:heat_ind == 2}"  @click="shai_cli(2,price_type)">
 					价格
-					<u-icon name="arrow-up" ></u-icon>
+					<u-icon name="arrow-up" v-if="price_type == 1" ></u-icon>
+					<u-icon name="arrow-down" v-if="price_type == 2"></u-icon>
 				</view>
-				<view class="head_left_child" :class="{active:heat_ind == 2}" v-else @click="shai_cli(2,1)">
-					价格
-					<u-icon name="arrow-down" v-if="price_type == 1" ></u-icon>
-				</view>
+				
 			</view>
 			<view class="head_right">
 				<view class="head_right_c" v-if="type==1" @click="cli_type(1)">
@@ -23,53 +22,92 @@
 					<u-icon name="list-dot" size="44"></u-icon>
 				</view>
 				<view class="">
-					<zs-classifytype></zs-classifytype> 
+					<view class="shai" @click="shaix">
+						<text>筛选</text><image src="../../static/loudou.png" mode=""></image>
+					</view>
+					<u-popup v-model="show" mode="right" >
+						<view class="popups">
+							<view class="item" v-for="(it,ind) in lists" :key="ind">
+								<view class="item_tit">
+									{{it.name}}
+								</view>
+								<view class="item_child" >
+									<view class="child_v" v-for="(cit,index) in it.data" @click="cli_it(cit.id,ind,index)"
+									:class="{active:cit.state == true}">
+										{{cit.title}}
+									</view>
+									<!-- {{index}} -->
+								</view>
+							</view>
+							<view class="item">
+								<view class="item_tit">
+									金重
+								</view>
+								<view class="item_child" >
+									<view class="child_v">
+										<input type="text" placeholder="最低" v-model="min_g" name="" id=""> 
+									</view>——
+									<view class="child_v">
+										<input type="text" placeholder="最高" v-model="max_g">
+									</view>
+									<!-- {{index}} -->
+								</view>
+							</view>
+							
+							<view class="but">
+								<view @click="reset">
+									重置
+								</view>
+								<view @click="shop_confim">确定</view>
+							</view>
+						</view>
+					</u-popup>
 				</view>
 			</view>
 		</view>
-		<view class="cont_list" v-if="type==1">
-			<view class="cont_item" v-for="(it,ind) in 6" :key="ind" @click="go_shopdetail(1)" >
-				<image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
+		<view class="cont_list" v-if="type==1" :style="{'padding-top':paddingTop}">
+			<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
+				<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
 				<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
 				<view class="it_tit">
-					黄金手镯 18k金 钻石挚爱
+					{{it.title}}
 				</view>
 				<view class="it_price">
-					￥2298
+					￥{{ it.price }}
 				</view>
 				<view class="it_selt">
 					<view class="it_selt_l">
-						<text>￥1980</text><image src="../../static/pifa.png" mode=""></image>
+						<text>￥{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
 					</view>
 					<view class="it_selt_r">
-						已售45512件
+						已售{{it.sale}}件
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="cont_list_two" v-else>
-			<view class="cont_item" v-for="(it,ind) in 6" :key="ind" @click="go_shopdetail(1)" >
+		<view class="cont_list_two" v-else :style="{'padding-top':paddingTop}">
+			<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
 				<view class="item_img">
 					<!-- <image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> -->
 					<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
 				</view>
 				<view class="it_text">
 					<view class="it_tit">
-						24K黄金手镯 18k金 钻石挚爱一生
+						{{it.title}}
 					</view>
 					<view class="it_text_cen">
 						<view class="it_price">
-							￥2298
+							￥{{ it.price }}
 						</view>
 						<view class="it_selt_l">
-							<text>￥1980</text><image src="../../static/pifa.png" mode=""></image>
+							<text>￥{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
 						</view>
 					</view>
 					<view class="it_label">
-						<view>精品</view>
+						<view v-if="it.is_recommend == 1">精品</view>
 					</view>
 					<view class="it_selt_r">
-						已售45512件
+						已售{{it.sale}}件
 					</view>
 				</view>
 			</view>
@@ -81,16 +119,113 @@
 	export default {
 		data() {
 			return {
-				list:[
-					{name:'新品'},
-					{name:'热销'},
-				],
 				type:0,//商品列表
 				heat_ind: -1,// 导航
-				price_type:0
+				price_type:0,//排序 1-降序 2-升序		
+				show:false,
+				sale:0, //	排序 1-降序 2-升序			
+				key:'', //	关键字
+				cate_id:0,//分类id
+				shop_label_cate_id:0,//筛选款式
+				shop_label_texture_id:0,//筛选材质
+				sku_value:'', //筛选时sku的值
+				shop_subject_id: 0,//专题
+				min_g:'', //最小重量
+				max_g:'', //最大重量
 			};
 		},
+		props:{
+			tops:{default:0},//定位
+			paddingTop:{default:0},//上内
+			lists:{},//商品筛选
+			fixed:{default:'none'},
+			shop_list:{},
+			cate_fist_id:{}
+		},
 		methods:{
+			//点击选项
+			cli_it(mid,find,index){
+				let arr = this.lists[find]
+				// console.log(find,arr)
+				arr.data.forEach(a=>{
+					a.state = false
+				})
+				arr.data[index].state = true
+				this.$forceUpdate()
+				//获取参数
+				if(find == 0){
+					arr.data.forEach(i=>{
+						if(i.state == true){
+							this.cate_id = i.id
+							console.log(this.cate_id)
+						}
+					})
+				}else if(find == 1){
+					arr.data.forEach(i=>{
+						if(i.state == true){
+							this.shop_label_cate_id = i.id
+							console.log(this.cate_id)
+						}
+					})
+				}else if(find == 2){
+					arr.data.forEach(i=>{
+						if(i.state == true){
+							this.shop_label_texture_id = i.id
+							console.log(this.cate_id)
+						}
+					})
+				}
+			},
+			//重置
+			reset(){
+				this.sale = ''
+				this.price_type = ''
+				this.key ='' //	关键字
+				this.cate_id =''//分类id
+				this.shop_label_cate_id =''//筛选款式
+				this.shop_label_texture_id=''//筛选材质
+				this.sku_value ='' //筛选时sku的值
+				this.shop_subject_id =''//专题
+				this.min_g ='' //最小重量
+				this.max_g ='' //最大重量
+				this.lists.forEach(a=>{
+					a.data.forEach(b=>{
+						b.state = false
+					})
+					console.log(a.data)
+				})
+				this.$forceUpdate()
+			},
+			//确定
+			shop_confim(){
+				this.shop_remder()
+				this.show = false
+			},
+			//筛选
+			shop_remder(){
+				let data = {
+					sale:this.sale,
+					price:this.price_type,
+					key:this.key, //	关键字
+					cate_id:this.cate_id,//分类id
+					cate_fist_id:this.cate_fist_id,//筛选分类
+					shop_label_cate_id:this.shop_label_cate_id,//筛选款式
+					shop_label_texture_id:this.shop_label_texture_id,//筛选材质
+					sku_value:this.sku_value, //筛选时sku的值
+					shop_subject_id: this.shop_subject_id,//专题
+					min_g:this.min_g, //最小重量
+					max_g:this.max_g, //最大重量
+				}
+				this.$api.post('goods',data).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_list = res.data.data
+					}
+				})
+			},
+			shaix(){
+				this.show = true
+			},
 			go_shopdetail(e){
 				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
 			},
@@ -103,13 +238,28 @@
 				}
 			},
 			//筛选点击
-			shai_cli(e,type){
-				console.log(type)
+				shai_cli(e,type){
+				console.log(e)
 				this.heat_ind = e
-				if(type == 2){
-					this.price_type = 1
+				//销量
+				if(e == 1){
+					if(type == 0){
+						this.sale = 1
+					}else if(type == 1){
+						this.sale = 2
+					}else{
+						this.sale = 1
+					}
+					this.shop_remder()
 				}else{
-					this.price_type = 2
+					if(type == 0){
+						this.price_type = 1
+					}else if(type == 1){
+						this.price_type = 2
+					}else{
+						this.price_type = 1
+					}
+					this.shop_remder()
 				}
 			}
 		}
@@ -122,15 +272,56 @@
 	}
 </style>
 <style lang="scss" scoped>
+	.popups{
+		padding: 80rpx 30rpx 130rpx 30rpx;width: 640rpx;
+		position: relative;
+		.but{
+			position: fixed;left: 0;bottom: 40rpx;
+			width: 100%;
+			display: flex;justify-content: space-around;height: 70rpx;line-height: 70rpx;
+			view{
+				width: 40%;border-radius: 50rpx;
+			}
+			view:nth-child(1){
+				border: 1rpx solid #666;background-color: white;
+			}
+			view:nth-child(2){
+				border: 1rpx solid #2A3E7B;
+				background-color: #2A3E7B;color: white;
+			}
+		}
+		.item{
+			.item_tit{
+				text-align: left;line-height: 70rpx;font-weight: bold;
+			}
+			.item_child{
+				width: 100%;
+				display: flex;flex-wrap: wrap;
+				.child_v{
+					width: 31%;margin: 10rpx 1%;overflow: hidden;white-space: nowrap;
+					height: 60rpx;background-color: #EEEEEE;line-height: 56rpx;border-radius: 50rpx;
+					border: 1rpx solid #eee;
+					&.active{
+						background-color: #F6F8FF;
+						border: 1rpx solid #9FA8C5;
+					}
+					input{
+						height: 60rpx;font-size: 30rpx;
+					}
+				}
+			}
+		}
+	}
 //筛选条件
 .head{
-	width: 100%;height: 88rpx;display: flex;background-color: #fff;color: #555555;
+	width: 100%;height: 88rpx;display: flex;background-color: #fff;color: #555555; 
+	z-index: 21;
 	.head_left{
 		line-height: 88rpx;
 		width: 60%;
 		display: flex;justify-content: space-between;
 		.head_left_child{
-			width: 33%;text-align: center;
+			width: 50%;text-align: center;
 			position: relative;
 			&.active{
 				font-weight: bold;
@@ -158,6 +349,14 @@
 			width: 40%;line-height: 64rpx;padding-top: 6rpx;
 			height: 58rpx;border-right: 2rpx solid #666;margin-top: 15rpx;
 		}
+		.shai{
+			display: flex;
+			image{
+				padding-top: 28rpx;
+				width: 30rpx;height: 30rpx;margin: 4rpx;
+			}
+		}
+		
 	}
 }
 

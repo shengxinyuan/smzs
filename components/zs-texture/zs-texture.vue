@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="width: 100%;">
 		<scroll-view class="scroll" scroll-x >
 			<view class="scroll_child" v-for="(it,ind) in list" :key="ind" :class="{active:ind == head_ind}" @click="nav_cli(ind)">
 				<view class="">
@@ -37,7 +37,8 @@
 
 <style lang="scss" scoped>
 .scroll{
-	display: flex;white-space: nowrap;background-color: #fff;height: 80rpx;line-height: 76rpx;
+	display: flex;white-space: nowrap;background-color: #fff;height: 88rpx;line-height: 76rpx;
+	font-size: 32rpx;
 	.scroll_child{
 		width: 18%;display: inline-block;text-align: center;
 		position: relative;
@@ -46,13 +47,13 @@
 			&:before{
 				content: '';
 				position: absolute;
-				left: 35%;
-				bottom: 10%;
+				left: 30%;
+				bottom: 8%;
 				transform: translateY(-50%);
-				height: 7rpx;
-				width: 30%;
+				height: 6rpx;
+				width: 40%;
 				background-color: #2d407a;
-				border-radius: 0 4px 4px 0;
+				// border-radius: 0 4px 4px 0;
 				opacity: .8;
 			}
 		}

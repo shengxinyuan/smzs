@@ -24,14 +24,17 @@
 				请上传图片
 			</view>
 			<view class="">
-				<u-upload :action="action" ref="uUpload" max-count="2" ></u-upload>
+				<u-upload :action="action" ref="uUpload" max-count="3" :header="token"></u-upload>
 			</view>
 			<view class="" style="margin-top: 30rpx;">
 				请上传视频
 			</view>
 			<view class="vid_f">
-				<view v-if="ship_list !=''">
-					<video src="" controls></video>
+				<view class="vid_f_child" v-for="(it,ind) in ship_list" :key="ind">
+					<video v-if="ship_list !=''" :src="it" controls></video>
+					<view class="del_b" @click="del_vid(ind)">
+						<u-icon class="u-icon" name="close" size="20" color="#fff"></u-icon>
+					</view>
 				</view>
 				
 				<view class="videos_list" v-if="ship_list.length < 2" @click="videos">
@@ -46,7 +49,7 @@
 		</view>
 		
 		<view class="button_b">
-			<zs-button :buttitle="提交" @but_cli="but_cli" ></zs-button>
+			<zs-button :buttitle="'提交'" @but_cli="but_cli" ></zs-button>
 		</view>
 	</view>
 </template>
@@ -58,9 +61,12 @@
 				name:'',
 				phone:'',
 				discride:'',
-				action: 'http://hbcw.nxm.wanheweb.com/api/uploads',
+				action: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
 				lists:[],
-				ship_list:[]
+				ship_list:[],
+				token:{
+					token:uni.getStorageSync('token')
+				}
 			}
 		},
 		onReady() {
@@ -78,23 +84,93 @@
 					success: function (res) {
 						console.log(res)
 						// console.log(res.tempFilePath)
-						let src = res.tempFilePath;
-						// return
-						uni.uploadFile({
-							url: 'https://www.example.com/upload', //仅为示例，非真实的接口地址
-							filePath: src,
-							name: 'file',
-							formData: {
-								'user': 'test'
-							},
-							success: (red) => { 
-								console.log(red);
-							}
-						});
+						if(res.size/1024/1024 > 10){
+							that.com.msg('上传视频不能大于5MB')
+						}else{
+							
+							let src = res.tempFilePath;
+							that.com.msg("正在上传")
+							// return
+							uni.uploadFile({
+								url: 'http://zhuanshi.nxm.wanheweb.com/api/uploadVideo', //仅为示例，非真实的接口地址
+								filePath: src,
+								name: 'file',
+								
+								formData: {
+									'user': 'test'
+								},
+								header:that.token,
+								success: (red) => { 
+									let arr =JSON.parse(red.data) 
+									console.log(arr);
+									if(arr.status == 1){
+										uni.hideToast()
+										that.com.msg('上传成功')
+										that.ship_list.push(arr.data)
+										console.log(that.ship_list)
+									}
+								}
+							});
+						}
 					}
 				});
 			},
+			//移除视频
+			del_vid(e){
+				console.log(e)
+				let that = this
+				uni.showModal({
+					title: '提示',
+					content: '您确定要删除此项吗？',
+					success: async (res) => {
+						if(res.confirm){
+							that.ship_list.splice(e,1)
+							console.log(that.ship_list)
+						}
+					}, 
+				})
+				
+				
+			},
 			// 提交
+			but_cli(){
+				this.lists = this.$refs.uUpload.lists;
+				// console.log(this.lists)
+				//图片处理
+				let arr = ''
+				let img = ''
+				this.lists.forEach(a=>{
+					console.log(a)
+					if(a.response){
+						arr += a.response.data+','
+						img = arr.substr(0,arr.length -1)
+					}
+				})
+				// console.log(this.ship_list)
+				//视频处理
+				let vid = ''
+				let videos = ''
+				this.ship_list.forEach(i=>{
+					vid += i + ','
+					videos = vid.substr(0,vid.length -1)
+					console.log(vid)
+				})
+				// return
+				let data={
+					name:this.name,
+					mobile:this.phone,
+					contact:this.discride,
+					images:img,
+					videos:videos,
+				}
+				this.$api.post('customization',data).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.msg(res.message)
+						this.com.three_back()
+					}
+				})
+			}
 		}
 	}
 </script>
@@ -127,9 +203,19 @@
 	.vid_f{
 		width: 100%;
 		display: flex;flex-wrap: wrap;
-		video{
-			margin: 10rpx;width: 200rpx;height: 200rpx;
+		.vid_f_child{
+			margin: 10rpx;width: 200rpx;height: 200rpx;border-radius: 10rpx;overflow: hidden;
+			position: relative;
+			.del_b{
+				position: absolute;right: 10rpx;top: 10rpx;background-color: red;border-radius: 50%;
+				z-index: 20;width: 40rpx;height: 40rpx;text-align: center;
+			}
+			video{
+				width: 200rpx;height: 200rpx;
+				
+			}
 		}
+		
 		.videos_list{
 			width: 200rpx;height: 200rpx;background-color: #f4f5f6;border-radius: 10rpx;margin: 10rpx;
 			text-align: center;padding-top: 50rpx;

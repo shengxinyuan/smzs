@@ -15,9 +15,7 @@
 			<zs-texture></zs-texture>
 		</view>
 		<view class="contes">
-			
-				<!-- <zs-shopping-list></zs-shopping-list> -->
-				<zs-shoplist-type></zs-shoplist-type>
+			<zs-shoplist-type :tops="'230rpx'" :fixed="'fixed'" :paddingTop="'86rpx'"></zs-shoplist-type>
 		</view>
 	</view>
 </template>
@@ -44,7 +42,7 @@
 		height: 145rpx;width: 100%;
 		padding-top: 55rpx;padding-left: 30rpx;
 		display: flex;
-		z-index: 999;background-color: #293C79;
+		z-index: 20;background-color: #293C79;
 		.header_l{
 			width: 12%;
 			line-height: 100rpx;
@@ -60,7 +58,7 @@
 			margin: 7px 0;
 			line-height: 60rpx;
 			background-color: #eee;
-			margin-right: 4%;
+			margin-right: 4%;z-index: 22;
 			input{
 				width: 86%;
 				margin-top: 10rpx;
@@ -70,8 +68,8 @@
 		}
 	}
 	.textrus{
-		width: 100%;padding: 0 2%;
-		position: fixed;left: 0;top: 145rpx;z-index: 888;
+		width: 100%;
+		position: fixed;left: 0;top: 145rpx;z-index: 20;
 	}
 	.contes{
 		width: 100%;

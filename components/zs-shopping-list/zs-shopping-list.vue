@@ -1,20 +1,20 @@
 <template>
 	<view class="cont">
-		<view class="cont_item" v-for="(it,ind) in 6" :key="ind" @click="go_shopdetail(1)">
-			<image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
+		<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
+			<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
 			<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
 			<view class="it_tit">
-				黄金手镯 18k金 钻石挚爱
+				{{it.title}}
 			</view>
 			<view class="it_price">
-				￥2298
+				￥{{ it.price }}
 			</view>
 			<view class="it_selt">
 				<view class="it_selt_l">
-					<text>￥1980</text><image src="../../static/pifa.png" mode=""></image>
+					<text>￥{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
 				</view>
 				<view class="it_selt_r">
-					已售45512件
+					已售{{it.sale}}件
 				</view>
 			</view>
 		</view>
@@ -27,6 +27,9 @@
 			return {
 				
 			};
+		},
+		props:{
+			shop_list:{}
 		},
 		methods:{
 			go_shopdetail(e){
@@ -48,7 +51,7 @@
 		.imagea{
 			width: 70rpx;height: 84rpx;
 			position: absolute;left: 22rpx;top: 0;
-			z-index: 20;
+			z-index: 10;
 		}
 		.images{
 			width: 100%;

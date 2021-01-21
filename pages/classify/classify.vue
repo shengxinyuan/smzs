@@ -13,8 +13,8 @@
 		</view>
 		
 		<scroll-view scroll-y class="left-aside">
-			<view v-for="item in flist" :key="item.id" class="f-item b-b" :class="{active: currentId == item.id}" @click="tabtap(item)">
-				{{item.name}}
+			<view v-for="(item,ind) in flist" :key="ind" class="f-item b-b" :class="{active: currentId == item.id}" @click="tabtap(item)">
+				{{item.title}}
 			</view>
 		</scroll-view>
 		<scroll-view scroll-with-animation scroll-y class="right-aside" @scroll="asideScroll" :scroll-top="tabScrollTop">
@@ -29,11 +29,11 @@
 			<!-- 轮播 -->
 			
 			<view v-for="item in slist" :key="item.id" class="s-list" :id="'main-'+item.id">
-				<text class="s-item"> {{item.name}}</text>
+				<text class="s-item"> {{item.title}}</text>
 				<view class="t-list">
-					<view @click="navToList(item.id, titem.id)" v-if="titem.pid === item.id" class="t-item" v-for="titem in tlist" :key="titem.id">
+					<view @click="navToList(titem.id)" v-if="titem.pid == item.id" class="t-item" v-for="titem in tlist" :key="titem.id">
 						<image :src="titem.picture"></image>
-						<text>{{titem.name}}</text>
+						<text>{{titem.title}}</text>
 					</view>
 				</view>
 			</view>
@@ -81,20 +81,48 @@
 				this.com.navto(e)
 			},
 			
-			async loadData(){
-				let list = await Json.cateList
-				list.forEach(item=>{
-					if(!item.pid){
-						this.flist.push(item);  //pid为父级id, 没有pid或者pid=0是一级分类
-					}else if(!item.picture){
-						this.slist.push(item); //没有图的是2级分类
-					}else{
-						this.tlist.push(item); //3级分类
-					}
-				}) 
+			loadData(){
+				// let list = Json.cateList
+				// list.forEach(item=>{
+					
+				// 	if(!item.pid){
+				// 		// this.flist.push(item);  //pid为父级id, 没有pid或者pid=0是一级分类
+				// 		// console.log(this.flist)
+				// 	}else if(!item.picture){
+				// 		this.slist.push(item); //没有图的是2级分类
+				// 		console.log(this.slist)
+				// 	}else{
+				// 		this.tlist.push(item); //3级分类
+							
+				// 	}
+				// }) 
+				this.$api.get('cate').then(res=>{
+					console.log(res.data.label)
+					this.flist=res.data.label
+					this.slist=res.data.label //2级分类
+					this.currentId = res.data.label[0].id
+					res.data.label.forEach(i=>{
+						this.$api.get('cate',{label:i.id}).then(res=>{
+							if(res.data.cate !=''){
+								res.data.cate.forEach(it=>{
+									this.tlist.push(it)
+								})
+								
+								console.log(this.tlist)
+							}
+						})
+					})
+				
+				})
 			},
 			//一级分类点击
 			tabtap(item){
+				// this.$api.get('cate',{label:item.id}).then(res=>{
+				// 	console.log(res)
+				// 	if(res.status == 1){
+				// 		this.tlist = res.data.cate
+				// 	}
+				// })
 				if(!this.sizeCalcState){
 					this.calcSize();
 				}
@@ -130,10 +158,8 @@
 				})
 				this.sizeCalcState = true;
 			},
-			navToList(sid, tid){
-				uni.navigateTo({
-					url: `/pages/product/list?fid=${this.currentId}&sid=${sid}&tid=${tid}`
-				})
+			navToList(e){
+				this.com.navto('./class_detail?classify_id='+e)
 			}
 		}
 	}
@@ -209,6 +235,7 @@
 	}
 
 	.right-aside{
+		width: 520rpx;
 		flex: 1;
 		overflow: hidden;
 		padding-left: 20upx;
@@ -245,7 +272,7 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-		width: 176upx;
+		width: 32%;margin-right: 2%;
 		font-size: 26upx;
 		color: #666;
 		padding-bottom: 20upx;
@@ -255,5 +282,8 @@
 			height: 140upx;
 			background-color: #F1F1F1;
 		}
+	}
+	.t-item:nth-child(3n+3){
+		margin-right: 0;
 	}
 </style>
