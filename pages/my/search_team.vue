@@ -1,6 +1,6 @@
 <template>
 	<view style="padding: 3%;">
-		<view class="list" v-if="list">
+		<view class="list" v-if="list != ''">
 			<view class="list_item" v-for="(it,ind) in list" :key="ind">
 				<image src="" mode=""></image>
 				<view class="list_item_name">

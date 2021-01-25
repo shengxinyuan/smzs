@@ -15,20 +15,23 @@
 			</view>
 		</view>
 		<!-- //商品列表 -->
-		<view class="shop_list" >
-			<view class="lsit_item" v-for="(it,ind) in 3" :key="ind">
-				<view class="item_time">
-					{{date_j}}
+		<view class="shop_list" v-if="state_data != ''">
+			<view class="lsit_item" v-for="it in state_data">
+				<view class="item_time" >
+					{{it.time}}
 				</view>
 				<view class="item_shop">
-					<view class="item_shop_it" v-for="it_two in 4">
-						<image src="../../static/index/bann1.png" mode="aspectFill" @click="go_shopdetail(1)"></image>
+					<view class="item_shop_it" v-for="it_two in it.data">
+						<image :src="it_two.image" @click="go_shopdetail(1)"></image>
 						<view class="shop_price">
-							￥2299
+							￥{{it_two.price}}
 						</view>
 					</view>
 				</view>
 			</view>
+		</view>
+		<view v-else style="padding-top: 140rpx;">
+			<u-empty text="暂无浏览记录" mode="history"></u-empty>
 		</view>
 		<!-- 日历 -->
 		<u-calendar v-model="show" :mode="mode" @change="change" :change-year="false"></u-calendar>
@@ -56,7 +59,8 @@
 					{name:'六',index:6},
 				],
 				opacity:1,//透明度
-				date_j:''
+				date_j:'',
+				state_data:''
 			}
 		},
 		//页面滑动
@@ -72,12 +76,16 @@
 			}
 		},
 		onNavigationBarButtonTap() {
+			let that = this
 			uni.showModal({
 				content: "这将会清空所有记录，是否继续？",
 				confirmText: '继续',
 				success(a) {
 					if (a.confirm) {
-
+						that.$api.del('history').then(res=>{
+							console.log(res)
+							that.page_reader()
+						})
 					}
 				}
 			})
@@ -112,9 +120,24 @@
 				
 			}
 			console.log(this.data) //data就是一周的
-			
+			this.page_reader()
 		},
 		methods: {
+			page_reader(){
+				let arr = ''
+				this.data.forEach(i=>{
+					if(i.isToday == true){
+						arr = i
+					}
+				})
+				// console.log(arr)
+				this.$api.get('historyall',{time:arr.timestamp / 1000}).then(res=>{
+					console.log(res.data)
+					if(res.status == 1){
+						this.state_data = res.data
+					}
+				})
+			},
 			//到详情
 			go_shopdetail(e){
 				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
@@ -148,7 +171,7 @@
 					
 				}
 				console.log(this.data) //data就是整一周的
-				
+				this.page_reader()
 			},
 			timess(e){
 				var today = new Date(this.change_date);
@@ -183,12 +206,13 @@
 							result: tYear + "/" + tMonth + "/" + tDate, // 日期整体值
 							week: weekIndex, //星期
 							year: tYear , // 年份
+							timestamp: new Date(time).getTime() + 86400000
 						}
 					return daylist
 				
 				} else {
 					//周几
-					let time = tYear + "/" + tMonth + "/" + tDate
+					let time = tYear + "-" + tMonth + "-" + tDate
 					let weekIndex = new Date(time).getDay();
 					//改变今天的选中状态
 					var d =new Date(this.change_date)
@@ -201,6 +225,7 @@
 							result: tYear + "-" + tMonth + "-" + tDate, // 日期整体值
 							week: weekIndex, //星期
 							year: tYear , // 年份
+							timestamp: new Date(time).getTime() + 86400000
 						}
 					return daylist
 				}
@@ -215,6 +240,7 @@
 						it.isToday = false
 					}
 				})
+				this.page_reader()
 			},
 			//日期数据
 			getWeek(day) {
@@ -223,7 +249,6 @@
 				var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
 				// console.log(today.getTime())
 				today.setTime(targetday_milliseconds);
-				console.log(today.setTime(targetday_milliseconds))
 				var tYear = today.getFullYear();
 
 				var tMonth = today.getMonth();
@@ -249,12 +274,13 @@
 							result: tYear + "/" + tMonth + "/" + tDate, // 日期整体值
 							week: weekIndex, //星期
 							year: tYear , // 年份
+							timestamp: new Date(time).getTime() + 86400000
 						}
 					return daylist
 
 				} else {
 					//周几
-					let time = tYear + "/" + tMonth + "/" + tDate
+					let time = tYear + "-" + tMonth + "-" + tDate
 					let weekIndex = new Date(time).getDay();
 					//改变今天的选中状态
 					var d =new Date()
@@ -267,6 +293,7 @@
 							result: tYear + "-" + tMonth + "-" + tDate, // 日期整体值
 							week: weekIndex, //星期
 							year: tYear , // 年份
+							timestamp: new Date(time).getTime() + 86400000
 						}
 					return daylist
 				}
@@ -323,6 +350,7 @@
 			width: 100%;display: flex;flex-wrap: wrap;
 			.item_shop_it{
 				width: 32%;margin-right: 2%;margin-top: 10rpx;background-color: white;
+				overflow-y: scroll;
 				image{
 					height: 240rpx;width: 100%;
 				}

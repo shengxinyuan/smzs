@@ -1,28 +1,28 @@
 <template>
 	<view class="cont">
 		<view class="cont_list_two" >
-			<view class="cont_item" v-for="(it,ind) in 6" :key="ind" @click="go_shopdetail(1)" >
+			<view class="cont_item" v-for="(it,ind) in lists" :key="ind" @click="go_shopdetail(it.id)" >
 				<view class="item_img">
 					<!-- <image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> -->
-					<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
+					<image class="images" :src="it.image" mode="aspectFill"></image>
 				</view>
 				<view class="it_text">
 					<view class="it_tit">
-						24K黄金手镯 18k金 钻石挚爱一生
+						{{it.title}}
 					</view>
 					<view class="seckill_pic">
 						秒杀价
 					</view>
 					<view class="it_selt_r">
-						剩余512件
+						剩余{{it.stock}}件
 					</view>
 					<view class="it_text_cen">
 						<view style="display: flex;padding-top: 6rpx;">
 							<view class="it_price">
-								￥2298
+								￥{{it.price}}
 							</view>
 							<view class="it_selt_l">
-								<text>￥1980</text>
+								<text>￥{{it.price_make}}</text>
 							</view>
 						</view>
 						<view class="go_seck">
@@ -52,9 +52,13 @@
 				price_type:2
 			};
 		},
+		props:{
+			lists:{},
+			types:{}
+		},
 		methods:{
 			go_shopdetail(e){
-				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
+				this.com.navto('../../pages/index/Activityshop_detail?shop_id='+e+'&type='+this.types)
 			},
 			cli_type(e){
 				console.log(e)
@@ -100,6 +104,7 @@
 			}
 		}
 		.it_text{
+			width: 100%;
 			.it_tit{
 				font-size: 30rpx;width: 96%;height: 80rpx;overflow: hidden;
 			}
@@ -108,6 +113,7 @@
 				padding: 0 16rpx;background-color: #e8372f;
 			}
 			.it_text_cen{
+				width: 100%;
 				display: flex;white-space: nowrap;justify-content: space-between;
 				margin: 8rpx 0;
 				.it_price{

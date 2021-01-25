@@ -7,24 +7,13 @@
 			{{it.name}} </view>
 		</view>
 		<!-- //列表 -->
-		<view class="list" v-if="but_ind == 1">
-			<view class="list_item" v-for="(it,ind) in 6" :key="ind">
-				<image src="../../static/kefu.png" mode=""></image> 
+		<view class="list" >
+			<view class="list_item" v-for="(it,ind) in stdata" :key="ind">
+				<image :src="it.avatar" mode=""></image> 
 				<view class="list_item_name">
-					{{names_com}}
+					{{it.usename}}
 				</view>
 				<text class="list_item_vip" v-if="ind % 2 == 0">
-					超级会员
-				</text>
-			</view>
-		</view>
-		<view class="list" v-else>
-			<view class="list_item" v-for="(it,ind) in 3" :key="ind">
-				<image src="../../static/kefu.png" mode=""></image>
-				<view class="list_item_name">
-					{{names_com}}
-				</view>
-				<text class="list_item_vip" v-if="ind % 4 == 0">
 					超级会员
 				</text>
 			</view>
@@ -43,7 +32,9 @@
 				list:[
 					{name:'区域合伙人'},
 					{name:'全部用户'}
-				]
+				],
+				stdata:'',
+				names:''
 			}
 		},
 		computed:{
@@ -58,13 +49,47 @@
 				return arr
 			}
 		},
+		onLoad() {
+			this.page_reader(1)
+		},
 		methods:{
+			page_reader(e){
+				let arr =''
+				this.$api.get('partnermember',{type:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.stdata = res.data
+						res.data.forEach(i=>{
+							this.names = i.nickname
+							if(this.names.length >= 2 && this.names.length < 4){
+								arr = this.names.replace(/^./g, '*');
+							}else if(this.names.length >= 4 && this.names.length < 11){
+								arr = this.names.replace(/^../g, '**');
+							}else if(this.names.length >= 11){
+								arr = this.names.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+							}
+							i.usename = arr
+						})
+					}
+				})
+			},
+			//搜索
 			go_search(e){
-				
+				this.$api.get('partnersearch',{key:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.navto('./search_team?list='+JSON.stringify(res.data))
+					}
+				})
 			},
 			//团队切换
 			but_ind_cli(e){
 				this.but_ind = e
+				if(e == 1){
+					this.page_reader()
+				}else{
+					this.page_reader(1)
+				}
 			}
 		}
 	}

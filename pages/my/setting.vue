@@ -67,11 +67,11 @@
 				}else if(e == 1){
 					this.com.navto('./user_text')
 				}else if(e == 2){
-					
+					this.com.navto('../../pages/community/shop-code')
 				}else if(e == 3){
 					this.com.navto('./olie_course')
 				}else if(e == 4){
-					
+					this.com.navto('../../pages/service/service')
 				}else if(e == 5){
 					this.com.navto('../../pages/my/aboutus')
 				}else if(e == 6){ 

@@ -34,7 +34,7 @@
 							<view class="user_qda" v-else @click="qiandao(2)"><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
 						</view>
 						<view class="user_phone">
-							手机号：15666666666
+							手机号：{{menber.mobile}}
 						</view>
 						<view class="user_invite">
 							<view @click="qrcode_show = true">
@@ -56,7 +56,7 @@
 						<view class="it_name">我的收藏</view>
 					</view>
 					<view class="statistics_it" @click="go_pages('./my_footprint')">
-						<view class="it_num">18</view>
+						<view class="it_num">{{menber.history}}</view>
 						<view class="it_name">我的足迹</view>
 					</view>
 					<view class="statistics_it" @click="go_pages('./discontcoupon')">
@@ -177,7 +177,7 @@
 						<view style="display: flex;justify-content: space-around;">
 							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
 								<view class="it_num">
-									10人
+									{{menber.team}}人
 								</view>
 								<view class="">
 									累计
@@ -185,7 +185,7 @@
 							</view>
 							<view class="orders_it">
 								<view class="it_num">
-									8人
+									{{menber.today_team}}人
 								</view>
 								<view class="">
 									今日新增
@@ -218,6 +218,7 @@
 								</view>
 							</view>
 						</view>
+						<!-- 非 -->
 						<view class="order_childs_a" v-else>
 							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
 								<view class="it_num">
@@ -239,7 +240,7 @@
 					</view>
 				</view>
 				<!-- 店铺管理 -->
-				<zs-store-admin :skip='huiy_show'></zs-store-admin>
+				<zs-store-admin :skip='!huiy_show'></zs-store-admin>
 				<!-- 综合管理 -->
 				<zs-synth-admin></zs-synth-admin>
 				
@@ -266,7 +267,7 @@
 					联系电话: {{menber.recommend_phone}}
 				</view>
 				<view class="my_yaoq_typebut">
-					<view @click="show = false">
+					<view @click="show = false">	
 						返回
 					</view>
 					<view @click="kao_yqr(menber.recommend_phone)">
@@ -314,15 +315,15 @@
 				],
 				wallet:[
 					{
-						num:260,
+						num:0,
 						name:"待返利(元)"
 					},
 					{
-						num:680,
+						num:0,
 						name:"可提现(元)"
 					},
 					{
-						num:2450,
+						num:0,
 						name:"累计返现(元)"
 					}
 				],
@@ -346,7 +347,7 @@
 		},
 		onShow() {
 			this.page_info()
-			let vip = uni.getStorageSync('viptype')
+			// let vip = uni.getStorageSync('viptype')
 			// console.log(vip)
 			// 会员
 			// if(vip){
@@ -360,9 +361,32 @@
 				this.$api.get('member').then(res=>{
 					console.log(res)
 					if(res.status == 1){
+						let date = new Date().getTime()
+						let end = res.data.vip_time
+						if(end  <= date){
+							uni.setStorageSync("viptype", false)
+							this.huiy_show = false
+						}else{
+							uni.setStorageSync("viptype", true)
+							this.huiy_show = true
+						}
+						
 						this.menber = res.data
 						this.qrcode_image = res.data.qrcode
-						
+						this.wallet = [
+							{
+								num:res.data.rebate_money,
+								name:"待返利(元)"
+							},
+							{
+								num:res.data.money,
+								name:"可提现(元)"
+							},
+							{
+								num:res.data.total_money,
+								name:"累计返现(元)"
+							}
+						]
 					}
 				})
 			},

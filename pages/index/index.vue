@@ -101,7 +101,7 @@
 							<view 
 								v-for="(item, index) in index_data.kill.data" :key="index"
 								class="floor-item"
-								@click="go_pages('./shop_detail')"
+								@click="go_shopdetail(item.id)"
 							>
 								<image src="../../static/community/list_03.png" mode=""></image>
 								<view class="title">￥{{item.price}}</view>
@@ -127,7 +127,7 @@
 						<view class="scoll-wrapper">
 							<view v-for="(item, index) in index_data.group" :key="index"
 								class="floor-item"
-								@click="go_pages('./shop_detail')"
+								@click="go_teamshop(item.id)"
 							>
 								<image src="../../static/community/list_01.png" mode="aspectFill"></image>
 								<view class="title">￥{{item.price}}</view>
@@ -261,6 +261,18 @@
 						this.nac_cla(res.data.cates[0].id)
 					}
 				})
+			},
+			//秒杀进详情
+			go_shopdetail(e){
+				if(this.end_seckill == '秒杀已结束'){
+					this.com.msg('本轮秒杀已经结束，请期待下一期')
+				}else{
+					this.com.navto('../../pages/index/shop_detail?shop_id='+e)
+				}
+			},
+			//团购进详情
+			go_teamshop(e){
+				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
 			},
 			// 确定筛选
 			shop_confim(e){

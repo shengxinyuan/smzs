@@ -745,6 +745,16 @@
 				"navigationBarTitleText":"搜索"
 			}
         }
+        ,{
+            "path" : "pages/service/service",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/Activityshop_detail",
+            "style" : {
+				"navigationStyle":"custom"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

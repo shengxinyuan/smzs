@@ -121,7 +121,7 @@
 				
 			},
 			//登录
-			app_login(){
+			 app_login(){
 				if(this.checked == true){
 					this.$api.post('login',{mobile:this.phone,password:this.pass,note:this.note}).then(res=>{
 						console.log(res)

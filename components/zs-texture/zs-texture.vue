@@ -1,9 +1,14 @@
 <template>
 	<view style="width: 100%;">
 		<scroll-view class="scroll" scroll-x >
-			<view class="scroll_child" v-for="(it,ind) in list" :key="ind" :class="{active:ind == head_ind}" @click="nav_cli(ind)">
+			<view class="scroll_child" :class="{active:head_ind == ''}" @click="nav_cli('')">
 				<view class="">
-					{{it.name}}
+					全部
+				</view>
+			</view>
+			<view class="scroll_child" v-for="(it,ind) in lists" :key="ind" :class="{active:it.id == head_ind}" @click="nav_cli(it.id)">
+				<view class="">
+					{{it.title}}
 				</view>
 			</view>
 		</scroll-view>
@@ -27,9 +32,13 @@
 				]
 			}
 		},
+		props:{
+			lists:{}
+		},
 		methods:{
 			nav_cli(e){
 				this.head_ind = e
+				this.$emit('nav_cli',e)
 			}
 		}
 	}

@@ -1,15 +1,15 @@
 <template>
 	<view>
-		<view class="nav_head">
-			<view class="head_item"  v-for="(it,ind) in list" :key="ind" @click="navhead_cli(ind)">
-				<view class="it_tiem" :class="{acts: ind == navIndex}">
+		<scroll-view class="nav_head" scroll-x="true">
+			<view class="head_item"  v-for="(it,ind) in list.top" :key="ind" @click="navhead_cli(it.id)">
+				<view class="it_tiem" :class="{acts:navIndex == it.id}">
 					{{it.time}}
 				</view>
-				<text class="it_tit" :class="{active:navIndex == ind}">
+				<text class="it_tit" :class="{active:navIndex == it.id}">
 					{{it.title}}
 				</text>
 			</view>
-		</view>
+		</scroll-view>
 		<view class="down_time">
 			<view class="s-header_child">
 				距结束<text class="hour_timer">{{end_seckill}}</text>
@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<view class="shop_cont">
-			<zs-shoplist-seckill></zs-shoplist-seckill>
+			<zs-shoplist-seckill :types="2" :lists="list.data"></zs-shoplist-seckill>
 		</view>
 	</view>
 </template>
@@ -43,22 +43,89 @@
 					}
 				],
 				navIndex:0,
-				end_time:'1611912417',//秒杀到期
+				end_time:'',//秒杀到期
 				end_seckill:'00天00:00:00',//倒计时
+				type_id:'',
 			}
 		},
-		onLoad(){
-			this.ent_time_s()
+		onLoad(op){
+			// console.log(op)
+			this.page_reader()
 		},
 		methods:{
 			navhead_cli(e){
 				this.navIndex = e
+				this.$api.get('activity',{type:2,type_id:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						let arr = 0
+						let title = ''
+						let data = new Date().getTime()
+						res.data.top.forEach(i=>{
+							//时间
+							arr = new Date(i.start_time *1000).getHours() < 10 ? 0 +new Date(i.start_time *1000).getHours() : new Date(i.start_time *1000).getHours()
+							i.time = arr +':00'
+							//状态 开始时间小于当前时间，结束时间大于当前时间 抢购中
+							let ks = i.start_time *1000
+							let js = i.end_time *1000
+							if(ks < data && js > data){
+								i.title = "抢购中"
+							}else if( js < data ){
+								i.title = "已结束"
+							}else if(ks > data){
+								i.title = "即将开始"
+							}
+							//获取抢购中的 时间戳和id
+							if(i.id == e){
+								this.end_time = i.end_time
+							}
+						})
+						this.list = res.data
+					}
+					
+				})
+			},
+			page_reader(){
+				this.$api.get('activity',{type:2,type_id:this.type_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						// 
+						
+						let arr = 0
+						let title = ''
+						let data = new Date().getTime()
+						res.data.top.forEach(i=>{
+							//时间
+							arr = new Date(i.start_time *1000).getHours() < 10 ? 0 +new Date(i.start_time *1000).getHours() : new Date(i.start_time *1000).getHours()
+							i.time = arr +':00'
+							//状态 开始时间小于当前时间，结束时间大于当前时间 抢购中
+							let ks = i.start_time *1000
+							let js = i.end_time *1000
+							if(ks < data && js > data){
+								i.title = "抢购中"
+							}else if( js < data ){
+								i.title = "已结束"
+							}else if(ks > data){
+								i.title = "即将开始"
+							}
+							//获取抢购中的 时间戳和id
+							if(i.T_F == 2){
+								this.end_time = i.end_time
+								this.navIndex = i.id
+							}
+						})
+						this.list = res.data
+						this.ent_time_s()
+					}
+				})
 			},
 			//秒杀倒计时
 			ent_time_s(){
 				let data = new Date()
 				let state = data.getTime()
-				let reslut = this.end_time *1000 - state
+				// console.log(state)
+				let reslut = this.end_time *1000 -state
+				// console.log(reslut)
 				let tim = setInterval(()=>{
 					if(reslut <= 0){
 						clearInterval(tim)
@@ -95,11 +162,11 @@
 <style scoped lang="scss">
 	
 	.nav_head{
-		width: 100%;padding: 16rpx 3%;
-		background-color: white;
+		padding: 16rpx 3%;
+		background-color: white;white-space: nowrap;
 		display: flex;
 		.head_item{
-			width: 33%;text-align: center;
+			width: 33%;text-align: center;display: inline-block;
 			.it_tiem{
 				font-size: 36rpx;font-weight: bold;
 			}

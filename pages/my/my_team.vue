@@ -36,8 +36,8 @@
 			</view>
 		</view>
 		<view class="list" v-else>
-			<view class="list_item" v-for="(it,ind) in 3" :key="ind">
-				<image src="../../static/kefu.png" mode=""></image>
+			<view class="list_item" v-for="(it,ind) in team_data.second" :key="ind">
+				<image :src="it.avatar" mode=""></image>
 				<view class="list_item_name">
 					{{it.usename}}
 				</view>
@@ -103,7 +103,7 @@
 					console.log(res)
 					if(res.status == 1){
 						this.team_data = res.data
-						 res.data.first.forEach(i=>{
+						res.data.first.forEach(i=>{
 							this.names = i.nickname
 							if(this.names.length >= 2 && this.names.length < 4){
 								arr = this.names.replace(/^./g, '*');

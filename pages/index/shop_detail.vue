@@ -49,7 +49,7 @@
 		<view class="introduce-section">
 			
 			<view class="price-box">
-				<view class="price-box_l" v-if="vip_type">
+				<view class="price-box_l" v-if="!vip_type">
 					<text class="price-tip">¥</text>
 					<text class="price">{{shop_det.price}}</text>起
 					<text class="m-price">¥{{shop_det.price_vip}}</text>
@@ -143,7 +143,7 @@
 		
 		<view class="add_bottom">
 			<view class="add_con">
-				<view class="three_icons" >
+				<view class="three_icons" @click="goto_page('../service/service')" >
 					<u-icon name="kefu-ermai" color="#ccc" size="38" class="s_icon"></u-icon>
 					<view>客服</view>
 				</view>
@@ -189,40 +189,47 @@
 						</view>
 					</view>
 				</view> -->
-				<view v-for="(item,index) in specList" :key="index" class="attr-list">
-					<text>{{item.name}}</text>
+				<view v-for="(item,index) in shopsku.title" :key="index" class="attr-list">
+					<text>{{item.title.title}}</text>
 					<view class="item-list">
-						<text v-for="(childItem, childIndex) in specChildList" 
+						<text v-for="(childItem, childIndex) in item.data" 
 							v-if="childItem.pid === item.id && childItem.pid !=3"
 							:key="childIndex" class="tit"
 							:class="{selected: childItem.selected}"
-							@click="selectSpec(childIndex, childItem.pid)"
+							@click="selectSpec(index,childIndex, childItem.pid)"
 						>
-							{{childItem.name}}
+							{{childItem.title}}
 						</text>
 						
 					</view>
 				</view>
-				<view v-for="(it, ind) in former" :key="ind" :class="{jactive:jg_ind == it.id}" class="jg_sty" @click="zhifu(it.id)">
+				<view v-for="(it, ind) in details" :key="ind" :class="{jactive:jg_ind == it.id}" class="jg_sty" @click="zhifu(it.id)">
 					<view class="jg_sty_t">
 						<view>
-							足金：{{it.type}}
+							足金：{{it.title}}
 						</view>
 						<view>
 							金重：{{it.weight}}
 						</view>
 					</view>
 					<view>
-						NO编号：1541544
+						NO编号：{{it.model_no}}
 					</view>
 					<view class="jg_sty_b">
 						<view>
-							附加工费：11.2
+							附加工费：{{it.labor}}
 						</view>
-						<view>
-							￥<text>2899.00</text>
+						<view class="jg_r" v-if="!vip_type">
+							￥<text>{{it.price_normal}}</text>
+						</view>
+						<view class="jg_r" v-else>
+							￥<text>{{it.price_vip}}</text>
 						</view>
 					</view>
+				</view>
+				<view style="margin: 20rpx 0;">
+					数量
+					<u-number-box v-model="value" :min="1" :step="1" :long-press="false" @change="valChange"></u-number-box>
 				</view>
 				<button class="btn" @click="shop_pay(1)" v-if="shop_type == 1">完成</button>
 				<button class="btn" @click="shop_pay(2)" v-else>加入购物车</button>
@@ -237,6 +244,8 @@
 	export default{
 		data() {
 			return {
+				value:1,
+				shop_num:'',
 				vip_type:false,//会员状态
 				shop_type:0,//按钮状态
 				jg_ind:-1,//
@@ -279,74 +288,6 @@
 					{name:'详情'},
 					{name:'推荐'}
 				],
-				specChildList: [
-					{
-						id: 1,
-						pid: 1,
-						name: 'XS',
-					},
-					{
-						id: 2,
-						pid: 1,
-						name: 'S',
-					},
-					{
-						id: 3,
-						pid: 1,
-						name: 'M',
-					},
-					{
-						id: 4,
-						pid: 1,
-						name: 'L',
-					},
-					{
-						id: 5,
-						pid: 1,
-						name: 'XL',
-					},
-					{
-						id: 6,
-						pid: 1,
-						name: 'XXL',
-					},
-					{
-						id: 7,
-						pid: 2,
-						name: '白色',
-					},
-					{
-						id: 8,
-						pid: 2,
-						name: '珊瑚粉',
-					},
-					{
-						id: 9,
-						pid: 2,
-						name: '草木绿',
-					},
-					{
-						id: 10,
-						pid: 3,
-						name: '草木绿',
-						type:"条码：10185474",
-						weight:"1.530g"
-					},
-					{
-						id: 11,
-						pid: 3,
-						name: '草木绿',
-						type:"条码：10185474",
-						weight:"1.530g"
-					},
-					{
-						id: 12,
-						pid: 3,
-						name: '草木绿',
-						type:"条码：10185474",
-						weight:"1.530g"
-					},
-				],
 				pingl:0,//评论
 				tuij:0,//推荐
 				detail_shop:0,//商品详情
@@ -355,6 +296,10 @@
 				stynumber:[],//款号等
 				shop_list:'',//推荐
 				member:'',//个人信息
+				shopsku:'',
+				shoptype_id:"",//商品id
+				sku_ids:'',//sku 的id拼接
+				details:''
 			};
 		},
 		onPageScroll(e) {
@@ -369,19 +314,7 @@
 				this.head_ind = 0 
 			}
 		},
-		computed:{
-			former(){
-				let arr = []
-				this.specChildList.forEach(i=>{
-					
-					if(i.pid == 3){
-						arr.push(i)
-						// console.log(arr)
-					}
-				})
-				return arr
-			}
-		},
+
 		mounted() {
 			var query = uni.createSelectorQuery()
 			//获取对应模块到顶部的距离
@@ -409,23 +342,27 @@
 			
 			this.member = uni.getStorageSync('member_info')
 			console.log(this.member)
-			//规格 默认选中第一条
-			this.specList.forEach(item=>{
-				for(let cItem of this.specChildList){
-					if(cItem.pid === item.id){
-						this.$set(cItem, 'selected', true);
-						this.specSelected.push(cItem);
-						break; //forEach不能使用break
-					}
-				} 
-			})
+			let vip = uni.getStorageSync('viptype')
+			console.log(vip)
+			// 会员
+			if(vip){
+				this.vip_type = true
+			}else{
+				this.vip_type = false
+			}
+			
 		},
 		methods:{
+			valChange(e) {
+				// console.log('当前值为: ' + e.value)
+				this.shop_num = e.value
+			},
 			page_render(){
 				this.$api.get('goods/'+this.shop_id+'&member_id='+this.member.id).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.shop_det = res.data
+						this.shoptype_id = res.data.id
 						this.stynumber = [
 							{
 								name:'款号',
@@ -444,10 +381,13 @@
 								num:res.data.texture
 							},
 							{
-								name:'金重',
+								name:'克重',
 								num:res.data.min_g+'-'+res.data.max_g
 							}
 						]
+						
+						// sku
+						this.sku()
 					}
 				})
 				//推荐商品
@@ -476,6 +416,10 @@
 			shop_pay(e){ //e  1是购买 2 加购物车
 				if(e == 1){
 					this.com.navto('../vip-confirm-order/vip-confirm-order')
+				}else{
+					this.$api.post('cart',{shop_goods_id:this.shop_id,count:this.shop_num,shop_goods_sku_id:10}).then(res=>{
+						console.log(res)
+					})
 				}
 			},
 			//结果
@@ -520,7 +464,6 @@
 			},
 			//轮播指示点
 			swiperChange(e) {
-				console.log(e)
 				this.swiperCurrent = e.detail.current
 			},
 			//点击轮播图放大
@@ -536,8 +479,19 @@
 			},
 			//加购物车/购买
 			payment_yes(e){
-				this.shop_type = e
-				this.toggleSpec()
+				this.shop_type = e //按钮显示
+				this.toggleSpec() // 模态框
+				this.sku()
+			},
+			//商品sku
+			sku(){
+				this.$api.get('sku',{type:0,id:this.shoptype_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shopsku = res.data
+						this.details = res.data.data
+					}
+				})
 			},
 			//返回上一页
 			goto_top(){
@@ -555,27 +509,44 @@
 				}
 			},
 			//选择规格
-			selectSpec(index, pid){
-				let list = this.specChildList;
-				list.forEach(item=>{
+			selectSpec(find,index, pid){
+				let list = this.shopsku.title[find];
+				console.log(list)
+				list.data.forEach(item=>{
 					if(item.pid === pid){
 						this.$set(item, 'selected', false);
 					}
 				})
 
-				this.$set(list[index], 'selected', true);
+				this.$set(list.data[index], 'selected', true);
 				// 存储已选择
 				// *
 				//  * 修复选择规格存储错误
 				//  * 将这几行代码替换即可
 				//  * 选择的规格存放在specSelected中
 				
-				this.specSelected = []; 
-				list.forEach(item=>{ 
-					if(item.selected === true){ 
-						this.specSelected.push(item); 
-						console.log(this.specSelected)
-					} 
+				this.specSelected = '';
+				this.shopsku.title.forEach(item=>{
+					item.data.forEach(c=>{
+						if(c.selected == true){
+							this.specSelected += c.id +','
+							// console.log(this.specSelected)
+							//处理逗号
+							let arr = '' 
+							this.sku_ids = this.specSelected.substr(0,this.specSelected.length - 1)
+							  arr = this.sku_ids.replace(/\,/g, "") //替换所有的 逗号
+							  console.log(this.sku_ids)
+							//判断长度相同时
+							if(item.data.length == arr.length){
+								this.$api.get('sku',{type:0,id:this.shoptype_id,sku_ids:this.sku_ids}).then(res=>{
+									console.log(res)
+									if(res.status == 1){
+										this.details = res.data.data
+									}
+								})
+							}
+						} 
+					})
 				})
 				
 			},
@@ -603,10 +574,7 @@
 	}
 </style>
 <style lang="scss" scoped>
-	
-	
 	page{
-		
 		padding-bottom: 160upx;
 	}
 	.header_bait{
@@ -941,7 +909,7 @@
 				view{
 					margin-top: 10rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
 				}
-				view:nth-child(2){
+				.jg_r{
 					color: #ef2d2d;
 					text{
 						font-size: 34rpx;font-weight: bold;

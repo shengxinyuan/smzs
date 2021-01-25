@@ -67,7 +67,7 @@
 				}else if(e==4){
 					this.com.navto('../../pages/my/aboutus')
 				}else if(e==5){
-					
+					this.com.navto('../../pages/service/service')
 				}else if(e==6){
 					this.com.navto('../../pages/community/platform-gold-prices')
 				}

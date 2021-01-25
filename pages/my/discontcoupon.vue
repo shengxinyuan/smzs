@@ -6,40 +6,63 @@
 				<view :class="{line:current==index}"></view>
 			</view>
 		</view>
-		<!-- 未使用 -->
-		<view v-if="current==0? true:false" style="padding: 3%;">
-			<view class="p2 common" v-for="it in 2">
-				<view class="i1">￥10
-				<view>满一百可用</view></view>
-				<view class="i2">
-					<view>平台通用抵用券	</view>
-					<view>有效期：2020-12-12-2021-6-12</view>
-					<view>适用范围：黄金等贵金属可用</view>
+		<view class="" v-if="page_show">
+			<zs-login></zs-login>
+		</view>
+		<view v-else>
+			<!-- 未使用 -->
+			<view v-if="current==0" style="padding: 3%;">
+				<view class="p2 common" v-for="(it,ind) in stdata">
+					<view class="common_child">
+						<view class="i1">￥{{it.face_value}}
+							<view>满{{it.price}}可用</view>
+						</view>
+						<view class="i2">
+							<view>{{it.title}}	</view>
+							<view>有效期：{{it.start_time}}至{{it.end_time}}</view>
+							<view  @click="beizhu(ind)">{{it.typstit}} 适用范围：<u-icon name="arrow-down"></u-icon> </view>
+						</view>
+					</view>
+					<view class="position" v-if="remackind == ind && remack_show == true" @click="remack_show = false"> 
+						{{remack}} 
+					</view>
 				</view>
 				
 			</view>
-		</view>
-		<!-- 已使用 -->
-		<view v-else-if="current==1? true:false" style="padding: 3%;">
-			<view class="p4 common" v-for="it in 3">
-				<view class="i1">￥10
-				<view>满一百可用</view></view>
-				<view class="i2">
-					<view>平台通用抵用券	</view>
-					<view>有效期：2020-12-12-2021-6-12</view>
-					<view>适用范围：黄金等贵金属可用</view>
+			<!-- 已使用 -->
+			<view v-else-if="current==1" style="padding: 3%;">
+				<view class="p4 common" v-for="(it,ind) in stdata">
+					<view class="common_child">
+						<view class="i1">￥{{it.face_value}}
+							<view>满{{it.price}}可用</view>
+						</view>
+						<view class="i2">
+							<view>{{it.title}}	</view>
+							<view>有效期：{{it.start_time}}至{{it.end_time}}</view>
+							<view  @click="beizhu(ind)">{{it.typstit}} 适用范围：<u-icon name="arrow-down"></u-icon> </view>
+						</view>
+					</view>
+					<view class="position" v-if="remackind == ind && remack_show == true" @click="remack_show = false">
+						{{remack}}
+					</view>
 				</view>
 			</view>
-		</view>
-		<!-- 已过期 -->
-		<view v-else style="padding: 3%;">
-			<view class="p4 common" v-for="it in 4">
-				<view class="i1">￥10
-				<view>满一百可用</view></view>
-				<view class="i2">
-					<view>平台通用抵用券	</view>
-					<view>有效期：2020-12-12-2021-6-12</view>
-					<view>适用范围：黄金等贵金属可用</view>
+			<!-- 已过期 -->
+			<view v-else style="padding: 3%;">
+				<view class="p5 common" v-for="(it,ind) in stdata">
+					<view class="common_child">
+						<view class="i1">￥{{it.face_value}}
+							<view>满{{it.price}}可用</view>
+						</view>
+						<view class="i2">
+							<view>{{it.title}}	</view>
+							<view>有效期：{{it.start_time}}至{{it.end_time}}</view>
+							<view  @click="beizhu(ind)">{{it.typstit}} 适用范围：<u-icon name="arrow-down"></u-icon> </view>
+						</view>
+					</view>
+					<view class="position" v-if="remackind == ind && remack_show == true" @click="remack_show = false">
+						{{remack}}
+					</view>
 				</view>
 			</view>
 		</view>
@@ -53,35 +76,67 @@
 				tabs: ['未使用','已使用','已过期'],
 				current: 0,
 				isUse: true,
-				unused:[],//未使用1
-				yishiy:[],//已使用0
-				stale:[]//已过期2
-				
+				stdata:[],
+				remack:'',
+				remackind:-1,
+				remack_show:false,
+				page_show:true
 			}
 		},
 		onShow() {
-			this.$api.post('mycoupon').then(res=>{
-				console.log(res)
-				if(res.status==1){
-					res.data.forEach(i=>{
-						//未使用
-						if(i.status == 1){
-							this.unused.push(i)
-						}else if(i.status == 0){
-							this.yishiy.push(i)
-						}else{
-							this.stale.push(i)
-						}
-					})
-				}
-			})
+			// this.$api.post('mycoupon').then(res=>{
+			// 	console.log(res)
+			// 	if(res.status==1){
+			// 		res.data.forEach(i=>{
+			// 			//未使用
+			// 			if(i.status == 1){
+			// 				this.unused.push(i)
+			// 			}else if(i.status == 0){
+			// 				this.yishiy.push(i)
+			// 			}else{
+			// 				this.stale.push(i)
+			// 			}
+			// 		})
+			// 	}
+			// })
+			this.page_reader(1)
 		},
 		methods:{
+			page_reader(e){
+				this.$api.get('coupon',{type:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						
+						this.page_show = false
+						res.data.forEach(i=>{
+							if(i.type == 0){
+								i.typstit = '减免优惠券'
+							}else if(i.type == 1){
+								i.typstit = '新人优惠券'
+							}else if(i.type == 2){
+								i.typstit = '定额优惠券'
+							}else if(i.type == 3){
+								i.typstit = '分类优惠券'
+							}
+						})
+						this.stdata = res.data
+					}
+				})
+			},
+			//备注展示
+			beizhu(e){
+				this.remack_show = !this.remack_show
+				this.remackind = e
+				this.remack = this.stdata[0].cate_title
+				
+			},
+			//类型切换
 			tabsChange(index){
-				console.log(this.unused)
-				console.log(this.yishiy)
-				console.log(this.stale)
+				this.page_show = true
+				let ind = index + 1
+				this.page_reader(ind)
 				this.current = index;
+				
 			}
 		}
 	}
@@ -118,17 +173,30 @@
 			background: url(../../static/my/discount2.png);
 			background-size: 100% 100%;
 		}
+		.p5{
+			background: url(../../static/my/dos.png);
+			background-size: 100% 100%;
+		}
 		.common{
 			background-size: 100% 100%;
 			width: 100%;
 			height: 195rpx;
-			display: flex;
+			
 			// justify-content: space-between;
 			// align-items: center;
 			padding: 0 30rpx;
 			margin: 15rpx 0;
 			box-sizing: border-box;
-			
+			position: relative;
+			.position{
+				position: absolute;bottom: -32rpx;right: 0;
+				width: 440rpx;background-color: #F1F1F1;z-index: 20; 
+				font-size: 26rpx;padding: 2rpx;border-radius: 6rpx;
+				box-shadow: 0 3rpx 1rpx 3rpx rgba(0,0,0,0.12);
+			}
+			.common_child{
+				display: flex;
+			}
 			.i1{
 				width: 38%;margin-top: 40rpx;
 				font-size: 44rpx; color: #fff;
