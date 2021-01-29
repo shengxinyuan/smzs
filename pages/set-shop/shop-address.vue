@@ -1,9 +1,17 @@
 <template>
 	<view class="service-tel-box">
 		<view class="tel">
-			<view>
-				<input :value="valueTel" :type="type" :placeholder="placeholder" />
+			<view @click="openPicker">
+				<u-picker 
+				mode="region" 
+				v-model="show" 
+				:params="params" 
+				:default-region="defaultRegion"
+				@confirm="confirm">
+				</u-picker>
+				<view>{{value}}</view>
 			</view>
+			<u-input v-model="address" type="text" placeholder="请输入详细地址"/>
 		</view>
 		<view class="show-switch-box">
 			<view class="show-switch-up">
@@ -15,7 +23,7 @@
 				<text>商城显示开关按钮可以控制商城是否显示此信息。</text>
 			</view>
 			<view class="zl-btn">
-				<button class="btn">保存</button>
+				<button class="btn" @click="save">保存</button>
 			</view>
 		</view>
 	</view>
@@ -25,16 +33,72 @@
 	export default {
 		data() {
 			return {
-				valueTel:'江苏省苏州市相城区嘉园广场1924',
-				type:'text',
-				placeholder:'请输入商城地址',
-				checked: true
+				defaultRegion: ["江苏省", "苏州市", "相城区"],
+				params: {
+					province: true,
+					city: true,
+					area: true,
+				},
+				checked: true,
+				show: false,
+				value: '选择省市区',
+				address: '' ,
+				province : '' ,
+				city : '' ,
+				area: '' ,
+			}
+		},
+		onLoad(e) {
+			this.province = e.province
+			this.city = e.city
+			this.area = e.area
+			this.address = e.address
+			if(e.province){
+				this.value = e.province + e.city + e.area
+				this.defaultRegion = [e.province, e.city, e.area]
 			}
 		},
 		methods: {
 			change(status) {
 				console.log(status);
 			},
+			confirm(e) {
+				console.log(e);
+				this.value = e.province.label + e.city.label + e.area.label
+				this.defaultRegion = [e.province.label , e.city.label , e.area.label]
+				this.province = e.province.label
+				this.city = e.city.label
+				this.area = e.area.label
+			},
+			openPicker() {
+				this.show = true
+			},
+			save(){		
+				let params = {
+					address: this.address ,
+					province : this.province ,
+					city : this.city ,
+					area: this.area 
+				}
+				
+				console.log(params)
+				
+				this.$api.post('manage', params ).then(res=>{
+					console.log(res)
+					uni.showToast({
+						telephone : res.message,
+					})
+					if(res.status == 1){
+						uni.setStorageSync('shop_province', this.province)
+						uni.setStorageSync('shop_city', this.city)
+						uni.setStorageSync('shop_area', this.area)
+						uni.setStorageSync('shop_address', this.address)
+						
+						uni.navigateBack() 
+					}
+				})
+			}
+			
 		}
 	}
 </script>
@@ -42,14 +106,13 @@
 <style lang="scss">
 	.service-tel-box {
 		padding-left: 30upx;
+		
 
 		.tel {
 			padding: 30upx 0;
+			font-size: 30upx;
 			border-top: solid 2upx #f8f8f8;
 			border-bottom: solid 2upx #f8f8f8;
-			input{
-				font-size: 30upx;
-			}
 		}
 
 		.show-switch-box {

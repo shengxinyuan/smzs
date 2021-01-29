@@ -7,15 +7,28 @@
 					<text>金店logo</text>
 				</view>
 				<view class="images" @click="shopLogoPopup">
-					<image class="shop-photo" :src="shopPhoto" mode="widthFix"></image>
+					<u-image
+					v-if="data.avatar"  
+					width="90" 
+					height="90" 
+					:src="data.avatar" 
+					mode="widthFix" 
+					shape="circle"></u-image>
+					<u-image 
+					v-else 
+					width="90" 
+					height="90" 
+					:src="shopPhoto" 
+					mode="widthFix" 
+					shape="circle"></u-image>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
-				
+
 				<!-- 选择相册 -->
 				<u-popup v-model="show" mode="bottom" border-radius="10">
 					<view class="shop-logo-popup">
-						<view class="take-picture">拍照</view>
-						<view class="album">从相册选择</view>
+						<view class="take-picture" @click="takePhoto">拍照</view>
+						<view class="album" @click="selectPhoto">从相册选择</view>
 						<view class="cancel" @click="show = false">取消</view>
 					</view>
 				</u-popup>
@@ -25,7 +38,7 @@
 					<text>金店名称</text>
 				</view>
 				<view class="nick-name" @click="skipShopName">
-					<text>{{shopName}}</text>
+					<text>{{data.title}}</text>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -34,7 +47,7 @@
 					<text>金店签名</text>
 				</view>
 				<view class="nick-name" @click="skipShopSignature">
-					<text class="u-line-1">{{shopSignature}}</text>
+					<text class="u-line-1">{{data.remark||'签名'}}</text>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -43,7 +56,7 @@
 					<text>客服电话</text>
 				</view>
 				<view class="nick-name" @click="skipServiceTel">
-					<text>{{shopTelephone}}</text>
+					<text>{{data.telephone||'手机号'}}</text>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -52,7 +65,7 @@
 					<text>金店地址</text>
 				</view>
 				<view class="nick-name" @click="skipShopAddress">
-					<text>{{shopAddress}}</text>
+					<text>{{data.province}}{{data.city}}{{data.area}}{{data.address}}</text>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -117,67 +130,160 @@
 	export default {
 		data() {
 			return {
+				data : [] ,
 				shopPhoto: '../../static/community/photo.png',
-				shopName: '这里是昵称',
-				shopSignature: '这里是签名这里是签名这里是签名签名签名签名签名签名',
-				shopTelephone: '18252352641',
-				shopAddress: '这里是地址',
-				show: false
+				shopName: '',
+				shopSignature: '',
+				shopTelephone: '',
+				shopAddress: '',
+				show: false,
+				text: 'uni.request',
+				avatar:''
+			}
+		},
+		onLoad() {
+			this.getData();
+		},
+		onShow(){
+			let shop_title = uni.getStorageSync('shop_title') 
+			if(shop_title){
+				this.data.title = shop_title
+			}
+			let shop_remark = uni.getStorageSync('shop_remark')
+			if(shop_remark){
+				this.data.remark = shop_remark
+			}
+			let shop_telephone = uni.getStorageSync('shop_telephone')
+			if(shop_telephone){
+				this.data.telephone = shop_telephone
+			}
+			let shop_is_display = uni.getStorageSync('shop_is_display')
+			if(shop_is_display){
+				this.data.is_display = shop_is_display
+			}
+			let shop_address = uni.getStorageSync('shop_address')
+			if(shop_address){
+				this.data.address = shop_address
+			}
+			let shop_province = uni.getStorageSync('shop_province')
+			if(shop_province){
+				this.data.province = shop_province
+			}
+			let shop_city = uni.getStorageSync('shop_city')
+			if(shop_city){
+				this.data.city = shop_city
+			}
+			let shop_area = uni.getStorageSync('shop_area')
+			if(shop_area){
+				this.data.area = shop_area
 			}
 		},
 		methods: {
 			shopLogoPopup() {
 				this.show = true
 			},
-			skipShopName(){
+			skipShopName() {
 				uni.navigateTo({
-					url:'shop-name'
+					url: './shop-name?title='+this.data.title+'&id='+this.data.id
 				})
 			},
-			skipShopSignature(){
+			skipShopSignature() {
 				uni.navigateTo({
-					url:'shop-signature'
+					url: './shop-signature?remark='+this.data.remark
 				})
 			},
-			skipServiceTel(){
+			skipServiceTel() {
 				uni.navigateTo({
-					url:'service-tel'
+					url: './service-tel?telephone='+this.data.telephone+'&is_display='+this.data.is_display
 				})
 			},
-			skipShopAddress(){
+			skipShopAddress() {
 				uni.navigateTo({
-					url:'shop-address'
+					url: './shop-address?province='+this.data.province+'&city='+this.data.city+'&area='+this.data.area+'&address='+this.data.address
 				})
 			},
-			skipServiceCode(){
+			skipServiceCode() {
 				uni.navigateTo({
-					url:'service-code'
+					url: 'service-code'
 				})
 			},
-			skipShopData(){
+			skipShopData() {
 				uni.navigateTo({
-					url:'shop-data'
+					url: 'shop-data'
 				})
 			},
-			skipShopCertificate(){
+			skipShopCertificate() {
 				uni.navigateTo({
-					url:'shop-certificate'
+					url: 'shop-certificate'
 				})
 			},
-			skipShopGoldPrice(){
+			skipShopGoldPrice() {
 				uni.navigateTo({
-					url:'shop-gold-price'
+					url: 'shop-gold-price'
 				})
 			},
-			skipSetPayee(){
+			skipSetPayee() {
 				uni.navigateTo({
-					url:'set-payee'
+					url: 'set-payee'
 				})
 			},
-			skipSetWithdraw(){
+			skipSetWithdraw() {
 				uni.navigateTo({
-					url:'set-withdraw'
+					url: 'set-withdraw'
 				})
+			},
+			getData() {
+				let _that = this 
+				let params = {}
+				console.log(params)
+				
+				this.$api.get('manage', params ).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.data = res.data
+						console.log(this.data)
+					}
+					console.log(_that.data)
+				})
+			},
+			takePhoto(){
+				uni.chooseImage({
+				    count: 1, //默认9
+				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				    sourceType: ['camera'], //使用相机
+				    success: function (res) {
+				        console.log(JSON.stringify(res.tempFilePaths));
+				    }
+				});
+			},
+			selectPhoto(){
+				let _that = this
+				uni.chooseImage({
+				    count: 1, //默认9
+				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				    sourceType: ['album'], //使用相机
+				    success: function (res) {
+				        console.log(JSON.stringify(res.tempFilePaths[0]));
+						 uni.uploadFile({
+						            url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads', //仅为示例，非真实的接口地址
+						            filePath: res.tempFilePaths[0],
+						            name: 'file',
+						            formData: {
+						                'user': 'test'
+						            },
+									methods : 'POST',
+									header:{	// uni.getStorageSync('token')
+										// 'content-type': 'application/x-www-form-urlencoded',
+										'token':uni.getStorageSync('token')},
+						            success: (uploadFileRes) => {
+						                console.log(uploadFileRes.data);
+										_that.data = {
+											'avatar' : uploadFileRes.data.data
+										}
+						            }
+						        });
+				    }
+				});
 			}
 		}
 	}
@@ -219,11 +325,6 @@
 		align-items: center;
 		justify-content: flex-end;
 
-		.shop-photo {
-			width: 25%;
-			border-radius: 100%;
-		}
-
 		.shop-code {
 			width: 12%;
 		}
@@ -243,17 +344,21 @@
 		color: #CCCCCC;
 		margin-left: 10upx;
 	}
-	.shop-logo-popup{
+
+	.shop-logo-popup {
 		width: 100%;
 		font-size: 32upx;
 		padding: 0 30upx;
-		.take-picture,.album{
+
+		.take-picture,
+		.album {
 			height: 110upx;
 			line-height: 110upx;
 			text-align: center;
 			border-bottom: solid 2upx #F8F8F8;
 		}
-		.cancel{
+
+		.cancel {
 			height: 140upx;
 			line-height: 140upx;
 			text-align: center;
