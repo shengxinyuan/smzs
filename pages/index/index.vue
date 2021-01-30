@@ -60,12 +60,14 @@
 						<view>卖出价</view>
 						<view>涨跌</view>
 					</view>
-					<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" v-for="(it,ind) in 5" :key="ind">
-						<view>黄金99.95</view>
-						<view>360.00</view>
-						<view>357.01</view>
-						<view>359.80</view>
-						<view> <text v-if="ind %2 == 0" style="color: #5cb671;">↑ 2.23</text><text style="color: #f5553f;" v-else>↓ 2.23</text> </view>
+					<view class="swipers_d">
+						<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" v-for="(it,ind) in 15" :key="ind">
+							<view>黄金99.95</view>
+							<view>360.00</view>
+							<view>357.01</view>
+							<view>359.80</view>
+							<view> <text v-if="ind %2 == 0" style="color: #5cb671;">↑ 2.23</text><text style="color: #f5553f;" v-else>↓ 2.23</text> </view>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -184,7 +186,7 @@
 			<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="nav_ind" @shop_confim="shop_confim"></zs-shoplist-type>
 			
 		</view>
-		 <drag-button :isDock="true" :existTabBar="true" @btnClick="btnClick" />
+		 <drag-button :isDock="true" :existTabBar="true" @btnClick="go_pages('../service/service')"/>
 		<!-- tabbar -->
 		<zs-tabbar :tab_ind="1"></zs-tabbar>
 		<!-- tabbar -->
@@ -267,12 +269,12 @@
 				if(this.end_seckill == '秒杀已结束'){
 					this.com.msg('本轮秒杀已经结束，请期待下一期')
 				}else{
-					this.com.navto('../../pages/index/shop_detail?shop_id='+e)
+					this.com.navto('../../pages/index/Activityshop_detail?shop_id='+e+'&type='+2)
 				}
 			},
 			//团购进详情
 			go_teamshop(e){
-				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
+				this.com.navto('../../pages/index/Activityshop_detail?shop_id='+e+'&type='+1)
 			},
 			// 确定筛选
 			shop_confim(e){
@@ -290,10 +292,6 @@
 			//页面跳转
 			go_pages(e){
 				this.com.navto(e)
-			},
-			//点击客服
-			btnClick(){
-				this.com.msg('客服')
 			},
 			// 搜索
 			search(){

@@ -54,11 +54,23 @@
 		},
 		props:{
 			lists:{},
-			types:{}
+			types:{},
+			titles:{},//状态
+			second:{} //秒数
 		},
 		methods:{
 			go_shopdetail(e){
-				this.com.navto('../../pages/index/Activityshop_detail?shop_id='+e+'&type='+this.types)
+				if(this.titles){
+					if(this.titles == '抢购中' ){
+						this.com.navto('../../pages/index/Activityshop_detail?shop_id='+e+'&type='+this.types+'&second='+this.second)
+					}else{
+						this.com.msg('本轮秒杀已经结束，请期待下一期')
+					}
+				}else{
+					this.com.navto('../../pages/index/Activityshop_detail?shop_id='+e+'&type='+this.types)
+				}
+				
+				
 			},
 			cli_type(e){
 				console.log(e)

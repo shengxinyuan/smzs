@@ -67,21 +67,7 @@
 			goto_vip_set(ind){
 				let that = this
 				if(this.skip == true){
-					if(ind == 2){
-						this.com.navto('../../pages/set-shop/set-shop')
-					} else if(ind == 3){
-						this.com.navto('../../pages/community/shop-code')
-					} else if(ind == 5){
-						this.com.navto('../../pages/community/talk')
-					} else if(ind == 6){
-						this.com.navto('../../pages/community/community')
-					} else if(ind == 7){
-						this.com.navto('../../pages/selected-topics/selected-topics')
-					} else if(ind == 4){
-						this.com.navto('../../pages/community/my-gold-prices')
-					} else if(ind == 1){
-						this.com.navto('../../pages/shop-orders/shop-orders')
-					}else{
+					if(ind == 0){
 						uni.showModal({
 							content:"你还不是VIP,是否开通?",
 							success(a) {
@@ -90,6 +76,20 @@
 								}
 							}
 						})
+					}else if(ind == 1){
+						this.com.navto('../../pages/shop-orders/shop-orders')
+					}else if(ind == 2){
+						this.com.navto('../../pages/set-shop/set-shop')
+					} else if(ind == 3){
+						this.com.navto('../../pages/community/shop-code')
+					} else if(ind == 4){
+						this.com.navto('../../pages/community/my-gold-prices')
+					}else if(ind == 5){
+						this.com.navto('../../pages/community/talk')
+					} else if(ind == 6){
+						this.com.navto('../../pages/community/community')
+					} else if(ind == 7){
+						this.com.navto('../../pages/selected-topics/selected-topics')
 					}
 				}
 			

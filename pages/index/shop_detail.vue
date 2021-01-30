@@ -245,10 +245,10 @@
 		data() {
 			return {
 				value:1,
-				shop_num:'',
+				shop_num:1,
 				vip_type:false,//会员状态
 				shop_type:0,//按钮状态
-				jg_ind:-1,//
+				jg_ind:'',//sku套装id
 				bgcolor:'',//背景色
 				opacity: 0,//透明度
 				head_ind:0,//头部样式
@@ -267,20 +267,6 @@
 					{
 						src: '../../static/index/bann2.png'
 					}
-				],
-				specList: [
-					{
-						id: 1,
-						name: '尺寸',
-					},
-					{	
-						id: 2,
-						name: '颜色',
-					},
-					{
-						id: 3,
-						name: '成色',
-					},
 				],
 				headlist:[
 					{name:'商品'},
@@ -338,7 +324,7 @@
 			console.log(options)
 			//接收传值,id里面放的是标题，因为测试数据并没写id 
 			this.shop_id = options.shop_id;
-			this.page_render()
+			
 			
 			this.member = uni.getStorageSync('member_info')
 			console.log(this.member)
@@ -350,7 +336,7 @@
 			}else{
 				this.vip_type = false
 			}
-			
+			this.page_render()
 		},
 		methods:{
 			valChange(e) {
@@ -414,12 +400,26 @@
 			},
 			//购买/加购物车
 			shop_pay(e){ //e  1是购买 2 加购物车
-				if(e == 1){
-					this.com.navto('../vip-confirm-order/vip-confirm-order')
+				let data = {
+					goods_id:this.shop_id,
+					sku_id:this.jg_ind,
+					count:this.shop_num,
+					type:0
+				}
+				if(this.jg_ind ==''){
+					this.com.msg('请选择规格')
+					return
 				}else{
-					this.$api.post('cart',{shop_goods_id:this.shop_id,count:this.shop_num,shop_goods_sku_id:10}).then(res=>{
-						console.log(res)
-					})
+					if(e == 1){
+						this.com.navto('../vip-confirm-order/vip-confirm-order?data='+JSON.stringify(data))
+					}else{
+						
+						this.$api.post('cart',{shop_goods_id:this.shop_id,count:this.shop_num,shop_goods_sku_id:this.jg_ind}).then(res=>{
+							console.log(res)
+							this.com.msg(res.message)
+							this.toggleSpec() // 模态框
+						})
+					}
 				}
 			},
 			//结果
@@ -524,7 +524,6 @@
 				//  * 修复选择规格存储错误
 				//  * 将这几行代码替换即可
 				//  * 选择的规格存放在specSelected中
-				
 				this.specSelected = '';
 				this.shopsku.title.forEach(item=>{
 					item.data.forEach(c=>{

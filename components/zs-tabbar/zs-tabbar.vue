@@ -65,7 +65,7 @@
 					this.com.rel("../../pages/classify/classify")
 				}else if(e==3){
 					this.com.msg('敬请期待~')
-					// this.com.rel("../../pages/selts/selts")
+					// this.com.rel("../../pages/selts/selts")	
 				}else if(e==4){
 					this.com.rel("../../pages/cart/cart")
 				}else if(e==5){
@@ -78,9 +78,8 @@
 
 <style scoped lang="scss">
 	.tab{
-		font-size: 26rpx;z-index: 999;
-		position: fixed;left: 0;bottom: 0;
-		width: 100%;height: 110rpx;
+		font-size: 26rpx;width: 100%;height: 110rpx;
+		position: fixed;left: 0;bottom: 0;z-index: 999;
 		background: url(../../static/tabbar/backimg.png);
 		background-size: 100% 100%;
 		display: flex;

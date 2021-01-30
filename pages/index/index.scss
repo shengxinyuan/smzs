@@ -118,11 +118,18 @@
 			.king_pic_a{
 				display: flex;justify-content: space-between;
 				.times{
-					color: #999;line-height: 60rpx;
+					color: #999;line-height: 60rpx; 
 				}
 			}
 			.tabs{
 				width: 100%;
+				.swipers_d{
+					height: 362rpx;
+					overflow-y: scroll;
+				}
+				.scroll-Y{
+					
+				}
 				.tabs_tr{
 					display: flex;
 					view{

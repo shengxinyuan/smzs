@@ -2,23 +2,14 @@
 	<!-- 金店管理 -->
 	<view class="zl-page">
 		<view class="box-one">
-			<view class="zl-head">
+			<view class="zl-heads">
 				<view class="heads">
 					<text>金店logo</text>
 				</view>
 				<view class="images" @click="shopLogoPopup">
-					<image class="shop-photo" :src="shopPhoto" mode="widthFix"></image>
+					<image class="shop-photo" :src="shopPhoto" mode="aspectFill"></image>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
-				
-				<!-- 选择相册 -->
-				<u-popup v-model="show" mode="bottom" border-radius="10">
-					<view class="shop-logo-popup">
-						<view class="take-picture">拍照</view>
-						<view class="album">从相册选择</view>
-						<view class="cancel" @click="show = false">取消</view>
-					</view>
-				</u-popup>
 			</view>
 			<view class="zl-heads">
 				<view class="heads">
@@ -117,17 +108,43 @@
 	export default {
 		data() {
 			return {
-				shopPhoto: '../../static/community/photo.png',
+				shopPhoto: '',
 				shopName: '这里是昵称',
 				shopSignature: '这里是签名这里是签名这里是签名签名签名签名签名签名',
 				shopTelephone: '18252352641',
 				shopAddress: '这里是地址',
-				show: false
+				image:''
 			}
 		},
 		methods: {
 			shopLogoPopup() {
-				this.show = true
+				let that = this
+				uni.chooseImage({
+					sourceType: ['camera '], //从相册选择
+					success: (chooseImageRes) => {
+						console.log(chooseImageRes)
+						const tempFilePaths = chooseImageRes.tempFilePaths[0]
+						console.log(chooseImageRes.tempFilePaths[0])
+						uni.uploadFile({
+							url: 'http://mrd.nxm.wanheweb.com/api/uploads',
+							filePath: tempFilePaths,
+							name: 'file',
+							formData: {
+								'user': 'test'
+							},
+							header:{
+								'token':uni.getStorageSync('token')
+							},
+							success: (up) => {
+								that.image = JSON.parse(up.data).data
+								// console.log(JSON.parse(up.data))
+								that.shopPhoto = that.image
+								// console.log(this.images_ava)
+							}
+						});
+						
+					}
+				});
 			},
 			skipShopName(){
 				uni.navigateTo({
@@ -218,7 +235,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-
+		image{
+			width: 80rpx;height: 86rpx;
+		}
 		.shop-photo {
 			width: 25%;
 			border-radius: 100%;

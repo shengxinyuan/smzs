@@ -1,38 +1,31 @@
 <template>
 	<view class="content">
-		<view class="p1" >
+	<!-- 	<view class="p1" >
 			<view :class="{tabs:current==index}" v-for="(item,index) in tabs" :key="index" @click="tabsChange(index)">
 				{{item}}
 				<view :class="{line:current==index}"></view>
 			</view>
+		</view> -->
+		<view class="" v-if="page_show">
+			<zs-login></zs-login>
 		</view>
-		<!-- 未使用 -->
-		<view v-if="current==0? true:false">
-			<view class="p2 common" v-for="it in unused">
-				<view class="i1">￥{{it.price}}</view>
-				<view class="i2">
-					<view>优惠券满{{it.money}}使用</view>
-					<view>{{it.start_time}} 至 {{it.end_time}}</view>
-				</view>
-			</view>
-		</view>
-		<!-- 已使用 -->
-		<view v-else-if="current==1? true:false">
-			<view class="p4 common" v-for="it in yishiy">
-				<view class="i1">￥{{it.price}}</view>
-				<view class="i2">
-					<view>优惠券满{{it.money}}使用</view>
-					<view>{{it.start_time}} 至 {{it.end_time}}</view>
-				</view>
-			</view>
-		</view>
-		<!-- 已过期 -->
 		<view v-else>
-			<view class="p4 common" v-for="it in stale">
-				<view class="i1">已过期</view>
-				<view class="i2">
-					<view>优惠券满{{it.money}}使用</view>
-					<view>{{it.start_time}} 至 {{it.end_time}}</view>
+			<!-- 未使用 -->
+			<view v-if="current==0" style="padding: 3%;">
+				<view class="p2 common" v-for="(it,ind) in stdata" :key="ind" @click="count(it)">
+					<view class="common_child">
+						<view class="i1">￥{{it.price}}
+							<view>满{{it.face_value}}可用</view>
+						</view>
+						<view class="i2">
+							<view>{{it.title}}	</view>
+							<view>有效期：{{it.start_time}}至{{it.end_time}}</view>
+							<view  @click="beizhu(ind)">{{it.typstit}} 适用范围：<u-icon name="arrow-down"></u-icon> </view>
+						</view>
+					</view>
+					<view class="position" v-if="remackind == ind && remack_show == true" @click="remack_show = false"> 
+						{{remack}} 
+					</view>
 				</view>
 			</view>
 		</view>
@@ -43,37 +36,65 @@
 	export default{
 		data(){
 			return{
-				tabs: ['未使用','已使用','已过期'],
 				current: 0,
 				isUse: true,
-				unused:[],//未使用1
-				yishiy:[],//已使用0
-				stale:[]//已过期2
-				
+				stdata:[],
+				remack:'',
+				remackind:-1,
+				remack_show:false,
+				page_show:true,
+				cate_ids:'',
+				money:''
 			}
 		},
+		onLoad(op) {
+			console.log(op)
+			this.cate_ids = op.ids
+			this.money = op.price
+		},
 		onShow() {
-			this.$api.post('mycoupon').then(res=>{
-				console.log(res)
-				if(res.status==1){
-					res.data.forEach(i=>{
-						//未使用
-						if(i.status == 1){
-							this.unused.push(i)
-						}else if(i.status == 0){
-							this.yishiy.push(i)
-						}else{
-							this.stale.push(i)
-						}
-					})
-				}
-			})
+			this.page_reader(1)
 		},
 		methods:{
+			//优惠券点击
+			count(e){
+				uni.setStorageSync('coupon',e)
+				uni.navigateBack()
+			},
+			//页面渲染
+			page_reader(e){
+				this.$api.get('coupon',{type:e,cate_ids:this.cate_ids,money:this.money}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						
+						this.page_show = false
+						res.data.forEach(i=>{
+							if(i.type == 0){
+								i.typstit = '减免优惠券'
+							}else if(i.type == 1){
+								i.typstit = '新人优惠券'
+							}else if(i.type == 2){
+								i.typstit = '定额优惠券'
+							}else if(i.type == 3){
+								i.typstit = '分类优惠券'
+							}
+						})
+						this.stdata = res.data
+					}
+				})
+			},
+			//备注展示
+			beizhu(e){
+				this.remack_show = !this.remack_show
+				this.remackind = e
+				this.remack = this.stdata[0].cate_title
+				
+			},
+			//类型切换
 			tabsChange(index){
-				console.log(this.unused)
-				console.log(this.yishiy)
-				console.log(this.stale)
+				this.page_show = true
+				let ind = index + 1
+				this.page_reader(ind)
 				this.current = index;
 			}
 		}
@@ -105,33 +126,57 @@
 		}
 		.p2{
 			background: url(../../static/my/discount_coupon.png);
+			
 		}
 		.p4{
 			background: url(../../static/my/discount2.png);
+			background-size: 100% 100%;
+		}
+		.p5{
+			background: url(../../static/my/dos.png);
+			background-size: 100% 100%;
 		}
 		.common{
-			margin: 20rpx 30rpx;
 			background-size: 100% 100%;
-			width: 690rpx;
+			width: 100%;
 			height: 195rpx;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 0 102rpx 0 30rpx;
+			
+			// justify-content: space-between;
+			// align-items: center;
+			padding: 0 30rpx;
+			margin: 15rpx 0;
 			box-sizing: border-box;
-			color: #fff;
+			position: relative;
+			.position{
+				position: absolute;bottom: -32rpx;right: 0;
+				width: 440rpx;background-color: #F1F1F1;z-index: 20; 
+				font-size: 26rpx;padding: 2rpx;border-radius: 6rpx;
+				box-shadow: 0 3rpx 1rpx 3rpx rgba(0,0,0,0.12);
+			}
+			.common_child{
+				display: flex;
+			}
 			.i1{
-				font-size: 44rpx;
+				width: 38%;margin-top: 40rpx;
+				font-size: 44rpx; color: #fff;
+				view{
+					font-size: 28rpx;line-height: 60rpx;
+				}
 			}
 			.i2{
-				view:nth-child(2){
-					font-size: 40rpx;
+				margin-top: 38rpx;
+				
+				view:nth-child(1){
+					font-size: 34rpx;font-weight: bold;
 				}
 				view:nth-child(2){
-					margin-top: 45rpx;
-					font-size: 24rpx;
+					font-size: 26rpx;color: #999;line-height: 66rpx;white-space: nowrap;
+				}
+				view:nth-child(3){
+					font-size: 28rpx;color: #999;white-space: nowrap; 
 				}
 			}
+			
 		}
 	}
 </style>

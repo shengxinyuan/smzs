@@ -18,25 +18,28 @@
 					<image src="../../static/index/section.png" mode="aspectFill" @click="order_detail(item.id)"></image>
 					<view class="list_right">
 						<view @click="order_detail(item.id)">
-							<view class="title">足金项链 环环相扣</view>
-							<view class="Specifications">金重：5.8g<text class="num"> 款号：0141448</text></view>
-							<view class="price">￥1888</view>
+							<view class="title">{{item.goods.title}}</view>
+							<view class="Specifications">金重：{{item.goods.wage}}<text class="num"> 款号：{{item.goods.model_no}}</text></view>
+							<view class="shop_list_label">
+								<text>金价：{{item.gold_price}}</text><text>工费： {{item.labor_price}} </text>
+							</view>
+							<view class="price">￥{{item.total}}</view>
 						</view>
 						
 					</view>
 				</view>
-				<view class="around">
-					<view class="">
-						共1件商品
-					</view>
-					<view>合计:<text class="money">￥1888</text></view>
-				</view>
+				
 				<view class="foot_s">
-					<view></view> <!-- 位置 -->
+					<view class="around">
+						<view style="margin-right: 20rpx;">
+							共1件
+						</view>
+						<view>合计:<text class="money">￥{{item.total}}</text></view>
+					</view>
 					<view class="foot_child">
 						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id)">取消订单</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 10" @click="order_detail(item.id)">去支付</view> <!-- // -->
-						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  <!-- // -->
+						<!-- <view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  -->
 						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist_wl(item)">查看物流</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 30" @click="sure_details(item.id)">确认收货</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 40" @click="go_immed(item)">立即评价</view>
@@ -116,7 +119,7 @@
 					content:'您确定删除该订单吗？？',
 					success(a) {
 						if(a.confirm){
-							that.$api.put('orders',{id:e}).then(res=>{
+							that.$api.del('orders',{id:e}).then(res=>{
 								console.log(res)
 								if(res.status == 1){
 									if(ty == 50){
@@ -192,7 +195,7 @@
 				height: 250rpx;
 				display: flex;
 				align-items: center;
-				border-bottom: 1rpx solid #f6f6f6;
+				// border-bottom: 1rpx solid #f6f6f6;
 				
 				image{
 					width: 200rpx;
@@ -230,10 +233,18 @@
 						}
 					}
 					.Specifications{
-						width: 100%;color: #999;line-height: 60rpx;
+						width: 100%;color: #999;font-size: 26rpx;
 						display: flex;
 						.num{
 							color: #999;margin-left: 20rpx;
+						}
+					}
+					.shop_list_label{
+						
+						text{
+							display: inline-block;background-color: #eee;font-size: 24rpx;margin: 5rpx 10rpx 5rpx 0;
+							padding: 0 4rpx;border-radius: 5rpx;
+							color: #999;
 						}
 					}
 				}
@@ -243,8 +254,6 @@
 				height: 80rpx;
 				display: flex;
 				align-items: center;
-				justify-content: space-between;
-				border-bottom: 1rpx solid #eee;
 				.money{
 					color: #ba1a30;
 				}

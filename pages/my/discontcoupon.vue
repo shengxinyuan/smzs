@@ -14,8 +14,8 @@
 			<view v-if="current==0" style="padding: 3%;">
 				<view class="p2 common" v-for="(it,ind) in stdata">
 					<view class="common_child">
-						<view class="i1">￥{{it.face_value}}
-							<view>满{{it.price}}可用</view>
+						<view class="i1">￥{{it.price}}
+							<view>满{{it.face_value}}可用</view>
 						</view>
 						<view class="i2">
 							<view>{{it.title}}	</view>

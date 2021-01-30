@@ -1,10 +1,12 @@
 <template>
  	<view class="content">
  		<view class="head">
- 			<view v-for="(item,index) in tabs" :key="index" :class="{title:current==item.id}" @click="tabClick(item.id,index)">
- 				{{item.name}}
- 				<view :class="{line:current==item.id}"></view>
- 			</view>
+ 			<scroll-view scroll-x="true" class="swiper-box">
+ 				<view v-for="(item,index) in tabs" :key="index" class="swiper_it" :class="{title:current==item.id}" @click="tabClick(item.id,index)">
+ 					{{item.name}}
+ 					<view :class="{line:current==item.id}"></view>
+ 				</view>
+ 			</scroll-view>
  		</view>
  		<view class="box" v-if="page_show">
 			 <swiper class="swiper" :current="current_ind" @change="page_swiper">
@@ -123,6 +125,11 @@
  </script>
  
  
+ <style>
+	page{
+		background-color: #f6f6f6;
+	}
+ </style>
  <style lang="scss" scoped>
  	.content{
 		background-color: #f6f6f6;
@@ -137,10 +144,17 @@
  			justify-content: space-between;
  			height: 80rpx;
  			line-height: 80rpx;
- 			padding: 0 25rpx 0 35rpx;
+ 			padding:0 2%;
  			background-color: #fff;color: #999999;
  			text-align: center;
-			position: fixed;left: 0;top: 0;z-index: 20;
+			// position: fixed;left: 0;top: 0;z-index: 20;
+			.swiper-box{
+				display: flex;white-space: nowrap;
+				.swiper_it{
+					display: inline-block;
+					width: 18%;
+				}
+			}
  			.title {
  				font-size: 30rpx;color: #000000;
  				font-weight: bold;

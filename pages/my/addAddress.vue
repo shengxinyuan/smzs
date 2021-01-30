@@ -34,9 +34,15 @@
 				</view>
 			</view>
 			<view class="item ">
-				<text>寄件人实名认证</text>
+				<text>收件人真实姓名</text>
 				<view class="right">
-					<input type="text" :disabled="true"  placeholder="顺丰邮件必需实名认证,否则不能收件! ＞" />
+					<input type="text" v-model="Realityname" placeholder="请输入真实姓名,负责会导致不能收货" />
+				</view>
+			</view>
+			<view class="item ">
+				<text>身份证号码</text>
+				<view class="right">
+					<input type="text" v-model="idcard" placeholder="请输入有效身份证号码" maxlength="18"/>
 				</view>
 			</view>
 			<view class="item item-bd"> <!-- v-if="address_id == 0 ? true : false" -->
@@ -46,11 +52,10 @@
 				</view>
 			</view>
 		</view>
-		<view v-if="address_id == 0">
-			<button class="btn_sty" v-if="this.editForm.username =='' || this.editForm.mobile == '' || this.editForm.address == '' || this.regions == ''" >保存</button>
+		<view >
+			<button class="btn_sty" v-if="but_true" >保存</button>
 			<button class="btn" v-else @click="save">保存</button>
 		</view>
-		<button class="btn" v-else @click="Modify">修改</button>
 	</view>
 </template>
 
@@ -68,32 +73,43 @@
 					mobile: '',
 					address: ''
 				},
+				Realityname:'',//真实姓名
+				idcard:'',//身份证
 				regions:'',
 				province:'',//省
 				city:'',//市
 				area:'',//区
-				address_type:0,
-				address_id:0,
+				address_type:0, //	0-非默认 1-默认
+				address_id:'',
 				address_mor:0,
-				labind:0
+				labind:0,
+				is_mine:1, //0-不是自己的 1-自己的
 			}
 		},
 		onLoad(op) {
-			
-			console.log(op)
-			if(op.type != -1 ){
-				this.address_id = op.type
-				this.$api.get('address/'+op.type).then(res=>{
-					console.log(res)
-					if(res.status == 1){
-						this.editForm.username = res.data.contact
-						this.editForm.mobile = res.data.mobile
-						this.regions = res.data.province+'-'+ res.data.city +'-'+res.data.area
-						this.editForm.address = res.data.address
-					}
-				})
+			this.is_mine = op.is_mine
+			// console.log(JSON.parse(op.type))
+			let arr = JSON.parse(op.type)
+				this.editForm.username = arr.contact
+				this.editForm.mobile = arr.mobile
+				this.regions = arr.province+'-'+ arr.city +'-'+arr.area
+				this.editForm.address = arr.address
+				this.labind = arr.label
+				this.Realityname = arr.truename
+				this.idcard = arr.id_number
+				this.address_mor  = arr.is_default
+				this.address_id = arr.id
+		},
+		computed:{
+			but_true(){
+				let arr
+				if(this.editForm.username =='' || this.editForm.mobile == '' || this.editForm.address == '' || this.regions == '' || this.Realityname == '' || this.idcard==""){
+					arr = true
+				}else{
+					arr = false
+				}
+				return arr
 			}
-			
 		},
 		methods:{
 			//标签
@@ -118,39 +134,43 @@
 					// console.log(this.address_type)
 				}
 			},
+			//地址接口
+			address_reader(){
+				let data = {
+					contact:this.editForm.username,
+					mobile:this.editForm.mobile,
+					province:this.province,
+					city:this.city,
+					area:this.area,
+					address:this.editForm.address,
+					label:this.labind,
+					address_id:this.address_id,//地址id，修改传
+					truename:this.Realityname,
+					id_number:this.idcard,
+					is_mine:this.is_mine,
+					is_default:this.address_type
+				}
+				this.$api.post('address',data).then(res=>{
+					console.log(res)
+					this.com.msg(res.message)
+					if(res.status == 1){
+						this.com.three_back( )
+					}
+				})
+			},
 			//保存
 			save(){
-				
+				let idcard_code = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
 				if(!(/^1[345678]\d{9}$/.test(this.editForm.mobile))){
 					uni.showToast({
 						title:'手机号不正确',icon:'none'
 					})
+				}else if(!idcard_code.test(this.idcard)){
+					this.com.msg("身份证有误")
 				}else{
-					this.$api.post('address',{address_id:this.address_id,contact:this.editForm.username,mobile:this.editForm.mobile,province:this.province,
-					city:this.city,area:this.area,address:this.editForm.address,is_default:this.address_type}).then(res=>{
-						console.log(res)
-						if(res.status ==1){	
-							uni.navigateBack()
-						}
-					})
+					this.address_reader()
 				}
 			},
-			//修改
-			Modify(){
-				if(!(/^1[34578]\d{9}$/.test(this.editForm.mobile))){
-					uni.showToast({
-						title:'手机号不正确',icon:'none'
-					})
-				 }else{
-					 this.$api.post('address',{address_id:this.address_id,contact:this.editForm.username,mobile:this.editForm.mobile,province:this.province,
-					city:this.city,area:this.area,address:this.editForm.address,is_default:0,address_id:this.address_id}).then(res=>{
-						console.log(res)
-						if(res.status ==1){	
-							uni.navigateBack()
-						}
-					})
-				}
-			}
 		}
 	}
 </script>

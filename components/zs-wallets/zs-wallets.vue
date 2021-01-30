@@ -97,7 +97,7 @@
 				this.value = Math.floor(e.detail.value)
 			},
 			but_cli(){
-				this.$emit('but_cli')
+				this.$emit('but_cli',this.pay_type,this.value)
 			}
 			
 		}

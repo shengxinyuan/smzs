@@ -90,7 +90,7 @@
 				this.checked = e;
 			},
 			pages_ty(){
-				this.$api.get('member_info').then(res=>{
+				this.$api.get('info').then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.images_ava = res.data.avatar
@@ -179,12 +179,12 @@
 			},
 			// 收货地址
 			go_address(){
-				this.com.navto('./receiving')
+				this.com.navto('./receiving?is_mine='+ 1+'&type='+1)
 			},
 			//保存
 			go_usertext(){
 				// let arr = this.birthday.replace(/\-/g,"")
-				 this.$api.post('member_info',{avatar:this.images_ava,nickname:this.names,sex:this.sex_num,
+				 this.$api.put('info',{avatar:this.images_ava,nickname:this.names,
 				 birthday:this.birthday}).then(res=>{
 					console.log(res)
 					if(res.status == 1){

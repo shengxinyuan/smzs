@@ -83,6 +83,7 @@
 			"path": "pages/login/login",
 			"style": {
 				// "navigationBarTitleText": "uni-app"
+				"navigationStyle":"custom"
 			}
 		},{
 			"path": "pages/information/information",
@@ -753,6 +754,16 @@
             "path" : "pages/index/Activityshop_detail",
             "style" : {
 				"navigationStyle":"custom"
+			}
+        }
+        ,{
+            "path" : "pages/my/add_name",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/login/bangding",
+            "style" : {
+				"navigationBarTitleText":"绑定手机号"
 			}
         }
     ],

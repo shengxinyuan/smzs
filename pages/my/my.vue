@@ -29,7 +29,7 @@
 					</view>
 					<view class="userinfo_text">
 						<view class="text_top">
-							<view class="user_name">{{menber.nickname}}</view>
+							<view class="user_name"> {{menber.nickname}} </view>
 							<view class="user_qda" v-if="!menber.if_sign" @click="qiandao(1)"><u-icon name="order"></u-icon>立即签到</view>
 							<view class="user_qda" v-else @click="qiandao(2)"><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
 						</view>
@@ -415,6 +415,7 @@
 					this.qd_show = true
 					this.$api.put('gold').then(res=>{
 						console.log(res)
+						this.page_info()
 					})
 				}else{
 					this.com.msg('您已经签到过了')

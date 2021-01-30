@@ -42,7 +42,7 @@
 			</view>
 			<view class="three_s">
 				<view class="titles">—————— 其他方式登录 ——————</view>
-				<view class="weixin">
+				<view class="weixin" @click="weixin">
 					<view>
 						<u-icon name="weixin-circle-fill" color="#08BA06" size="90"></u-icon>
 					    <text>微信</text>
@@ -145,11 +145,11 @@
 									clearInterval(time)
 									this.com.rel('../index/index')
 								}else{
-									arr -= 1
+									arr -= 1 
 								}
 							},1000)
 						}else{
-							this.com.msg(res.message)
+							this.com.msg(res.message) 
 						}
 					})
 				}else{
@@ -168,6 +168,40 @@
 				uni.navigateTo({
 					url:'./forget?type='+e
 				})
+			},
+			// 微信登录
+			weixin(){
+				let that = this
+				uni.login({
+				  provider: 'weixin',
+				  success: function (log) {
+				    // console.log(log.authResult);
+					uni.setStorageSync("openid",log.authResult.openid)
+					that.$api.post('getWxUserInfo',{access_token:log.authResult.access_token,openid:log.authResult.openid}).then(res=>{
+						console.log(res) 
+						if(res.status == 1){
+							if(res.data.login_type == 0){
+								that.com.navto("./bangding")
+							}else{
+								uni.setStorageSync('member_info',red.data.member_info)
+								uni.setStorageSync('token',red.data.token)
+								uni.showToast({
+									title:'请稍后...',icon:'loading',duration:2000
+								})
+								let arr = 2
+								let time = setInterval(()=>{
+									if(arr == 0){
+										clearInterval(time)
+										this.com.rel('../index/index')
+									}else{
+										arr -= 1 
+									}
+								},1000)
+							}
+						}
+					})
+				  }
+				});
 			}
 		}
 	}

@@ -18,11 +18,15 @@
 						<image v-if="its.goods" src="../../static/index/section.png" mode="aspectFill" @click="order_detail(item.id,10)"></image>
 						<view class="list_right" v-if="its.goods">
 							<view @click="order_detail(item.id)">
-								<view class="title">足金项链 环环相扣</view>
-								<view class="Specifications">金重：5.8g<text class="num"> 款号：0141448</text></view>
-								<view class="price">￥1888</view>
+								<view class="title">{{its.goods.title}}</view>
+								<view class="Specifications">金重：{{its.goods.wage}}<text class="num"> 款号：{{its.goods.model_no}}</text></view>
+								<view class="shop_list_label">
+									<text>金价：{{its.gold_price}}</text><text>工费： {{its.labor_price}} </text>
+								</view>
+								<view class="price"><text>￥{{its.total}}</text>
+								 <text style="color: #999;"> *{{its.count}}</text></view>
 							</view>
-							
+								
 						</view>
 					</view>
 				</view>
@@ -215,17 +219,20 @@
 				}
 				.price{
 					width: 100%;line-height: 70rpx;
-					color: #ba1a30;
-					text{
-						color: #999999;
-						text-decoration: line-through;
-					}
+					color: #ba1a30;display: flex;justify-content: space-between;
 				}
 				.Specifications{
-					width: 100%;color: #999;line-height: 60rpx;
+					width: 100%;color: #999;font-size: 26rpx;
 					display: flex;
-					justify-content: space-between;
 					.num{
+						color: #999;margin-left: 20rpx;
+					}
+				}
+				.shop_list_label{
+					
+					text{
+						display: inline-block;background-color: #eee;font-size: 24rpx;margin: 5rpx 10rpx 5rpx 0;
+						padding: 0 4rpx;border-radius: 5rpx;
 						color: #999;
 					}
 				}
