@@ -3,7 +3,7 @@
 	<view class="zl-page">
 		<view class="box-one">
 			<view class="zl-heads">
-				<view class="heads">
+				<view class="heads"> 
 					<text>金店logo</text>
 				</view>
 				<view class="images" @click="shopLogoPopup">
@@ -16,7 +16,7 @@
 					<text>金店名称</text>
 				</view>
 				<view class="nick-name" @click="skipShopName">
-					<text>{{shopName}}</text>
+					<text>{{data.title}}</text>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -25,7 +25,7 @@
 					<text>金店签名</text>
 				</view>
 				<view class="nick-name" @click="skipShopSignature">
-					<text class="u-line-1">{{shopSignature}}</text>
+					<text class="u-line-1">{{data.remark||'还没设置签名~'}}</text>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -34,7 +34,7 @@
 					<text>客服电话</text>
 				</view>
 				<view class="nick-name" @click="skipServiceTel">
-					<text>{{shopTelephone}}</text>
+					<text>{{data.telephone||'还没设置手机号~'}}</text> 
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -43,7 +43,7 @@
 					<text>金店地址</text>
 				</view>
 				<view class="nick-name" @click="skipShopAddress">
-					<text>{{shopAddress}}</text>
+					<text>{{data.province}}{{data.city}}{{data.area}}{{data.address}}</text>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -52,7 +52,7 @@
 					<text>金店客服二维码</text>
 				</view>
 				<view class="images" @click="skipServiceCode">
-					<image class="shop-code" src="../../static/set-shop/ma.png" mode="widthFix"></image>
+					<image class="shop-code" :src="data.qr_code" @click="imgpreview(data.qr_code)" mode="aspectFill"></image>
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -108,15 +108,36 @@
 	export default {
 		data() {
 			return {
+				image:'',
+				data : [] ,
 				shopPhoto: '',
-				shopName: '这里是昵称',
-				shopSignature: '这里是签名这里是签名这里是签名签名签名签名签名签名',
-				shopTelephone: '18252352641',
-				shopAddress: '这里是地址',
-				image:''
+				shopName: '',
+				shopSignature: '',
+				shopTelephone: '',
+				shopAddress: '',
+				show: false,
+				text: 'uni.request',
+				avatar:''
 			}
 		},
+		onLoad() {
+		},
+		onShow(){
+			this.$api.get("manage").then(res=>{
+				console.log(res)
+				this.data = res.data
+				this.shopPhoto=res.data.avatar
+			})
+		},
 		methods: {
+			//图片预览
+			imgpreview(e){
+				let arr = []
+				arr.push(e)
+				uni.previewImage({
+					urls:arr
+				})
+			},
 			shopLogoPopup() {
 				let that = this
 				uni.chooseImage({
@@ -126,7 +147,7 @@
 						const tempFilePaths = chooseImageRes.tempFilePaths[0]
 						console.log(chooseImageRes.tempFilePaths[0])
 						uni.uploadFile({
-							url: 'http://mrd.nxm.wanheweb.com/api/uploads',
+							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
 							filePath: tempFilePaths,
 							name: 'file',
 							formData: {
@@ -139,62 +160,94 @@
 								that.image = JSON.parse(up.data).data
 								// console.log(JSON.parse(up.data))
 								that.shopPhoto = that.image
-								// console.log(this.images_ava)
+								that.$api.post('manage',{avatar:that.image}).then(res=>{
+									console.log(res)
+								})
 							}
 						});
 						
 					}
 				});
 			},
-			skipShopName(){
+			skipShopName() {
 				uni.navigateTo({
-					url:'shop-name'
+					url: './shop-name?title='+this.data.title+'&id='+this.data.id
 				})
 			},
-			skipShopSignature(){
+			skipShopSignature() {
 				uni.navigateTo({
-					url:'shop-signature'
+					url: './shop-signature?remark='+this.data.remark
 				})
 			},
-			skipServiceTel(){
+			skipServiceTel() {
 				uni.navigateTo({
-					url:'service-tel'
+					url: './service-tel?telephone='+this.data.telephone+'&is_display='+this.data.is_display
 				})
 			},
-			skipShopAddress(){
+			skipShopAddress() {
 				uni.navigateTo({
-					url:'shop-address'
+					url: './shop-address?province='+this.data.province+'&city='+this.data.city+'&area='+this.data.area+'&address='+this.data.address
 				})
 			},
-			skipServiceCode(){
+			skipServiceCode() {
 				uni.navigateTo({
-					url:'service-code'
+					url: 'service-code'
 				})
 			},
-			skipShopData(){
+			//金店数据
+			skipShopData() {
 				uni.navigateTo({
-					url:'shop-data'
+					url: 'shop-data'
 				})
 			},
-			skipShopCertificate(){
+			skipShopCertificate() {
 				uni.navigateTo({
-					url:'shop-certificate'
+					url: 'shop-certificate'
 				})
 			},
-			skipShopGoldPrice(){
+			skipShopGoldPrice() {
 				uni.navigateTo({
-					url:'shop-gold-price'
+					url: 'shop-gold-price'
 				})
 			},
-			skipSetPayee(){
+			skipSetPayee() {
 				uni.navigateTo({
-					url:'set-payee'
+					url: 'set-payee'
 				})
 			},
-			skipSetWithdraw(){
+			skipSetWithdraw() {
 				uni.navigateTo({
-					url:'set-withdraw'
+					url: 'set-withdraw'
 				})
+			},
+			selectPhoto(){
+				let _that = this
+				uni.chooseImage({
+				    count: 1, //默认9
+				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				    sourceType: ['album'], //使用相机
+				    success: function (res) {
+				        console.log(JSON.stringify(res.tempFilePaths[0]));
+						uni.uploadFile({
+							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads', //仅为示例，非真实的接口地址
+							filePath: res.tempFilePaths[0],
+							name: 'file',
+							formData: {
+								'user': 'test'
+							},
+							methods : 'POST',
+							header:{	// uni.getStorageSync('token')
+								// 'content-type': 'application/x-www-form-urlencoded',
+								'token':uni.getStorageSync('token')},
+							success: (uploadFileRes) => {
+								console.log(uploadFileRes.data);
+								_that.data = {
+									'avatar' : uploadFileRes.data.data
+								}
+							}
+						});
+				    }
+				});
 			}
 		}
 	}
@@ -241,10 +294,11 @@
 		.shop-photo {
 			width: 25%;
 			border-radius: 100%;
+			background-color: #F6F6F6;
 		}
 
 		.shop-code {
-			width: 12%;
+			width: 80rpx;height: 80rpx;
 		}
 	}
 
@@ -262,17 +316,21 @@
 		color: #CCCCCC;
 		margin-left: 10upx;
 	}
-	.shop-logo-popup{
+
+	.shop-logo-popup {
 		width: 100%;
 		font-size: 32upx;
 		padding: 0 30upx;
-		.take-picture,.album{
+
+		.take-picture,
+		.album {
 			height: 110upx;
 			line-height: 110upx;
 			text-align: center;
 			border-bottom: solid 2upx #F8F8F8;
 		}
-		.cancel{
+
+		.cancel {
 			height: 140upx;
 			line-height: 140upx;
 			text-align: center;

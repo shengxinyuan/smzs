@@ -28,24 +28,31 @@
 				</view>
 			</view>
 			<view class="qiun-charts">
-				<canvas canvas-id="canvasArea" id="canvasArea" class="charts" @touchstart="touchArea"></canvas>
+				<!-- <canvas canvas-id="canvasArea" id="canvasArea" class="charts" @touchstart="touchArea"></canvas> -->
+				  <uCharts :scroll="item.opts.enableScroll" :show="canvas" :canvasId="item.id" :chartType="item.chartType" :extraType="item.extraType" :cWidth="cWidth" :cHeight="cHeight" :opts="item.opts" :ref="item.id"/>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import uCharts from '@../../components/u-charts/u-charts/u-charts.js';
+	import uCharts from '../../components/u-charts/u-charts.vue';
+	import crt from '../../components/u-charts/js/chartsUtil.js';
 	var _self;
 	var canvaArea = null;
 
 	export default {
+		components: { uCharts },
 		data() {
 			return {
 				visitNumber:'20',
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
+				canvas: true,
+				cWidth:'',
+				cHeight:'',
+				arr: []
 			}
 		},
 		onLoad() {

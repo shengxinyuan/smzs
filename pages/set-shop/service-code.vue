@@ -2,9 +2,8 @@
 	<view class="service-tel-box">
 		<view class="tel">
 			<view class="u-upload-box">
-				<u-upload 
-				:action="action"
-				:max-count="maxCount"
+				<u-upload :action="action" ref="uUpload" :header="token"
+				:max-count="1"
 				:width="width"
 				:height="height"></u-upload>
 			</view>
@@ -12,14 +11,14 @@
 		<view class="show-switch-box">
 			<view class="show-switch-up">
 				<view>商城中展示:</view>
-				<u-switch v-model="checked" active-color="#2d407a" size="40"></u-switch>
+				<u-switch v-model="checked" active-color="#2d407a" size="40" @change="change" ></u-switch>
 			</view>
 			<view class="show-switch-down">
 				<u-icon class="icon warning" name="warning"></u-icon>
 				<text>商城显示开关按钮可以控制商城是否显示此信息。</text>
 			</view>
 			<view class="zl-btn">
-				<button class="btn">保存</button>
+				<button class="btn" @click="save">保存</button>
 			</view>
 		</view>
 	</view>
@@ -29,17 +28,54 @@
 	export default {
 		data() {
 			return {
-				action: '',
-				maxCount: 1,
+				action: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+				token:{
+					token:uni.getStorageSync('token')
+				},
 				width: 230,
 				height: 230,
-				checked: true
+				checked: true,
+				lists:[]
 			}
 		},
+		onUnload() {
+			clearInterval(this.com.three_back())
+		},
 		methods: {
-			change(status) {
-				console.log(status);
+			change(e) {
+				this.checked = e
 			},
+			//保存
+			save(){
+				this.lists = this.$refs.uUpload.lists
+				let imgs = ''
+				if(this.lists != ''){
+					imgs = this.lists[0].response.data
+				}
+				// console.log(this.lists)
+				let arr = {
+					qr_code:imgs,
+					is_qr_code:this.checked ? 1 : 2
+				}
+				this.$api.post("manage",arr).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.msg(res.message)
+					}
+					let arr = 2
+					let time = setTimeout(()=>{
+						
+						if(arr <= 0){
+							uni.navigateBack({})
+							clearInterval(time)
+							console.log(arr)
+						}else{
+							arr -=1
+							console.log(arr)
+						}
+					},1000)
+				})
+			}
 		}
 	}
 </script>

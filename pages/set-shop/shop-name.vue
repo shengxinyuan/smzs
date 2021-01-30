@@ -5,7 +5,7 @@
 			<u-input v-model="value" :type="type" :border="border" :clearable="clearable" />
 		</view>
 		<view class="zl-btn">
-			<button class="btn">保存</button>
+			<button class="btn" @click="save()">保存</button>
 		</view>
 	</view>
 </template>
@@ -14,15 +14,32 @@
 	export default {
 		data() {
 			return {
-				value: '这里是昵称',
+				value: '',
 				type: 'text',
 				passwordIcon: true,
 				border: false,
-				clearable:true
+				clearable:true,
+				// id : '' ,
+	
 			}
 		},
+		onLoad(e){
+			console.log(e)
+			this.value = e.title
+			// this.id = e.id
+		},
 		methods: {
-			
+			save(){
+				let params = {
+					title : this.value ,
+					// id : this.id
+				}
+				this.$api.post('manage', params ).then(res=>{
+					this.com.msg(res.message)
+					this.com.three_back()
+				})
+				
+			}
 		}
 	}
 </script>
