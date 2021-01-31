@@ -126,10 +126,10 @@
 		onLoad(e) {
 			// console.log(JSON.parse(e.data))
 			// console.log(JSON.parse(e.shop))
-			this.page_reader()
-			this.order_return = JSON.parse(e.data)
-			this.shop_data = JSON.parse(e.shop)
 			
+			this.order_return = e.data
+			this.shop_data = JSON.parse(e.shop)
+			this.page_reader()
 				
 		},
 		methods:{
@@ -280,7 +280,7 @@
 				}
 				//请求参数
 				let data = {
-					bn_id:this.order_return.data.bn,
+					bn_id:this.order_return,
 					vip_id:this.shop_data.vip,
 					type:this.img_show,
 					image:this.image_det
@@ -289,8 +289,10 @@
 					console.log(res)
 					
 					if(res.status == 1){
+						//支付宝
 						if(this.img_show == 0){
 							this.zfb_alipay(res.data)
+						//微信
 						}else if(this.img_show == 1){
 							this.weixin(res.data)
 						}else if(this.img_show == 2 ||this.img_show == 4||this.img_show == 5){

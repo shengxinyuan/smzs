@@ -41,12 +41,12 @@
 
 <style lang="scss" scoped>
 .cont{
-	width: 100%;
+	width: 100%;padding: 0 2%;
 	display: flex;flex-wrap: wrap;
 	.cont_item{
 		width: 49%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
-		margin-top: 20rpx;overflow: hidden; padding: 2%;
+		margin-top: 20rpx;overflow: hidden;
 		position: relative;
 		.imagea{
 			width: 70rpx;height: 84rpx;
@@ -55,15 +55,18 @@
 		}
 		.images{
 			width: 100%;
-			height: 280rpx;
+			height: 300rpx;
 		}
 		.it_tit{
+			padding-left: 20rpx;
 			font-size: 30rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 60rpx;
 		}
 		.it_price{
+			padding-left: 20rpx;
 			font-weight: bold;font-size: 30rpx;line-height: 60rpx;
 		}
 		.it_selt{
+			padding-left: 20rpx;
 			width: 100%;display: flex;justify-content: space-between;
 			line-height: 40rpx;
 			.it_selt_l{

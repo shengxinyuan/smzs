@@ -26,10 +26,10 @@
 		<!-- banner轮播 -->
 		<view class="carousel">
 			<swiper :circular="true" :autoplay="true" :duration="400" :interval="3000"  @change="swiperChange">
-				<swiper-item class="swiper-item" v-for="(item,index) in imgList" :key="index">
+				<swiper-item class="swiper-item" v-for="(item,index) in shop_det.album" :key="index">
 					<view class="image-wrapper" @click="banner_cli">
 						<image
-							:src="item.src" 
+							:src="item" 
 							class="loaded" 
 							mode="aspectFill"
 						></image>
@@ -95,39 +95,39 @@
 			</view>
 		</view>
 		<!-- 评价 -->
-		<view class="eva-section" id="evaluate">
-			<view class="section_title" @click="goto_page('./evaluate')">
+		<view class="eva-section" id="evaluate" >
+			<view class="section_title" @click="goto_page('./evaluate?id='+shop_id)" v-if="commentlist">
 				<view class="tit_l">
 					<text></text>
-					宝贝评价（100）
+					宝贝评价（{{commentlist.total}}）
 				</view>
 				<view style="color: #999;">
 					查看更多＞
 				</view>
 			</view> 
 			<view class="eva-box">
-				<view class="eval_con" v-for="it in 2">
+				<view class="eval_con" v-for="(it,ind) in commentlist.data">
 					<view class="order_head">
 						<view class="img">
-							<image src="../../static/kefu.png" mode="aspectFill"></image>
-							<view class="shop_name">你的名字</view>
+							<image :src="it.avatar" mode="aspectFill"></image>
+							<view class="shop_name">{{it.nickname}}</view>
 						</view>
 						<view class="shop_name_f">
 							
 						</view>
-						<view class="order_time">2021-1-15</view>
+						<view class="order_time">{{it.create_time}}</view>
 					</view>
 					<view class="order_con">
-						打定金交付吉萨大
+						{{it.remark}}
 					</view>
 					<view class="order_img">
-						<image v-for="img in 3" src="../../static/index/section.png" mode="aspectFill" ></image>
+						<image v-for="img in it.img" :src="img" mode="aspectFill" ></image>
 					</view>
 				</view>
 			</view>
 		</view>
 		
-		<view class="detail-desc" id="detail">
+		<view id="details_parse" class="detail-desc" >
 			<view class="d-header">
 				<text>宝贝详情</text>
 			</view>
@@ -285,7 +285,8 @@
 				shopsku:'',
 				shoptype_id:"",//商品id
 				sku_ids:'',//sku 的id拼接
-				details:''
+				details:'',
+				commentlist:''
 			};
 		},
 		onPageScroll(e) {
@@ -307,17 +308,17 @@
 			//评论
 			query.select('#evaluate').boundingClientRect((res) => {
 				// console.log(res)
-				this.pingl = res.top -100 
+				this.pingl = res.top - 70 
 			}).exec()
 			// 推荐
 			query.select('#tuijina').boundingClientRect((res) => {
-				// console.log(res)
-				this.tuij = res.top -100
+				console.log(res)
+				this.tuij = res.top - 70
 			}).exec()
 			// 详情
-			query.select('#detail').boundingClientRect((res) => {
-				// console.log(res)
-				this.detail_shop = res.top -100
+			query.select('#details_parse').boundingClientRect((res) => {
+				console.log(res)
+				this.detail_shop = res.top - 70
 			}).exec()
 		},
 		onLoad(options){
@@ -386,6 +387,9 @@
 				//评论
 				this.$api.get('commentlist/'+this.shop_id).then(res=>{
 					console.log(res)
+					if(res.status == 1){
+						this.commentlist = res.data
+					}
 				})
 				
 			},
@@ -469,8 +473,8 @@
 			//点击轮播图放大
 			banner_cli(){
 				let arr = [];
-				this.imgList.forEach(i=>{
-					arr.push(i.src)
+				this.shop_det.album.forEach(i=>{
+					arr.push(i)
 				})
 				 uni.previewImage({
 					urls: arr,
@@ -781,7 +785,7 @@
 						image{
 							width: 80rpx;
 							height: 80rpx;border-radius: 80rpx;
-							// background-color: pink;
+							background-color: #eee;
 						}
 						.shop_name{
 							width: 180rpx;line-height: 80rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
@@ -808,7 +812,7 @@
 					image{
 						width: 216rpx;
 						height: 216rpx;
-						margin: 10rpx;
+						margin: 10rpx;background-color: #eee;
 					}
 				}
 			}

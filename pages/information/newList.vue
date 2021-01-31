@@ -1,21 +1,19 @@
 <template>
 	<view style="padding: 3%;">
-		<view class="items" v-if="true">
+		<view class="items" v-if="true" v-for="(it,ind) in list" :key="ind">
 			<view class="items_time">
-				2021-01-07 17:57
+				{{it.create_time}}
 			</view>
 			<view class="items_cont">
 				<view class="items_cont_text">
-					文章内容.........................
-					文章内容.........................
-					文章内容.........................
-					文章内容.........................
-					文章内容.........................
-					文章内容.........................
+					{{it.title}}
 				</view>
-				<view class="items_cont_child" @click="inform_detail(1)">
+				<view class="cont_content" v-if="it.cont_show">
+					{{it.content}}
+				</view>
+				<view class="items_cont_child" @click="new_detail(ind)">
 					<view class="child_l">
-						查看详细
+						{{it.cont_show == true?'收起':'展开'}}
 					</view>
 					<view style="color: #999;">
 						＞
@@ -33,13 +31,32 @@
 	export default{
 		data(){
 			return{
-				
+				cate_id:0,
+				page:1,
+				list:[],
 			}
 		},
+		onLoad(op){
+			this.cate_id = op.cate_id,
+			this.page_reader(this.page)
+		},
 		methods:{
-			//消息详情
-			inform_detail(e){
+			page_reader(e){
+				this.$api.get('message',{page:e,cate_id:this.cate_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.list = res.data.data.data
+						this.list.forEach(o=>{
+							o.cont_show = false
+						})
+					}
+				})
+			},
+			//详情
+			new_detail(e){
 				
+				this.list[e].cont_show = !this.list[e].cont_show
+				this.$forceUpdate()
 			}
 		}
 	}
@@ -61,6 +78,9 @@
 		background-color: #fff;padding: 22rpx;
 		.items_cont_text{
 			color: #999;line-height: 44rpx;
+		}
+		.cont_content{
+			
 		}
 		.items_cont_child{
 			display: flex;justify-content: space-between;border-top: 1rpx solid #f1f1f1;margin-top: 22rpx;padding-top: 22rpx;

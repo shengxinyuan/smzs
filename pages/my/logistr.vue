@@ -1,18 +1,13 @@
 <template>
 	<view class="content">
-		<view class="shop_list" v-for="it in page_cont.data">
-			<image :src="it.shop_goods_image" mode=""></image>
-			<view class="list_right">
-				<view class="title"><text></text>{{it.shop_goods_title}}</view>
-				<view class="Specifications">规格：{{it.sku_value}}<text class="num">*1</text></view>
-				<view class="price">￥{{it.total}}<text>￥{{it.original}}</text></view>
-			</view>
+		<view style="background-color: #fff;font-size: 36rpx;font-weight: bold;padding: 2% 0;">
+			待签收
 		</view>
-		<view style="margin-bottom: 20rpx;font-weight: bold;">
-			顺丰快递：{{mailNo.mailNo}}
+		<view style="margin: 20rpx 0;font-weight: bold;">
+			顺丰快递：{{numList.ship_bn}}
 		</view>
 		<view class="p1">
-			<u-steps :list="numList.routeResponseRouteList" :current="numList.routeResponseRouteList.length" direction="column"></u-steps>
+			<u-steps :list="numList.logistic_detail" :current="numList.logistic_detail.length" activeColor="#000" direction="column"></u-steps>
 		</view>
 		<!-- <view class="box">
 			<view class="p1 text">
@@ -37,9 +32,9 @@
 			}
 		},
 		onLoad(op) {
-			// console.log(JSON.parse(op.cont))
-			this.page_cont = JSON.parse(op.cont)
-			// this.page_type()
+			console.log(op.cont)
+			this.page_cont = op.cont
+			this.page_type()
 		},
 		onShow() {
 			// this.page_type()
@@ -47,10 +42,9 @@
 		methods:{
 			page_type(){
 				// this.page_cont.bn
-				this.$api.post('logistics',{bn_id:'HH1112032183'}).then(res=>{
+				this.$api.post('logistics',{bn_id:this.page_cont}).then(res=>{
 					console.log(res.data)
-					this.numList = res.data.json[0]
-					this.mailNo = res.data
+					this.numList = res.data
 				})
 				
 			}

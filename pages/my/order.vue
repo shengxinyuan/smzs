@@ -16,7 +16,7 @@
 							<zs-order-list :list="list" @order_detail="order_detail" v-if="current_ind != 1"></zs-order-list>
 							<zs-order-df :list="list" @order_detail="order_detail" v-else></zs-order-df>
 						</view> 
-						<view v-else style="padding-top: 25%;"><u-empty text="暂无该类订单" mode="order"></u-empty> </view>
+						<view v-else style="padding-top: 25%;"><u-empty text="暂无该类订单" mode="order"></u-empty> </view> 
 			 		</scroll-view>
 			 	</swiper-item>
 			 </swiper>

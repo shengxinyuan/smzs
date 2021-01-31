@@ -766,6 +766,18 @@
 				"navigationBarTitleText":"绑定手机号"
 			}
         }
+        ,{
+            "path" : "pages/information/newlistDetail",
+            "style" : {
+				"navigationBarTitleText":"消息详情"
+			}
+        }
+        ,{
+            "path" : "pages/index/search",
+            "style" : {
+				"navigationStyle":"custom"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

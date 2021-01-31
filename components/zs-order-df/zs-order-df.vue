@@ -15,7 +15,7 @@
 				</view>
 				<view v-if="item.data[0]">
 					<view class="shop_list"  v-for="(its,ind) in item.data[0]">
-						<image v-if="its.goods" src="../../static/index/section.png" mode="aspectFill" @click="order_detail(item.id,10)"></image>
+						<image v-if="its.goods" :src="its.goods.image" mode="aspectFill" @click="order_detail(item.id,10)"></image>
 						<view class="list_right" v-if="its.goods">
 							<view @click="order_detail(item.id)">
 								<view class="title">{{its.goods.title}}</view>
@@ -70,11 +70,19 @@
 		methods:{
 			//取消订单
 			no_order(e){
-				this.$api.put('orders',{id:e,status:10,type:2}).then(res=>{
-					if(res.status == 1){
-						this.com.redto('./order?state='+ 10 +'&index='+ 1)
-					}else{
-						this.com.msg(res.message)
+				let that = this
+				uni.showModal({
+					content:'确认取消该订单吗？',
+					success(re) {
+						if(re.confirm){
+							that.$api.put('orders',{id:e,type:2}).then(res=>{
+								if(res.status == 1){
+									that.com.redto('./order?state='+ 10 +'&index='+ 1)
+								}else{
+									that.com.msg(res.message)
+								}
+							})
+						}
 					}
 				})
 			},

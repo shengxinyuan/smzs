@@ -5,13 +5,15 @@
 		</view>
 		<view class="fixeds" id="evaluate" >
 			<scroll-view class="swiper" scroll-x >
-				<view class="swiper_item" v-for="(it,ind) in 6" :key="ind" @click="nav_cli(ind)" :class="{active:nav_idnex == ind}">
-					婚庆三金
+				<view class="swiper_item" v-if="it.type != 4" v-for="(it,ind) in nav" :key="ind" @click="nav_cli(it.id)" :class="{active:nav_idnex == it.id}">
+					{{it.title}}
 				</view>
 			</scroll-view>
 		</view>
 		<view class="">
-			<zs-shoplist-type></zs-shoplist-type>
+			<!-- <zs-shoplist-type></zs-shoplist-type> -->
+			<zs-shoplist-type :shop_list="shop_list" :lists="lists" @shop_confim="shop_confim" :cate_fist_id="''"
+			 :shop_subject_id="nav_idnex"></zs-shoplist-type>
 		</view>
 	</view>
 </template>
@@ -21,24 +23,45 @@
 		data() {
 			return {
 				nav_idnex:0,
-				nav_top:10,
+				nav:[],
+				lists:[],
+				shop_list:[]
 			};
 		},
-		mounted() {
-			var query = uni.createSelectorQuery()
-			//获取对应模块到顶部的距离
-			//评论
-			query.select('#evaluate').boundingClientRect((res) => {
-				console.log(res)
-				this.nav_top = res.top -100 
-			}).exec()
+		onLoad(op) {
+			console.log(op)
+			this.nav = JSON.parse(op.type)
+			this.nav_idnex = op.id
+			this.nav_cli(op.id)
 		},
 		onPageScroll(e){
 			console.log(e)
 		},
 		methods:{
+			//
+			shop_confim(e){
+				this.$api.post('goods',e).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_list = res.data.data
+					}
+				})
+			},
+			
 			nav_cli(e){
 				this.nav_idnex = e
+				this.$api.post('goods',{shop_subject_id:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_list = res.data.data
+					}
+				})
+				this.$api.get('screen').then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.lists = res.data
+					}
+				})
 			}
 		}
 	}

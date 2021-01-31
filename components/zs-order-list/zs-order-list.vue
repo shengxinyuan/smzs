@@ -40,9 +40,9 @@
 						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id)">取消订单</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 10" @click="order_detail(item.id)">去支付</view> <!-- // -->
 						<!-- <view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  -->
-						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist_wl(item)">查看物流</view> <!-- // -->
+						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist_wl(item.bn_id)">查看物流</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 30" @click="sure_details(item.id)">确认收货</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 40" @click="go_immed(item)">立即评价</view>
+						<!-- <view class="go_buy" v-if="item.status == 40" @click="go_immed(item)">立即评价</view> -->
 						<view class="go_buy_s" v-if="item.status == 50" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 60 && item.return_type == 1" @click="shen_details(item.id)">撤销</view> 
 						<view class="go_buy" v-if="item.status == 60 && item.return_type == 2" @click="order_logist(item)">再次申请</view> <!-- // -->
@@ -94,7 +94,7 @@
 							that.$api.put('orders',{id:e,type:1}).then(res=>{
 								console.log(res)
 								if(res.status == 1){
-									that.com.redto('./order?state='+ 20 +'&index='+ 2)
+									that.com.redto('./order?state='+ 30 +'&index='+ 3)
 								}else{
 									that.com.msg(res.message)
 								}
@@ -153,7 +153,7 @@
 			},
 			//物流
 			order_logist_wl(e){
-				this.com.navto('./logistics?cont='+JSON.stringify(e))
+				this.com.navto('./logistr?cont='+e)
 			}
 		}
 	}

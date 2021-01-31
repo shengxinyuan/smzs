@@ -32,7 +32,7 @@
 				<text class="s-item"> {{item.title}}</text>
 				<view class="t-list">
 					<view @click="navToList(titem.id)" v-if="titem.pid == item.id" class="t-item" v-for="titem in tlist" :key="titem.id">
-						<image :src="titem.picture"></image>
+						<image :src="titem.image"></image>
 						<text>{{titem.title}}</text>
 					</view>
 				</view>

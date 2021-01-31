@@ -28,108 +28,31 @@
 				</view>
 			</view>
 			<view class="qiun-charts">
-				<!-- <canvas canvas-id="canvasArea" id="canvasArea" class="charts" @touchstart="touchArea"></canvas> -->
-				  <uCharts :scroll="item.opts.enableScroll" :show="canvas" :canvasId="item.id" :chartType="item.chartType" :extraType="item.extraType" :cWidth="cWidth" :cHeight="cHeight" :opts="item.opts" :ref="item.id"/>
+				<canvas canvas-id="canvasArea" id="canvasArea" class="charts" @touchstart="touchArea"></canvas>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import uCharts from '../../components/u-charts/u-charts.vue';
-	import crt from '../../components/u-charts/js/chartsUtil.js';
+	import uCharts from '../../components/u-charts/u-charts/u-charts.js';
 	var _self;
 	var canvaArea = null;
 
 	export default {
-		components: { uCharts },
 		data() {
 			return {
 				visitNumber:'20',
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
-				canvas: true,
-				cWidth:'',
-				cHeight:'',
-				arr: []
 			}
 		},
 		onLoad() {
-			_self = this;
-			this.cWidth = uni.upx2px(750);
-			this.cHeight = uni.upx2px(500);
-			this.getServerData();
+			
 		},
 		methods: {
-			getServerData() {
-				uni.request({
-					url: 'https://www.ucharts.cn/data.json',
-					data: {},
-					success: function(res) {
-						console.log(res.data.data)
-						let Area = {
-							categories: [],
-							series: []
-						};
-						//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-						Area.categories = res.data.data.Area.categories;
-						Area.series = res.data.data.Area.series;
-						_self.showArea("canvasArea", Area);
-					},
-					fail: () => {
-						_self.tips = "网络错误，小程序端请检查合法域名";
-					},
-				});
-			},
-			showArea(canvasId, chartData) {
-				canvaArea = new uCharts({
-					$this: _self,
-					canvasId: canvasId,
-					type: 'area',
-					fontSize: 11,
-					legend: true,
-					dataLabel: false,
-					dataPointShape: true,
-					background: '#FFFFFF',
-					pixelRatio: _self.pixelRatio,
-					categories: chartData.categories,
-					series: chartData.series,
-					animation: true,
-					xAxis: {
-						type: 'grid',
-						gridColor: '#CCCCCC',
-						gridType: 'dash',
-						dashLength: 8
-					},
-					yAxis: {
-						gridType: 'dash',
-						gridColor: '#CCCCCC',
-						dashLength: 8,
-						splitNumber: 5,
-						min: 10,
-						max: 180,
-					},
-					width: _self.cWidth * _self.pixelRatio,
-					height: _self.cHeight * _self.pixelRatio,
-					extra: {
-						area: {
-							type: 'straight',
-							opacity: 0.2,
-							addLine: true,
-							width: 2
-						}
-					}
-				});
-
-			},
-			touchArea(e) {
-				canvaArea.showToolTip(e, {
-					format: function(item, category) {
-						return category + ' ' + item.name + ':' + item.data
-					}
-				});
-			}
+			
 		}
 	}
 </script>

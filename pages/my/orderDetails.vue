@@ -10,10 +10,10 @@
 			<view class="toast_but">
 				<view></view>
 				<view class="toast_but_r">
-					<view class="toast_but_no">
+					<view class="toast_but_no" @click="no_order(item.id)">
 						取消订单
 					</view>
-					<view class="toast_but_pay" @click="goto_page('./payments')">
+					<view class="toast_but_pay" @click="goto_pages">
 						去支付<u-count-down :show-hours="false" bg-color="" color="#fff" :timestamp="timestamp"></u-count-down>
 					</view>
 				</view>
@@ -22,13 +22,13 @@
 		<!-- 地址 -->
 		<view class="address">
 			<view class="address_l">
-				收货地址 <text>邮寄</text>
+				收货地址 <text>{{shop_det.sf_change == 0 ? '到付' : '邮寄'}}</text>
 			</view>
 			<view class="address_r">
-				<view class="address_r_l">
-					德诚嘉园广场写字楼1903 
+				<view class="address_r_l" v-if="shop_det.address_id">
+					{{shop_det.address_id.province + shop_det.address_id.city + shop_det.address_id.area +shop_det.address_id.address}} 
 					<view>
-						龙叔 1566666666
+						{{shop_det.address_id.contact}} {{shop_det.address_id.mobile}}
 					</view>
 				</view>
 				<!-- <view class="address_r_r">
@@ -43,7 +43,7 @@
 					商品汇总
 				</view>
 				<view class="statis_r">
-					共 1 件 约1.90g ￥620.00
+					共 {{shop_det.count}} 件 ￥{{shop_det.total}}
 				</view>
 			</view>
 			<!-- 工费 -->
@@ -52,7 +52,7 @@
 					工费
 				</view>
 				<view class="statis_r">
-					￥12.00
+					￥{{shop_det.total_labor_price}}
 				</view>
 			</view>
 			<view class="statis">
@@ -60,7 +60,7 @@
 					合计
 				</view>
 				<view class="statis_r" style="color: #ee453f;">
-					￥632.00
+					￥{{shop_det.total}}
 				</view>
 			</view>
 		</view>
@@ -68,39 +68,35 @@
 		<view class="shop">
 			<view class="shop_title">
 				<view class="title_l">
-					订单编号：hh4874155545
+					订单编号：{{shop_det.bn}}
 				</view>
-				<view class="title_r">
+				<!-- <view class="title_r">
 					待付款
-				</view>
+				</view> -->
 			</view>
-			<view class="shop_list"  v-for="(its,ind) in 2">
-				<image src="../../static/community/list_01.png" mode="aspectFill" @click="order_detail(item.id,10)"></image>
+			<view class="shop_list"  v-for="(its,ind) in shop_det.order_goods">
+				<image :src="its.image" mode="aspectFill" @click="order_detail(item.id,10)"></image>
 				<view class="list_right">
 					<view @click="order_detail(item.id)">
-						<view class="title">足金项链 环环相扣</view>
-						<view class="Specifications">金重：5.8g<text class="num"> 款号：0141448</text></view>
+						<view class="title">{{its.title}}</view>
+						<view class="Specifications">金重：{{its.sku.weight}}<text class="num"> 款号：{{shop_det.model_no}}</text></view>
 						<view class="list_right_its">
-							<text v-for="it in 3">金料:￥1800 </text>	
+							<text >金料:￥{{its.gold_price}} </text>	
+							<text >工费:￥{{its.labor_price}} </text>
 						</view>
-						<view class="price">￥1888</view>
+						<view class="price">￥{{its.total}} <text>*{{its.count}}</text></view>
 					</view>
 				</view>
 			</view>
 			<view class="heji">
-				<text  class="heji_l">共 2 件</text>
-				<text class="heji_r"> 合计：<text>￥3776</text></text>
+				<text  class="heji_l">共 {{shop_det.count}} 件</text>
+				<text class="heji_r"> 合计：<text>￥{{shop_det.total}}</text></text>
 			</view>
 		</view>
 		
 		<view class="st_data" style="margin-bottom: 60rpx;">
 			<view class="statis">
-				<view class="statis_l">
-					备注
-				</view>
-				<view class="statis_r">
-					无
-				</view>
+				<textarea :placeholder="'备注'+shop_det.message" :disabled="true" />
 			</view>
 			<!-- 工费 -->
 			<view class="statis">
@@ -108,7 +104,7 @@
 					订单编号
 				</view>
 				<view class="statis_r">
-					<text @click="make">复制</text>hh4874155545
+					<text @click="make(shop_det.bn)">复制</text>{{shop_det.bn}}
 				</view>
 			</view>
 			<view class="statis">
@@ -116,7 +112,7 @@
 					创建时间
 				</view>
 				<view class="statis_r"  >
-					2020-1-15 11:13:18
+					{{shop_det.create_time}}
 				</view>
 			</view>
 		</view>
@@ -128,30 +124,67 @@
 		data(){
 			return{
 				// end_time:'1610699111',//秒杀到期
-				timestamp:0
+				timestamp:0,
+				order_id:0,
+				shop_det:''
 			}
 		},
-		onLoad() {
+		onLoad(op) {
+			console.log(op)
+			this.order_id = op.page_type
 			let data = new Date()
 			let state = data.getTime()
 			let end_time = state + 300000
 			console.log(end_time) 
 			let reslut = end_time - state
 			this.timestamp = Math.floor(reslut / 1000)
-			
+			this.page_reader()
 		},
 		methods:{
-			//复制
-			make(){
+			page_reader(){
+				this.$api.get('order_goods',{id:this.order_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_det = res.data
+					}
+				})
+			},
+			//复制订单号
+			make(e){
 				uni.setClipboardData({
-					data: 'hh4874155545',
+					data: e,
 					success: function () {
 						console.log('success');
 					}
 				})
 			},
-			goto_page(e){
-				this.com.navto(e)
+			//取消订单
+			no_order(e){
+				let that = this
+				uni.showModal({
+					content:'确认取消该订单吗？',
+					success(re) {
+						if(re.confirm){
+							that.$api.put('orders',{id:e,type:2}).then(res=>{
+								if(res.status == 1){
+									that.com.redto('./order?state='+ 10 +'&index='+ 1)
+								}else{
+									that.com.msg(res.message)
+								}
+							})
+						}
+					}
+				})
+			},
+			goto_pages(){
+				let payment_data={
+					vip:this.shop_det.vip,
+					menber_price:this.shop_det.member_money,
+					shop_price:this.shop_det.total
+				}
+				uni.navigateTo({
+					url:'../my/payments?data='+this.shop_det.bn+'&shop='+JSON.stringify(payment_data)
+				})
 			}
 		}
 	}
@@ -210,8 +243,8 @@
 		.statis{
 			width: 100%;background-color: white;display: flex;justify-content: space-between;
 			padding: 20rpx 3%;font-size: 30rpx;
-			.statis_l{
-				color: #999;
+			textarea{
+				width: 100%;font-size: 28rpx;
 			}
 			.statis_r{
 				text{
@@ -272,10 +305,10 @@
 				}
 				.price{
 					width: 100%;line-height: 70rpx;
-					color: #ba1a30;
+					color: #ba1a30;display: flex;justify-content: space-between;
 					text{
 						color: #999999;
-						text-decoration: line-through;
+						// text-decoration: line-through;
 					}
 				}
 				.Specifications{

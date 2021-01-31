@@ -73,14 +73,14 @@
 			</view>
 			<!-- 九宫格 -->
 			<view class="nine_g">
-				<view class="nine_g_child" v-for="(it,ind) in index_data.label" :key="ind" @click="go_pages('./nine_nav')">
+				<view class="nine_g_child" v-for="(it,ind) in index_data.label" :key="ind" v-if="ind <= 7" @click="go_textrue(it.id)">
 					<view class="nine_g_child_tit">
 						{{it.title}}
 					</view>
-					<!-- <view class="nine_g_child_cla">
-						高保值 更安全
-					</view> -->
-					<image src="../../static/nine.png" mode=""></image>
+					<view class="nine_g_child_cla">
+						{{it.remark}}
+					</view>
+					<image :src="it.image" mode="aspectFill"></image>
 				</view>
 			</view>
 			<!-- 活动专区 -->
@@ -159,13 +159,13 @@
 			<!-- 精选专题 -->
 			<view class="choiceness">
 				<view class="choiceness_child">
-					<view class="choiceness_item" v-for="(it,ind) in 4" :key="ind" @click="special_cli(ind)">
-						<image src="../../static/index/banner1.png" mode="aspectFill"></image>
+					<view class="choiceness_item" v-for="(it,ind) in index_data.zhuanti" :key="ind" @click="special_cli(it.id,it.type)" v-if="ind <= 4">
+						<image :src="it.image" mode="aspectFill"></image>
 						<view class="item_tit">
-							定制专区
+							{{it.title}}
 						</view>
 						<view class="item_cla">
-							最适合的
+							{{it.remark}}
 						</view>
 					</view>
 				</view>
@@ -183,7 +183,7 @@
 			
 		</view>
 		<view class="classify">
-			<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="nav_ind" @shop_confim="shop_confim"></zs-shoplist-type>
+			<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="nav_ind" :shop_subject_id="''" @shop_confim="shop_confim"></zs-shoplist-type>
 			
 		</view>
 		 <drag-button :isDock="true" :existTabBar="true" @btnClick="go_pages('../service/service')"/>
@@ -200,11 +200,6 @@
 		data() {
 			return {
 				tops:0,
-				bann: [
-					{a:"../../static/index/bann1.png"},
-					{a:"../../static/index/bann2.png"},
-					{a:"../../static/index/banner1.png"},
-				],
 				swiperCurrent:0,
 				backgroundColor:'',//标题栏背景色
 				headcolor:'#fff',//消息颜色
@@ -247,11 +242,6 @@
 		onShow() {
 			
 		},
-		watch:{
-			// shop_list(a,b){
-			// 	console.log(a)
-			// }
-		},
 		methods: {
 			page_render(){
 				this.$api.get('index').then(res=>{
@@ -263,6 +253,10 @@
 						this.nac_cla(res.data.cates[0].id)
 					}
 				})
+			},
+			//点击材质
+			go_textrue(e){
+				this.com.navto('./nine_nav?id='+e+'&data='+JSON.stringify(this.index_data.label))
 			},
 			//秒杀进详情
 			go_shopdetail(e){
@@ -295,7 +289,7 @@
 			},
 			// 搜索
 			search(){
-				
+				this.com.navto('./search')
 			},
 			//拍照
 			camear(){
@@ -317,13 +311,12 @@
 				});
 			},
 			//专题点击
-			special_cli(e){
-				console.log(e)
+			special_cli(id,type){
 				//定制
-				if(e == 0){
+				if(type == 4){
 					this.com.navto('./customization')
 				}else{
-					this.com.navto('./Selected_topics')
+					this.com.navto('./Selected_topics?id='+id+'&type='+JSON.stringify(this.index_data.zhuanti))
 				}
 				
 			},

@@ -2,7 +2,7 @@ const com = {
 	//两秒后返回上一页，
 	three_back(){
 		let arr = 2
-		let time = setTimeout(()=>{
+		let time = setInterval(()=>{
 			if(arr <= 0){
 				uni.navigateBack()
 				clearInterval(time)

@@ -64,9 +64,10 @@
 				code_tit:'获取验证码',
 				time:60,
 				code_show:true,//提示语显示
+				time:''
 			}
 		},
-		onLoad() {
+		onUnload() {
 		},
 		methods:{
 			//获取验证码
@@ -107,7 +108,15 @@
 						console.log(res)
 						if(res.state == 1){
 							this.com.msg('注册成功')
-							this.com.two_back()
+							let arr = 2
+							this.time = setInterval(()=>{
+								if(arr <= 0){
+									uni.navigateBack()
+									clearInterval(this.time)
+								}else{
+									arr -=1
+								}
+							},1000)
 						}else{
 							this.com.msg(res.message)
 						}

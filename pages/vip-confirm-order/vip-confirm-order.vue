@@ -245,7 +245,7 @@
 						<block v-for="(firstItem,firstIndex) in zhanshi.data" :key="firstIndex">
 							<view class="goods-box">
 								<view class="good-photo">
-									<image :src="firstItem.image" mode="widthFix"></image>
+									<image :src="firstItem.image" mode="aspectFill"></image>
 								</view>
 								<view class="goods-details">
 									<view class="goods-title">{{firstItem.title}}</view>
@@ -759,7 +759,7 @@
 									if(arr == 0){
 										clearInterval(this.time)
 										uni.redirectTo({
-											url:'../my/payments?data='+JSON.stringify(res.data)+'&shop='+JSON.stringify(payment_data)
+											url:'../my/payments?data='+res.data.data.bn+'&shop='+JSON.stringify(payment_data)
 										})
 									}else{
 										arr -= 1
@@ -772,7 +772,7 @@
 					}
 				}else{
 					this.$api.post('orders',data).then(res=>{
-						// console.log(res)
+						console.log(res)
 						this.com.msg(res.message+',请勿操作')
 						if(res.status == 1){
 							let arr = 2
@@ -780,7 +780,7 @@
 								if(arr == 0){
 									clearInterval(this.time)
 									uni.redirectTo({
-										url:'../my/payments?data='+JSON.stringify(res.data)+'&shop='+JSON.stringify(payment_data)
+										url:'../my/payments?data='+res.data.data.bn+'&shop='+JSON.stringify(payment_data)
 									})
 								}else{
 									arr -= 1
