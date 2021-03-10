@@ -40,7 +40,6 @@
 						remark : res.message
 					})
 					if(res.status == 1){
-						uni.setStorageSync('shop_remark', this.value)
 						uni.navigateBack() 
 					}
 				})

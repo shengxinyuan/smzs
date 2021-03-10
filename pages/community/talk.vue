@@ -1,25 +1,31 @@
 <template>
 	<view>
 		<view class="swiper-box">
-			<u-swiper :list="list" mode="rect" height="400" name="img" :title="true"></u-swiper>
+			 <swiper class="swiper" :autoplay="true" :interval="4000" :circular="true">
+				<swiper-item v-for="(it,ind) in list" :key="ind">
+					<view class="swiper-item uni-bg-red">
+						<image :src="it.image" mode="aspectFill"></image>
+					</view>
+				</swiper-item>
+			</swiper>
 		</view>
 		<view class="yltk-bars-list">
-			<block v-for="(barsItem,barsIndex) in barsList" :key="barsIndex">
-				<view class="yltk-bars-box" :style="{'background-image':barsItem.backgroundImage}">
+			<block class="nav_bar" v-for="(barsItem,ind) in barsList" :key="ind" >
+				<view class="yltk-bars-box" :class="{active: barsItem.id == navbarind}" @click="navbar_click(barsItem.id)">
 					<text>{{barsItem.title}}</text>
 				</view>
 			</block>
 		</view>
-		<view class="yltk-details-list">
+		<view class="yltk-details-list" v-if="page_show">
 			<block v-for="(detailsItem,detailsIndex) in detailsList" :key="detailsIndex">
-				<view class="yltk-details-box">
+				<view class="yltk-details-box" @click="go_detail(detailsItem.id)">
 					<view class="details-box-left">
 						<view class="details-text">
-							<text class="u-line-2">{{detailsItem.text}}</text>
+							<text class="u-line-2">{{detailsItem.title}}</text>
 						</view>
 						<view class="bottom-show">
 							<view>
-								<text>{{detailsItem.time}}</text>
+								<text>{{detailsItem.create_time}}</text>
 							</view>
 							<view>
 								<text>{{detailsItem.number}}人看过</text>
@@ -27,10 +33,13 @@
 						</view>
 					</view>
 					<view class="details-box-right">
-						<image :src="detailsItem.url" mode="widthFix"></image>
+						<image :src="detailsItem.image" mode="aspectFill"></image>
 					</view>
 				</view>
 			</block>
+		</view>
+		<view class="" v-else>
+			<zs-login> </zs-login>
 		</view>
 	</view>
 </template>
@@ -39,72 +48,69 @@
 	export default {
 		data() {
 			return {
-				list: [{
-						img: '../../static/community/shipin_01.png',
-						title: '拓客文章标题拓客文章标题拓客文章标题'
-					},
-					{
-						img: '../../static/community/shipin_02.png',
-						title: '拓客文章标题拓客文章标题拓客文章标题'
-					},
-					{
-						img: '../../static/community/shipin_01.png',
-						title: '拓客文章标题拓客文章标题拓客文章标题'
-					}
-				],
+				list: [],
 				barsList:[
 					{
-						backgroundImage:'linear-gradient(90deg, #f8e1b5 0%, #ffffff 100%)',
-						title:'热门'
+						title:'热门',id:7
 					},
 					{
-						backgroundImage:'',
-						title:'技巧'
+						title:'技巧',id:8
 					},
 					{
-						backgroundImage:'',
-						title:'服务'
+						title:'服务',id:9
 					},
 					{
-						backgroundImage:'',
-						title:'话术'
+						title:'话术',id:10
 					}
 				],
-				detailsList:[
-					{
-						text:'文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题',
-						time:'2020-9-28 13:28:23',
-						number:'900',
-						url:'../../static/community/list_01.png'
-					},
-					{
-						text:'文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题',
-						time:'2020-9-28 13:28:23',
-						number:'900',
-						url:'../../static/community/list_02.png'
-					},
-					{
-						text:'文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题',
-						time:'2020-9-28 13:28:23',
-						number:'900',
-						url:'../../static/community/list_03.png'
-					},
-					{
-						text:'文章标题文章标题文章标题文章标题文章标题文章标题文章标题文章标题',
-						time:'2020-9-28 13:28:23',
-						number:'900',
-						url:'../../static/community/list_04.png'
-					}
-				]
+				detailsList:[],
+				navbarind:7,
+				page_show:false
 			}
 		},
+		onLoad() {
+			this.navbar_click(this.navbarind)
+			this.page_reader()
+		},
 		methods: {
-
+			page_reader(){
+				this.$api.get('banner',{type:4}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.list = res.data
+					}
+				})
+			},
+			//点击导航
+			navbar_click(e){
+				this.page_show = false
+				this.navbarind = e
+				this.$api.get('news',{label:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.detailsList = res.data
+						this.page_show = true
+					}
+				})
+			},
+			//详情
+			go_detail(e){
+				this.com.navto('../my/talk_detail?id='+e+'&type='+this.navbarind)
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	.swiper{
+		width: 100%;height: 400rpx;border-radius: 14rpx;overflow: hidden;
+		.swiper-item{
+			width: 100%;height: 100%;
+			image{
+				width: 100%;height: 100%;
+			}
+		}
+	}
 	.swiper-box{
 		padding: 20upx;
 	}
@@ -117,13 +123,16 @@
 			height: 50upx;
 			line-height: 50upx;
 			padding-left: 30upx;
+			&.active{
+				background-image:linear-gradient(90deg, #f8e1b5 0%, #ffffff 100%);
+			}
 		}
 	}
 	.yltk-details-list{
 		padding: 20upx;
 		.yltk-details-box{
+			padding: 20rpx 2%;
 			display: flex;
-			margin-bottom: 50upx;
 			.details-box-left{
 				width: 74%;
 				padding-right: 20upx;
@@ -140,10 +149,10 @@
 				}
 			}
 			.details-box-right{
-				width: 26%;
+				width: 26%;height: 185rpx;
 				display: flex;
 				image{
-					width: 100%;
+					width: 100%;height: 100%;
 					border-radius: 6upx;
 				}
 			}

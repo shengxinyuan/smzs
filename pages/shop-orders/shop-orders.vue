@@ -1,407 +1,207 @@
 <template>
-	<view>
-		<view>
-			<u-tabs :list="list" :is-scroll="false" :current="current" @change="changeTabs" :height="height" :font-size="30"
-			 :bar-width="50" :bar-height="6" :active-color="activeColor"></u-tabs>
-		</view>
-
-		<!-- 全部订单 -->
-		<view class="zl-page">
-			<block v-for="(firstItem,firstIndex) in goodsList" :key="firstIndex" :id="id">
-				<view class="tabs-first">
-					<view class="tabs-first-title">
-						<view class="orders-number">订单编号：{{firstItem.ordersNumber}}</view>
-						<view class="orders">{{firstItem.orders}}</view>
-					</view>
-					<view class="goods-box">
-						<view class="good-photo">
-							<image :src="firstItem.goodsPhoto" mode="widthFix"></image>
-						</view>
-						<view class="goods-details">
-							<view class="goods-title">{{firstItem.title}}</view>
-							<view class="goods-text-one">
-								<text>金重：{{firstItem.weight}}</text>
-								<text>款号：{{firstItem.styleNumber}}</text>
-							</view>
-							<view class="goods-text-two">
-								<view class="goods-text-two-min-box">
-									<text>金料：￥{{firstItem.money01}}</text>
-								</view>
-								<view class="goods-text-two-min-box">
-									<text>工费：￥{{firstItem.money02}}</text>
-								</view>
-								<view class="goods-text-two-min-box">
-									<text>商城售价：￥{{firstItem.money03}}</text>
-								</view>
-							</view>
-							<view class="money-box">
-								<text class="rmb">￥</text>
-								<text class="integer">{{firstItem.integer}}</text>
-								<text class="fractional-part">{{firstItem.fractionalPart}}</text>
-							</view>
-						</view>
-					</view>
-					<view class="goods-down-box">
-						<view class="left">
-							<text class="sum">共1件</text>
-							<text class="profit">利润：</text>
-							<text class="price">￥754.1</text>
-						</view>
-						<view class="right" v-if="firstItem.id == 1">
-							<view class="btn-one">取消订单</view>
-							<view class="btn-two" @click="openPopup">平台下单</view>
-						</view>
-						<view class="right" v-if="firstItem.id == 2">
-							<view class="btn-one">取消订单</view>
-							<view class="btn-there">查看物流</view>
-						</view>
-						<view class="right" v-if="firstItem.id == 3">
-							<view class="one">删除订单</view>
-							<view class="two">售后</view>
-							<view class="there">评价</view>
-						</view>
-					</view>
+ 	<view class="content">
+ 		<view class="head">
+ 			<scroll-view scroll-x="true" class="swiper-box">
+ 				<view v-for="(item,index) in tabs" :key="index" class="swiper_it" :class="{title:current==item.id}" @click="tabClick(item.id,index)">
+ 					{{item.name}}
+ 					<view :class="{line:current==item.id}"></view>
+ 				</view>
+ 			</scroll-view>
+ 		</view>
+ 		<view class="box" v-if="page_show">
+			<view v-if="list.length != 0">
+				<zs-order-list-two :list="list" @order_detail="order_detail" v-if="current_ind != 1" @del_order="del_order"></zs-order-list-two>
+				<zs-order-df-two :list="list" @order_detail="order_detail" v-else></zs-order-df-two>
+				<view style="width: 100%;height: 80rpx;">
+					<uni-load-more :status="status" :content-text="contentText"></uni-load-more>
 				</view>
-			</block>
-			
-			<!-- 平台下单 弹出层 -->
-			<u-popup v-model="popupShow" mode="center" border-radius="10" :closeable="false" width="560">
-				<view class="popup-box">
-					<view class="popup-up">
-						<view class="notice">请注意！</view>
-						<view class="text">该订单买家是否通过</view>
-						<view class="text">微信、支付宝或其他线下支付方式</view>
-						<view class="text">给您付款之后再回流订单至奢美</view>
-						<view class="text">奢美不会接触您的客户</view>
-					</view>
-					<view class="popup-btn">
-						<button class="btn-one">卖家已付款，回流订单至奢美</button>
-						<button class="btn-two" @click="closePopup">买家未付款，暂不回流</button>
-					</view>
-				</view>
-			</u-popup>
-		</view>
-	</view>
-</template>
-
-<script>
-	export default {
-		data() {
-			return {
-				list: [{
-						name: '全部订单'
-					}, {
-						name: '待确认'
-					}, {
-						name: '待收货'
-					},
-					{
-						name: '已完成'
-					}
-				],
-				current: 0,
-				height: '78',
-				activeColor: '#2d407a',
-				goodsList: [{
-						id: '1',
-						ordersNumber: '12345678910',
-						orders: '待确认',
-						goodsPhoto: '../../static/vip-order/img_01.png',
-						title: '足金项链环环相扣',
-						weight: '4.7g',
-						styleNumber: 'ZJJZ00271',
-						money01: '1872.00',
-						money02: '15.03',
-						money03: '2399',
-						integer: '1887',
-						fractionalPart: '.05'
-					},
-					{
-						id: '2',
-						ordersNumber: '12345678910',
-						orders: '待收货',
-						goodsPhoto: '../../static/vip-order/img_01.png',
-						title: '足金项链环环相扣',
-						weight: '4.7g',
-						styleNumber: 'ZJJZ00271',
-						money01: '1872.00',
-						money02: '15.03',
-						money03: '2399',
-						integer: '1887',
-						fractionalPart: '.05'
-					},
-					{
-						id: '3',
-						ordersNumber: '12345678910',
-						orders: '已完成',
-						goodsPhoto: '../../static/vip-order/img_01.png',
-						title: '足金项链环环相扣',
-						weight: '4.7g',
-						styleNumber: 'ZJJZ00271',
-						money01: '1872.00',
-						money02: '15.03',
-						money03: '2399',
-						integer: '1887',
-						fractionalPart: '.05'
-					}
-				],
-				popupShow: false
-			}
+			</view> 
+			<view v-else style="padding-top: 25%;"><u-empty text="暂无该类订单" mode="order"></u-empty> </view> 
+ 		</view>
+ 		<view v-else style="width: 100%;height: 100vh;padding: 28% 46%;"> 
+ 			<u-loading mode="flower" size="60"></u-loading>
+ 		</view>
+ 	</view>
+ </template>
+  
+ <script>
+	 import uniLoadMore from "@/components/uni-load-more/uni-load-more.vue"
+ 	export default { 	
+ 		data() {
+ 			return {
+ 				tabs: [{name:'全部',id:0}, {name:'待确认',id:10}, {name:'待收货',id:30},{name:'已完成',id:50}],
+ 				list:[],
+ 				current: 0,
+				current_ind:0,
+ 				isShow: true,
+				page:1,
+				page_show:false,
+				status: 'more',
+				statusTypes: [{
+					value: 'more',
+					text: '加载前'
+				}, {
+					value: 'loading',
+					text: '加载中'
+				}, {
+					value: 'noMore',
+					text: '没有更多'
+				}],
+				contentText: {
+					contentdown: '查看更多',
+					contentrefresh: '加载中',
+					contentnomore: '没有更多'
+				},
+ 			}
+ 		},
+ 		onLoad(op) {
+			console.log(op)
+			this.tabClick(this.current)
+ 		},
+		onReachBottom() {
+			this.status = 'loading'
+			this.page++
+			this.page_cont(this.page)
 		},
-		methods: {
-			changeTabs(index) {
-				this.current = index
-				if (index !== 0) {
-					this.isShow01 = false
-				} else {
-					this.isShow01 = true
-				};
-				if (index !== 1) {
-					this.isShow02 = false
-				} else {
-					this.isShow02 = true
-				};
-				if (index !== 2) {
-					this.isShow03 = false
-				} else {
-					this.isShow03 = true
-				}
+ 		methods: {
+			//上拉加载
+			swiper_but(e){
+				this.page++
+				this.page_cont(this.page)
 			},
-			openPopup(){
-				this.popupShow = true
+			
+			page_cont(e){
+				
+				this.$api.get('orders',{page:e,status:this.current,store:1,is_h5:1}).then(res=>{
+					// console.log(res.data.data)
+					if(res.status == 1){
+						this.list = this.list.concat(res.data.data)
+						this.page_show = true
+						if(res.data.data.length < 10){
+							this.status = 'noMore'
+							return false
+						}
+					}
+					//时间
+					if(this.current_ind == 1 && res.data.data){
+						var date = new Date()
+						var nowTime = date.getTime(); // 当前时间的时间戳
+						res.data.data.forEach(i=>{
+							// console.log(i)
+							i.data[0].forEach(j=>{
+								let arr = j.end_time*1000
+								if(nowTime >= arr){
+									this.$api.put('orders',{id:i.id,status:10,type:2}).then(res=>{
+										console.log(res)
+										if(res.status == 1){
+											this.com.redto('./order?state='+ 20 +'&index='+ 2)
+										}else{
+											this.com.msg(res.message)
+										}
+									})
+								}
+							})
+						})
+					}
+				})
 			},
-			closePopup(){
-				this.popupShow = false
+			//订单详情
+			order_detail(e){
+				this.com.navto('../vip-confirm-order/orderDetails?page_type='+e)
+				
+			},
+			//页面滑动
+			page_swiper(e){
+				// console.log(e)
+				this.page_show = false
+				this.page = 1
+				this.list = []
+				this.current_ind = e.detail.current
+				this.current = this.current_ind *10
+				this.page_cont(this.page)
+			},
+			// 点击上方状态按钮
+ 			tabClick(id,index) {
+				// console.log(index)
+				this.page_show = false
+				this.page = 1
+				this.list = []
+ 				this.current = id
+				this.current_ind = index
+				this.page_cont(this.page)
+ 			},
+ 			//删除
+			del_order(e){
+				let that = this
+				uni.showModal({
+					content:'您确定删除该订单吗？？',
+					success(a) {
+						if(a.confirm){
+							that.$api.del('orders',{id:e,is_h5:1}).then(res=>{
+								console.log(res)
+								that.tabClick(that.current)
+								that.com.msg(res.message)
+							})
+						}
+					}
+				})
 			}
-		}
+ 		}
+ 	}
+ </script>
+ 
+ 
+ <style>
+	page{
+		background-color: #f6f6f6;
 	}
-</script>
-
-<style lang="scss">
-	.tabs-first {
-		border-top: solid 10upx #f6f6f6;
-		background-color: #FFFFFF;
-		padding: 20upx 30upx;
-
-		.tabs-first-title {
-			padding: 20upx 0;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			font-size: 26upx;
-
-			.orders-number {
-				color: #999999;
-			}
-
-			.orders {
-				color: #2d407a;
-			}
-		}
-	}
-
-	.goods-box {
+ </style>
+ <style lang="scss" scoped>
+ 	.content{
+		background-color: #f6f6f6;
+		width: 100%;
 		display: flex;
-		padding: 30upx 0;
-		border-top: solid 2upx #eeeeee;
-		border-bottom: solid 2upx #eeeeee;
-
-		.good-photo {
-			width: 23%;
-			display: flex;
-
-			image {
-				width: 100%;
-				border-radius: 10upx;
-			}
-		}
-
-		.goods-details {
-			margin-left: 20upx;
-
-			.goods-title {
-				font-size: 28upx;
-			}
-
-			.goods-text-one {
-				margin-top: 20upx;
-				margin-bottom: 10upx;
-				font-size: 22upx;
-				color: #666666;
-
-				text {
-					margin-right: 30upx;
+		flex-wrap: wrap;
+		padding-top: 70rpx;
+ 		.head {
+ 			width: 100%;
+ 			display: flex;
+ 			justify-content: space-between;
+ 			height: 80rpx;
+ 			line-height: 80rpx;
+ 			padding:0 2%;
+ 			background-color: #fff;color: #999999;
+ 			text-align: center;
+			// position: fixed;left: 0;top: 0;z-index: 20;
+			.swiper-box{
+				
+				display: flex;white-space: nowrap;
+				.swiper_it{
+					display: inline-block;
+					width: 25%;
 				}
 			}
-
-			.goods-text-two {
-				display: flex;
-				flex-wrap: wrap;
-				font-size: 20upx;
-				color: #777777;
-
-				.goods-text-two-min-box {
-					padding: 4upx 14upx;
-					background-color: #f6f6f6;
-					margin-right: 20upx;
-					margin-bottom: 10upx;
-					border-radius: 6upx;
-				}
-			}
-
-			.money-box {
-				margin-top: 10upx;
-
-				.rmb {
-					font-size: 22upx;
-				}
-
-				.integer {
-					font-size: 30upx;
-					font-weight: bold;
-				}
-
-				.fractional-part {
-					font-size: 22upx;
-				}
-			}
-		}
-	}
-
-	.goods-down-box {
-		padding-top: 20upx;
-		display: flex;
-		align-items: center;
-
-		.left {
-			width: 35%;
-
-			.sum {
-				font-size: 22upx;
-				color: #999999;
-			}
-
-			.profit {
-				font-size: 24upx;
-			}
-
-			.price {
-				font-size: 28upx;
-				font-weight: bold;
-				color: #ed4440;
-			}
-		}
-
-		.right {
-			width: 65%;
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			text-align: center;
-
-			.btn-one {
-				width: 37%;
-				height: 52upx;
-				line-height: 52upx;
-				font-size: 24upx;
-				color: #999999;
-				background-color: #FFFFFF;
-				border-radius: 26upx;
-				border: solid 2upx #999999;
-				margin-right: 20upx;
-			}
-
-			.btn-two {
-				width: 37%;
-				height: 52upx;
-				line-height: 52upx;
-				font-size: 24upx;
-				color: #ffffff;
-				background-image: linear-gradient(0deg,
-					#eb4241 0%,
-					#ef463f 100%);
-				border-radius: 26upx;
-			}
-			.btn-there {
-				width: 37%;
-				height: 52upx;
-				line-height: 52upx;
-				font-size: 24upx;
-				color: #999999;
-				background-color: #FFFFFF;
-				border-radius: 26upx;
-				border: solid 2upx #999999;
-			}
-			.one{
-				width: 37%;
-				height: 52upx;
-				line-height: 52upx;
-				font-size: 24upx;
-				color: #999999;
-				background-color: #FFFFFF;
-				border-radius: 26upx;
-				border: solid 2upx #999999;
-				margin-right: 20upx;
-			}
-			.two{
-				width: 24%;
-				height: 52upx;
-				line-height: 52upx;
-				font-size: 24upx;
-				color: #999999;
-				background-color: #FFFFFF;
-				border-radius: 26upx;
-				border: solid 2upx #999999;
-				margin-right: 20upx;
-			}
-			.there{
-				width: 24%;
-				height: 52upx;
-				line-height: 52upx;
-				font-size: 24upx;
-				color: #999999;
-				background-color: #FFFFFF;
-				border-radius: 26upx;
-				border: solid 2upx #999999;
-			}
-		}
-	}
-	.popup-box{
-		padding: 40upx;
-		.popup-up{
-			text-align: center;
-			.notice{
-				font-size: 34upx;
-				font-weight: bold;
-				margin-bottom: 50upx;
-			}
-			.text{
-				font-size: 26upx;
-				color: #666666;
-				margin-bottom: 8upx;
-			}
-		}
-		.popup-btn{
-			padding: 10upx;
-			margin-top: 50upx;
-			.btn-one{
-				padding: 4upx 0;
-				font-size: 24upx;
-				color: #FFFFFF;
-				background-image: linear-gradient(90deg, 
-						#2b3f7d 0%, 
-						#1b2c60 100%);
-				border-radius: 34upx;
-			}
-			.btn-two{
-				padding: 4upx 0;
-				margin-top: 20upx;
-				font-size: 24upx;
-				color: #999999;
-				background-color: #FFFFFF;
-				border-radius: 34upx;
-				border: solid 2upx #999999;
-			}
-		}
-	}
-</style>
+ 			.title {
+ 				font-size: 30rpx;color: #000000;
+ 				font-weight: bold;
+ 			}
+ 			.line {
+ 				width: 70rpx;
+ 				border-bottom: 8rpx solid #ff5810;
+ 				margin: 0 auto;
+ 				margin-top: -14rpx;
+ 				border-radius: 28rpx;
+ 			}
+ 		}
+ 		.box{
+			width: 100%;
+ 			padding: 20rpx;
+ 		}
+ 		.goods{
+ 			width: 100%;
+ 				
+ 		}
+ 	}
+ 	
+ </style>
+ 

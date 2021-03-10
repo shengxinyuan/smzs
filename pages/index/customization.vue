@@ -87,7 +87,6 @@
 						if(res.size/1024/1024 > 10){
 							that.com.msg('上传视频不能大于5MB')
 						}else{
-							
 							let src = res.tempFilePath;
 							that.com.msg("正在上传")
 							// return

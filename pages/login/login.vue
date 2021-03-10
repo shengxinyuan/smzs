@@ -68,6 +68,7 @@
 				code_tit:'获取验证码',
 				time:60,
 				code_show:true,//提示语显示
+				cli_type:true
 			}
 		},
 		onLoad() {
@@ -110,6 +111,7 @@
 						if(this.time ==0){
 							this.code_tit = "再次获取"
 							this.code_show = true
+							clearInterval(setInt)
 						}else{
 							this.time -=1
 						}
@@ -123,39 +125,48 @@
 			//登录
 			 app_login(){
 				if(this.checked == true){
-					this.$api.post('login',{mobile:this.phone,password:this.pass,note:this.note}).then(res=>{
-						console.log(res)
-						if(res.status == 1){
-							let date = new Date().getTime()
-							let end = res.data.member_info.vip_time
-							if(end  <= date){
-								uni.setStorageSync("viptype", false)
-							}else{
-								uni.setStorageSync("viptype", true)
-							}
-							
-							uni.setStorageSync("token",res.data.token)
-							uni.setStorageSync("member_info",res.data.member_info)
-							uni.showToast({
-								title:'请稍后...',icon:'loading',duration:2000
-							})
-							let arr = 2
-							let time = setInterval(()=>{
-								if(arr == 0){
-									clearInterval(time)
-									this.com.rel('../index/index')
-								}else{
-									arr -= 1 
-								}
-							},1000)
-						}else{
-							this.com.msg(res.message) 
-						}
-					})
+					if(this.cli_type){
+						this.login_function()
+					}
 				}else{
 					this.com.msg("请阅读并同意下方协议")
 				}
 				
+			},
+			//登录封装
+			login_function(){
+				this.$api.post('login',{mobile:this.phone,password:this.pass,note:this.note}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.cli_type = false//防抖
+						let date = new Date().getTime()
+						let end = res.data.member_info.vip_time * 1000
+						if(end  <= date){
+							uni.setStorageSync("viptype", false)
+						}else{
+							uni.setStorageSync("viptype", true)
+						}
+						
+						uni.setStorageSync("token",res.data.token)
+						uni.setStorageSync("member_info",res.data.member_info)
+						uni.setStorageSync('member_info_img',res.data.member_info.avatar)
+						uni.setStorageSync('coupon',0)
+						uni.showToast({
+							title:'请稍后...',icon:'loading',duration:2000
+						})
+						let arr = 2
+						let time = setInterval(()=>{
+							if(arr == 0){
+								clearInterval(time)
+								this.com.rel('../index/index')
+							}else{
+								arr -= 1 
+							}
+						},1000)
+					}else{
+						this.com.msg(res.message) 
+					}
+				})
 			},
 			// 到注册页面
 			go_register(){
@@ -183,8 +194,18 @@
 							if(res.data.login_type == 0){
 								that.com.navto("./bangding")
 							}else{
-								uni.setStorageSync('member_info',red.data.member_info)
-								uni.setStorageSync('token',red.data.token)
+								let date = new Date().getTime()
+								let end = res.data.member_info.vip_time * 1000
+								if(end  <= date){
+									uni.setStorageSync("viptype", false)
+								}else{
+									uni.setStorageSync("viptype", true)
+								}
+								
+								uni.setStorageSync("token",res.data.token)
+								uni.setStorageSync("member_info",res.data.member_info)
+								uni.setStorageSync('member_info_img',res.data.member_info.avatar)
+								uni.setStorageSync('coupon',0)
 								uni.showToast({
 									title:'请稍后...',icon:'loading',duration:2000
 								})

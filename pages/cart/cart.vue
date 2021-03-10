@@ -26,7 +26,7 @@
 								</u-checkbox-group>
 							</view>
 							<view class="cart_shop_item_c" @click="go_shopdetail(it.shop_goods_id)">
-								<image src="../../static/index/bann1.png" mode="aspectFill"></image>
+								<image :src="it.image" mode="aspectFill"></image>
 							</view>
 							<view class="cart_shop_item_r">
 								<view class="it_title">
@@ -117,13 +117,11 @@
 			shop_list(a){
 				this.shop_list.data.every(i=>{
 					if(i.status == 1){
-						this.qx_type = true
+						return this.qx_type = true
 					}else{
-						this.qx_type = false
+						return this.qx_type = false
 					}
 				})
-				return this.qx_type
-				// keep:true
 			}
 		},
 		computed:{

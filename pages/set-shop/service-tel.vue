@@ -2,7 +2,7 @@
 	<view class="service-tel-box">
 		<view class="tel">
 			<view>
-				<u-input v-model="value" :type="type" />
+				<u-input v-model="value" :type="type" maxlength="11"/>
 			</view>
 		</view>
 		<view class="show-switch-box">
@@ -61,9 +61,7 @@
 					console.log(res)
 					this.com.msg(res.message)
 					if(res.status == 1){
-						uni.setStorageSync('shop_telephone', this.value)
 						let a = this.status ? 1 : 2 ;
-						uni.setStorageSync('shop_is_display', a)
 						uni.navigateBack() 
 					}
 				})

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="text">
-			<u-parse :html="content"></u-parse>
+			<u-parse :html="content.registration_protocol"></u-parse>
 		</view>
 	</view>
 </template>
@@ -10,11 +10,17 @@
 	export default {
 		data() {
 			return {
-				content: `<p>露从今夜白，月是故乡明</p>
-					<img src="https://cdn.uviewui.com/uview/swiper/2.jpg" />
-					`
+				content:''
 				
 			}
+		},
+		onLoad() {
+			this.$api.get('site').then(res=>{
+				console.log(res)
+				if(res.status == 1){
+					this.content = res.message
+				}
+			})
 		}
 	}
 </script>

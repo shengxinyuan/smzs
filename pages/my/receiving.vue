@@ -2,7 +2,7 @@
 	<!-- 我的地址 -->
 	<view class="content">
 		
-		<view class="conent_box" v-if="list_show">
+		<view class="conent_box" v-if="!list_show">
 			<u-swipe-action v-for="(it, index) in page_list" :key="it.id" :show="it.show" :index="index"
 			 class="address_box" @click="del(it.id)" @open="open" :options="options">
 				<view class="address_box_child">
@@ -89,12 +89,12 @@
 				this.$api.get('address',{is_mine:this.is_mine}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.page_list = res.data
-						if(res.data.length != 0){
-							this.list_show = true
-						}else{
-							this.list_show = false
-						}
+						this.page_list = res.data	
+					}
+					if(res.data===undefined || res.data ==""){
+						this.list_show = true
+					}else{
+						this.list_show = false
 					}
 				})
 			},

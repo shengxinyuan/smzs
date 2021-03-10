@@ -33,7 +33,8 @@
 				codes:"",//验证码
 				note:'',
 				time:60,
-				noclick:true
+				noclick:true,
+				but_show:false
 			}
 		},
 		methods: {
@@ -71,27 +72,41 @@
 				}else if(this.note != this.codes){
 					this.com.msg('验证码错误')
 				}else{
-					this.$api.post('bindingphone',{mobile:this.phone,note:this.codes,openid:uni.getStorageSync('openid'),bn:arr}).then(res=>{
-						console.log(res)
-						if(res.status == 1){
-							uni.showToast({
-								title:'正在登录...',icon:'loading'
-							})
-							//本地存储 
-							uni.setStorageSync('member_info',res.data.member_info)
-							uni.setStorageSync('token',res.data.token)
-							let arr = 2
-							let time = setInterval(()=>{
-								arr --
-								if(arr == 0){
-									clearInterval(time)
-									this.com.tab('../index/index')
+					if(this.but_show){
+						this.$api.post('bindingphone',{mobile:this.phone,note:this.codes,openid:uni.getStorageSync('openid'),bn:arr}).then(res=>{
+							console.log(res)
+							if(res.status == 1){
+								this.but_show = false // 防抖
+								let date = new Date().getTime()
+								let end = res.data.member_info.vip_time * 1000
+								if(end  <= date){
+									uni.setStorageSync("viptype", false)
+								}else{
+									uni.setStorageSync("viptype", true)
 								}
-							},1000)
-						}else{
-							this.com.msg(res.message)
-						}
-					})
+								
+								uni.setStorageSync("token",res.data.token)
+								uni.setStorageSync("member_info",res.data.member_info)
+								uni.setStorageSync('member_info_img',res.data.member_info.avatar)
+								uni.setStorageSync('coupon',0)
+								uni.showToast({
+									title:'请稍后...',icon:'loading',duration:2000
+								})
+								let arr = 2
+								let time = setInterval(()=>{
+									if(arr == 0){
+										clearInterval(time)
+										this.com.rel('../index/index')
+									}else{
+										arr -= 1 
+									}
+								},1000)
+							}else{
+								this.com.msg(res.message)
+							}
+						})
+					}
+					
 				}
 			}
 		}

@@ -11,10 +11,10 @@
 				<text style="margin-right: 20rpx;" v-else>{{ time }}s</text>
 			</view>
 			<view class="write">
-				<input type="text" v-model="pass" placeholder="输入密码"/>
+				<input type="password" v-model="pass" placeholder="输入密码"/>
 			</view>
 			<view class="write">
-				<input type="text" v-model="invcode" placeholder="输入邀请码"/>
+				<input type="text" v-model="invcode" placeholder="输入邀请码(选填)"/>
 			</view>
 			<view class="write">
 				所在地区 <view class="choose" @click="show = true">{{regions}}<u-icon name="arrow-right" color="#999" size="38"></u-icon></view>
@@ -28,15 +28,6 @@
 					<u-checkbox size="45" shape="circle" v-model="checked"  active-color="#1E3066"></u-checkbox>
 					阅读并同意<text @click="agreement(1)">《平台服务协议》</text>及<text @click="agreement(0)">《隐私政策》</text>
 				</u-checkbox-group>
-			</view>
-			<view class="three_s">
-				<view class="titles">—————— 其他方式登录 ——————</view>
-				<view class="weixin">
-					<view>
-						<u-icon name="weixin-circle-fill" color="#08BA06" size="90"></u-icon>
-					    <text>微信</text>
-					</view>
-				</view>
 			</view>
 		</view>
 	</view>
@@ -64,10 +55,9 @@
 				code_tit:'获取验证码',
 				time:60,
 				code_show:true,//提示语显示
-				time:''
+				time:'',
+				log_show:true //防抖
 			}
-		},
-		onUnload() {
 		},
 		methods:{
 			//获取验证码
@@ -104,23 +94,41 @@
 				if(this.checked == false){
 					this.com.msg('请阅读并同意下方协议')
 				}else{
-					this.$api.post('register',data).then(res=>{
-						console.log(res)
-						if(res.state == 1){
-							this.com.msg('注册成功')
-							let arr = 2
-							this.time = setInterval(()=>{
-								if(arr <= 0){
-									uni.navigateBack()
-									clearInterval(this.time)
+					if(this.log_show){
+						this.$api.post('register',data).then(res=>{
+							console.log(res)
+							if(res.status == 1){
+								this.log_show = false //防抖
+								let date = new Date().getTime()
+								let end = res.data.member_info.vip_time * 1000
+								if(end  <= date){
+									uni.setStorageSync("viptype", false)
 								}else{
-									arr -=1
+									uni.setStorageSync("viptype", true)
 								}
-							},1000)
-						}else{
-							this.com.msg(res.message)
-						}
-					})
+								
+								uni.setStorageSync("token",res.data.token)
+								uni.setStorageSync("member_info",res.data.member_info)
+								uni.setStorageSync('member_info_img',res.data.member_info.avatar)
+								uni.setStorageSync('coupon',1)
+								uni.showToast({
+									title:'请稍后...',icon:'loading',duration:2000
+								})
+								// let arr = 2
+								// this.time = setInterval(()=>{
+								// 	if(arr == 0){
+								// 		clearInterval(this.time)
+										this.com.rel('../index/index')
+								// 	}else{
+								// 		arr -= 1 
+								// 	}
+								// },1000)
+							}else{
+								this.com.msg(res.message) 
+							}
+						})
+					}
+					
 				}
 			},
 			//协议

@@ -1,17 +1,18 @@
 <template>
 	<view class="service-tel-box">
 		<view class="tel">
-			<view class="u-upload-box">
-				<u-upload :action="action" ref="uUpload" :header="token"
+			<view class="u-upload-box" @click="shopLogoPopup">
+				<!-- <u-upload :action="action" ref="uUpload" :header="token"
 				:max-count="1"
 				:width="width"
-				:height="height"></u-upload>
+				:height="height"></u-upload> -->
+				<image class="shop-photo" :src="shopPhoto" mode="aspectFill"></image>
 			</view>
 		</view>
 		<view class="show-switch-box">
 			<view class="show-switch-up">
 				<view>商城中展示:</view>
-				<u-switch v-model="checked" active-color="#2d407a" size="40" @change="change" ></u-switch>
+				<u-switch v-model="checked" active-color="#2d407a" size="40" @change="change"></u-switch>
 			</view>
 			<view class="show-switch-down">
 				<u-icon class="icon warning" name="warning"></u-icon>
@@ -28,18 +29,22 @@
 	export default {
 		data() {
 			return {
-				action: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+				
 				token:{
 					token:uni.getStorageSync('token')
 				},
 				width: 230,
 				height: 230,
-				checked: true,
-				lists:[]
+				checked: false,
+				lists:[],
+				image:'',
+				shopPhoto: '',
 			}
 		},
-		onUnload() {
-			clearInterval(this.com.three_back())
+		onLoad(e){
+			console.log(e)
+			this.checked = e.is_qr_code == 1 ? true : false
+			this.shopPhoto = e.qr_code
 		},
 		methods: {
 			change(e) {
@@ -47,35 +52,48 @@
 			},
 			//保存
 			save(){
-				this.lists = this.$refs.uUpload.lists
-				let imgs = ''
-				if(this.lists != ''){
-					imgs = this.lists[0].response.data
-				}
 				// console.log(this.lists)
 				let arr = {
-					qr_code:imgs,
+					qr_code:this.shopPhoto,
 					is_qr_code:this.checked ? 1 : 2
 				}
 				this.$api.post("manage",arr).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.com.msg(res.message)
+						uni.navigateBack()
 					}
-					let arr = 2
-					let time = setTimeout(()=>{
-						
-						if(arr <= 0){
-							uni.navigateBack({})
-							clearInterval(time)
-							console.log(arr)
-						}else{
-							arr -=1
-							console.log(arr)
-						}
-					},1000)
+					
 				})
-			}
+			},
+			shopLogoPopup() {
+				let that = this
+				uni.chooseImage({
+					sourceType: ['camera '], //从相册选择
+					success: (chooseImageRes) => {
+						console.log(chooseImageRes)
+						const tempFilePaths = chooseImageRes.tempFilePaths[0]
+						console.log(chooseImageRes.tempFilePaths[0])
+						uni.uploadFile({
+							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+							filePath: tempFilePaths,
+							name: 'file',
+							formData: {
+								'user': 'test'
+							},
+							header:{
+								'token':uni.getStorageSync('token')
+							},
+							success: (up) => {
+								that.image = JSON.parse(up.data).data
+								// console.log(JSON.parse(up.data))
+								that.shopPhoto = that.image
+							}
+						});
+						
+					}
+				});
+			},
 		}
 	}
 </script>
@@ -96,6 +114,9 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				image{
+					width: 400rpx;height: 400rpx;
+				}
 			}
 		}
 

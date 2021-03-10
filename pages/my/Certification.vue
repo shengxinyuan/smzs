@@ -29,9 +29,24 @@
 				user_id:''
 			}
 		},
+		onLoad() {
+			this.$api.get('info').then(res=>{
+				console.log(res)
+				if(res.status == 1){
+					this.name = res.data.truename
+					this.user_id = res.data.id_number
+				}
+			})
+		},
 		methods:{
 			but_cli(){
-				
+				this.$api.put('info',{truename:this.name,id_number:this.user_id}).then(res=>{
+					console.log(res)
+					this.com.msg(res.message)
+					if(res.status == 1){
+						
+					}
+				})
 			}
 		}
 	}

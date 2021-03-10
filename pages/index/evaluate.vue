@@ -4,7 +4,7 @@
 			<view class="eval_con" v-for="(it,ind) in shop_pj">
 				<view class="order_head">
 					<view class="img">
-						<image src="../../static/index/section.png" mode="aspectFill"></image>
+						<image :src="it.avatar" mode="aspectFill"></image>
 						<view class="shop_name"> {{it.nickname}}</view>
 					</view>
 					
@@ -14,7 +14,7 @@
 					{{it.remark}}
 				</view>
 				<view class="order_img">
-					<image v-for="img in it.img" :src="it" mode="aspectFill" ></image>
+					<image v-for="imgs in it.img" :src="imgs" mode="aspectFill" ></image>
 				</view>
 			</view>
 			<view style="width: 100%;height: 80rpx;">

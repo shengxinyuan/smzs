@@ -5,7 +5,7 @@
 		</view>
 		<view class="fixeds" id="evaluate" >
 			<scroll-view class="swiper" scroll-x >
-				<view class="swiper_item" v-if="it.type != 4" v-for="(it,ind) in nav" :key="ind" @click="nav_cli(it.id)" :class="{active:nav_idnex == it.id}">
+				<view class="swiper_item" v-if="it.title != '定制专区'" v-for="(it,ind) in nav" :key="ind" @click="nav_cli(it.id)" :class="{active:nav_idnex == it.id}">
 					{{it.title}}
 				</view>
 			</scroll-view>

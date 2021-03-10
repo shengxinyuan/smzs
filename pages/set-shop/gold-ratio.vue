@@ -1,14 +1,16 @@
 <template>
 	<view class="zl-box">
+		<uni-nav-bar left-icon="back" @clickLeft="goto_top" :title="title"></uni-nav-bar>
+		
 		<view class="gold-ratio-box">
 			<view class="title">{{ratioTitle}}</view>
-			<input class="input" type="number" :value="value" />
+			<input class="input" type="number" v-model="value" @input="chack"/>
 		</view>
 		<view class="explain">
 			<view class="explain-title">{{explainTitle}}</view>
 			<view>
 				<view>
-					{{explain01}}
+					{{explain01}} 
 				</view>
 				<view>
 					{{explain02}}
@@ -29,7 +31,7 @@
 		data() {
 			return {
 				ratioTitle:'古法金倍率',
-				value:'2',
+				value:'',
 				explainTitle:'说明',
 				explain01:'1、倍率设置：APP端的批发拿货价x您设置的倍率=您的商城售价',
 				explain02:'2、XXX倍率修改后，本平台仍将显示您的拿货成本价格；',
@@ -37,11 +39,38 @@
 				btnName:'保存'
 			}
 		},
+		onLoad(op) {
+			this.title = op.title+'金价'
+			this.gold_id = op.id
+			this.page_reader()
+		},
 		methods: {
-			skipShopGoldPrice(){
-				uni.navigateTo({
-					url:'shop-gold-price'
+			page_reader(){
+				this.$api.get('managegold',{id:this.gold_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.value = res.data.ratio_price
+					}
 				})
+			},
+			skipShopGoldPrice(){
+				this.$api.post('managegold',{ratio_price:this.value,id:this.gold_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.redto('./shop-gold-price?tit='+'修改成功')
+					}
+				})
+			},
+			chack(e){
+				e.target.value = parseInt(e.target.value)
+				//重新赋值给input
+				this.$nextTick(() => {
+					this.value= e.target.value
+				})
+			},
+			//返回
+			goto_top(){
+				uni.navigateBack()
 			}
 		}
 	}

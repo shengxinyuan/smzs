@@ -2,7 +2,7 @@
 	<view class="forget">
 		<view style="width: 100%;">
 			<view class="phone" v-if="type == 2">
-				账号：156 4785 4568
+				账号：{{mobile}}
 			</view>
 			<view class="write">
 				<input type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
@@ -32,10 +32,15 @@
 				code_tit:'获取验证码',
 				time:60,
 				code_show:true,//提示语显示
+				mobile:'',
+				but_show:false
 			}
 		},
 		onLoad(op) {
 			this.type = op.type
+			if(op.mobile){
+				this.mobile = op.mobile
+			}
 		},
 		methods:{
 			//获取验证码
@@ -66,10 +71,15 @@
 					password:this.pass,
 					note:this.note
 				}
-				this.$api.post('changepassword',data).then(res=>{
-					console.log(res)
-					this.com.msg(res.message)
-				})
+				if(this.but_show){
+					this.$api.post('changepassword',data).then(res=>{
+						console.log(res)
+						this.com.msg(res.message)
+						if(res.status == 1){
+							this.but_show = false
+						}
+					})
+				}
 			}
 		}
 	}

@@ -1,89 +1,33 @@
 <template>
 	<view>
 		<view class="sure" v-if="shop_det.status == 10">
-			待支付
+			待确认
 		</view>
-		<text class="sure" v-if="shop_det.status == 20">待发货</text>
-		<text class="sure" v-if="shop_det.status == 30">待收货</text>
-		<text class="sure" v-if="shop_det.status == 40">待评价</text>
+		<text class="sure" v-if="shop_det.status == 30">待完成</text>
 		<text class="sure" v-if="shop_det.status == 50">已完成</text>
-		<text class="sure" v-if="shop_det.status == 60 && shop_det.return_type == 1">审核中</text>
-		<text class="sure" v-if="shop_det.status == 60 && shop_det.return_type == 2">已拒绝</text>
-		<text class="sure" v-if="shop_det.status == 60 && shop_det.return_type == 3">售后成功</text>
-		<view class="toast_order" v-if="shop_det.status != 20">
-			<view class="toast_title" v-if="shop_det.status == 10">
-				超时未支付订单将自动取消
-			</view>
-			<view class="toast_but">
-				<view></view>
-				<view class="toast_but_r"  v-if="shop_det.status == 10">
-					<view class="toast_but_no" @click="no_order(shop_det.id)">
-						取消订单
-					</view>
-					<view class="toast_but_pay" @click="goto_pages">
-						去支付<u-count-down :show-hours="false" bg-color="" color="#fff" :timestamp="timestamp"></u-count-down>
-					</view>
-				</view>
-				<view  class="toast_but_r"  v-if="shop_det.status == 30">
-					<view class="toast_but_no" @click="order_logist_wl(shop_det.bn)">查看物流</view> <!-- // -->
-					<view class="toast_but_pay" @click="sure_details(shop_det.id)">确认收货</view> <!-- // -->
-				</view>
-				<view class="toast_but_r"  v-if="shop_det.status == 50">
-					<view class="toast_but_no" @click="shouh">售后服务</view> <!-- // -->
-					<view class="toast_but_pay" @click="del_order(shop_det.id,shop_det.status)">删除订单</view> <!-- // -->
-				</view>
-				<view class="toast_but_r"  v-if="shop_det.status == 60">
-					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 1" @click="shen_details(shop_det.id)">撤销</view>
-					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 2" @click="order_logist(shop_det)">再次申请</view> <!-- // -->
-					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 3" @click="del_order(shop_det.id,shop_det.status)">删除订单</view> <!-- // -->
-				</view>
-			</view>
-		</view>
+		
 		<!-- 地址 -->
 		<view class="address">
-			<view class="address_l">
-				收货地址 <text>{{shop_det.sf_change == 0 ? '到付' : '邮寄'}}</text>
+			<view class="address_top">
+				<view class="address_l">
+					收货人
+				</view>
+				{{shop_det.address_id.contact}} {{shop_det.address_id.mobile}}
 			</view>
-			<view class="address_r">
-				<view class="address_r_l" v-if="shop_det.address_id">
-					{{shop_det.address_id.province + shop_det.address_id.city + shop_det.address_id.area +shop_det.address_id.address}} 
-					<view>
-						{{shop_det.address_id.contact}} {{shop_det.address_id.mobile}}
+			<view class="address_b">
+				<view class="address_l">
+					收货地址 <!-- <text>{{shop_det.sf_change == 0 ? '到付' : '邮寄'}}</text> -->
+				</view>
+				<view class="address_r">
+					<view class="address_r_l" v-if="shop_det.address_id">
+						{{shop_det.address_id.province +','+ shop_det.address_id.city +','+ shop_det.address_id.area +',' + shop_det.address_id.address}} 
+						
 					</view>
 				</view>
-				<!-- <view class="address_r_r">
-					＞
-				</view> -->
 			</view>
+			
 		</view>
-		<!-- 商品汇总 -->
-		<view class="st_data">
-			<view class="statis">
-				<view class="statis_l">
-					商品汇总
-				</view>
-				<view class="statis_r">
-					共 {{shop_det.count}} 件 ￥{{shop_det.total}}
-				</view>
-			</view>
-			<!-- 工费 -->
-			<view class="statis">
-				<view class="statis_l">
-					工费
-				</view>
-				<view class="statis_r">
-					￥{{shop_det.total_labor_price}}
-				</view>
-			</view>
-			<view class="statis">
-				<view class="statis_l">
-					合计
-				</view>
-				<view class="statis_r" style="color: #ee453f;">
-					￥{{shop_det.total}}
-				</view>
-			</view>
-		</view>
+		
 		<!-- 商品 -->
 		<view class="shop">
 			<view class="shop_title">
@@ -113,7 +57,26 @@
 				<text class="heji_r"> 合计：<text>￥{{shop_det.total}}</text></text>
 			</view>
 		</view>
-		
+		<!-- 商品汇总 -->
+		<view class="st_data">
+			<view class="statis">
+				<view class="statis_l">
+					商品汇总
+				</view>
+				<view class="statis_r">
+					共 {{shop_det.count}} 件 ￥{{shop_det.total}}
+				</view>
+			</view>
+			<!-- 工费 -->
+			<view class="statis">
+				<view class="statis_l">
+					工费
+				</view>
+				<view class="statis_r">
+					￥{{shop_det.total_labor_price}}
+				</view>
+			</view>
+		</view>
 		<view class="st_data" style="margin-bottom: 60rpx;">
 			<view class="statis" v-if="shop_det.message">
 				<textarea :placeholder="'备注'+shop_det.message" :disabled="true" />
@@ -136,6 +99,33 @@
 				</view>
 			</view>
 		</view>
+		
+		<view class="toast_order">
+			<view class="toast_but">
+				<view></view>
+				<view class="toast_but_r"  v-if="shop_det.status == 10">
+					<view class="toast_but_no" @click="no_order(shop_det.id)">
+						取消订单
+					</view>
+					<view class="toast_but_pay" @click="goto_pages(shop_det.bn)">
+						平台下单
+					</view>
+				</view>
+				<view  class="toast_but_r"  v-if="shop_det.status == 30">
+					<view class="toast_but_no" @click="order_logist_wl(shop_det.bn)">查看物流</view> <!-- // -->
+					<view class="toast_but_pay" @click="sure_details(shop_det.id)">确认收货</view> <!-- // -->
+				</view>
+				<view class="toast_but_r"  v-if="shop_det.status == 50">
+					<view class="toast_but_no" @click="shouh">售后服务</view> <!-- // -->
+					<view class="toast_but_pay" @click="del_order(shop_det.id,shop_det.status)">删除订单</view> <!-- // -->
+				</view>
+				<view class="toast_but_r"  v-if="shop_det.status == 60">
+					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 1" @click="shen_details(shop_det.id)">撤销</view>
+					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 2" @click="order_logist(shop_det)">再次申请</view> <!-- // -->
+					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 3" @click="del_order(shop_det.id,shop_det.status)">删除订单</view> <!-- // -->
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -151,13 +141,13 @@
 			}
 		},
 		watch:{
-			timestamp(a){
-				if(this.shop_det.status == 10){
-					if(a <=0){
-						uni.navigateBack()
-					}
-				}
-			}
+			// timestamp(a){
+			// 	if(this.shop_det.status == 10){
+			// 		if(a <=0){
+			// 			uni.navigateBack()
+			// 		}
+			// 	}
+			// }
 		},
 		onLoad(op) {
 			console.log(op)
@@ -165,18 +155,12 @@
 			this.page_reader()
 		},
 		methods:{
+			
 			page_reader(){
-				this.$api.get('order_goods',{id:this.order_id}).then(res=>{
+				this.$api.get('order_goods',{id:this.order_id,is_h5:1}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.shop_det = res.data
-						
-						let data = new Date()
-						let state = data.getTime()
-						let end_time = res.data.cancel_time * 1000
-						console.log(end_time) 
-						let reslut = end_time - state
-						this.timestamp = Math.floor(reslut / 1000)
 					}
 				})
 			},
@@ -241,7 +225,7 @@
 					content:'确认取消该订单吗？',
 					success(re) {
 						if(re.confirm){
-							that.$api.put('orders',{id:e,type:2}).then(res=>{
+							that.$api.put('orders',{id:e,type:2,is_h5:1}).then(res=>{
 								if(res.status == 1){
 									that.com.redto('./order?state='+ 10 +'&index='+ 1)
 								}else{
@@ -252,15 +236,13 @@
 					}
 				})
 			},
-			goto_pages(){
-				let payment_data={
-					vip:this.shop_det.vip,
-					menber_price:this.shop_det.member_money,
-					shop_price:this.shop_det.total
+			goto_pages(e){
+				// console.log(e)
+				let data = {
+					bn: e,
+					current:1
 				}
-				uni.navigateTo({
-					url:'../my/payments?data='+this.shop_det.bn+'&shop='+JSON.stringify(payment_data)
-				})
+				this.com.navto('../vip-confirm-order/vip-confirm-order?data=' + JSON.stringify(data))
 			}
 		}
 	}
@@ -276,7 +258,7 @@
 		padding: 3%;font-size: 38rpx;font-weight: bold;
 	}
 	.toast_order{
-		width: 100%;background-color: #fff;padding: 3%;
+		width: 100%;padding: 3%;
 		.toast_title{
 			font-size: 30rpx;font-weight: bold;margin-bottom: 30rpx;
 		}
@@ -291,16 +273,23 @@
 					font-size: 28rpx;color: #999;border: 2rpx solid #999;border-radius: 50rpx;padding: 0 20rpx;
 				}
 				.toast_but_pay{
-					height: 60rpx;line-height: 56rpx;
+					height: 60rpx;line-height: 60rpx;
 					font-size: 28rpx;color: #fff;background-color: #ee453f; border-radius: 50rpx;padding: 0 20rpx;
 				}
 			}
 		}
 	}
 	.address{
-		display: flex;justify-content: space-between;padding: 20rpx 3%;background-color: white;margin-top: 20rpx;
+		padding: 20rpx 3%;background-color: white;margin-top: 20rpx;
+		.address_top{
+			margin-bottom: 20rpx;
+			display: flex;
+		}
+		.address_b{
+			display: flex;justify-content: space-between;
+		}
 		.address_l{
-			width: 32%;white-space: nowrap;
+			width: 160rpx;white-space: nowrap;
 			color: #999;
 			text{
 				display: inline-block;color: white;background-color: #2b3f7d;padding: 0 16rpx;margin-left: 14rpx;border-radius: 50rpx;
@@ -310,7 +299,7 @@
 			display: flex;
 			color: #333;
 			.address_r_l{
-				text-align: right;line-height: 40rpx;
+				line-height: 40rpx;
 			}
 			.address_r_r{
 				line-height: 80rpx;margin-left: 28rpx;color: #999;
@@ -334,6 +323,7 @@
 	}
 	.shop{
 		width: 100%;padding: 20rpx 3% 0 3%;background-color: white;
+		margin-top: 20rpx;
 		.shop_title{
 			width: 100%;display: flex;justify-content: space-between;padding-bottom: 20rpx;border-bottom: 1rpx solid #eee;
 			line-height: 50rpx  ;

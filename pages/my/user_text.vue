@@ -4,8 +4,7 @@
 		<view class="personal">
 			<view class="per_list" @click="photograph">头像
 			    <view class="list_s">
-					<image src="../../static/errorImage.jpg" mode="aspectFill" v-if="!images_ava"></image>
-					<image :src="images_ava" mode="aspectFill" v-else></image>
+					<image :src="images_ava" mode="aspectFill"></image>
 			    	<u-icon name="arrow-right" color="#706f6c" size="20"></u-icon>
 			    </view>
 			</view>
@@ -136,7 +135,7 @@
 						const tempFilePaths = chooseImageRes.tempFilePaths[0]
 						console.log(chooseImageRes.tempFilePaths[0])
 						uni.uploadFile({
-							url: 'http://mrd.nxm.wanheweb.com/api/uploads',
+							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
 							filePath: tempFilePaths,
 							name: 'file',
 							formData: {

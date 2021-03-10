@@ -4,16 +4,16 @@
 		
 		<!-- 列表 -->
 		<view class="part_list">
-			<view class="list_child" v-for="(it,ind) in 4" :key="ind">
+			<view class="list_child" v-for="(it,ind) in list" :key="ind">
 				<view class="child_l">
-					<view class="child_l_top">微信</view>
-					<view class="child_l_but" v-if="type == 2">来源 2021-01-08 13:47</view>
-					<view class="child_l_but">2021-01-08 13:47</view>
+					<view class="child_l_top">{{it.title}}</view>
+					<view class="child_l_but" v-if="type == 2">来源 {{it.member}}</view>
+					<view class="child_l_but">{{it.update_time}}</view>
 				</view>
 				<view class="child_r">
 					<view v-if="type==2">
 						<view class="child_r_top" style="color: #dd2626;">
-							￥300
+							+{{it.price}}
 						</view>
 						<view class="child_r_but">
 							已到账
@@ -21,11 +21,12 @@
 					</view>
 					
 					<view class="child_r_top" v-else>
-						￥300
+						￥{{it.price}}
 					</view>
-					
-					
 				</view>
+			</view>
+			<view style="width: 100%;height: 80rpx;">
+				<uni-load-more :status="status" :content-text="contentText"></uni-load-more>
 			</view>
 		</view>
 	</view>
@@ -38,7 +39,24 @@
 			return{
 				title:'',
 				type:0,
-				list:[]
+				list:[],
+				page:1,
+				status: 'more',
+				statusTypes: [{
+					value: 'more',
+					text: '加载前'
+				}, {
+					value: 'loading',
+					text: '加载中'
+				}, {
+					value: 'noMore',
+					text: '没有更多'
+				}],
+				contentText: {
+					contentdown: '查看更多',
+					contentrefresh: '加载中',
+					contentnomore: '没有更多'
+				},
 			}
 		},
 		onLoad(op) {
@@ -53,14 +71,17 @@
 			}else if(op.type == 4){
 				this.title = '充值明细'
 			} 
-			this.page_reader()
+			this.page_reader(this.page)
 		},
 		methods:{
-			page_reader(){
-				this.$api.post('money',{type:this.type}).then(res=>{
+			page_reader(e){
+				this.$api.post('money',{type:this.type,page:e}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.money = res.data
+						this.list = this.list.concat(res.data.data)
+						if(res.data.data && res.data.data < 10  ){
+							this.status = 'noMore'
+						}
 					}
 				})
 			},

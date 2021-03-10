@@ -47,7 +47,7 @@
 		
 		methods:{
 			search() {
-				this.com.navto('../service/service')
+				this.com.navto('./search')
 			},
 			//传值
 			shop_confim(e){
@@ -90,7 +90,7 @@
 		height: 145rpx;width: 100%;
 		padding-top: 55rpx;padding-left: 30rpx;
 		display: flex;
-		z-index: 20;background-color: #293C79;
+		z-index: 22;background-color: #293C79;
 		.header_l{
 			width: 12%;
 			line-height: 100rpx;
@@ -117,7 +117,7 @@
 	}
 	.textrus{
 		width: 100%;
-		position: fixed;left: 0;top: 145rpx;z-index: 20;
+		position: fixed;left: 0;top: 145rpx;z-index: 22;
 	}
 	.contes{
 		width: 100%;

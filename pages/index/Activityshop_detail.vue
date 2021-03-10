@@ -26,13 +26,9 @@
 		<!-- banner轮播 -->
 		<view class="carousel">
 			<swiper :circular="true" :autoplay="true" :duration="400" :interval="3000"  @change="swiperChange">
-				<swiper-item class="swiper-item" v-for="(item,index) in imgList" :key="index">
+				<swiper-item class="swiper-item" v-for="(item,index) in shop_det.album" :key="index">
 					<view class="image-wrapper" @click="banner_cli">
-						<image
-							:src="item.src" 
-							class="loaded" 
-							mode="aspectFill"
-						></image>
+						<image :src="item" class="loaded" mode="aspectFill" />
 					</view>
 				</swiper-item>
 			</swiper>
@@ -104,32 +100,32 @@
 		</view>
 		<!-- 评价 -->
 		<view class="eva-section" id="evaluate">
-			<view class="section_title" @click="goto_page('./evaluate')">
+			<view class="section_title" @click="goto_page('./evaluate?id='+shop_id)" v-if="commentlist">
 				<view class="tit_l">
 					<text></text>
-					宝贝评价（100）
+					宝贝评价（{{commentlist.total}}）
 				</view>
 				<view style="color: #999;">
 					查看更多＞
 				</view>
-			</view> 
+			</view>
 			<view class="eva-box">
-				<view class="eval_con" v-for="it in 2">
+				<view class="eval_con" v-for="(it,ind) in commentlist.data">
 					<view class="order_head">
 						<view class="img">
-							<image src="../../static/kefu.png" mode="aspectFill"></image>
-							<view class="shop_name">你的名字</view>
+							<image :src="it.avatar" mode="aspectFill"></image>
+							<view class="shop_name">{{it.nickname}}</view>
 						</view>
 						<view class="shop_name_f">
-							
+		
 						</view>
-						<view class="order_time">2021-1-15</view>
+						<view class="order_time">{{it.create_time}}</view>
 					</view>
 					<view class="order_con">
-						打定金交付吉萨大
+						{{it.remark}}
 					</view>
 					<view class="order_img">
-						<image v-for="img in 3" src="../../static/index/section.png" mode="aspectFill" ></image>
+						<image v-for="img in it.img" :src="img" mode="aspectFill"></image>
 					</view>
 				</view>
 			</view>
@@ -268,17 +264,7 @@
 				swiperCurrent: 0,
 				favorite: true,
 				shareList: [],
-				imgList: [
-					{
-						src: '../../static/index/bann1.png' 
-					},
-					{
-						src: '../../static/vip-order/img_02.png'
-					},
-					{
-						src: '../../static/index/bann2.png'
-					}
-				],
+				imgList: [],
 				headlist:[
 					{name:'商品'},
 					{name:'评价'},
@@ -302,6 +288,7 @@
 				second:0,//秒数
 				cantuan:0,//参团id
 				pi_group:'',//拼团列表
+				commentlist:''
 			};
 		},
 		onPageScroll(e) {
@@ -405,8 +392,11 @@
 					}
 				})
 				//评论
-				this.$api.get('commentlist/'+this.shop_id).then(res=>{
-					// console.log(res)
+				this.$api.get('commentlist/' + this.shop_id).then(res => {
+					console.log(res)
+					if (res.status == 1) {
+						this.commentlist = res.data
+					}
 				})
 				//拼团列表
 				this.$api.get('group',{id:this.shop_id,member_id:this.member.id}).then(res=>{

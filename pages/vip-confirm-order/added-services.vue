@@ -18,7 +18,7 @@
 					<view class="text">首饰打包费用（包含外纸箱、泡沫等材料费）</view>
 				</view>
 				<view class="zzfw-cost">
-					<view>保费：</view>
+					<view>打包费：</view>
 					<view class="cost-pay">￥{{baof}}</view>
 				</view>
 			</view>
@@ -40,7 +40,7 @@
 						:class="{active:it.id == itemid }" @click="item_cli(it.id,ind)">
 							<view class="gift-package-min-box">
 								<view class="gift-package-photo">
-									<image src="../../static/community/list_01.png" mode="aspectFill"></image>
+									<image :src="it.image" mode="aspectFill"></image>
 									<view v-if="it.counds != 0">
 										{{it.counds}}
 									</view>
@@ -92,7 +92,7 @@
 			this.baof = op.price
 			if(op.data){
 				this.datas = JSON.parse(op.data)
-				// console.log(this.datas.list) 
+				console.log(this.datas.list) 
 				this.giftList = this.datas.list
 				this.itemid = this.datas.list[0].id
 				this.totalMoney()

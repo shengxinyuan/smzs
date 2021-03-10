@@ -4,8 +4,11 @@
 			<view class="items_l">
 				实名认证
 			</view>
-			<view class="items_r">
+			<view class="items_r" v-if="shiname">
 				未认证 <text class="views"></text> <u-icon name="arrow-right"></u-icon>
+			</view>
+			<view class="items_r" v-else>
+				已认证 <u-icon name="arrow-right"></u-icon>
 			</view>
 		</view>
 		<view class="items" v-for="(it,ind) in list" :key="ind" @click="go_set(ind)">
@@ -35,8 +38,22 @@
 					{tit:"帮助与客服"},
 					{tit:"关于我们"},
 					{tit:"意见反馈"},
-				]
+					{tit:"提现设置"},
+				],
+				shiname:false
 			}
+		},
+		onShow() {
+			this.$api.get('info').then(res=>{
+				console.log(res)
+				if(res.status == 1){
+					if(res.data.truename != '' && res.data.id_number != ''){
+						this.shiname = false
+					}else{
+						this.shiname = true
+					}
+				}
+			})
 		},
 		methods:{
 			//退出
@@ -68,14 +85,16 @@
 					this.com.navto('./user_text')
 				}else if(e == 2){
 					this.com.navto('../../pages/community/shop-code')
-				}else if(e == 3){
+				}else if(e == 3){//新手教程
 					this.com.navto('./olie_course')
-				}else if(e == 4){
+				}else if(e == 4){ 
 					this.com.navto('../../pages/service/service')
-				}else if(e == 5){
+				}else if(e == 5){ //关于我们
 					this.com.navto('../../pages/my/aboutus')
-				}else if(e == 6){ 
+				}else if(e == 6){ //意见
 					this.com.navto('./fankui')
+				}else if(e == 7){ //提现设置
+					this.com.navto('../set-shop/set-withdraw')
 				}else if(e == 99){ //实名认证
 					this.com.navto('./Certification')
 				}

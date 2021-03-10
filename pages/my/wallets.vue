@@ -10,7 +10,7 @@
 				</view>
 			</view>
 			<view class="wallet_rent_r">
-				<view class="rent_r_it" @click="go_pages('./withdraw')">
+				<view class="rent_r_it" @click="go_pages('./withdraw?money='+stdata.money+'&feil='+stdata.alipay_rate+'&bank='+stdata.bank_rate)">
 					<u-icon name="red-packet-fill" size="34" style="margin-right: 14rpx;"></u-icon> 提现
 				</view>
 				<view class="rent_r_it" @click="go_pages('./recharge')">

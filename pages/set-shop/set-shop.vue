@@ -120,7 +120,7 @@
 				avatar:''
 			}
 		},
-		onLoad() {
+		onLoad(op) {
 		},
 		onShow(){
 			this.$api.get("manage").then(res=>{
@@ -179,76 +179,52 @@
 					url: './shop-signature?remark='+this.data.remark
 				})
 			},
+			//客服电话
 			skipServiceTel() {
 				uni.navigateTo({
-					url: './service-tel?telephone='+this.data.telephone+'&is_display='+this.data.is_display
+					url: './service-tel?telephone='+this.data.telephone+'&is_display='+this.data.is_telephone
 				})
 			},
+			//金店地址
 			skipShopAddress() {
 				uni.navigateTo({
-					url: './shop-address?province='+this.data.province+'&city='+this.data.city+'&area='+this.data.area+'&address='+this.data.address
+					url: './shop-address?province='+this.data.province+'&city='+this.data.city+'&area='+this.data.area+'&address='+this.data.address+'&is_address='+this.data.is_address
 				})
 			},
+			//二维码
 			skipServiceCode() {
 				uni.navigateTo({
-					url: 'service-code'
+					url: 'service-code?is_qr_code='+this.data.is_qr_code+'&qr_code='+this.data.qr_code
 				})
 			},
 			//金店数据
 			skipShopData() {
 				uni.navigateTo({
-					url: 'shop-data'
+					url: 'shop-data?id='+this.data.id
 				})
 			},
+			//商城证书
 			skipShopCertificate() {
 				uni.navigateTo({
-					url: 'shop-certificate'
+					url: 'shop-certificate?sign='+this.data.sign+'&certificate='+this.data.certificate
 				})
 			},
+			//金店金价
 			skipShopGoldPrice() {
 				uni.navigateTo({
 					url: 'shop-gold-price'
 				})
 			},
+			//收款设置
 			skipSetPayee() {
 				uni.navigateTo({
-					url: 'set-payee'
+					url: 'set-payee?wechat_image='+this.data.wechat_image+'&alipay_image='+this.data.alipay_image
 				})
 			},
+			//提现设置
 			skipSetWithdraw() {
-				uni.navigateTo({
-					url: 'set-withdraw'
-				})
+				this.com.navto('../set-shop/set-withdraw')
 			},
-			selectPhoto(){
-				let _that = this
-				uni.chooseImage({
-				    count: 1, //默认9
-				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-				    sourceType: ['album'], //使用相机
-				    success: function (res) {
-				        console.log(JSON.stringify(res.tempFilePaths[0]));
-						uni.uploadFile({
-							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads', //仅为示例，非真实的接口地址
-							filePath: res.tempFilePaths[0],
-							name: 'file',
-							formData: {
-								'user': 'test'
-							},
-							methods : 'POST',
-							header:{	// uni.getStorageSync('token')
-								// 'content-type': 'application/x-www-form-urlencoded',
-								'token':uni.getStorageSync('token')},
-							success: (uploadFileRes) => {
-								console.log(uploadFileRes.data);
-								_that.data = {
-									'avatar' : uploadFileRes.data.data
-								}
-							}
-						});
-				    }
-				});
-			}
 		}
 	}
 </script>

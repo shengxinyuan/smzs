@@ -10,13 +10,13 @@
 		</uni-nav-bar>
 		
 			<!-- 历史搜索 -->
-			<view >
+			<view v-if="shop_tuij == ''">
 				<view v-if="history.length !=0" style="width: 100%;">
 					<view class="zl-history-box">
 						<view class="zl-history">
 							<text>历史搜索</text>
 						</view>
-						<image src="/static/search/search_01.png" class="zl-delete" @click="deles"></image>
+						<u-icon name="trash" @click="deles" size="44"></u-icon>
 					</view>
 						<!-- 内容 -->
 					<view class="zl-search-history">
@@ -37,12 +37,7 @@
 					</view>
 				</view> -->
 			</view>
-			<view class="imgs">
-				<image src="../../static/my/tuijain_bgimg.png" mode=""></image>
-			</view>
-			<view style="background-color: #F6F6F6;">
-				<zs-shopping-list ></zs-shopping-list>
-			</view>
+			<zs-shopping-list :shop_list="shop_tuij"></zs-shopping-list>
 	</view>
 </template>
 
@@ -53,13 +48,34 @@
 				// search_hot:["大型犬狗粮","幼犬狗粮","狗粮","大型犬狗粮","大型犬狗粮"],
 				search_s:"",//搜索关键字
 				history:[],//搜索历史
+				shop_tuij:'',
+				shop_list:[],
+				list:'',
+				nav_ind:0
+			}
+		},
+		watch:{
+			search_s(a){
+				if(a==''){
+					this.shop_tuij = []
+				}
 			}
 		},
 		onLoad() {
-			let aq = uni.getStorageSync('neirong')
-			this.history =JSON.parse(aq)
+			if( uni.getStorageSync('neirong')){
+				let aq = uni.getStorageSync('neirong')
+				this.history =JSON.parse(aq)
+			}
+			// //推荐商品
+			// this.$api.get('hotgoods').then(res=>{
+			// 	console.log(res)
+			// 	if(res.status == 1){
+			// 		this.shop_tuij = res.data
+			// 	}
+			// })
 		},
 		methods: {
+			
 			back(){
 				uni.navigateBack()
 			},
@@ -69,7 +85,15 @@
 					this.com.msg('搜索内容不能为空')
 					
 				}else{
-					this.com.navto('./search-result?id='+key)
+					this.$api.post('goods',{key:key}).then(res=>{
+						console.log(res)
+						if(res.status == 1){
+							this.shop_tuij = res.data.data
+							if(res.data.data.length == 0){
+								this.com.msg('暂无该类商品')
+							}
+						}
+					})
 					if(this.history.indexOf(this.search_s) == -1){
 						this.history.unshift(this.search_s)  //unshift:跟push性质一样 区别就是将新添加的数据放在第一位
 					}
@@ -81,7 +105,6 @@
 						data: JSON.stringify(this.history)//转换为字符串形式
 					})
 				}
-				
 			},
 			// 删除搜索历史
 			deles(){
@@ -101,8 +124,6 @@
 									})
 								}
 							});
-				        } else if (res.cancel) {
-				            
 				        }
 				    }
 				});
@@ -111,12 +132,16 @@
 			// 点击搜索历史再次搜索
 			again(item){
 				this.search_s = item
-				this.com.navto('./search-result?id='+item)
+				this.go_search(item)
 			}
 		}
 	}
 </script>
-
+<style>
+	page{
+		background-color: #F1F1F1;
+	}
+</style>
 <style lang="scss" scoped>
 	.imgs{
 		width: 100%;height: 100rpx;margin-top: 40rpx;
@@ -126,7 +151,7 @@
 	}
 	.box{
 		width: 100%;
-
+		padding-bottom: 30rpx;
 	}
 	
 	.zl-box{
@@ -187,7 +212,7 @@
 		flex-wrap: wrap;
 		padding: 0 50rpx;
 		text{
-			background-color: #f3f3f3;
+			background-color: #fff;
 			margin: 15upx;
 			padding: 0 25upx;
 			text-align: center;

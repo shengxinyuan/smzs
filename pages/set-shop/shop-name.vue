@@ -5,7 +5,7 @@
 			<u-input v-model="value" :type="type" :border="border" :clearable="clearable" />
 		</view>
 		<view class="zl-btn">
-			<button class="btn" @click="save()">保存</button>
+			<button class="btn" @click="save">保存</button>
 		</view>
 	</view>
 </template>
@@ -36,7 +36,7 @@
 				}
 				this.$api.post('manage', params ).then(res=>{
 					this.com.msg(res.message)
-					this.com.three_back()
+					uni.navigateBack()
 				})
 				
 			}
