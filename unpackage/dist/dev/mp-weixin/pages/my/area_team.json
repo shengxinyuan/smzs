@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "区域团队",
+  "usingComponents": {
+    "zs-inputs": "/components/zs-inputs/zs-inputs"
+  }
+}

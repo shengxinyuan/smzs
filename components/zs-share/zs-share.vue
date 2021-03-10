@@ -1,15 +1,12 @@
 <template>
-	<view v-if="show" class="mask" @click="toggleMask" 
-		@touchmove.stop.prevent="stopPrevent" 
-		:style="{backgroundColor: backgroundColor}">
-		<view class="mask-content" @click.stop.prevent="stopPrevent" 
-		:style="[{height: config.height, transform: transform}]">
+	<view v-if="show" class="mask" @click="toggleMask" 	@touchmove.stop.prevent="stopPrevent" :style="{backgroundColor: backgroundColor}">
+		<view class="mask-content" @click.stop.prevent="stopPrevent" :style="[{height: config.height, transform: transform}]">
 			<scroll-view class="view-content" scroll-y>
 				<view class="share-header">
 					分享到
 				</view>
 				<view class="share-list">
-					<view v-for="(item, index) in shareList" :key="index" class="share-item" @click="shareToFriend(item.text)">
+					<view v-for="(item, index) in shareList" :key="index" class="share-item" @click="shareToFriend(item.type)">
 						<image :src="item.icon" mode=""></image>
 						<text>{{item.text}}</text>
 					</view>
@@ -104,8 +101,8 @@
 			//防止冒泡和滚动穿透
 			stopPrevent() {},
 			//分享操作
-			shareToFriend(type) {
-				this.$api.msg(`分享给${type}`);
+			shareToFriend(e) {
+				this.$emit('shaer_app',e)
 				this.toggleMask();
 			},
 		}

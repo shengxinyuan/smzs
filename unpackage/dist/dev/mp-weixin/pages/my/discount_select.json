@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择优惠券",
+  "usingComponents": {
+    "zs-login": "/components/zs-login/zs-login",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon"
+  }
+}

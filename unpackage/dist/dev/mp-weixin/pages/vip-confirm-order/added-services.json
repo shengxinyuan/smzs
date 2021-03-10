@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "增值服务",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box",
+    "drag-button": "/components/drag-button/drag-button"
+  }
+}

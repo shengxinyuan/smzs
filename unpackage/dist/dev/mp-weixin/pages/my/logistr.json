@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "物流信息",
+  "usingComponents": {
+    "u-steps": "/node-modules/uview-ui/components/u-steps/u-steps"
+  }
+}

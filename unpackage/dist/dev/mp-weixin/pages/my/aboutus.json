@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "关于我们",
+  "usingComponents": {
+    "u-parse": "/node-modules/uview-ui/components/u-parse/u-parse"
+  }
+}

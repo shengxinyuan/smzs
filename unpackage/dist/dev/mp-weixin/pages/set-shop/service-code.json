@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "商城客服二维码",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-switch": "/node-modules/uview-ui/components/u-switch/u-switch",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon"
+  }
+}

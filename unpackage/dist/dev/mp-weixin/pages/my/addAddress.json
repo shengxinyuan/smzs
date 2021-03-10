@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "新增地址",
+  "usingComponents": {
+    "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker"
+  }
+}

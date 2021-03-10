@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "限时秒杀",
+  "navigationBarBackgroundColor": "#e8372f",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "zs-shoplist-seckill": "/components/zs-shoplist-seckill/zs-shoplist-seckill"
+  }
+}

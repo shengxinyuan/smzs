@@ -67,6 +67,7 @@
 				</view>
 			</view>
 		</view>
+		<!-- 竖向 -->
 		<view v-if="page_login">
 			<view style="padding-top: 200rpx;" v-if="shop_list == ''">
 				<u-empty text="暂无" mode="list"></u-empty>
@@ -79,11 +80,11 @@
 						{{it.title}}
 					</view>
 					<view class="it_price">
-						￥{{ it.price }}
+						<text style="font-size: 22rpx;font-weight: none;">￥</text>{{ it.price }}
 					</view>
 					<view class="it_selt">
 						<view class="it_selt_l">
-							<text>￥{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
+							<text><text style="font-size: 20rpx;">￥</text>{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
 						</view>
 						<view class="it_selt_r">
 							已售{{it.sale}}件
@@ -104,10 +105,10 @@
 						</view>
 						<view class="it_text_cen">
 							<view class="it_price">
-								￥{{ it.price }}
+								<text style="font-size: 22rpx;font-weight: none;">￥</text>{{ it.price }}
 							</view>
 							<view class="it_selt_l">
-								<text>￥{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
+								<text><text style="font-size: 20rpx;">￥</text>{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
 							</view>
 						</view>
 						<view class="it_label">
@@ -130,7 +131,7 @@
 	export default {
 		data() {
 			return {
-				type:0,//商品列表
+				type:1,//商品列表
 				heat_ind: -1,// 导航
 				price_type:0,//排序 1-降序 2-升序		
 				show:false,
@@ -196,7 +197,7 @@
 				this.key ='' //	关键字
 				this.cate_id =''//分类id
 				this.shop_label_cate_id =''//筛选款式
-				if(shaix_type !=3){
+				if(this.shaix_type !=3){
 					this.shop_label_texture_id=''//筛选材质
 				}
 				this.sku_value ='' //筛选时sku的值
@@ -411,7 +412,7 @@
 		}
 		.it_text{
 			.it_tit{
-				font-size: 30rpx;width: 96%;height: 80rpx;overflow: hidden;
+				font-size: 28rpx;width: 96%;height: 80rpx;overflow: hidden;
 			}
 			.it_text_cen{
 				display: flex;white-space: nowrap;
@@ -426,7 +427,7 @@
 						color: #ea5b72;font-size: 26rpx;
 					}
 					image{
-						width: 80rpx; height: 28rpx;margin-top: 6rpx;
+						width: 60rpx; height: 24rpx;margin-top: 10rpx;
 					}
 				}
 			}
@@ -440,12 +441,12 @@
 			}
 			.it_selt_r{
 				color: #998;line-height: 40rpx;font-size: 26rpx;
-				
 			}
 		}
 		
 	}
 }
+//竖向
 .cont_list{
 	width: 100%;
 	display: flex;flex-wrap: wrap;padding: 0 3%;
@@ -454,40 +455,40 @@
 		width: 49%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
 		margin-top: 20rpx;overflow: hidden; 
-		position: relative;
+		position: relative;padding-bottom: 10rpx;
 		.imagea{
-			width: 70rpx;height: 84rpx;
+			width: 56rpx;height: 70rpx;
 			position: absolute;left: 22rpx;top: 0;
 			z-index: 20;
 		}
 		.images{
 			width: 100%;
-			height: 300rpx;
+			height: 350rpx;
 		}
 		.it_tit{
 			padding-left: 10rpx;
-			font-size: 30rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 60rpx;
+			font-size: 28rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 56rpx;
 		}
 		.it_price{
 			padding-left: 10rpx;
-			font-weight: bold;font-size: 30rpx;line-height: 60rpx;
+			font-weight: bold;font-size: 30rpx;
 		}
 		.it_selt{
 			padding-left: 10rpx;
 			width: 100%;display: flex;justify-content: space-between;
 			line-height: 40rpx;
 			.it_selt_l{
-				padding-top: 10rpx;display: flex;
+				display: flex;
 				text{
 					color: #ea5b72;font-size: 26rpx;
 				}
 				image{
-					width: 80rpx; height: 28rpx;margin-top: 6rpx;
+					width: 60rpx; height: 24rpx;margin-top: 10rpx;
 				}
 			}
 			.it_selt_r{
 				width: 150rpx;
-				color: #998;line-height: 50rpx;font-size: 26rpx;
+				color: #998;font-size: 22rpx;text-align: right;margin-right: 20rpx;
 				white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 			}
 		}

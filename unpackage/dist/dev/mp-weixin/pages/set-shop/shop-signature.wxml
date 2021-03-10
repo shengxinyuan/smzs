@@ -1,0 +1,1 @@
+<view><view class="zl-box"><u-input bind:input="__e" vue-id="4d521ac0-1" type="{{type}}" border="{{border}}" clearable="{{true}}" value="{{value}}" data-event-opts="{{[['^input',[['__set_model',['','value','$event',[]]]]]]}}" bind:__l="__l"></u-input></view><view class="zl-btn"><button data-event-opts="{{[['tap',[['save']]]]}}" class="btn" bindtap="__e">保存</button></view></view>

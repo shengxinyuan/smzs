@@ -66,7 +66,7 @@
 		
 		.tab-item{
 			width: 100%;
-			line-height: 50upx;
+			line-height: 46upx;
 			/* padding: 20upx; */
 			/* min-width: 100upx; */
 			text-align: center;

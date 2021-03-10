@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "客服电话",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#ffffff",
+  "usingComponents": {
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-switch": "/node-modules/uview-ui/components/u-switch/u-switch",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon"
+  }
+}

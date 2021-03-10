@@ -15,7 +15,7 @@
 					<text class="sure" v-if="item.status == 60 && item.return_type == 3">售后成功</text>
 				</view>
 				<view class="shop_list" v-if="item.goods">
-					<image src="../../static/index/section.png" mode="aspectFill" @click="order_detail(item.id)"></image>
+					<image :src="item.goods.image" mode="aspectFill" @click="order_detail(item.id)"></image>
 					<view class="list_right">
 						<view @click="order_detail(item.id)">
 							<view class="title">{{item.goods.title}}</view>
@@ -23,7 +23,8 @@
 							<view class="shop_list_label">
 								<text>金价：{{item.gold_price}}</text><text>工费： {{item.labor_price}} </text>
 							</view>
-							<view class="price">￥{{item.total}}</view>
+							<view class="price"><text>￥{{item.total}}</text>
+							 <text style="color: #999;"> *{{item.count}}</text></view>
 						</view>
 						
 					</view>
@@ -42,10 +43,10 @@
 						<!-- <view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  -->
 						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist_wl(item.bn_id)">查看物流</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 30" @click="sure_details(item.id)">确认收货</view> <!-- // -->
-						<!-- <view class="go_buy" v-if="item.status == 40" @click="go_immed(item)">立即评价</view> -->
+						<view class="go_buy" v-if="item.status == 40" @click="go_immed(item)">立即评价</view>
 						<view class="go_buy_s" v-if="item.status == 50" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 60 && item.return_type == 1" @click="shen_details(item.id)">撤销</view> 
-						<view class="go_buy" v-if="item.status == 60 && item.return_type == 2" @click="order_logist(item)">再次申请</view> <!-- // -->
+						<view class="go_buy" v-if="item.status == 50" @click="shouh">售后服务</view> <!-- // -->
+						<view class="go_buy" v-if="item.status == 60 && item.return_type == 2" @click="shouh">再次申请</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 60 && item.return_type == 3" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
 					</view>
 				</view>
@@ -83,6 +84,10 @@
 			order_detail(e){
 				console.log(e)
 				this.$emit('order_detail',e)
+			},
+			//售后
+			shouh(){
+				this.com.navto('../service/service')
 			},
 			//确认收货
 			sure_details(e){
@@ -141,7 +146,10 @@
 			},
 			// 评论
 			go_immed(e){
-				this.com.navto('../my/evaluate?list='+JSON.stringify(e))
+				// this.com.navto('../my/evaluate?list='+JSON.stringify(e))
+				uni.navigateTo({
+					url:'../my/evaluate?list='+JSON.stringify(e)
+				})
 			},
 			//取消
 			order_quxiao(e){
@@ -226,11 +234,7 @@
 					}
 					.price{
 						width: 100%;line-height: 70rpx;
-						color: #ba1a30;
-						text{
-							color: #999999;
-							text-decoration: line-through;
-						}
+						color: #ba1a30;display: flex;justify-content: space-between;
 					}
 					.Specifications{
 						width: 100%;color: #999;font-size: 26rpx;

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "平台金价",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "stzhang-tab": "/components/stzhang-tab/stzhang-tab"
+  }
+}

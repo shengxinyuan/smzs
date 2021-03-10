@@ -340,7 +340,7 @@
         },{
             "path" : "pages/cart/payment",
             "style" : {
-				"navigationBarTitleText":"确认订单"
+				"navigationBarTitleText":"..."
 			}
         }
         ,{
@@ -440,7 +440,7 @@
             "path" : "pages/community/community",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "社区营销",
+                "navigationBarTitleText": "社交营销",
                 "enablePullDownRefresh": false,
 				"navigationBarBackgroundColor":"#FFFFFF"
             }
@@ -584,21 +584,15 @@
             "path" : "pages/set-shop/gold-prices",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "足金金价",
-                "enablePullDownRefresh": false,
-				"navigationBarBackgroundColor":"#FFFFFF"
+               "navigationStyle":"custom" 
             }
             
         }
         ,{
             "path" : "pages/set-shop/gold-ratio",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "古法金倍率",
-                "enablePullDownRefresh": false,
-				"navigationBarBackgroundColor":"#FFFFFF"
+            "style" :{
+				"navigationStyle":"custom"
             }
-            
         }
         ,{
             "path" : "components/zs-texture/zs-texture",
@@ -608,7 +602,7 @@
             "path" : "pages/set-shop/add-payee-code",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "添加支付宝收款码",
+                "navigationBarTitleText": "添加收款码",
                 "enablePullDownRefresh": false,
 				"navigationBarBackgroundColor":"#FFFFFF"
             }
@@ -665,11 +659,24 @@
         }
         ,{
             "path" : "pages/community/my-gold-prices",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "周大福珠宝",
+            "style" :{
                 "enablePullDownRefresh": false,
-				"navigationBarBackgroundColor":"#FFFFFF"
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"app-plus":{
+					//App平台iOS端软键盘上方横条去除方案
+					"softinputNavBar": "none",
+					"titleNView":{
+						"buttons":[
+							{
+								"text":"周大福",
+								"fontSize": "16px",
+								"float":"left",
+								"width":"240px",
+								"align":"right"
+							}
+						]
+					}
+				}
             }
             
         }
@@ -777,6 +784,42 @@
             "style" : {
 				"navigationStyle":"custom"
 			}
+        }
+        ,{
+            "path" : "pages/my/evaluate",
+            "style" : {
+				"navigationBarTitleText":"评价"
+			}
+        }
+        ,{
+            "path" : "pages/my/talk_detail",
+            "style" : {
+				"navigationBarTitleText":"详情"
+			}
+        }
+        ,{
+            "path" : "components/zs-coupon-put/zs-coupon-put",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-coupon-xr/zs-coupon-xr",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-order-list-two/zs-order-list-two",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/zs-order-df-two/zs-order-df-two",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/vip-confirm-order/orderDetails",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/service/my-dp-html",
+            "style" : {}
         }
     ],
 	"globalStyle": {

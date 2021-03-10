@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-count-down": "/node-modules/uview-ui/components/u-count-down/u-count-down",
+    "u-parse": "/node-modules/uview-ui/components/u-parse/u-parse",
+    "zs-shopping-list": "/components/zs-shopping-list/zs-shopping-list",
+    "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box",
+    "zs-share": "/components/zs-share/zs-share"
+  }
+}

@@ -40,12 +40,13 @@
 .con{
 	display: flex;
 	.jint{
-		width: 10rpx;height: 50rpx;
+		margin-top: 10rpx;
+		width: 10rpx;height: 40rpx;
 		background-image: linear-gradient(#d5b260,#fff2ce,#d5b260);
 	}
 	.title{
-		font-size: 38rpx;line-height: 60rpx;padding-left: 20rpx;
-		font-weight: 580;display: flex;
+		font-size: 30rpx;line-height: 60rpx;padding-left: 20rpx;
+		font-weight: bold;display: flex;
 		.title_red{
 			color: red;
 		}

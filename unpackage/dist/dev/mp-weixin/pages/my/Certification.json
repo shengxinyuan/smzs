@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "身份认证",
+  "usingComponents": {
+    "zs-button": "/components/zs-button/zs-button"
+  }
+}

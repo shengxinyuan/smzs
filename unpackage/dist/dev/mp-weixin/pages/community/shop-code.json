@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "店铺二维码",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-swiper": "/node-modules/uview-ui/components/u-swiper/u-swiper",
+    "u-popup": "/node-modules/uview-ui/components/u-popup/u-popup",
+    "u-divider": "/node-modules/uview-ui/components/u-divider/u-divider"
+  }
+}

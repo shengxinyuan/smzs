@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "评价",
+  "usingComponents": {
+    "u-upload": "/node-modules/uview-ui/components/u-upload/u-upload",
+    "zs-button": "/components/zs-button/zs-button"
+  }
+}

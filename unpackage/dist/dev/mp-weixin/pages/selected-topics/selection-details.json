@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "精选专题详情",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-tabs": "/node-modules/uview-ui/components/u-tabs/u-tabs",
+    "zs-shoplist-type": "/components/zs-shoplist-type/zs-shoplist-type"
+  }
+}

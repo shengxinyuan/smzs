@@ -36,17 +36,18 @@
 		</view>
 		<view class="pay_sty" v-if="pageType != 1">
 			<view class="head_type_l">
-				提现金额 <text >可用余额  元</text>
+				提现金额 <text >可用余额 {{money}} 元</text><text @click="quanb(money)" style="color: orange;">全部提现</text>
 			</view>
 			<view class="pay_sty_inp">
 				<text>￥</text>
 				<input type="number" v-model="value" @blur="ok_inp"/>
 			</view>
 			<view class="pay_sty_pass"> 
-				服务费<text>￥ 0.60</text>
+				服务费<text>￥ {{fuwu_money}}</text>
 			</view>
 			<view class="pay_sty_pass">
-				费率 <text>0.60%</text>
+				费率 <text v-if="pay_type == 1">{{feil}}%</text>
+					 <text v-else>{{bank}}%</text>
 			</view>
 			<view class="pay_sty_pass">
 				注：保留整数
@@ -74,12 +75,12 @@
 	export default {
 		data() {
 			return {
-				pay_type:0,
+				pay_type:1,
 				value:''
 				
 			};
 		},
-		
+	
 		props:{
 			buttitle:{
 				default:'申请提现'
@@ -87,8 +88,27 @@
 			pageType:{
 				default:1
 			},//页面类型
+			money:{}, 
+			feil:{},// 支付宝费率
+			bank:{}, //银行卡费率
+		},
+		
+		computed:{
+			fuwu_money(){
+				let arr = 0
+				if(this.pay_type == 1){ //支付宝
+					arr = this.feil / 100
+				}else{
+					arr = this.bank / 100
+				}
+				let at = arr * this.value
+				return at.toFixed(2)
+			},
 		},
 		methods:{
+			quanb(e){
+				this.value = e
+			},
 			radio_cli(e){
 				console.log(e)
 				this.pay_type = e
@@ -97,7 +117,10 @@
 				this.value = Math.floor(e.detail.value)
 			},
 			but_cli(){
-				this.$emit('but_cli',this.pay_type,this.value)
+				// console.log(this.fuwu_money,this.value)
+				
+				let arr =this.value - this.fuwu_money
+				this.$emit('but_cli',this.pay_type,arr.toFixed(2))
 			}
 			
 		}
