@@ -3,7 +3,7 @@
 		<view class="header_bait" :style="{'background-color': bgcolor,'opacity':opacity}">
 			<view class="toubu">
 				<view class="header_left" @click="goto_top">
-					<u-icon name="arrow-left" size="54"></u-icon>
+					<u-icon class="left-icon" name="arrow-left" size="40"></u-icon>
 				</view>
 				<view class="center">
 					<view class="center_it" :class="{active:head_ind == ind}" v-for="(it,ind) in headlist" :key="ind" @click="head_nav_cli(ind)">
@@ -11,16 +11,16 @@
 					</view>
 				</view>
 				<view class="head_share" @click="share">
-					<u-icon name="zhuanfa" size="54"></u-icon>
+					<u-icon class="left-icon" name="zhuanfa" size="40"></u-icon>
 				</view>
 			</view>
 		</view>
 		<view class="header">
 			<view class="header_left" @click="goto_top">
-				<u-icon name="arrow-left" size="60"></u-icon>
+				<image src="../../static/index/back1.png" mode="aspectFill"></image>
 			</view>
 			<view class="header_left" @click="share">
-				<u-icon name="zhuanfa" size="60"></u-icon>
+				<image src="../../static/index/zf.png" mode="aspectFill"></image>
 			</view>
 		</view>
 			<!-- banner轮播 -->
@@ -43,20 +43,29 @@
 				市场平均料价：{{shop_det.average_price}}元/g <text style="margin-left: 20rpx;"> 工费：{{shop_det.wage}}元/g</text>
 			</view>
 			<view class="introduce-section">
-
 				<view class="price-box">
 					<view class="price-box_l" v-if="!vip_type">
 						<text class="price-tip">¥</text>
 						<text class="price">{{shop_det.price}}</text>起
 						<text class="m-price">¥{{shop_det.price_vip}}</text>
 					</view>
-					<view class="price-box_l" style="color: #e8372f;" v-else>
+					<view class="price-box_l" style="color: #ef2d2d;" v-else>
 						<text class="price-tip">¥</text>
 						<text class="price">{{shop_det.price_vip}}</text>起
 					</view>
 					<view class="price-box_r">
-						<image src="../../static/index/search_icon.png" mode=""></image>
-						<view>一键比价</view>
+						<view class="min-box">
+							<u-icon name="heart" size="42"></u-icon>
+							<view>收藏</view>
+						</view>
+						<view class="min-box">
+							<image src="../../static/index/search_icon.png" mode=""></image>
+							<view>一键比价</view>
+						</view>
+						<view>
+							<u-icon name="share" size="42"></u-icon>
+							<view>店铺分享</view>
+						</view>
 					</view>
 				</view>
 				<!-- <view class="bot-row">
@@ -65,24 +74,25 @@
 					<text>浏览量: 768</text>
 				</view> -->
 			</view>
-			<view class="shop_names">
-				<text>正品</text> {{shop_det.title}}
-			</view>
 			<view class="shopping_text">
-				<view class="text-item" v-if="!vip_type" @click="goto_page('../my/vip_member')">
-					<view class="">
-						开通超级会员，预估额外省 <text style="color: #df3636;"> {{shop_det.price - shop_det.price_vip}} </text>
-					</view>
-					<view class="text-item_r">
-						立即开通 ＞
-					</view>
+				<view class="shop_names">
+					<text class="zp">正品</text>
+					<text class="shopname">{{shop_det.title}}</text>
 				</view>
 				<view class="shop_introduce">
 					{{shop_det.remark}}
 				</view>
-				<view class="Rapid_delivery">
-					<!-- <u-icon name="car-fill" style="margin-right: 10rpx;"></u-icon>急速出货  16:30前下单当日货品可发货，定制产品除外。 -->
+			</view>
+			<view class="text-item" v-if="!vip_type" @click="goto_page('../my/vip_member')">
+				<view class="">
+					开通超级会员，预估额外省 <text style="color: #df3636;"> {{shop_det.price - shop_det.price_vip}} </text>
 				</view>
+				<view class="text-item_r">
+					立即开通 ＞
+				</view>
+			</view>
+			<view class="Rapid_delivery">
+				<!-- <u-icon name="car-fill" style="margin-right: 10rpx;"></u-icon>急速出货  16:30前下单当日货品可发货，定制产品除外。 -->
 			</view>
 			<!-- 规格 -->
 			<view class="specification">
@@ -94,11 +104,13 @@
 			<view class="eva-section" id="evaluate">
 				<view class="section_title" @click="goto_page('./evaluate?id='+shop_id)" v-if="commentlist">
 					<view class="tit_l">
-						<text></text>
-						宝贝评价（{{commentlist.total}}）
+						<text class="pk"></text>
+						<text class="pj">宝贝评价</text>
+						<text class="numbers">（{{commentlist.total}}）</text>
 					</view>
-					<view style="color: #999;">
-						查看更多＞
+					<view style="color: #999; font-size: 24upx;">
+						查看更多
+						<u-icon name="arrow-right"></u-icon>
 					</view>
 				</view>
 				<view class="eva-box">
@@ -643,7 +655,7 @@
 
 	.header_bait {
 		width: 100%;
-		height: 150rpx;
+		height: 160rpx;
 		background-color: white;
 		padding-top: 60rpx;
 		position: fixed;
@@ -652,15 +664,14 @@
 		z-index: 99;
 
 		.toubu {
-			padding: 0 16rpx;
-			line-height: 100rpx;
+			padding: 0 3%;
 			display: flex;
-			justify-content: space-between;
+			justify-content: space-between;align-items: center;
 
 			.center {
 				width: 60%;
-				line-height: 78rpx;
-				font-size: 32rpx;
+				line-height: 100rpx;
+				font-size: 30rpx;
 				display: flex;
 
 				.center_it {
@@ -674,13 +685,13 @@
 						&:before {
 							content: '';
 							position: absolute;
-							left: 22%;
+							left: 31%;
 							bottom: 20%;
 							transform: translateY(-50%);
-							height: 7rpx;
-							width: 56%;
+							height: 6rpx;
+							width: 38%;
 							background-color: #2d407a;
-							border-radius: 0 4px 4px 0;
+							border-radius: 4px;
 							opacity: .8;
 						}
 					}
@@ -697,17 +708,24 @@
 		padding: 0 4%;
 		position: absolute;
 		left: 0;
-		top: 66rpx;
+		top: 60rpx;
 		z-index: 20;
 
 		.header_left {
-			text-align: center;
-			padding-top: 12rpx;
-			width: 80rpx;
-			height: 80rpx;
-			background-color: rgba(0, 0, 0, 0.5);
-			border-radius: 50%;
-			color: #fff;
+			// text-align: center;
+			// padding-top: 12rpx;
+			// width: 80rpx;
+			// height: 80rpx;
+			// background-color: rgba(0, 0, 0, 0.5);
+			// border-radius: 50%;
+			// color: #fff;
+			image{
+				width: 64upx;
+				height: 64upx;
+			}
+			.left-icon{
+				color: #eeeeee;
+			}
 		}
 	}
 
@@ -758,10 +776,10 @@
 	.trabecula {
 		width: 100%;
 		background-color: #1e2f65;
-		height: 70rpx;
+		height: 62rpx;
 		color: #fff;
-		line-height: 70rpx;
-		padding: 0 3%;
+		line-height: 62rpx;
+		padding: 0 3%;font-size: 26upx;
 	}
 
 	/* 标题简介 */
@@ -788,22 +806,25 @@
 			}
 
 			.price-box_r {
-				width: 100rpx;
 				text-align: center;
+				display: flex;align-items: center;
 
 				image {
-					width: 40rpx;
-					height: 40rpx;
+					width: 38rpx;
+					height: 38rpx;
 				}
 
 				view {
-					font-size: 24rpx;
+					font-size: 18rpx;
+				}
+				.min-box{
+					margin-right: 20upx;
 				}
 			}
 		}
 
 		.price {
-			font-size: 38rpx;
+			font-size: 48rpx;
 			font-weight: bold;
 			margin: 0 16rpx 0 14rpx;
 		}
@@ -841,54 +862,46 @@
 
 	.shop_names {
 		background-color: white;
-		;
-		overflow: hidden;
-		line-height: 50rpx;
-		font-size: 32rpx;
-		font-weight: bold;
-		padding: 0 0 20rpx 3%;
+		font-size: 30rpx;
+		// padding: 0 3%;
+		display: flex;align-items: center;
 
-		text {
-			display: inline-block;
-			font-size: 24rpx;
-			font-weight: none;
+		.zp {
+			font-size: 20rpx;
 			background-color: #df3636;
 			padding: 0 4rpx;
 			color: white;
-			height: 36rpx;
-			line-height: 36rpx;
 			border-radius: 6rpx;
+		}
+		.shopname{
+			font-weight: bold;
+			padding-left: 10upx;
 		}
 	}
 
 	.shopping_text {
-		background-color: white;
 		background-color: #fff;
-		padding: 0 3%;
-
-		.text-item {
-			font-weight: bold;
-			display: flex;
-			justify-content: space-between;
-			background-color: #f6f8ff;
-			line-height: 68rpx;
-			padding: 0 20rpx;
-			color: #333;
-			border-radius: 8rpx;
-		}
+		padding: 0 0 20upx 3%;
+		display: flex;
 
 		.shop_introduce {
-			font-size: 28rpx;
-			color: #333;
-			line-height: 42rpx;
-			padding: 10rpx 0;
+			
 		}
 
 		.Rapid_delivery {
 			color: #999;
-			line-height: 70rpx;
 			white-space: nowrap;
 		}
+	}
+	.text-item {
+		font-weight: bold;
+		display: flex;
+		justify-content: space-between;
+		background-color: #f6f8ff;
+		line-height: 68rpx;
+		padding: 0 20rpx;
+		color: #333;
+		border-radius: 8rpx;
 	}
 
 	// 规格
@@ -896,11 +909,11 @@
 		width: 100%;
 		display: flex;
 		flex-wrap: wrap;
-		font-size: 28rpx;
+		font-size: 24rpx;
 		margin: 20rpx 0;
 		background-color: white;
 		padding: 0 3%;
-		line-height: 70rpx;
+		line-height: 50rpx;
 		color: #666;
 
 		.child {
@@ -920,7 +933,6 @@
 
 	/* 评价 */
 	.eva-section {
-
 		padding: 20upx 30upx;
 		background: #fff;
 		margin-top: 16upx;
@@ -929,18 +941,23 @@
 			width: 100%;
 			display: flex;
 			justify-content: space-between;
-			padding-bottom: 20rpx;
-			line-height: 44rpx;
 
 			.tit_l {
 				display: flex;
+				align-items: center;
 
-				text {
+				.pk {
 					display: inline-block;
 					width: 12rpx;
 					height: 100%;
 					background-image: linear-gradient(#445589, #fff);
 					margin-right: 16rpx;
+				}
+				.pj{
+					font-size: 28upx;
+				}
+				.numbers{
+					font-size: 22upx;
 				}
 			}
 		}
@@ -1025,6 +1042,7 @@
 			justify-content: center;
 			align-items: center;
 			height: 80upx;
+			font-size: 30upx;
 			/* font-size: $font-base + 2upx; */
 			/* color: $font-color-dark; */
 			position: relative;
@@ -1291,7 +1309,7 @@
 		width: 100%;
 		height: 100rpx;
 		background-color: #fff;
-		display: flex;
+		display: flex;align-items: center;
 		border-top: 1rpx solid #e2e2e2;
 
 		.add_con {
@@ -1299,7 +1317,7 @@
 			height: 70rpx;
 			margin: 15rpx auto;
 			display: flex;
-			justify-content: space-between;
+			justify-content: space-between;align-items: center;
 
 			.s_icon {
 				margin-left: 27rpx;
@@ -1322,37 +1340,38 @@
 
 			.anniu {
 				display: flex;
+				justify-content: flex-end;
+				align-items: center;
 				width: 400rpx;
-				height: 70rpx;
 
 				.add_car {
-					width: 200rpx;
-					height: 70rpx;
-					line-height: 70rpx;
-					background-image: linear-gradient(0deg,
-						#ff8b02 0%,
-						#f9ad53 100%);
-					border-radius: 34rpx 0rpx 0rpx 36rpx;
+					width: 45%;
+					height: 62rpx;
+					line-height: 62rpx;
+					background-image: linear-gradient(90deg, 
+							#354a8b 0%, 
+							#1b2c60 100%);
+					border-radius: 30upx;
 					font-size: 24rpx;
 					color: #ffffff;
 					text-align: center;
 				}
 
 				.buy {
-					width: 201rpx;
-					height: 70rpx;
-					line-height: 70rpx;
-					background-image: linear-gradient(0deg,
-						#ff5910 0%,
-						#fa7e48 100%);
-					border-radius: 0rpx 36rpx 34rpx 0rpx;
+					width: 45%;
+					height: 62rpx;
+					line-height: 62rpx;
+					background-image: linear-gradient(90deg, 
+							#f3c44f 0%, 
+							#f2b827 50%, 
+							#f0ab00 100%);
+					border-radius: 30upx;
 					font-size: 24rpx;
 					color: #ffffff;
 					text-align: center;
+					margin-left: 10upx;
 				}
 			}
-
 		}
-
 	}
 </style>
