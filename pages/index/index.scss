@@ -40,65 +40,64 @@
 		}
 	}
 	.trumpet{
-		width: 92%;height: 56rpx;line-height: 66rpx;padding-left: 20rpx;
-		background-color: rgba(56,69,130,0.4);
-		position: absolute;left: 4%;bottom: 0;color: white;display: flex;
+		width: 100%;height: 56rpx;line-height: 56rpx;padding-left: 20rpx;
+		background-color: rgba(0, 85, 255, 0.4);
+		position: absolute;left: 0;bottom: 0;color: #FFFFFF;display: flex;
 		.swiper_three{
-			height: 56rpx;width: 92%;margin-left: 1%;font-size: 26rpx;
+			height: 56rpx;width: 100%;margin-left: 1%;font-size: 26rpx;
 		}
 	}
 }
 .header{
 	position: fixed;left: 0;top: 0;
-	height: 145rpx;width: 100%;
-	padding-top: 55rpx;
+	height: 140rpx;width: 100%;
 	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	z-index: 999;
+	// border-bottom: solid 0.5upx #F1F1F1;
+	padding: 40upx 30upx 0 30upx;
 	//头部导航栏
 	.city {
-		width: 12%;
-		/* #ifndef APP-PLUS-NVUE */
-		/* #endif */
-		flex-direction: row;
+		display: flex;
 		align-items: center;
-		justify-content: flex-start;padding-top: 16rpx;
-		/* width: 160rpx;
-	*/
-		margin-left: 18px;
+		justify-content: center;
+		padding-right: 20upx;
+		position: relative;
 		.city_a{
-			margin-left: 10rpx;
 			width: 56rpx;height: 56rpx;border-radius: 50%;
-			margin-top: 8rpx;
 		}
 		.city_b{
-			position: absolute;margin-left: 10rpx;
-			width: 76rpx;height: 76rpx;
-			left: 20rpx;top: 54rpx;
+			position: absolute;
+			width: 80rpx;height: 80rpx;
+			left: -19rpx;
+			top: -24upx;
 		}
 	}
 	.input-view {
 		display: flex;
+		align-items: center;
+		justify-content: space-between;
 		flex-direction: row;
-		width: 74%;
 		flex: 1;
 		height: 60rpx;
 		border-radius: 15px;
 		padding: 0 15px;
 		flex-wrap: nowrap;
-		margin: 7px 0;
-		line-height: 60rpx;
 		
 		input{
 			width: 70%;
-			margin-top: 10rpx;
-			font-size: 30rpx;
-			
+			font-size: 26rpx;
 		}
 	}
 	.rig{
-		width: 18%;
-		line-height: 94rpx;text-align: center;
-		font-size: 26rpx;padding-right: 20rpx;
+		padding-left: 20upx;
+		display: flex;
+		align-items: center;
+		font-size: 24rpx;
+		.chat-icon{
+			padding-right: 2upx;
+		}
 	}
 }
 .swiper{
@@ -117,14 +116,14 @@
 			background-color: white;
 			border-radius: 10rpx;padding: 20rpx;
 			.king_pic_a{
-				display: flex;justify-content: space-between;
+				display: flex;justify-content: space-between;align-items: center;
 				.times{
-					color: #999;line-height: 60rpx; font-size: 24rpx;
+					color: #999;line-height: 60rpx; font-size: 22rpx;
 				}
 			}
 			.tabs{
 				width: 100%;
-				font-size: 22rpx;
+				font-size: 20rpx;
 				.swipers_d{
 					height: 304rpx;
 					overflow-y: scroll;
@@ -135,9 +134,9 @@
 				.tabs_tr{
 					display: flex;
 					view{
-						width: 20%;text-align: center;height: 58rpx;line-height: 60rpx;background-color: #fff0d7;
+						width: 20%;text-align: center;height: 58rpx;line-height: 58rpx;background-color: #fff0d7;
 						margin: 2rpx;border-radius: 4rpx;
-						white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
+						text-overflow: ellipsis;
 					}
 				}
 				.tabs_td{
@@ -145,13 +144,13 @@
 					view{
 						width: 20%;text-align: center;height: 58rpx;line-height: 60rpx;background-color: #fffcf7;
 						margin: 2rpx;border-radius: 4rpx;
-						white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
+						text-overflow: ellipsis;
 					}
 				}
 			}
 		}
 		.nine_g{
-			width: 100%;margin: 20rpx 0;;border-radius: 10rpx;
+			width: 100%;margin: 20rpx 0;border-radius: 10rpx;
 			background-color: white;
 			padding: 8rpx 16rpx;
 			display: flex;flex-wrap: wrap;justify-content: space-between;
@@ -168,11 +167,12 @@
 					width: 70%;text-align: center;
 					position: absolute;left: 15%;top: 10%;
 					z-index: 20;
+					font-size: 26upx;
 					white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 				}
 				.nine_g_child_cla{
 					width: 100%;text-align: center;color: #ccae70;
-					position: absolute;left: 0;top: 34%;font-size: 20rpx;
+					position: absolute;left: 0;top: 30%;font-size: 18rpx;
 					z-index: 20;
 					white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 				}
@@ -185,10 +185,10 @@
 			.s-header{
 				display:flex;
 				align-items:center;justify-content: space-between;
-				height: 92upx;
-				line-height: 1;
+				height: 90upx;
 				.s-header_a{
 					display: flex;
+					align-items: center;
 				}
 				.s-img{
 					width: 120rpx;height: 20rpx;margin-right: 20px;margin-top: 6rpx;
@@ -202,14 +202,14 @@
 					}
 					.timer{
 						display:inline-block;
-						padding: 0 10rpx;
+						padding: 2upx 10rpx;
 						text-align:center;
-						line-height: 36upx;
 						margin-right: 14upx;
 						font-size: 22rpx;
 						color: white;
 						border-radius: 2px;
 						background-color: #2d407a;
+						border-radius: 10upx 10upx 10upx 0;
 					}
 				}
 				
@@ -229,12 +229,12 @@
 							border-radius: 4upx;
 						}
 						.title{
-							font-size: 26rpx;color: #EB6177;font-weight: bold;
+							font-size: 24rpx;color: #EB6177;font-weight: bold;
 							white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 						}
 						.price{
 							color: #C1C1C0;
-							text-decoration: line-through;font-size: 22rpx;
+							text-decoration: line-through;font-size: 20rpx;
 							white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 						}
 					}
@@ -247,14 +247,14 @@
 			.swiper_two{
 				height: 620rpx;
 				.swiper_item_tit{
-					padding: 10rpx;font-size: 30rpx;
+					padding: 10rpx 0;font-size: 28rpx;
 					
 				}
 				image{
 					width: 100%;height: 342rpx;border-radius: 10rpx;margin-top: 16rpx;
 				}
 				.swiper_item_cont{
-					color: #999;font-size: 26rpx;
+					color: #999;font-size: 24rpx;
 					height: 88rpx;line-height: 40rpx;overflow: hidden;text-overflow: ellipsis;
 				}
 			}
@@ -297,25 +297,26 @@
 			}
 		}
 		.choiceness{
-			margin-top: 20rpx;padding: 84rpx 20rpx 40rpx 20rpx;
-			width: 100%;border-radius: 10rpx;height: 330rpx;
+			margin-top: 20rpx;padding: 80rpx 20rpx 0 20rpx;
+			width: 100%;border-radius: 10rpx;height: 324upx;
 			background-image: url(../../static/choiceness.png);
 			background-size: 100% 100%;
 			.choiceness_child{
 				width: 100%;
 				display: flex;justify-content: space-around;
 				.choiceness_item{
-					width: 23%;height: 220rpx;background-color: #fff8f2;border-radius: 10rpx;
+					width: 23%;background-color: #fff8f2;border-radius: 10rpx;
 					text-align: center;padding: 16rpx 0;
 					image{
 						width: 100rpx;height: 100rpx;
 					}
 					.item_tit{
+						font-size: 26upx;
 						line-height: 50rpx;
 						color: #666;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 					}
 					.item_cla{
-						color: #999999;font-size: 22rpx;
+						color: #999999;font-size: 20rpx;
 					}
 				}
 			}

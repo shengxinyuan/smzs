@@ -2,24 +2,20 @@
 	<view class="content">
 		<!-- 自定义头部 -->
 		<view class="header" :style="{ 'background-color': backgroundColor }">
-			<view class="city" @click="page_my" v-if="member">
-				<image :src="member" mode="aspectFill" class="city_a"></image>
+			<view class="city" @click="page_my">
+				<image :src="member || dft_photo" mode="aspectFill" class="city_a"></image>
 				<image src="../../static/userimg.png" mode="widthFix" v-if="huiy_show && member" class="city_b"></image>
-			</view>
-			<view class="city" v-else>
-				<image src="../../static/tabbar/shopsale.png" mode="aspectFill" class="city_a"></image>
+				<view class="notlogin" v-show="isLogin">未登录</view>
 			</view>
 			<view class="input-view" :style="{'backgroundColor' : indexbackcolor}">
 				<view class=""  @click="saoma">
-					<uni-icons class="input-uni-icon" type="scan" size="22" color="#666666" /><text style="color: #999;margin-left: 16rpx;"> ▏</text>
+					<uni-icons class="input-uni-icon" type="scan" size="20" color="#999999" /><text style="color: #999999;margin-left: 20rpx;"> ▏</text>
 				</view>
 				<input confirm-type="search" class="nav-bar-input" type="text" :disabled="true" placeholder="输入搜索关键词" @click="search">
-				<view style="margin-top: 10rpx;" @click="camear">
-					<u-icon name="camera" size="44" color="#666666"></u-icon>
-				</view>
+				<u-icon name="camera" size="40" color="#999999" @click="camear"></u-icon>
 			</view>
 			<view class="rig" :style="{'color': headcolor}"  @click="go_pages('../information/information')">
-				 <u-icon name="chat" size="36"></u-icon>消息
+				 <u-icon name="chat" size="38" class="chat-icon"></u-icon>消息
 			</view>
 		</view>
 		<!-- banner部分 -->
@@ -49,7 +45,7 @@
 				<view class="king_pic_a">
 					<zs-title :titleRed="'实时'" :title="'金价'" :page_show="true"></zs-title>
 					<view class="times">
-						<u-icon name="clock-fill" size="26" color="#3b4e85" style="margin-right: 10rpx;margin-top: 16rpx;"></u-icon>
+						<u-icon name="clock-fill" size="24" color="#3b4e85" style="margin-right: 10rpx;margin-top: 16rpx;"></u-icon>
 						{{gold_price.time}}
 					</view>
 				</view>
@@ -68,8 +64,16 @@
 							<view>{{it.new_price}}</view>
 							<view>{{it.buy_price}}</view>
 							<view>{{it.sell_price}}</view>
-							<view> <text v-if="it.proportion_type == 0" style="color: #5cb671;">↓ {{it.proportion}}</text>
-							<text style="color: #f5553f;" v-else>↑ {{it.proportion}}</text> </view>
+							<view v-if="it.proportion_type == 0" 
+							style="color: #5cb671; display: flex; justify-content: center;">
+								<u-icon name="arrow-downward"></u-icon>
+								<text>{{it.proportion}}</text>
+							</view>
+							<view style="color: #f5553f; display: flex; justify-content: center;" 
+							v-else>
+								<u-icon name="arrow-upward"></u-icon>
+								<text>{{it.proportion}}</text>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -97,7 +101,7 @@
 								<text class="hour timer">{{end_seckill}}</text>
 							</view>
 						</view>
-						<view style="color: #a6a6a6;font-size: 24rpx;">
+						<view style="color: #999999;font-size: 22rpx;">
 							更多好货 <u-icon name="arrow-right"></u-icon>
 						</view>
 					</view>
@@ -202,7 +206,7 @@
 
 <script>
 	// import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
-	import dragButton from "@/components/drag-button/drag-button.vue";
+	// import dragButton from "@/components/drag-button/drag-button.vue";
 	export default {
 		data() {
 			return {
@@ -222,12 +226,14 @@
 				shop_list:'',
 				list:'',
 				huiy_show:false,//会员状态
-				member:'',
+				member: '',
 				gold_price:[],
 				coupon_data:'',
 				ptcoupon:false,//普通优惠券状态
 				xrcoupon:false,//新人优惠券状态
-				second:''
+				second:'',
+				dft_photo: '../../static/tabbar/shopsale.png',
+				isLogin: false
 			}
 		},
 		onPageScroll(e){
@@ -245,14 +251,20 @@
 			uni.setStorageSync('coupon',0)
 		},
 		onLoad() {
+			let a = uni.getStorageSync("token")
+			if(!a){
+				this.isLogin = true
+			} else{
+				this.isLogin = false
+			}
 			//头像
 			this.member = uni.getStorageSync('member_info_img')
-			
 			this.ent_time_s()//倒计时
 			this.page_render()
 		},
 		onShow() {
 			this.member = uni.getStorageSync('member_info_img')
+			console.log(this.member)
 			let vip = uni.getStorageSync('viptype')
 			// 会员
 			if(vip){
@@ -445,12 +457,20 @@
 		
 	}
 </script>
+<style>
+	page{
+		background-color: #F6F6F6;
+	}
+</style>
 
 <style lang="scss" scoped>
+	.content{
+		padding-bottom: 10upx;
+	}
 	.scroll-view_H{
 		display: flex;white-space: nowrap;line-height: 90rpx;height: 90rpx;border-bottom: 1rpx solid #eee;
 		.nav_swiper{
-			width: 20%;text-align: center;
+			width: 20%;text-align: center;font-size: 30upx;
 			display: inline-block;
 			position: relative;
 			&.active{
@@ -471,9 +491,22 @@
 			}
 		}
 	}
+	.notlogin{
+		width: 56upx;
+		text-align: center;
+			font-size: 16upx;
+			color: #333333;
+			border: solid 0.5rpx #F1F1F1;
+			background-color: #FFFFFF;
+			border-radius: 4upx;
+			position: absolute;
+			left: 0upx;
+			bottom: 0upx;
+			opacity: 0.8;
+		}
 	.classify{
 		width: 100%;
-		margin-bottom: 150rpx;background-color: #F6F6F6;
+		margin-bottom: 150rpx;background-color: #F6F6F6;font-size: 26upx;
 	}
 	@import './index.scss'
 	

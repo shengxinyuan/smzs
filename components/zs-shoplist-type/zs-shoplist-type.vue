@@ -48,7 +48,8 @@
 								<view class="item_child" >
 									<view class="child_v">
 										<input type="text" placeholder="最低" v-model="min_g" name="" id=""> 
-									</view>——
+									</view>
+									<view class="u-m-l-10 u-m-r-10" style="color: #999999;">一</view>
 									<view class="child_v">
 										<input type="text" placeholder="最高" v-model="max_g">
 									</view>
@@ -288,7 +289,7 @@
 					}else{
 						this.price_type = 1
 					}
-					this.shop_remder()
+					this.shop_remder()   
 				}
 			}
 		}
@@ -306,10 +307,10 @@
 		position: relative;
 		.but{
 			position: fixed;left: 0;bottom: 40rpx;
-			width: 100%;
-			display: flex;justify-content: space-around;height: 70rpx;line-height: 70rpx;
+			width: 100%;font-size: 26upx;
+			display: flex;justify-content: space-around;height: 70rpx;line-height: 68upx;
 			view{
-				width: 40%;border-radius: 50rpx;
+				width: 45%;border-radius: 50rpx;
 			}
 			view:nth-child(1){
 				border: 1rpx solid #666;background-color: white;
@@ -321,21 +322,22 @@
 		}
 		.item{
 			.item_tit{
-				text-align: left;line-height: 70rpx;font-weight: bold;
+				text-align: left;font-weight: bold;font-size: 26upx;
 			}
 			.item_child{
 				width: 100%;
 				display: flex;flex-wrap: wrap;
+				font-size: 24upx;
 				.child_v{
-					width: 31%;margin: 10rpx 1%;overflow: hidden;white-space: nowrap;
-					height: 60rpx;background-color: #EEEEEE;line-height: 56rpx;border-radius: 50rpx;
-					border: 1rpx solid #eee;
+					width: 31%;margin: 16rpx 1%;overflow: hidden;white-space: nowrap;
+					height: 56rpx;background-color: #f5f5f5;line-height: 54rpx;border-radius: 50rpx;
 					&.active{
-						background-color: #F6F8FF;
-						border: 1rpx solid #9FA8C5;
+						background-color: #f6f8ff;
+						border: 1rpx solid #2d407a;
+						color: #2d407a;
 					}
 					input{
-						height: 60rpx;font-size: 30rpx;
+						height: 56rpx;font-size: 24rpx;
 					}
 				}
 			}
