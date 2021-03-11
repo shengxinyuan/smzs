@@ -6,7 +6,8 @@
 				购物车
 			</view>
 			<view class="rig" @click="go_address" v-if="shop_list.address">
-				 <u-icon name="map" size="36"></u-icon> 收货地址: {{shop_list.address.province+shop_list.address.city+shop_list.address.area+shop_list.address.address}}
+				 <u-icon name="map" size="26"></u-icon>
+				 <text class="address">收货地址: {{shop_list.address.province+shop_list.address.city+shop_list.address.area+shop_list.address.address}}</text>
 			</view>
 		</view>
 		<!-- 加载页 -->
@@ -18,7 +19,7 @@
 						<view class="cart_shop_item_child">
 							<view class="cart_shop_item_l">
 								<u-checkbox-group @change="checkbox_d(it.id,it.count)">
-									<u-checkbox  shape="circle" active-color="#dd2626" size="40"
+									<u-checkbox  shape="circle" active-color="#dd2626" size="36"
 										v-model="it.status == check" 
 										:name="1" 
 									>
@@ -34,10 +35,10 @@
 								</view>
 								<view class="it_speac">
 									<view >
-										金重:{{it.weight}}
+										金重：{{it.weight}}
 									</view>
 									<view>
-										款号:{{it.model_no}}
+										款号：{{it.model_no}}
 									</view>
 								</view>
 								<view class="it_speac_bs" >
@@ -48,16 +49,17 @@
 										金料：￥{{it.price_normal}}
 									</view>
 									<view>
-										工费： ￥{{it.labor}}
+										工费：￥{{it.labor}}
 									</view>
 								</view>
 							</view>
 						</view>
 						<view class="item_js">
 							<view style="color: #dd2626;">
-								￥ <text style="font-size: 32rpx;">{{it.xiaoj}}</text>
+								<text class="rmb">￥</text>
+								<text style="font-size: 30rpx;">{{it.xiaoj}}</text>
 							</view>
-							<u-number-box v-model="it.count"  :step="1" :min="1" :long-press="false" @change="number_box($event,it.id)"></u-number-box>
+							<u-number-box v-model="it.count" :step="1" :min="1" :long-press="false" @change="number_box($event,it.id)"></u-number-box>
 						</view>
 					</view>
 				</view>
@@ -69,15 +71,17 @@
 			<!-- 、、小结 -->
 			<view v-if="cart_show">
 				<view class="js_canchu">
-					金料：{{goldl}} 工费：{{wage}} 金重： {{goldwrig}}
+					<text>金料：{{goldl}}</text>
+					<text>工费：{{wage}}</text>
+					<text>金重：{{goldwrig}}</text>
 				</view>
 				<view class="jis_but">
 					<u-checkbox-group @change="checkboxChange_qx">
-						<u-checkbox  shape="circle" active-color="#dd2626" size="40"
+						<u-checkbox  shape="circle" active-color="#dd2626" size="36"
 							@change="checkboxChange" 
 							v-model="qx_type" 
 							:name="1"
-						>全选
+						><text style="font-size: 26upx;">全选</text>
 						</u-checkbox>
 					</u-checkbox-group>
 					<view class="jis_right">
@@ -274,7 +278,7 @@
 	
 .cart_shopping{
 	width: 100%;
-	padding: 160rpx 3% 260rpx 3%;
+	padding: 150rpx 3% 260rpx 3%;
 	
 	.cart_shop_item{
 		background-color: white;margin-bottom: 20rpx;
@@ -282,15 +286,19 @@
 		border-radius: 10rpx;
 		.item_js{
 			padding-left: 36%;margin-top: 28rpx;display: flex;justify-content: space-between;
+			.rmb{
+				font-size: 22upx;
+			}
 		}
 		.cart_shop_item_child{
 			display: flex;
 		}
 		.cart_shop_item_l{
-			width: 10%;padding-top: 80rpx,
+			width: 8%;padding-top: 80rpx,
 		}
 		.cart_shop_item_c{
-			width: 200rpx;height: 200rpx;overflow: hidden;border-radius: 16rpx;
+			width: 160rpx;height: 160rpx;overflow: hidden;border-radius: 10rpx;
+			border: solid 0.5upx #f1f1f1;
 			image{
 				width: 100%;height: 100%;
 			}
@@ -298,23 +306,23 @@
 		.cart_shop_item_r{
 			width: 59%;padding-left: 20rpx;
 			.it_title{
-				font-size: 32rpx;
+				font-size: 28rpx;
 				white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 			}
 			.it_speac{
-				display: flex;line-height: 56rpx;color: #999;
+				display: flex;align-items: center; line-height: 56rpx;color: #999;font-size: 22upx;
 				view{
-					width: 60%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+					white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 				}
 				view:nth-child(1){
-					width: 40%;
+					padding-right: 30upx;
 				}
 			}
 			.it_speac_bs{
-				display: flex;color: #999;flex-wrap: wrap;
+				display: flex;align-items: center; color: #999;flex-wrap: wrap;
 				view{
-					font-size: 26rpx;margin: 2rpx;padding: 0 5rpx;border-radius: 6rpx;
-					background-color: #F1F1F1;
+					font-size: 20rpx;border-radius: 6rpx;
+					background-color: #F1F1F1;margin-right: 20upx;padding: 2upx 10upx;
 				}
 			}
 		}
@@ -323,42 +331,49 @@
 
 .jis_but{
 		padding: 0 3%;
-		width: 100%;height: 100rpx;line-height: 100rpx;background-color: white;
+		width: 100%;height: 100rpx;background-color: white;
 		position: fixed;left: 0;bottom: 100rpx;
-		display: flex;justify-content: space-between;
+		display: flex;justify-content: space-between;align-items: center;
 		.jis_right{
-			display: flex;justify-content: space-between;
+			display: flex;justify-content: space-between;align-items: center;
 			view{
+				font-size: 24upx;
 				margin: 0 10rpx;
 			}
 			.jis_butcolor{
-				padding: 0 30rpx;color: #fff;border-radius: 50rpx;
-				margin-top: 15rpx;
-				height: 70rpx;
-				line-height: 70rpx;
-				background-color: #dd2626;
+				padding: 0 45rpx;color: #fff;border-radius: 50rpx;
+				height: 56rpx;
+				line-height: 56upx;
+				background-image: linear-gradient(0deg,#eb4241 0%,#ef463f 100%);
 			}
 		}
 	}
 .header{
 	position: fixed;left: 0;top: 0;
-	height: 145rpx;width: 100%;
-	padding-top: 55rpx;padding-left: 30rpx;
+	height: 140rpx;width: 100%;
+	padding-top: 40rpx;padding-left: 30rpx;
 	display: flex;
-	z-index: 999;background-color: white;
+	align-items: center;
+	z-index: 999;background-color: #F1F1F1;
 	.header_va{
-		width: 20%;
-		font-size: 40rpx;line-height: 90rpx;
+		padding-right: 26upx;
+		font-size: 34rpx;
 	}
 	.rig{
 		width: 78%;color: #999;
-		line-height: 100rpx;
-		font-size: 28rpx;
+		display: flex;align-items: center;
+		font-size: 22rpx;
 		white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+		.address{
+			padding-left: 6upx;
+		}
 	}
 }
 .js_canchu{
 		width: 100%;line-height: 60rpx;padding: 0 3%;background-color: white;color: #999;
-		position: fixed;left: 0;bottom: 200rpx;border-bottom: 1rpx dashed #999;
+		position: fixed;left: 0;bottom: 200rpx;border-bottom: 1rpx dashed #999;font-size: 22upx;
+		text{
+			margin-right: 20upx;
+		}
 	}
 </style>

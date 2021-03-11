@@ -477,6 +477,7 @@
 				color: #2d407a;
 				font-weight: bold;
 				&:before{
+					content: '';
 					position: absolute;
 					left: 35%;
 					bottom: 10%;
@@ -495,7 +496,7 @@
 		text-align: center;
 			font-size: 16upx;
 			color: #333333;
-			border: solid 0.5upx #999999;
+			border: solid 0.5rpx #F1F1F1;
 			background-color: #FFFFFF;
 			border-radius: 4upx;
 			position: absolute;
