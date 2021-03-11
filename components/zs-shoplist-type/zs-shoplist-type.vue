@@ -210,7 +210,7 @@
 					})
 					console.log(a.data)
 				})
-				this.$forceUpdate()
+				this.shop_confim()
 			},
 			//确定
 			shop_confim(){
@@ -344,7 +344,7 @@
 //筛选条件
 .head{
 	width: 100%;height: 88rpx;display: flex;background-color: #fff;color: #555555; 
-	z-index: 21;
+	z-index: 24;
 	.head_left{
 		line-height: 88rpx;
 		width: 60%;

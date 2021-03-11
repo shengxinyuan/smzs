@@ -349,14 +349,6 @@
 		},
 		onShow() {
 			this.page_info()
-			// let vip = uni.getStorageSync('viptype')
-			// console.log(vip)
-			// // 会员
-			// if(vip){
-			// 	this.huiy_show = true
-			// }else{
-			// 	this.huiy_show = false
-			// }
 			this.jinx = uni.getStorageSync('jinx')
 		},
 		methods: {
@@ -445,15 +437,16 @@
 								this.memberpar = res.data
 							}
 						})
+						//推荐商品
+						this.$api.get('hotgoods').then(res=>{
+							console.log(res)
+							if(res.status == 1){
+								this.shop_tuij = res.data
+							}
+						})
 					}
 				})
-				//推荐商品
-				this.$api.get('hotgoods').then(res=>{
-					console.log(res)
-					if(res.status == 1){
-						this.shop_tuij = res.data
-					}
-				})
+				
 				
 			},
 			//订单详情

@@ -455,6 +455,7 @@
 			position: relative;
 			&.active{
 				color: #2d407a;
+				font-weight: bold;
 				&:before{
 					content: '';
 					position: absolute;

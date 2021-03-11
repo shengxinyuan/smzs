@@ -67,7 +67,7 @@
 							uni.removeStorageSync('token')
 							uni.removeStorageSync('member_info')
 							uni.removeStorageSync('user_infotit')
-							uni.reLaunch({
+							uni.navigateTo({
 								url:'../login/login'
 							})
 						}else if(res.cancel) {
