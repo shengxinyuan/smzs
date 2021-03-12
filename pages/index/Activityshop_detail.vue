@@ -542,7 +542,7 @@
 						this.specClass = 'none';
 					}, 250);
 				}else if(this.specClass === 'none'){
-					this.specClass = 'show';
+					this.specClass = 'show'
 				}
 			},
 			//选择规格

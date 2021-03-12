@@ -174,7 +174,7 @@
 		methods: {
 			page_reader(){
 				this.$api.get('cart').then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						this.shop_list = res.data
 						this.page_show = true 
@@ -200,7 +200,7 @@
 			//单选
 			checkbox_d(e,num){
 				this.$api.put('cart',{status:1,cart_id:e,count:num}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status==1){
 						this.page_reader()
 					}
@@ -218,7 +218,7 @@
 			number_box(e,id){
 				console.log(e.value,id)
 				this.$api.put('cart',{cart_id:id,count:e.value}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status==1){
 						this.page_reader()
 					}
@@ -254,7 +254,7 @@
 						success(q) {
 							if(q.confirm){
 								that.$api.del('cart',{cart_id:arr.substr(0,arr.length -1)}).then(res=>{
-									console.log(res)
+									// console.log(res)
 									if(res.status == 1){
 										that.com.msg(res.message)
 										that.page_reader()

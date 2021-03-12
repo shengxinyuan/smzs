@@ -1,9 +1,9 @@
 <template>
 	<!-- 店铺二维码 -->
-	<view>
+	<view class="content">
 		<view class="nav_head">
 			<view class="nav_l" @click="it_cli(1)" :class="{act:navnum == 1}">图文二维码</view>
-			<view class="nav_l" @click="it_cli(2)" :class="{act:navnum == 2}">及简二维码</view>
+			<view class="nav_l" @click="it_cli(2)" :class="{act:navnum == 2}">极简二维码</view>
 		</view>
 		<!-- 图文二维码 -->
 		<view class="tabs-first" v-if="isShow01">
@@ -66,11 +66,6 @@
 	export default {
 		data() {
 			return {
-				tabsList: [{
-						name: '图文二维码'
-					}, {
-						name: '极简二维码'
-					}],
 				current: 0,
 				height: 80,
 				activeColor: '#2b3f7d',
@@ -202,6 +197,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.content{
+		padding-bottom: 100upx;
+	}
 	.nav_head{
 		height: 90rpx;line-height: 86rpx;
 		display: flex;text-align: center;
@@ -209,7 +207,7 @@
 		.nav_l{
 			width: 50%;position: relative;
 			&.act{
-				color: #000;
+				color: #000000;
 				&:before{
 					content: '';
 					position: absolute;
@@ -232,10 +230,10 @@
 		border-bottom: solid 2upx #eeeeee;
 	}
 	.tabs-first{
-		padding:0 0 30upx 0;
+		padding: 20upx 0 30upx 0;
 	}
 	.share-text{
-		margin: 20upx 0;
+		margin-top: 20upx;
 		text-align: center;
 		font-size: 24upx;
 		color: #999999;
