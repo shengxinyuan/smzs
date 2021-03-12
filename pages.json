@@ -651,7 +651,7 @@
             "path" : "pages/community/shop-code",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "店铺二维码",
+                "navigationBarTitleText": "平台二维码",
                 "enablePullDownRefresh": false,
 				"navigationBarBackgroundColor":"#FFFFFF"
             }

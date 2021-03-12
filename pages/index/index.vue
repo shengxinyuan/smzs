@@ -265,7 +265,7 @@
 		},
 		onShow() {
 			this.member = uni.getStorageSync('member_info_img')
-			console.log(this.member)
+			// console.log(this.member)
 			let vip = uni.getStorageSync('viptype')
 			// 会员
 			if(vip){
@@ -327,7 +327,7 @@
 			// 优惠券
 			coupon(e){
 				this.$api.post('coupon',{type:e}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						this.coupon_data = res.data
 						if(this.puytcopup == 0 && res.data.data != ''){
@@ -358,7 +358,7 @@
 			// 确定筛选
 			shop_confim(e){
 				this.$api.post('goods',e).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						this.shop_list = res.data.data
 					}
@@ -387,7 +387,7 @@
 				    count: 6, //默认9
 				    sourceType: ['camera'], //从相册选择
 				    success: function (res) {
-				        console.log(JSON.stringify(res.tempFilePaths));
+				        // console.log(JSON.stringify(res.tempFilePaths));
 				    }
 				}); 
 			},
@@ -395,8 +395,8 @@
 			saoma(){
 				uni.scanCode({
 				    success: function (res) {
-				        console.log('条码类型：' + res.scanType);
-				        console.log('条码内容：' + res.result);
+				        // console.log('条码类型：' + res.scanType);
+				        // console.log('条码内容：' + res.result);
 				    }
 				});
 			},
@@ -425,7 +425,7 @@
 				this.nav_ind = e
 				//商品
 				this.$api.post('goods',{cate_fist_id:this.nav_ind}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						this.shop_list = res.data.data
 					}

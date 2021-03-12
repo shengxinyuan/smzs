@@ -39,7 +39,7 @@
 			}
 		},
 		onLoad(op) {
-			console.log(op)
+			// console.log(op)
 			this.nav = JSON.parse(op.data)
 			this.currend = op.id
 			this.nav_cli(op.id)
@@ -52,7 +52,7 @@
 			//传值
 			shop_confim(e){
 				this.$api.post('goods',e).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						this.shop_list = res.data.data
 					}
@@ -63,14 +63,14 @@
 				this.page_login = false
 				this.currend = e
 				this.$api.post('goods',{shop_label_texture_id:e}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						this.shop_list = res.data.data
 						this.page_login = true
 					}
 				})
 				this.$api.get('screen',{type:2}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						this.lists = res.data
 					}

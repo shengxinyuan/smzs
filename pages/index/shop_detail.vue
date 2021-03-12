@@ -47,9 +47,11 @@
 					<view class="price-box_l" v-if="!vip_type">
 						<text class="price-tip">¥</text>
 						<text class="price">{{shop_det.price}}</text>起
-						<text class="m-price">¥{{shop_det.price_vip}}</text>
+						<text class="m-price-tip">¥</text>
+						<text class="m-price">{{shop_det.price_vip}}</text>
+						<image src="../../static/index/pf.png" mode="aspectFill"></image>
 					</view>
-					<view class="price-box_l" style="color: #ef2d2d;" v-else>
+					<view class="price-box_l" style="color: #e95069;" v-else>
 						<text class="price-tip">¥</text>
 						<text class="price">{{shop_det.price_vip}}</text>起
 					</view>
@@ -68,7 +70,8 @@
 							<image src="../../static/index/search_icon.png" mode=""></image>
 							<view>一键比价</view>
 						</view>
-						<view v-if="vip_type">
+
+						<view class="min-box-tt" @click="skipShare" v-show="vip_type">
 							<u-icon name="share" size="42"></u-icon>
 							<view>店铺分享</view>
 						</view>
@@ -90,15 +93,26 @@
 				</view>
 			</view>
 			<view class="text-item" v-if="!vip_type" @click="goto_page('../my/vip_member')">
-				<view class="">
-					开通超级会员，预估额外省 <text style="color: #df3636;"> {{shop_det.price - shop_det.price_vip}} </text>
-				</view>
-				<view class="text-item_r">
-					立即开通 ＞
+				<view class="text-box">
+					<view class="">
+						<text>开通</text>
+						<text style="font-weight: bold;">超级会员</text>
+						<text>，预估额外省</text>
+						<text style="color: #df3636;"> {{shop_det.price - shop_det.price_vip}}元 </text>
+					</view>
+					<view class="text-item_r">
+						<text style="margin-right: 10upx;">立即开通</text>
+						<u-icon name="arrow-right"></u-icon>
+					</view>
 				</view>
 			</view>
+			<view class="text-des">
+				<text>商品文字介绍商品文字介绍商品文字介绍商品文字介绍商品文字介绍商品文字介绍商品文</text>
+			</view>
 			<view class="Rapid_delivery">
-				<!-- <u-icon name="car-fill" style="margin-right: 10rpx;"></u-icon>急速出货  16:30前下单当日货品可发货，定制产品除外。 -->
+				<image src="../../static/index/ji.png" mode="aspectFill"></image>
+				<text style="margin-right: 16upx;">急速出货</text>
+				<text>16:30前下单当日货品可发货，定制产品除外。</text>
 			</view>
 			<!-- 规格 -->
 			<view class="specification">
@@ -157,24 +171,22 @@
 
 			<view class="add_bottom">
 				<view class="add_con">
-					<view class="three_icons" @click="like_collect">
-						<u-icon class="s_icon" name="home" color="#ccc" size="38" ></u-icon> 
+					<view class="three_icons" @click="skipIndex">
+						<image src="../../static/index/index.png" mode="aspectFill"></image>
 						<view>首页</view>
 					</view>
 					<view class="three_icons" @click="goto_page('../service/service')">
-						<u-icon name="kefu-ermai" color="#ccc" size="38" class="s_icon"></u-icon>
+						<image src="../../static/index/kf.png" mode="aspectFill"></image>
 						<view>客服</view>
 					</view>
 					<view class="three_icons" @click="goto_cart">
-						<u-icon name="shopping-cart" color="#ccc" size="38" class="s_icon"></u-icon>
+						<image src="../../static/index/cart.png" mode="aspectFill"></image>
 						<view>购物车</view>
 					</view>
-				
 					<view class="anniu">
 						<view class="add_car" @click="payment_yes(0)">加入购物车</view>
 						<view class="buy" @click="payment_yes(1)">立即购买</view>
 					</view>
-
 				</view>
 			</view>
 
@@ -305,14 +317,14 @@
 			}
 		},
 		onLoad(options) {
-			console.log(options)
+			// console.log(options)
 			//接收传值,id里面放的是标题，因为测试数据并没写id 
 			this.shop_id = options.shop_id;
 			
 			this.member = uni.getStorageSync('member_info')
 			// console.log(this.member)
 			let vip = uni.getStorageSync('viptype')
-			console.log(vip)
+			// console.log(vip)
 			// 会员
 			if (vip) {
 				this.vip_type = true
@@ -327,19 +339,19 @@
 				//获取对应模块到顶部的距离
 				//评论
 				query.select('#evaluate').boundingClientRect((res) => {
-					console.log(res)
+					// console.log(res)
 					this.pingl = res.top-50
 					
 				}).exec()
 				// 推荐
 				query.select('#tuijina').boundingClientRect((resb) => {
-					console.log(resb)
+					// console.log(resb)
 					this.tuij = resb.top-50
 					// 详情
 					
 				}).exec()
 				query.select('#details_parse').boundingClientRect((resc) => {
-					console.log(resc)
+					// console.log(resc)
 					this.detail_shop = resc.top-50
 				}).exec()
 			
@@ -357,7 +369,7 @@
 			},
 			page_render() {
 				this.$api.get('goods/' + this.shop_id + '&member_id=' + this.member.id).then(res => {
-					console.log(res)
+					// console.log(res)
 					if (res.status == 1) {
 						this.shop_det = res.data
 						this.shoptype_id = res.data.id
@@ -392,14 +404,14 @@
 				this.$api.post('goods', {
 					is_recommend: 1
 				}).then(res => {
-					console.log(res)
+					// console.log(res)
 					if (res.status == 1) {
 						this.shop_list = res.data.data
 					}
 				})
 				//评论
 				this.$api.get('commentlist/' + this.shop_id).then(res => {
-					console.log(res)
+					// console.log(res)
 					if (res.status == 1) {
 						this.commentlist = res.data
 					}
@@ -411,7 +423,7 @@
 				this.$api.put('collect', {
 					id: e
 				}).then(res => {
-					console.log(res)
+					// console.log(res)
 					if (res.status == 1) {
 						this.page_render()
 					}
@@ -440,7 +452,7 @@
 							count: this.shop_num,
 							shop_goods_sku_id: this.jg_ind
 						}).then(res => {
-							console.log(res)
+							// console.log(res)
 							this.com.msg(res.message)
 						})
 					}
@@ -457,6 +469,11 @@
 
 			goto_page(e) {
 				this.com.navto(e)
+			},
+			skipIndex(){
+				uni.switchTab({
+					url:'./index'
+				})
 			},
 			//点击头部
 			head_nav_cli(e) {
@@ -543,7 +560,7 @@
 					this.specClass = 'hide';
 					setTimeout(() => {
 						this.specClass = 'none';
-					}, 250);
+					}, 2500);
 				} else if (this.specClass === 'none') {
 					this.specClass = 'show';
 				}
@@ -551,7 +568,7 @@
 			//选择规格
 			selectSpec(find, index, pid) {
 				let list = this.shopsku.title[find];
-				console.log(list)
+				// console.log(list)
 				list.data.forEach(item => {
 					if (item.pid === pid) {
 						this.$set(item, 'selected', false);
@@ -574,7 +591,7 @@
 							let arr = ''
 							this.sku_ids = this.specSelected.substr(0, this.specSelected.length - 1)
 							arr = this.sku_ids.replace(/\,/g, "") //替换所有的 逗号
-							console.log(this.sku_ids)
+							// console.log(this.sku_ids)
 							//判断长度相同时
 							if (item.data.length == arr.length) {
 								this.$api.get('sku', {
@@ -609,10 +626,10 @@
 					    summary: "我在奢美饰界发现好物，快来看看！",
 					    imageUrl: this.shop_det.avatar,
 					    success: function (res) {
-							console.log(res)
+							// console.log(res)
 							
 					    },fail: function (err) {
-							console.log(err)
+							// console.log(err)
 					        // that.com.msg('失败')
 					    }
 					});
@@ -626,10 +643,10 @@
 					    summary: "我在奢美饰界发现好物，快来看看！",
 					    imageUrl: this.shop_det.avatar,
 					    success: function (res) {
-							console.log(res)
+							// console.log(res)
 							
 					    },fail: function (err) {
-							console.log(err)
+							// console.log(err)
 					        // that.com.msg('失败')
 					    }
 					});
@@ -645,9 +662,10 @@
 				})
 			},
 			stopPrevent() {},
-			//回到首页
-			like_collect(){
-				this.com.rel('../index/index')
+			skipShare(){
+				uni.navigateTo({
+					url:'../community/shop-code'
+				})
 			}
 		},
 	}
@@ -752,11 +770,12 @@
 			position: absolute;
 			right: 30rpx;
 			bottom: 20rpx;
-			background-color: rgba(0, 0, 0, 0.4);
+			background-color: rgba(0, 0, 0, 0.5);
 			display: inline-block;
 			padding: 4rpx 18rpx 6rpx 18rpx;
 			border-radius: 50rpx;
 			color: #fff;
+			font-size: 24upx;
 		}
 
 		swiper {
@@ -795,24 +814,32 @@
 	/* 标题简介 */
 	.introduce-section {
 		background: #fff;
-		padding: 10rpx 30upx;
+		padding: 30upx;
 
 		.title {
 			font-size: 32upx;
 			/* color: $font-color-dark; */
-			height: 50upx;
-			line-height: 50upx;
 		}
 
 		.price-box {
 			display: flex;
 			justify-content: space-between;
-			align-items: baseline;
-			font-size: 26upx;
+			align-items: center;
+			// font-size: 26upx;
 
 			/* color:$uni-color-primary; */
 			.price-box_l {
-				padding-top: 20rpx;
+				display: flex;align-items: center;
+				image{
+					width: 58upx;
+					height: 24upx;
+					margin-left: 16upx;
+				}
+				.m-price-tip{
+					font-size: 22upx;
+					color: #e95069;
+					margin-left: 20upx;
+				}
 			}
 
 			.price-box_r {
@@ -829,27 +856,27 @@
 				.min-box{
 					margin-right: 20upx;
 				}
+				.min-box-tt{
+					margin-left: 20upx;
+				}
 			}
 		}
 
 		.price {
-			font-size: 48rpx;
+			font-size: 54rpx;
 			font-weight: bold;
-			margin: 0 16rpx 0 14rpx;
+			margin: 0 10rpx;
 		}
 
 		.m-price {
-			margin-left: 30rpx;
-			color: #e8372f;
-			/* color: $font-color-light; */
-			// text-decoration: line-through;
+			color: #e95069;
+			font-size: 30upx;
+			margin-left: 10upx;
 		}
 
 		.coupon-tip {
 			align-items: center;
 			padding: 4upx 10upx;
-			/* background: $uni-color-primary; */
-			/* font-size: $font-sm; */
 			color: #fff;
 			border-radius: 6upx;
 			line-height: 1;
@@ -877,7 +904,9 @@
 
 		.zp {
 			font-size: 20rpx;
-			background-color: #df3636;
+			background-image: linear-gradient(90deg, 
+					#ff4362 0%, 
+					#fd5538 100%);
 			padding: 0 4rpx;
 			color: white;
 			border-radius: 6rpx;
@@ -896,21 +925,39 @@
 		.shop_introduce {
 			
 		}
-
-		.Rapid_delivery {
-			color: #999;
-			white-space: nowrap;
+	}
+	.text-des{
+		padding: 0 20upx 20upx 20upx;
+		font-size: 24upx;
+		background-color: #FFFFFF;
+	}
+	.Rapid_delivery {
+		padding: 20upx;
+		color: #999;
+		font-size: 22upx;
+		background-color: #FFFFFF;
+		display: flex;align-items: center;
+		image{
+			width: 24upx;
+			height: 24upx;
+			margin-right: 16upx;
 		}
 	}
 	.text-item {
-		font-weight: bold;
-		display: flex;
-		justify-content: space-between;
-		background-color: #f6f8ff;
-		line-height: 68rpx;
-		padding: 0 20rpx;
+		padding: 0 20rpx 20upx 20upx;
 		color: #333;
-		border-radius: 8rpx;
+		font-size: 24upx;
+		background-color: #FFFFFF;
+		.text-box{
+			width: 100%;
+			height: 70upx;
+			padding: 0 30upx;
+			background-color: #f6f8ff;
+			border-radius: 8rpx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 	}
 
 	// 规格
@@ -1323,8 +1370,7 @@
 
 		.add_con {
 			width: 695rpx;
-			height: 70rpx;
-			margin: 15rpx auto;
+			margin: 0 auto;
 			display: flex;
 			justify-content: space-between;align-items: center;
 
@@ -1336,13 +1382,18 @@
 				width: 95rpx;
 				display: flex;
 				flex-wrap: wrap;
-				height: 65rpx;
 				font-size: 20rpx;
-				color: #999;
+				color: #333;
 
 				view {
 					width: 100%;
 					text-align: center;
+					margin-top: 10upx;
+				}
+				image{
+					width: 36upx;
+					height: 36upx;
+					margin-left: 28rpx;
 				}
 			}
 

@@ -97,7 +97,7 @@
 				color: #2d407a;
 			}
 			.act_s{
-				color: #024C57;
+				color: #2d407a;
 			}
 		}
 		.tab_c{
