@@ -821,6 +821,10 @@
             "path" : "pages/service/my-dp-html",
             "style" : {}
         }
+        ,{
+            "path" : "pages/index/taobao",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

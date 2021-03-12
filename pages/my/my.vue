@@ -33,8 +33,8 @@
 							<view class="user_qda" v-if="!menber.if_sign" @click="qiandao(1)"><u-icon name="order"></u-icon>立即签到</view>
 							<view class="user_qda" v-else @click="qiandao(2)"><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
 						</view>
-						<view class="user_phone">
-							手机号：{{test(menber.mobile)}}
+						<view class="user_phone" >
+							手机号：<text v-if="menber.mobile">{{test(menber.mobile)}}</text> 
 						</view>
 						<view class="user_invite">
 							<view @click="qrcode_show = true">
@@ -277,7 +277,7 @@
 			</view>
 		</u-popup>
 		<!-- 分享 -->
-		<zs-share ref="share" @shaer_app="shaer_app" :contentHeight="400" :hasTabbar="true"></zs-share>
+		<!-- <zs-share ref="share" @shaer_app="shaer_app" :contentHeight="400" :hasTabbar="true"></zs-share> -->
 	</view>
 </template>
 

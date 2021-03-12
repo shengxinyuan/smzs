@@ -33,7 +33,6 @@
 					</view>
 					<view class="zl-hot-text">
 						<text v-for="(item,index) in search_hot" @click="again(item)" :key="index">{{item}}</text>
-						
 					</view>
 				</view> -->
 			</view>
@@ -45,7 +44,6 @@
 	export default {
 		data() {
 			return {
-				// search_hot:["大型犬狗粮","幼犬狗粮","狗粮","大型犬狗粮","大型犬狗粮"],
 				search_s:"",//搜索关键字
 				history:[],//搜索历史
 				shop_tuij:'',
@@ -61,7 +59,12 @@
 				}
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			console.log(e)
+			if(e.tit){
+				this.search_s = e.tit
+				this.go_search(e.tit)
+			}
 			if( uni.getStorageSync('neirong')){
 				let aq = uni.getStorageSync('neirong')
 				this.history =JSON.parse(aq)
@@ -80,7 +83,7 @@
 				uni.navigateBack()
 			},
 			go_search(key){
-				console.log(key)
+				// console.log(key)
 				if(this.search_s== ""){
 					this.com.msg('搜索内容不能为空')
 					
