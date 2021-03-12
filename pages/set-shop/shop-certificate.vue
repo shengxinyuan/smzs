@@ -8,7 +8,7 @@
 				<view class="hang-sign-box">
 					<view class="hang-sign-title">挂签</view>
 					<view class="hang-sign-switch">
-						<u-switch v-model="checked" size="26" active-color="#2d407a" inactive-color="#cccccc"></u-switch>
+						<u-switch v-model="checked" size="26" active-color="#2d407a" inactive-color="#cccccc" @change="change"></u-switch>
 					</view>
 				</view>
 				<view class="log-box hang-sign">
@@ -22,7 +22,7 @@
 				<view class="hang-sign-box">
 					<view>证书</view>
 					<view class="hang-sign-switch">
-						<u-switch v-model="checked02" size="26" active-color="#2d407a" inactive-color="#cccccc"></u-switch>
+						<u-switch v-model="checked02" size="26" active-color="#2d407a" inactive-color="#cccccc" @change="changetwo"></u-switch>
 					</view>
 				</view>
 				<view class="log-box zhengshu">
@@ -40,15 +40,39 @@
 	export default {
 		data() {
 			return {
-				checked: true,
+				checked: false,
 				checked02: false,
 				hangSignTitle: '国家珠宝玉石适量监督检验中心',
 				zhengshuTitle: '北京市中工商联珠宝检测中心',
 			}
 		},
+		onLoad(e){
+			console.log(e)
+			this.checked = e.sign == 1 ? true : false
+			this.checked02 = e.certificate == 1 ? true : false
+		},
 		methods: {
-			change(status) {
-				console.log(status);
+			change(e) {
+				console.log(e)
+				let arr = 0
+				arr = e == true ? 1 : 2
+				this.$api.post('manage',{sign:arr}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.msg(res.message)
+					}
+				})
+			},
+			changetwo(e) {
+				console.log(e)
+				let arr = 0
+				arr = e == true ? 1 : 2
+				this.$api.post('manage',{sign:arr}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.msg(res.message)
+					}
+				})
 			},
 		}
 	}

@@ -16,7 +16,7 @@
 		<view class="show-switch-box">
 			<view class="show-switch-up">
 				<view>商城中展示:</view>
-				<u-switch v-model="checked" active-color="#2d407a" size="40"></u-switch>
+				<u-switch v-model="checked" active-color="#2d407a" size="40" @change="change"></u-switch>
 			</view>
 			<view class="show-switch-down">
 				<u-icon class="icon warning" name="warning"></u-icon>
@@ -39,16 +39,18 @@
 					city: true,
 					area: true,
 				},
-				checked: true,
+				checked: false,
 				show: false,
 				value: '选择省市区',
 				address: '' ,
 				province : '' ,
 				city : '' ,
 				area: '' ,
+				is_address:1
 			}
 		},
 		onLoad(e) {
+			console.log(e)
 			this.province = e.province
 			this.city = e.city
 			this.area = e.area
@@ -57,10 +59,18 @@
 				this.value = e.province + e.city + e.area
 				this.defaultRegion = [e.province, e.city, e.area]
 			}
+			this.checked = e.is_address == 1 ? true : false
+			this.is_address = e.is_address
 		},
 		methods: {
-			change(status) {
-				console.log(status);
+			//选择状态
+			change(e) {
+				console.log(e);
+				if(e== true){
+					this.is_address = 1
+				}else{
+					this.is_address = 2
+				}
 			},
 			confirm(e) {
 				console.log(e);
@@ -78,7 +88,8 @@
 					address: this.address ,
 					province : this.province ,
 					city : this.city ,
-					area: this.area 
+					area: this.area ,
+					is_address:this.is_address
 				}
 				
 				console.log(params)
@@ -89,11 +100,6 @@
 						telephone : res.message,
 					})
 					if(res.status == 1){
-						uni.setStorageSync('shop_province', this.province)
-						uni.setStorageSync('shop_city', this.city)
-						uni.setStorageSync('shop_area', this.area)
-						uni.setStorageSync('shop_address', this.address)
-						
 						uni.navigateBack() 
 					}
 				})

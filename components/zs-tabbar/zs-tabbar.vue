@@ -12,7 +12,7 @@
 				<view class="tab_l_child" @click="cli_tab(2)">
 					<image src="../../static/tabbar/class.png" v-if="tab_ind != 2" mode=""></image>
 					<image src="../../static/tabbar/calss-fill.png" v-else mode=""></image>
-					<view :class="tab_ind == 2 ? 'act_s' : ''">
+					<view :class="tab_ind == 2 ? 'act' : ''">
 						产品分类
 					</view>
 				</view>
@@ -29,14 +29,14 @@
 				<view class="tab_l_child" @click="cli_tab(4)">
 					<image src="../../static/tabbar/cart.png"  v-if="tab_ind != 4" mode=""></image>
 					<image src="../../static/tabbar/cart-fill.png" v-else mode=""></image>
-					<view :class="tab_ind == 4 ? 'act_s' : ''">
+					<view :class="tab_ind == 4 ? 'act' : ''">
 						购物车
 					</view>
 				</view>
 				<view class="tab_l_child" @click="cli_tab(5)">
 					<image src="../../static/tabbar/my.png" v-if="tab_ind != 5" mode="" mode=""></image>
 					<image src="../../static/tabbar/my-fill.png" v-else mode=""></image>
-					<view :class="tab_ind == 5 ? 'act_s' : ''">
+					<view :class="tab_ind == 5 ? 'act' : ''">
 						我的
 					</view>
 				</view>
@@ -65,7 +65,7 @@
 					this.com.rel("../../pages/classify/classify")
 				}else if(e==3){
 					this.com.msg('敬请期待~')
-					// this.com.rel("../../pages/selts/selts")
+					// this.com.rel("../../pages/selts/selts")	
 				}else if(e==4){
 					this.com.rel("../../pages/cart/cart")
 				}else if(e==5){
@@ -78,15 +78,14 @@
 
 <style scoped lang="scss">
 	.tab{
-		font-size: 26rpx;z-index: 999;
-		position: fixed;left: 0;bottom: 0;
-		width: 100%;height: 110rpx;
+		font-size: 20rpx;color: #666666; width: 100%;height: 110rpx;
+		position: fixed;left: 0;bottom: 0;z-index: 999;
 		background: url(../../static/tabbar/backimg.png);
 		background-size: 100% 100%;
 		display: flex;
 		.tab_l{
-			padding: 26rpx 20rpx 6rpx 10rpx;
-			width: 43%;
+			padding: 30rpx 20rpx 6rpx 10rpx;
+			width: 44%;
 			display: flex;justify-content: space-around;
 			.tab_l_child{
 				text-align: center;
@@ -95,7 +94,7 @@
 				}
 			}
 			.act{
-				color: #405186;
+				color: #2d407a;
 			}
 			.act_s{
 				color: #024C57;

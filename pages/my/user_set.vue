@@ -17,22 +17,25 @@
 	export default {
 		data() {
 			return {
-				arr:156666666666,
+				arr:'',
 				list_s:[]
 			}
 		},
 		onShow() {
-			if(this.arr != []){
-				this.list_s = [
-					{
-						name:"修改密码",
-						number:this.arr
-					},{
-						name:"修改密码"
-						
-					}
-				]
-			}
+			this.$api.get('info').then(res=>{
+				console.log(res)
+				if(res.status == 1){
+					this.arr = res.data.mobile
+					this.list_s = [
+						{
+							name:"绑定手机",
+							number:res.data.mobile
+						},{
+							name:"修改密码"
+						}
+					]	
+				}
+			})
 		},
 		methods: {
 			go_account(index){
@@ -42,7 +45,7 @@
 				}
 				// 更换绑定手机
 				if(index==1){
-					this.com.navto('../login/forget')
+					this.com.navto('../login/forget?type='+2+'&mobile='+this.arr)
 				}
 			}
 		}

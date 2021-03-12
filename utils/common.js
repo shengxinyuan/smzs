@@ -3,10 +3,11 @@ const com = {
 	three_back(){
 		let arr = 2
 		let time = setInterval(()=>{
-			arr -- 
-			if(arr == 0){
+			if(arr <= 0){
 				uni.navigateBack()
 				clearInterval(time)
+			}else{
+				arr -=1
 			}
 		},1000)
 	},

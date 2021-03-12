@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "金店管理",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon"
+  }
+}

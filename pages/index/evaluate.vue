@@ -1,20 +1,20 @@
 <template>
 	<view class="allcomment">
-		<view class="evaluate" v-if="shop_pj == ''">
-			<view class="eval_con" v-for="it in 6">
+		<view class="evaluate" v-if="shop_pj">
+			<view class="eval_con" v-for="(it,ind) in shop_pj">
 				<view class="order_head">
 					<view class="img">
-						<image src="../../static/index/section.png" mode="aspectFill"></image>
-						<view class="shop_name"> 名字</view>
+						<image :src="it.avatar" mode="aspectFill"></image>
+						<view class="shop_name"> {{it.nickname}}</view>
 					</view>
 					
-					<view class="order_time">2021-1-15</view>
+					<view class="order_time">{{it.create_time}}</view>
 				</view>
 				<view class="order_con">
-					等哈就会发顺丰会发生等哈就会发顺丰会发生等哈就会发顺丰会发生
+					{{it.remark}}
 				</view>
 				<view class="order_img">
-					<image v-for="img in 3" src="../../static/index/section.png" mode="aspectFill" ></image>
+					<image v-for="imgs in it.img" :src="imgs" mode="aspectFill" ></image>
 				</view>
 			</view>
 			<view style="width: 100%;height: 80rpx;">
@@ -56,7 +56,7 @@
 		},
 		onLoad(op) {
 			console.log(op)
-			this.shop_id = op.shop_id
+			this.shop_id = op.id
 			this.page_type(this.page)
 		},
 		onPullDownRefresh() {
@@ -76,7 +76,7 @@
 			page_type(e){
 				// 评论
 				this.$api.get('commentlist/'+this.shop_id+'?page='+e).then(res=>{
-					console.log(res.data.data)
+					console.log(res)
 					if(res.status == 1){
 						this.shop_pj = this.shop_pj.concat(res.data.data)
 					}

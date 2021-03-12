@@ -28,9 +28,11 @@
 					<u-popup v-model="show" mode="right" >
 						<view class="popups">
 							<view class="item" v-for="(it,ind) in lists" :key="ind">
+								<!-- //标题 -->
 								<view class="item_tit">
 									{{it.name}}
 								</view>
+								<!-- 内容 -->
 								<view class="item_child" >
 									<view class="child_v" v-for="(cit,index) in it.data" @click="cli_it(cit.id,ind,index)"
 									:class="{active:cit.state == true}">
@@ -46,7 +48,8 @@
 								<view class="item_child" >
 									<view class="child_v">
 										<input type="text" placeholder="最低" v-model="min_g" name="" id=""> 
-									</view>——
+									</view>
+									<view class="u-m-l-10 u-m-r-10" style="color: #999999;">一</view>
 									<view class="child_v">
 										<input type="text" placeholder="最高" v-model="max_g">
 									</view>
@@ -65,52 +68,62 @@
 				</view>
 			</view>
 		</view>
-		<view class="cont_list" v-if="type==1" :style="{'padding-top':paddingTop}">
-			<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
-				<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
-				<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
-				<view class="it_tit">
-					{{it.title}}
-				</view>
-				<view class="it_price">
-					￥{{ it.price }}
-				</view>
-				<view class="it_selt">
-					<view class="it_selt_l">
-						<text>￥{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
+		<!-- 竖向 -->
+		<view v-if="page_login">
+			<view style="padding-top: 200rpx;" v-if="shop_list == ''">
+				<u-empty text="暂无" mode="list"></u-empty>
+			</view>
+			<view class="cont_list" v-if="type==1" :style="{'padding-top':paddingTop}">
+				<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
+					<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
+					<image class="images" :src="it.image" mode="aspectFill"></image>
+					<view class="it_tit">
+						{{it.title}}
 					</view>
-					<view class="it_selt_r">
-						已售{{it.sale}}件
+					<view class="it_price">
+						<text style="font-size: 22rpx;font-weight: none;">￥</text>{{ it.price }}
+					</view>
+					<view class="it_selt">
+						<view class="it_selt_l">
+							<text><text style="font-size: 20rpx;">￥</text>{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
+						</view>
+						<view class="it_selt_r">
+							已售{{it.sale}}件
+						</view>
+					</view>
+				</view>
+			</view>
+			<!-- //横向 -->
+			<view class="cont_list_two" v-else :style="{'padding-top':paddingTop}">
+				<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
+					<view class="item_img">
+						<!-- <image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> -->
+						<image class="images" :src="it.image" mode="aspectFill"></image>
+					</view>
+					<view class="it_text">
+						<view class="it_tit">
+							{{it.title}}
+						</view>
+						<view class="it_text_cen">
+							<view class="it_price">
+								<text style="font-size: 22rpx;font-weight: none;">￥</text>{{ it.price }}
+							</view>
+							<view class="it_selt_l">
+								<text><text style="font-size: 20rpx;">￥</text>{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
+							</view>
+						</view>
+						<view class="it_label">
+							<view v-if="it.is_recommend == 1">精品</view>
+						</view>
+						<view class="it_selt_r">
+							已售{{it.sale}}件
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="cont_list_two" v-else :style="{'padding-top':paddingTop}">
-			<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
-				<view class="item_img">
-					<!-- <image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> -->
-					<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
-				</view>
-				<view class="it_text">
-					<view class="it_tit">
-						{{it.title}}
-					</view>
-					<view class="it_text_cen">
-						<view class="it_price">
-							￥{{ it.price }}
-						</view>
-						<view class="it_selt_l">
-							<text>￥{{it.price_vip}}</text><image src="../../static/pifa.png" mode=""></image>
-						</view>
-					</view>
-					<view class="it_label">
-						<view v-if="it.is_recommend == 1">精品</view>
-					</view>
-					<view class="it_selt_r">
-						已售{{it.sale}}件
-					</view>
-				</view>
-			</view>
+		<view v-else>
+			<zs-login></zs-login>
 		</view>
 	</view>
 </template>
@@ -119,7 +132,7 @@
 	export default {
 		data() {
 			return {
-				type:0,//商品列表
+				type:1,//商品列表
 				heat_ind: -1,// 导航
 				price_type:0,//排序 1-降序 2-升序		
 				show:false,
@@ -127,9 +140,7 @@
 				key:'', //	关键字
 				cate_id:0,//分类id
 				shop_label_cate_id:0,//筛选款式
-				shop_label_texture_id:0,//筛选材质
 				sku_value:'', //筛选时sku的值
-				shop_subject_id: 0,//专题
 				min_g:'', //最小重量
 				max_g:'', //最大重量
 			};
@@ -140,7 +151,11 @@
 			lists:{},//商品筛选条件
 			fixed:{default:'none'},
 			shop_list:{},
-			cate_fist_id:{}
+			cate_fist_id:{},
+			shop_subject_id:{},//专题
+			page_login:{default:true},//加载页
+			shop_label_texture_id:{},//材质
+			shaix_type:{},//筛选类型
 		},
 		methods:{
 			//点击选项
@@ -183,9 +198,11 @@
 				this.key ='' //	关键字
 				this.cate_id =''//分类id
 				this.shop_label_cate_id =''//筛选款式
-				this.shop_label_texture_id=''//筛选材质
+				if(this.shaix_type !=3){
+					this.shop_label_texture_id=''//筛选材质
+				}
 				this.sku_value ='' //筛选时sku的值
-				this.shop_subject_id =''//专题
+				// this.shop_subject_id =''//专题
 				this.min_g ='' //最小重量
 				this.max_g ='' //最大重量
 				this.lists.forEach(a=>{
@@ -194,7 +211,7 @@
 					})
 					console.log(a.data)
 				})
-				this.$forceUpdate()
+				this.shop_confim()
 			},
 			//确定
 			shop_confim(){
@@ -203,11 +220,11 @@
 					price:this.price_type,
 					key:this.key, //	关键字
 					cate_id:this.cate_id,//分类id
-					cate_fist_id:this.cate_fist_id,//筛选分类
-					shop_label_cate_id:this.shop_label_cate_id,//筛选款式
-					shop_label_texture_id:this.shop_label_texture_id,//筛选材质
+					cate_fist_id:this.cate_fist_id === undefined ? '' : this.cate_fist_id,//筛选分类
+					shop_label_cate_id:this.shop_label_cate_id === undefined ? '' : this.shop_label_cate_id,//筛选款式
+					shop_label_texture_id:this.shop_label_texture_id === undefined?'':this.shop_label_texture_id,//筛选材质
 					sku_value:this.sku_value, //筛选时sku的值
-					shop_subject_id: this.shop_subject_id,//专题
+					shop_subject_id: this.shop_subject_id === undefined ? '': this.shop_subject_id,//专题
 					min_g:this.min_g, //最小重量
 					max_g:this.max_g, //最大重量
 				}
@@ -221,11 +238,11 @@
 					price:this.price_type,
 					key:this.key, //	关键字
 					cate_id:this.cate_id,//分类id
-					cate_fist_id:this.cate_fist_id,//筛选分类
-					shop_label_cate_id:this.shop_label_cate_id,//筛选款式
-					shop_label_texture_id:this.shop_label_texture_id,//筛选材质
+					cate_fist_id:this.cate_fist_id === undefined ? '' : this.cate_fist_id,//筛选分类
+					shop_label_cate_id:this.shop_label_cate_id === undefined ? '' : this.shop_label_cate_id,//筛选款式
+					shop_label_texture_id:this.shop_label_texture_id === undefined?'':this.shop_label_texture_id,//筛选材质
 					sku_value:this.sku_value, //筛选时sku的值
-					shop_subject_id: this.shop_subject_id,//专题
+					shop_subject_id: this.shop_subject_id === undefined ? '': this.shop_subject_id,//专题
 					min_g:this.min_g, //最小重量
 					max_g:this.max_g, //最大重量
 				}
@@ -272,7 +289,7 @@
 					}else{
 						this.price_type = 1
 					}
-					this.shop_remder()
+					this.shop_remder()   
 				}
 			}
 		}
@@ -290,10 +307,10 @@
 		position: relative;
 		.but{
 			position: fixed;left: 0;bottom: 40rpx;
-			width: 100%;
-			display: flex;justify-content: space-around;height: 70rpx;line-height: 70rpx;
+			width: 100%;font-size: 26upx;
+			display: flex;justify-content: space-around;height: 70rpx;line-height: 68upx;
 			view{
-				width: 40%;border-radius: 50rpx;
+				width: 45%;border-radius: 50rpx;
 			}
 			view:nth-child(1){
 				border: 1rpx solid #666;background-color: white;
@@ -305,21 +322,22 @@
 		}
 		.item{
 			.item_tit{
-				text-align: left;line-height: 70rpx;font-weight: bold;
+				text-align: left;font-weight: bold;font-size: 26upx;
 			}
 			.item_child{
 				width: 100%;
 				display: flex;flex-wrap: wrap;
+				font-size: 24upx;
 				.child_v{
-					width: 31%;margin: 10rpx 1%;overflow: hidden;white-space: nowrap;
-					height: 60rpx;background-color: #EEEEEE;line-height: 56rpx;border-radius: 50rpx;
-					border: 1rpx solid #eee;
+					width: 31%;margin: 16rpx 1%;overflow: hidden;white-space: nowrap;
+					height: 56rpx;background-color: #f5f5f5;line-height: 54rpx;border-radius: 50rpx;
 					&.active{
-						background-color: #F6F8FF;
-						border: 1rpx solid #9FA8C5;
+						background-color: #f6f8ff;
+						border: 1rpx solid #2d407a;
+						color: #2d407a;
 					}
 					input{
-						height: 60rpx;font-size: 30rpx;
+						height: 56rpx;font-size: 24rpx;
 					}
 				}
 			}
@@ -328,7 +346,7 @@
 //筛选条件
 .head{
 	width: 100%;height: 88rpx;display: flex;background-color: #fff;color: #555555; 
-	z-index: 21;
+	z-index: 24;
 	.head_left{
 		line-height: 88rpx;
 		width: 60%;
@@ -378,8 +396,8 @@
 	.cont_item{
 		width: 100%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
-		margin-top: 20rpx;overflow: hidden; padding: 20rpx 20rpx 10rpx 10rpx;
-		display: flex;
+		margin-top: 20rpx;overflow: hidden; 
+		display: flex;padding: 20rpx 0 14rpx 14rpx;
 		
 		.item_img{
 			// position: relative;
@@ -388,14 +406,15 @@
 			// 	position: absolute;left: 22rpx;top: 0;
 			// 	z-index: 20;
 			// }
+			margin-right: 10rpx;
 			.images{
-				width: 240rpx;
+				width: 240rpx;border-radius: 10rpx;
 				height:240rpx;
 			}
 		}
 		.it_text{
 			.it_tit{
-				font-size: 30rpx;width: 96%;height: 80rpx;overflow: hidden;
+				font-size: 28rpx;width: 96%;height: 80rpx;overflow: hidden;
 			}
 			.it_text_cen{
 				display: flex;white-space: nowrap;
@@ -410,7 +429,7 @@
 						color: #ea5b72;font-size: 26rpx;
 					}
 					image{
-						width: 80rpx; height: 28rpx;margin-top: 6rpx;
+						width: 60rpx; height: 24rpx;margin-top: 10rpx;
 					}
 				}
 			}
@@ -423,13 +442,13 @@
 				}
 			}
 			.it_selt_r{
-				color: #998;line-height: 50rpx;font-size: 26rpx;margin-top: 12rpx;
-				
+				color: #998;line-height: 40rpx;font-size: 26rpx;
 			}
 		}
 		
 	}
 }
+//竖向
 .cont_list{
 	width: 100%;
 	display: flex;flex-wrap: wrap;padding: 0 3%;
@@ -437,38 +456,41 @@
 	.cont_item{
 		width: 49%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
-		margin-top: 20rpx;overflow: hidden; padding: 2%;
-		position: relative;
+		margin-top: 20rpx;overflow: hidden; 
+		position: relative;padding-bottom: 10rpx;
 		.imagea{
-			width: 70rpx;height: 84rpx;
+			width: 56rpx;height: 70rpx;
 			position: absolute;left: 22rpx;top: 0;
 			z-index: 20;
 		}
 		.images{
 			width: 100%;
-			height: 280rpx;
+			height: 350rpx;
 		}
 		.it_tit{
-			font-size: 30rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 60rpx;
+			padding-left: 10rpx;
+			font-size: 28rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 56rpx;
 		}
 		.it_price{
-			font-weight: bold;font-size: 30rpx;line-height: 60rpx;
+			padding-left: 10rpx;
+			font-weight: bold;font-size: 30rpx;
 		}
 		.it_selt{
+			padding-left: 10rpx;
 			width: 100%;display: flex;justify-content: space-between;
 			line-height: 40rpx;
 			.it_selt_l{
-				padding-top: 10rpx;display: flex;
+				display: flex;
 				text{
 					color: #ea5b72;font-size: 26rpx;
 				}
 				image{
-					width: 80rpx; height: 28rpx;margin-top: 6rpx;
+					width: 60rpx; height: 24rpx;margin-top: 10rpx;
 				}
 			}
 			.it_selt_r{
 				width: 150rpx;
-				color: #998;line-height: 50rpx;font-size: 26rpx;
+				color: #998;font-size: 22rpx;text-align: right;margin-right: 20rpx;
 				white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 			}
 		}

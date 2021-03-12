@@ -2,13 +2,13 @@
 	<view class="service-tel-box">
 		<view class="tel">
 			<view>
-				<u-input v-model="value" :type="type" />
+				<u-input v-model="value" :type="type" maxlength="11"/>
 			</view>
 		</view>
 		<view class="show-switch-box">
 			<view class="show-switch-up">
 				<view>商城中展示:</view>
-				<u-switch v-model="status" active-color="#2d407a" size="40" @change="change(status)"></u-switch>
+				<u-switch v-model="status" active-color="#2d407a" size="40" @change="change"></u-switch>
 			</view>
 			<view class="show-switch-down">
 				<u-icon class="icon warning" name="warning"></u-icon>
@@ -28,7 +28,8 @@
 				value:'',
 				type:'number',
 				placeholder:'请输入电话',
-				status:'' 
+				status:'' ,
+				selecttype:1
 			}
 		},
 		onLoad(e){
@@ -39,28 +40,28 @@
 			console.log(this.status)
 		},
 		methods: {
-			change(status) {
-				console.log(status);
+			//选择状态
+			change(e) {
+				console.log(e);
+				if(e== true){
+					this.selecttype = 1
+				}else{
+					this.selecttype = 2
+				}
 			},
 			save(){
-				console.log(this.value)
-				
 				//写入数据库
 				let params = {
 					telephone : this.value ,
-					is_display : this.status ? 1 : 2  ,
+					is_telephone : this.selecttype,
 					// id : this.id
 				}
 				
 				this.$api.post('manage', params ).then(res=>{
 					console.log(res)
-					uni.showToast({
-						telephone : res.message,
-					})
+					this.com.msg(res.message)
 					if(res.status == 1){
-						uni.setStorageSync('shop_telephone', this.value)
 						let a = this.status ? 1 : 2 ;
-						uni.setStorageSync('shop_is_display', a)
 						uni.navigateBack() 
 					}
 				})

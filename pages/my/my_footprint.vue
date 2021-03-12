@@ -22,7 +22,7 @@
 				</view>
 				<view class="item_shop">
 					<view class="item_shop_it" v-for="it_two in it.data">
-						<image :src="it_two.image" @click="go_shopdetail(1)"></image>
+						<image :src="it_two.image" @click="go_shopdetail(it_two.id)"></image>
 						<view class="shop_price">
 							￥{{it_two.price}}
 						</view>

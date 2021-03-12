@@ -4,8 +4,7 @@
 		<view class="personal">
 			<view class="per_list" @click="photograph">头像
 			    <view class="list_s">
-					<image src="../../static/errorImage.jpg" mode="aspectFill" v-if="!images_ava"></image>
-					<image :src="images_ava" mode="aspectFill" v-else></image>
+					<image :src="images_ava" mode="aspectFill"></image>
 			    	<u-icon name="arrow-right" color="#706f6c" size="20"></u-icon>
 			    </view>
 			</view>
@@ -90,7 +89,7 @@
 				this.checked = e;
 			},
 			pages_ty(){
-				this.$api.get('member_info').then(res=>{
+				this.$api.get('info').then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.images_ava = res.data.avatar
@@ -136,7 +135,7 @@
 						const tempFilePaths = chooseImageRes.tempFilePaths[0]
 						console.log(chooseImageRes.tempFilePaths[0])
 						uni.uploadFile({
-							url: 'http://mrd.nxm.wanheweb.com/api/uploads',
+							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
 							filePath: tempFilePaths,
 							name: 'file',
 							formData: {
@@ -179,12 +178,12 @@
 			},
 			// 收货地址
 			go_address(){
-				this.com.navto('./receiving')
+				this.com.navto('./receiving?is_mine='+ 1+'&type='+1)
 			},
 			//保存
 			go_usertext(){
 				// let arr = this.birthday.replace(/\-/g,"")
-				 this.$api.post('member_info',{avatar:this.images_ava,nickname:this.names,sex:this.sex_num,
+				 this.$api.put('info',{avatar:this.images_ava,nickname:this.names,
 				 birthday:this.birthday}).then(res=>{
 					console.log(res)
 					if(res.status == 1){

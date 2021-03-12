@@ -26,13 +26,9 @@
 		<!-- banner轮播 -->
 		<view class="carousel">
 			<swiper :circular="true" :autoplay="true" :duration="400" :interval="3000"  @change="swiperChange">
-				<swiper-item class="swiper-item" v-for="(item,index) in imgList" :key="index">
+				<swiper-item class="swiper-item" v-for="(item,index) in shop_det.album" :key="index">
 					<view class="image-wrapper" @click="banner_cli">
-						<image
-							:src="item.src" 
-							class="loaded" 
-							mode="aspectFill"
-						></image>
+						<image :src="item" class="loaded" mode="aspectFill" />
 					</view>
 				</swiper-item>
 			</swiper>
@@ -44,10 +40,12 @@
 		</view>
 		<!-- 横条 -->
 		<view class="trabecula" v-if="detail_type == 1">
-			<text class="trabecula_l">超值拼团中</text> <text style="margin-left: 20rpx;"> 已拼{{shop_det.sale}}件，剩余{{shop_det.stock}}件</text> 
+			<text class="trabecula_l">超值拼团中</text> 
+			<text style="margin-left: 20rpx;"> 已拼{{shop_det.sale}}件，剩余{{shop_det.stock}}件</text> 
 		</view>
 		<view class="trabecula" v-else>
-			<text class="trabecula_l">限时秒杀中</text> <text style="margin-left: 20rpx;"> 距结束 </text> 
+			<text class="trabecula_l">限时秒杀中</text> 
+			<text style="margin-left: 20rpx;"> 距结束 <u-count-down :timestamp="second" color="white" bg-color="#E8372F"></u-count-down></text>
 		</view>
 		<view class="shop_names" v-if="detail_type == 1">
 			<text style="margin-right: 20rpx;">拼团价</text> {{shop_det.title}} 
@@ -85,12 +83,12 @@
 			</view>
 		</view> -->
 		<view class="group_sty" v-if="detail_type == 1">
-			<view class="group_child" v-for="(it,ind) in 2" :key="ind">
+			<view class="group_child" v-for="(it,ind) in pi_group" :key="ind" >
 				<view class="child_l">
-					<image v-for="it in 2" src="../../static/community/photo.png" mode="aspectFill"></image>
+					<image v-for="its in it.member" :src="its.avatar" mode="aspectFill"></image>
 				</view>
-				<view class="child_r">
-					仅剩 2 个名额 <text>去拼单</text>
+				<view class="child_r" @click="go_single(it.id)">
+					仅剩 {{it.member_count - it.count}} 个名额 <text>去拼单</text>
 				</view>
 			</view>
 		</view>
@@ -102,32 +100,32 @@
 		</view>
 		<!-- 评价 -->
 		<view class="eva-section" id="evaluate">
-			<view class="section_title" @click="goto_page('./evaluate')">
+			<view class="section_title" @click="goto_page('./evaluate?id='+shop_id)" v-if="commentlist">
 				<view class="tit_l">
 					<text></text>
-					宝贝评价（100）
+					宝贝评价（{{commentlist.total}}）
 				</view>
 				<view style="color: #999;">
 					查看更多＞
 				</view>
-			</view> 
+			</view>
 			<view class="eva-box">
-				<view class="eval_con" v-for="it in 2">
+				<view class="eval_con" v-for="(it,ind) in commentlist.data">
 					<view class="order_head">
 						<view class="img">
-							<image src="../../static/kefu.png" mode="aspectFill"></image>
-							<view class="shop_name">你的名字</view>
+							<image :src="it.avatar" mode="aspectFill"></image>
+							<view class="shop_name">{{it.nickname}}</view>
 						</view>
 						<view class="shop_name_f">
-							
+		
 						</view>
-						<view class="order_time">2021-1-15</view>
+						<view class="order_time">{{it.create_time}}</view>
 					</view>
 					<view class="order_con">
-						打定金交付吉萨大
+						{{it.remark}}
 					</view>
 					<view class="order_img">
-						<image v-for="img in 3" src="../../static/index/section.png" mode="aspectFill" ></image>
+						<image v-for="img in it.img" :src="img" mode="aspectFill"></image>
 					</view>
 				</view>
 			</view>
@@ -174,7 +172,7 @@
 				</view>
 				<view class="anniu" v-else>
 					<view class="buy_s" @click="payment_yes(1)">
-							立即抢购
+						立即抢购
 					</view>
 				</view>
 			</view>
@@ -200,43 +198,49 @@
 					</view>
 				</view> -->
 				<view v-for="(item,index) in shopsku.title" :key="index" class="attr-list">
-					<text>{{item.title.title}}</text>
-					<view class="item-list">
-						<text v-for="(childItem, childIndex) in item.data" 
-							v-if="childItem.pid === item.id && childItem.pid !=3"
-							:key="childIndex" class="tit"
-							:class="{selected: childItem.selected}"
-							@click="selectSpec(childIndex, childItem.pid)"
-						>
-							{{childItem.title}}
-						</text>
-						
+						<text>{{item.title.title}}</text>
+						<view class="item-list">
+							<text v-for="(childItem, childIndex) in item.data" 
+								v-if="childItem.pid === item.id && childItem.pid !=3"
+								:key="childIndex" class="tit"
+								:class="{selected: childItem.selected}"
+								@click="selectSpec(index,childIndex, childItem.pid)"
+							>
+								{{childItem.title}}
+							</text>
+							
+						</view>
 					</view>
+					<view v-for="(it, ind) in details" :key="ind" :class="{jactive:jg_ind == it.id}" class="jg_sty" @click="zhifu(it.id)">
+						<view class="jg_sty_t">
+							<view>
+								足金：{{it.title}}
+							</view>
+							<view>
+								金重：{{it.weight}}
+							</view>
+						</view>
+						<view>
+							NO编号：{{it.model_no}}
+						</view>
+						<view class="jg_sty_b">
+							<view>
+								附加工费：{{it.labor}}
+							</view>
+							<view class="jg_r" v-if="!vip_type">
+								￥<text>{{it.price_normal}}</text>
+							</view>
+							<view class="jg_r" v-else>
+								￥<text>{{it.price_vip}}</text>
+							</view>
+						</view>
+					</view>
+					<view style="margin: 20rpx 0;">
+						数量
+						<u-number-box v-model="value" :min="1" :step="1" :long-press="false" @change="valChange"></u-number-box>
+					</view>
+					<button class="btn" @click="shop_pay(1)">完成</button>
 				</view>
-				<view v-for="(it, ind) in former" :key="ind" :class="{jactive:jg_ind == it.id}" class="jg_sty" @click="zhifu(it.id)">
-					<view class="jg_sty_t">
-						<view>
-							足金：{{it.type}}
-						</view>
-						<view>
-							金重：{{it.weight}}
-						</view>
-					</view>
-					<view>
-						NO编号：1541544
-					</view>
-					<view class="jg_sty_b">
-						<view>
-							附加工费：11.2
-						</view>
-						<view>
-							￥<text>2899.00</text>
-						</view>
-					</view>
-				</view>
-				<button class="btn" @click="shop_pay(1)" v-if="shop_type == 1">完成</button>
-				<button class="btn" @click="shop_pay(2)" v-else>加入购物车</button>
-			</view>
 		</view>
 		<!-- 分享 -->
 		<zs-share ref="share" :contentHeight="400"></zs-share>
@@ -247,9 +251,11 @@
 	export default{
 		data() {
 			return {
+				value:1,
+				shop_num:1,
 				vip_type:false,//会员状态
 				shop_type:0,//按钮状态
-				jg_ind:-1,//
+				jg_ind:'',//
 				bgcolor:'',//背景色
 				opacity: 0,//透明度
 				head_ind:0,//头部样式
@@ -258,104 +264,12 @@
 				swiperCurrent: 0,
 				favorite: true,
 				shareList: [],
-				imgList: [
-					{
-						src: '../../static/index/bann1.png' 
-					},
-					{
-						src: '../../static/vip-order/img_02.png'
-					},
-					{
-						src: '../../static/index/bann2.png'
-					}
-				],
-				specList: [
-					{
-						id: 1,
-						name: '尺寸',
-					},
-					{	
-						id: 2,
-						name: '颜色',
-					},
-					{
-						id: 3,
-						name: '成色',
-					},
-				],
+				imgList: [],
 				headlist:[
 					{name:'商品'},
 					{name:'评价'},
 					{name:'详情'},
 					{name:'推荐'}
-				],
-				specChildList: [
-					{
-						id: 1,
-						pid: 1,
-						name: 'XS',
-					},
-					{
-						id: 2,
-						pid: 1,
-						name: 'S',
-					},
-					{
-						id: 3,
-						pid: 1,
-						name: 'M',
-					},
-					{
-						id: 4,
-						pid: 1,
-						name: 'L',
-					},
-					{
-						id: 5,
-						pid: 1,
-						name: 'XL',
-					},
-					{
-						id: 6,
-						pid: 1,
-						name: 'XXL',
-					},
-					{
-						id: 7,
-						pid: 2,
-						name: '白色',
-					},
-					{
-						id: 8,
-						pid: 2,
-						name: '珊瑚粉',
-					},
-					{
-						id: 9,
-						pid: 2,
-						name: '草木绿',
-					},
-					{
-						id: 10,
-						pid: 3,
-						name: '草木绿',
-						type:"条码：10185474",
-						weight:"1.530g"
-					},
-					{
-						id: 11,
-						pid: 3,
-						name: '草木绿',
-						type:"条码：10185474",
-						weight:"1.530g"
-					},
-					{
-						id: 12,
-						pid: 3,
-						name: '草木绿',
-						type:"条码：10185474",
-						weight:"1.530g"
-					},
 				],
 				pingl:0,//评论
 				tuij:0,//推荐
@@ -367,6 +281,14 @@
 				member:'',//个人信息
 				shopsku:'',
 				detail_type:0,//活动类型  1团购 2秒杀
+				sku_ids:'',//sku 的id拼接
+				details:'',
+				shop_id_goods:'',
+				type_shop:0,
+				second:0,//秒数
+				cantuan:0,//参团id
+				pi_group:'',//拼团列表
+				commentlist:''
 			};
 		},
 		onPageScroll(e) {
@@ -382,17 +304,7 @@
 			}
 		},
 		computed:{
-			former(){
-				let arr = []
-				this.specChildList.forEach(i=>{
-					
-					if(i.pid == 3){
-						arr.push(i)
-						// console.log(arr)
-					}
-				})
-				return arr
-			}
+			
 		},
 		mounted() {
 			var query = uni.createSelectorQuery()
@@ -413,33 +325,40 @@
 				this.detail_shop = res.top -100
 			}).exec()
 		},
+		onShow() {
+			this.page_render()
+		},
 		onLoad(options){
 			//option的 type 1团购 2 秒杀
-			this.detail_type = options.type
-			console.log(options) 
-			//接收传值,id里面放的是标题，因为测试数据并没写id 
 			this.shop_id = options.shop_id;
-			this.page_render()
-			
+			this.detail_type = options.type
+			if(options.second){
+				this.second = options.second
+			}
 			this.member = uni.getStorageSync('member_info')
 			console.log(this.member)
-			//规格 默认选中第一条
-			this.specList.forEach(item=>{
-				for(let cItem of this.specChildList){
-					if(cItem.pid === item.id){
-						this.$set(cItem, 'selected', true);
-						this.specSelected.push(cItem);
-						break; //forEach不能使用break
-					}
-				} 
-			})
+			let vip = uni.getStorageSync('viptype')
+			console.log(vip)
+			// 会员
+			if(vip){
+				this.vip_type = true
+			}else{
+				this.vip_type = false
+			}
+			this.page_render()
 		},
 		methods:{
+			valChange(e) {
+				// console.log('当前值为: ' + e.value)
+				this.shop_num = e.value
+			},
 			page_render(){
-				this.$api.get('activity/'+this.shop_id ).then(res=>{
+				this.$api.get('activity/'+this.shop_id+'&type='+this.detail_type).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.shop_det = res.data
+						this.shoptype_id = res.data.id
+						this.shop_id_goods = res.data.goods_id
 						this.stynumber = [
 							{
 								name:'款号',
@@ -462,36 +381,85 @@
 								num:res.data.min_g+'-'+res.data.max_g
 							}
 						]
+						this.sku()
 					}
 				})
 				//推荐商品
 				this.$api.post('goods',{is_recommend:1}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						this.shop_list =res.data.data
 					}
 				})
 				//评论
-				this.$api.get('commentlist/'+this.shop_id).then(res=>{
+				this.$api.get('commentlist/' + this.shop_id).then(res => {
 					console.log(res)
-				})
-				// sku
-				this.$api.get('sku',{type:0,id:this.shop_id}).then(res=>{
-					console.log(res)
-					if(res.status == 1){
-						this.shopsku = res.data
+					if (res.status == 1) {
+						this.commentlist = res.data
 					}
 				})
 				//拼团列表
-				this.$api.get('group',{article_part_id:this.shop_id}).then(res=>{
+				this.$api.get('group',{id:this.shop_id,member_id:this.member.id}).then(res=>{
 					console.log(res)
+					this.pi_group = res.data
+				})
+			},
+			//商品sku
+			sku(){
+				this.$api.get('sku',{type:this.type_shop,id:this.shoptype_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shopsku = res.data
+						this.details = res.data.data
+					}
 				})
 			},
 			//购买/加购物车
-			shop_pay(e){ //e  1是购买 2 加购物车
-				if(e == 1){
-					this.com.navto('../vip-confirm-order/vip-confirm-order')
+			shop_pay(){ //e  1是购买 2 加购物车
+				if(this.shop_type == 0){ //单独购买
+					let data = {
+						goods_id:this.shop_id_goods,
+						sku_id:this.jg_ind,
+						count:this.shop_num,
+						type:0,
+					}
+					if(this.jg_ind ==''){
+						this.com.msg('请选择规格')
+						return
+					}else{
+						this.com.navto('../vip-confirm-order/vip-confirm-order?data='+JSON.stringify(data))
+						this.toggleSpec()
+					}
+				}else{  //拼团 秒杀
+						// detail_type 1团购 2秒杀
+					let data = {
+						goods_id:this.shop_id,
+						sku_id:this.jg_ind,
+						count:this.shop_num,
+						type:1,
+						activity:this.detail_type,// detail_type 1团购 2秒杀
+						kaituan:this.shop_det.activity_id,//开团的id
+						cantuan:this.cantuan,//参加的团购的id
+					}
+					if(this.jg_ind ==''){
+						this.com.msg('请选择规格')
+						return
+					}else{
+						this.toggleSpec()
+						this.com.navto('../vip-confirm-order/vip-confirm-order?data='+JSON.stringify(data))
+					}
 				}
+				
+			},
+			//参加拼团
+			go_single(e){
+				this.cantuan = e
+				this.shoptype_id = this.shop_det.id
+				this.type_shop = 1
+				this.shop_type = 1 // 活动购买
+				this.sku()
+				
+				this.toggleSpec()
 			},
 			//结果
 			zhifu(e){
@@ -551,8 +519,16 @@
 			//加购物车/购买
 			payment_yes(e){
 				this.shop_type = e
+				if(e == 0){ // 单独购买
+					this.shoptype_id = this.shop_id_goods
+					this.type_shop = e
+					this.sku()
+				}else{
+					this.shoptype_id = this.shop_det.id
+					this.type_shop = e
+					this.sku()
+				}
 				this.toggleSpec()
-				
 			},
 			//返回上一页
 			goto_top(){
@@ -570,27 +546,43 @@
 				}
 			},
 			//选择规格
-			selectSpec(index, pid){
-				let list = this.specChildList;
-				list.forEach(item=>{
+			selectSpec(find,index, pid){
+				let list = this.shopsku.title[find];
+				console.log(list)
+				list.data.forEach(item=>{
 					if(item.pid === pid){
 						this.$set(item, 'selected', false);
 					}
 				})
-
-				this.$set(list[index], 'selected', true);
+			
+				this.$set(list.data[index], 'selected', true);
 				// 存储已选择
 				// *
 				//  * 修复选择规格存储错误
 				//  * 将这几行代码替换即可
 				//  * 选择的规格存放在specSelected中
-				
-				this.specSelected = []; 
-				list.forEach(item=>{ 
-					if(item.selected === true){ 
-						this.specSelected.push(item); 
-						console.log(this.specSelected)
-					} 
+				this.specSelected = '';
+				this.shopsku.title.forEach(item=>{
+					item.data.forEach(c=>{
+						if(c.selected == true){
+							this.specSelected += c.id +','
+							// console.log(this.specSelected)
+							//处理逗号
+							let arr = '' 
+							this.sku_ids = this.specSelected.substr(0,this.specSelected.length - 1)
+							  arr = this.sku_ids.replace(/\,/g, "") //替换所有的 逗号
+							  console.log(this.sku_ids)
+							//判断长度相同时
+							if(this.shopsku.title.length == arr.length){
+								this.$api.get('sku',{type:this.type_shop,id:this.shoptype_id,sku_ids:this.sku_ids}).then(res=>{
+									console.log(res)
+									if(res.status == 1){
+										this.details = res.data.data
+									}
+								})
+							}
+						} 
+					})
 				})
 				
 			},
@@ -652,9 +644,6 @@
 						}
 					}
 				}
-			}
-			.head_share{
-				
 			}
 		}
 	}
@@ -798,7 +787,7 @@
 	}
 	//拼团
 	.group_sty{
-		width: 100%;
+		width: 100%;height: 220rpx;overflow-y: scroll;
 		padding: 0 3%;background-color: white;margin-top: 20rpx;
 		.group_child{
 			border-bottom: 2rpx solid #f6f6f6;padding: 10rpx 0;
@@ -806,6 +795,7 @@
 			.child_l{
 				height: 86rpx;display: flex;
 				image{
+					background-color: #eee;
 					width: 80rpx;height: 80rpx;border-radius: 50%;margin-right: 8rpx;
 				}
 			}

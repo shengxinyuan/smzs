@@ -2,27 +2,24 @@
 	<view class="">
 		<view class="order_time" v-for="(item,ind) of list" :key="ind">
 			<view class="order_box">
-				<view class="order_head" @click="order_detail(item.id,10)">
-					订单编号：<text class="time">{{item.bn}}</text> 
-					
+				<view class="order_head" @click="order_detail(item.bn)">
+					订单编号：<text class="time">{{item.bn,10}}</text> 
 					<text class="sure" v-if="item.status == 10">待付款</text>
-				<!-- 	<text class="sure" v-if="item.status == 20">待收货</text>
-					<text class="sure" v-if="item.status == 30">待评价</text>
-					<text class="sure" v-if="item.status == 40">已完成</text>
-					<text class="sure" v-if="item.status == 50 && item.return_type == 1">审核中</text>
-					<text class="sure" v-if="item.status == 50 && item.return_type == 2">已拒绝</text>
-					<text class="sure" v-if="item.status == 50 && item.return_type == 3">售后成功</text> -->
 				</view>
 				<view v-if="item.data[0]">
 					<view class="shop_list"  v-for="(its,ind) in item.data[0]">
-						<image v-if="its.goods" src="../../static/index/section.png" mode="aspectFill" @click="order_detail(item.id,10)"></image>
+						<image v-if="its.goods" :src="its.goods.image" mode="aspectFill" @click="order_detail(item.bn,10)"></image>
 						<view class="list_right" v-if="its.goods">
-							<view @click="order_detail(item.id)">
-								<view class="title">足金项链 环环相扣</view>
-								<view class="Specifications">金重：5.8g<text class="num"> 款号：0141448</text></view>
-								<view class="price">￥1888</view>
+							<view @click="order_detail(item.bn,10)">
+								<view class="title">{{its.goods.title}}</view>
+								<view class="Specifications">金重：{{its.goods.wage}}<text class="num"> 款号：{{its.goods.model_no}}</text></view>
+								<view class="shop_list_label">
+									<text>金价：{{its.gold_price}}</text><text>工费： {{its.labor_price}} </text>
+								</view>
+								<view class="price"><text>￥{{its.total}}</text>
+								 <text style="color: #999;"> *{{its.count}}</text></view>
 							</view>
-							
+								
 						</view>
 					</view>
 				</view>
@@ -37,7 +34,9 @@
 					<view></view> <!-- 位置 -->
 					<view class="foot_child">
 						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id)">取消订单</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 10" @click="order_detail(item.id,10)">去支付</view> <!-- // -->
+						<view class="go_buy" v-if="item.status == 10" @click="order_detail(item.bn,10)">去支付
+							<!-- <u-count-down :timestamp="item.t_times" :show-hours="false"></u-count-down> -->
+						</view> <!-- // -->
 						<view class="go_buy_s" v-if="item.status == 20" @click="order_logist(item)">退款</view>  <!-- // -->
 						<view class="go_buy_s" v-if="item.status == 20" @click="order_logist_wl(item)">查看物流</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 20" @click="sure_details(item.id)">确认收货</view> <!-- // -->
@@ -66,11 +65,19 @@
 		methods:{
 			//取消订单
 			no_order(e){
-				this.$api.put('orders',{id:e,status:10,type:2}).then(res=>{
-					if(res.status == 1){
-						this.com.redto('./order?state='+ 10 +'&index='+ 1)
-					}else{
-						this.com.msg(res.message)
+				let that = this
+				uni.showModal({
+					content:'确认取消该订单吗？',
+					success(re) {
+						if(re.confirm){
+							that.$api.put('orders',{id:e,type:2}).then(res=>{
+								if(res.status == 1){
+									that.com.redto('./order?state='+ 10 +'&index='+ 1)
+								}else{
+									that.com.msg(res.message)
+								}
+							})
+						}
 					}
 				})
 			},
@@ -215,17 +222,20 @@
 				}
 				.price{
 					width: 100%;line-height: 70rpx;
-					color: #ba1a30;
-					text{
-						color: #999999;
-						text-decoration: line-through;
-					}
+					color: #ba1a30;display: flex;justify-content: space-between;
 				}
 				.Specifications{
-					width: 100%;color: #999;line-height: 60rpx;
+					width: 100%;color: #999;font-size: 26rpx;
 					display: flex;
-					justify-content: space-between;
 					.num{
+						color: #999;margin-left: 20rpx;
+					}
+				}
+				.shop_list_label{
+					
+					text{
+						display: inline-block;background-color: #eee;font-size: 24rpx;margin: 5rpx 10rpx 5rpx 0;
+						padding: 0 4rpx;border-radius: 5rpx;
 						color: #999;
 					}
 				}
@@ -254,6 +264,7 @@
 				width: 100%;
 				display: flex;
 				justify-content: space-around;
+				
 			}
 			.go_buy{
 				width: 88%;line-height: 80rpx;height: 80rpx;
@@ -264,6 +275,7 @@
 				color: #fff;
 				text-align: center;
 			}
+			
 			.go_buy_s{
 				width: 48%;line-height: 80rpx;height: 80rpx;
 				color: #f82222;

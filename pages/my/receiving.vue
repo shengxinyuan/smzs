@@ -2,11 +2,11 @@
 	<!-- 我的地址 -->
 	<view class="content">
 		
-		<view class="conent_box" v-if="list_show">
+		<view class="conent_box" v-if="!list_show">
 			<u-swipe-action v-for="(it, index) in page_list" :key="it.id" :show="it.show" :index="index"
 			 class="address_box" @click="del(it.id)" @open="open" :options="options">
 				<view class="address_box_child">
-					<view class="child_l">
+					<view class="child_l" @click="add_pay(it)">
 						<view >{{it.contact}}   {{it.mobile}} 
 							<text class="more" v-if="it.is_default == 1">默认</text> 
 						</view> 
@@ -18,7 +18,7 @@
 								设置为默认地址
 							</radio>
 						</radio-group> -->
-						<view class="btns"  @click="go_edit(it.id)" >
+						<view class="btns"  @click="Add(it)" >
 							<view class="btns_icon">
 								<u-icon name="edit-pen" size="50rpx"></u-icon>
 							</view>
@@ -31,7 +31,7 @@
 		<view style="padding-top: 150rpx;" v-else>
 			<u-empty text="没有收货地址" mode="address"></u-empty>
 		</view>
-		<button class="btn" @click="Add(-1)">添加地址</button>
+		<button class="btn" @click="Add()">添加地址</button>
 	</view>
 </template>
 
@@ -49,13 +49,32 @@
 						}
 					}
 				],
-				list_show:true
+				list_show:true,
+				is_mine:1 ,//0-不是自己的 1-自己的
+				type:0
 			}
 		},
 		onShow() {
 			this.page_t()
 		},
+		onLoad(op) {
+			console.log(op)
+			this.is_mine = op.is_mine
+			this.type = op.type
+		},
 		methods: {
+			//从下单页来
+			add_pay(e){
+				if(this.type == 0){
+					if(this.is_mine != 0){
+						uni.setStorageSync('address',e)
+						uni.navigateBack()
+					}else{
+						uni.setStorageSync('address_bier',e)
+						uni.navigateBack()
+					}
+				}
+			},
 			// 打开一个的时候，关闭其他
 			open(index) {
 				// 先将正在被操作的swipeAction标记为打开状态，否则由于props的特性限制，
@@ -67,15 +86,15 @@
 			},
 			
 			page_t(){
-				this.$api.get('address').then(res=>{
+				this.$api.get('address',{is_mine:this.is_mine}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.page_list = res.data.data
-						if(res.data.data.length != 0){
-							this.list_show = true
-						}else{
-							this.list_show = false
-						}
+						this.page_list = res.data	
+					}
+					if(res.data===undefined || res.data ==""){
+						this.list_show = true
+					}else{
+						this.list_show = false
 					}
 				})
 			},
@@ -92,11 +111,7 @@
 			
 			// 添加新地址
 			Add(e){
-				this.com.navto('./addAddress?type='+e)
-			},
-			// 编辑地址
-			go_edit(e){
-				this.com.navto('./addAddress?type='+e)
+				this.com.navto('./addAddress?type='+JSON.stringify(e)+'&is_mine='+ this.is_mine)
 			},
 			// 删除地址
 			del(e){
@@ -138,9 +153,11 @@
 				background-color: #fff;
 				
 				.address_box_child{
+					
 					display: flex;
 					justify-content: space-between;
 					.child_l{
+						width: 70%; 
 						line-height: 56rpx;
 						padding: 30rpx 0;
 						view:nth-child(1){

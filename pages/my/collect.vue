@@ -8,7 +8,7 @@
 						 <checkbox  :checked="it.state" />
 					</label>
 				</view>
-				<image class="images" src="../../static/shopping.png" mode="aspectFill" @click="go_shopdetail(it.id)"></image>
+				<image class="images" :src="it.image" mode="aspectFill" @click="go_shopdetail(it.id)"></image>
 				<view class="it_tit">
 					{{it.title}}
 				</view>
@@ -176,19 +176,21 @@
 		.cont_item{
 			width: 49%;margin-right: 2%;
 			border-radius: 16rpx;background-color: white;
-			margin-top: 20rpx;overflow: hidden; padding: 2%;
+			margin-top: 20rpx;overflow: hidden; 
 			position: relative;
 			.checkbox{
 				position: absolute;top: 24rpx;right: 4rpx;z-index: 20;
 			}
 			.images{
 				width: 100%;
-				height: 280rpx;
+				height: 320rpx;
 			}
 			.it_tit{
+				padding: 2%;
 				font-size: 30rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 60rpx;
 			}
 			.it_price{
+				padding: 2%;
 				font-weight: bold;font-size: 30rpx;line-height: 60rpx;display: flex;justify-content: space-between;color: #df3636;
 			}
 		}

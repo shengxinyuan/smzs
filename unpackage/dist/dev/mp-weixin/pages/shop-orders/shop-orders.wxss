@@ -1,0 +1,250 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.tabs-first {
+  border-top: solid 10rpx #f6f6f6;
+  background-color: #FFFFFF;
+  padding: 20rpx 30rpx;
+}
+.tabs-first .tabs-first-title {
+  padding: 20rpx 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  font-size: 26rpx;
+}
+.tabs-first .tabs-first-title .orders-number {
+  color: #999999;
+}
+.tabs-first .tabs-first-title .orders {
+  color: #2d407a;
+}
+.goods-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  padding: 30rpx 0;
+  border-top: solid 2rpx #eeeeee;
+  border-bottom: solid 2rpx #eeeeee;
+}
+.goods-box .good-photo {
+  width: 23%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.goods-box .good-photo image {
+  width: 100%;
+  border-radius: 10rpx;
+}
+.goods-box .goods-details {
+  margin-left: 20rpx;
+}
+.goods-box .goods-details .goods-title {
+  font-size: 28rpx;
+}
+.goods-box .goods-details .goods-text-one {
+  margin-top: 20rpx;
+  margin-bottom: 10rpx;
+  font-size: 22rpx;
+  color: #666666;
+}
+.goods-box .goods-details .goods-text-one text {
+  margin-right: 30rpx;
+}
+.goods-box .goods-details .goods-text-two {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  font-size: 20rpx;
+  color: #777777;
+}
+.goods-box .goods-details .goods-text-two .goods-text-two-min-box {
+  padding: 4rpx 14rpx;
+  background-color: #f6f6f6;
+  margin-right: 20rpx;
+  margin-bottom: 10rpx;
+  border-radius: 6rpx;
+}
+.goods-box .goods-details .money-box {
+  margin-top: 10rpx;
+}
+.goods-box .goods-details .money-box .rmb {
+  font-size: 22rpx;
+}
+.goods-box .goods-details .money-box .integer {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.goods-box .goods-details .money-box .fractional-part {
+  font-size: 22rpx;
+}
+.goods-down-box {
+  padding-top: 20rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.goods-down-box .left {
+  width: 35%;
+}
+.goods-down-box .left .sum {
+  font-size: 22rpx;
+  color: #999999;
+}
+.goods-down-box .left .profit {
+  font-size: 24rpx;
+}
+.goods-down-box .left .price {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ed4440;
+}
+.goods-down-box .right {
+  width: 65%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  text-align: center;
+}
+.goods-down-box .right .btn-one {
+  width: 37%;
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 24rpx;
+  color: #999999;
+  background-color: #FFFFFF;
+  border-radius: 26rpx;
+  border: solid 2rpx #999999;
+  margin-right: 20rpx;
+}
+.goods-down-box .right .btn-two {
+  width: 37%;
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 24rpx;
+  color: #ffffff;
+  background-image: -webkit-linear-gradient(bottom, #eb4241 0%, #ef463f 100%);
+  background-image: linear-gradient(0deg, #eb4241 0%, #ef463f 100%);
+  border-radius: 26rpx;
+}
+.goods-down-box .right .btn-there {
+  width: 37%;
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 24rpx;
+  color: #999999;
+  background-color: #FFFFFF;
+  border-radius: 26rpx;
+  border: solid 2rpx #999999;
+}
+.goods-down-box .right .one {
+  width: 37%;
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 24rpx;
+  color: #999999;
+  background-color: #FFFFFF;
+  border-radius: 26rpx;
+  border: solid 2rpx #999999;
+  margin-right: 20rpx;
+}
+.goods-down-box .right .two {
+  width: 24%;
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 24rpx;
+  color: #999999;
+  background-color: #FFFFFF;
+  border-radius: 26rpx;
+  border: solid 2rpx #999999;
+  margin-right: 20rpx;
+}
+.goods-down-box .right .there {
+  width: 24%;
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 24rpx;
+  color: #999999;
+  background-color: #FFFFFF;
+  border-radius: 26rpx;
+  border: solid 2rpx #999999;
+}
+.popup-box {
+  padding: 40rpx;
+}
+.popup-box .popup-up {
+  text-align: center;
+}
+.popup-box .popup-up .notice {
+  font-size: 34rpx;
+  font-weight: bold;
+  margin-bottom: 50rpx;
+}
+.popup-box .popup-up .text {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 8rpx;
+}
+.popup-box .popup-btn {
+  padding: 10rpx;
+  margin-top: 50rpx;
+}
+.popup-box .popup-btn .btn-one {
+  padding: 4rpx 0;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  background-image: -webkit-linear-gradient(left, #2b3f7d 0%, #1b2c60 100%);
+  background-image: linear-gradient(90deg, #2b3f7d 0%, #1b2c60 100%);
+  border-radius: 34rpx;
+}
+.popup-box .popup-btn .btn-two {
+  padding: 4rpx 0;
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #999999;
+  background-color: #FFFFFF;
+  border-radius: 34rpx;
+  border: solid 2rpx #999999;
+}
+

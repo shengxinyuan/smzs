@@ -18,8 +18,8 @@
 					<view class="text">首饰打包费用（包含外纸箱、泡沫等材料费）</view>
 				</view>
 				<view class="zzfw-cost">
-					<view>保费：</view>
-					<view class="cost-pay">￥{{premium}}</view>
+					<view>打包费：</view>
+					<view class="cost-pay">￥{{baof}}</view>
 				</view>
 			</view>
 
@@ -36,27 +36,32 @@
 				</view>
 				<view class="gift-package-box">
 					<scroll-view class="scroll-view_H" scroll-x="true">
-						<view class="scroll_item" v-for="(giftItem,giftIndex) in giftList" :key="giftIndex">
+						<view class="scroll_item" v-for="(it,ind) in giftList" :key="ind"
+						:class="{active:it.id == itemid }" @click="item_cli(it.id,ind)">
 							<view class="gift-package-min-box">
-								<view class="gift-package-photo" :style="{'border':giftItem.border}">
-									<image :src="giftItem.photo" mode="widthFix"></image>
+								<view class="gift-package-photo">
+									<image :src="it.image" mode="aspectFill"></image>
+									<view v-if="it.counds != 0">
+										{{it.counds}}
+									</view>
 								</view>
-								<view class="gift-package-title u-line-1" :style="{'color':giftItem.fontColor}">{{giftItem.title}}</view>
+								<view class="gift-package-title u-line-1" >{{it.title}} </view>
+							</view>
+							<view class="zzfw-number-box" v-if="it.id == itemid">
+								<view class="zzfw-number-title">数量</view>
+								<u-number-box v-model="it.counds" :long-press="false" @change="valChange($event,ind)"></u-number-box>
 							</view>
 						</view>
 					</scroll-view>
 				</view>
-				<view class="zzfw-number-box">
-					<view class="zzfw-number-title">数量</view>
-					<u-number-box v-model="value" @change="valChange"></u-number-box>
-				</view>
+				
 			</view>
 			
 			<!-- 底部展示 -->
 			<view class="zzfw-bottom-box">
 				<view class="zzfw-bottom-left">
 					<text>合计：</text>
-					<text class="money">￥{{totalMoney}}</text>
+					<text class="money">￥{{total.toFixed(2)}}</text>
 				</view>
 				<view class="zzfw-bottom-btn" @click="skipVipConfirmOrder">
 					<text>确定</text>
@@ -75,56 +80,95 @@
 		data() {
 			return {
 				premium:'3',
-				giftList:[
-					{
-						border:'solid 2upx #2d407a',
-						photo:'../../static/vip-order/box_02.png',
-						title:'戒指/耳钉盒',
-						fontColor:'#2d407a'
-					},
-					{
-						border:'',
-						photo:'../../static/vip-order/box_03.png',
-						title:'15号、16号手绳',
-						fontColor:'#999999'
-					},
-					{
-						border:'',
-						photo:'../../static/vip-order/box_02.png',
-						title:'戒指/耳钉盒',
-						fontColor:'#999999'
-					},
-					{
-						border:'',
-						photo:'../../static/vip-order/box_03.png',
-						title:'15号、16号手绳',
-						fontColor:'#999999'
-					},
-					{
-						border:'',
-						photo:'../../static/vip-order/box_02.png',
-						title:'戒指/耳钉盒',
-						fontColor:'#999999'
-					},
-					{
-						border:'',
-						photo:'../../static/vip-order/box_03.png',
-						title:'15号、16号手绳',
-						fontColor:'#999999'
-					}
-				],
-				value: 13,
-				totalMoney:'32'
+				giftList:[],
+				baof:0,
+				itemid:0,
+				total:0,
+				datas:''
 			}
 		},
+		onLoad(op) {
+			console.log(op)
+			this.baof = op.price
+			if(op.data){
+				this.datas = JSON.parse(op.data)
+				console.log(this.datas.list) 
+				this.giftList = this.datas.list
+				this.itemid = this.datas.list[0].id
+				this.totalMoney()
+			}else{
+				this.page_reader()
+			}
+			
+		},
 		methods: {
-			valChange(e) {
-				console.log('当前值为: ' + e.value)
-			},
-			skipVipConfirmOrder(){
-				uni.navigateTo({
-					url:'vip-confirm-order'
+			totalMoney(){
+				this.total = 0
+				this.giftList.forEach(i=>{
+					if(i.counds > 0){
+						this.total += i.price * i.counds
+					}
 				})
+			},
+			btnClick(){
+				this.com.navto('../../pages/service/service')
+			},
+			//点击
+			item_cli(e,ind){
+				this.itemid = e
+				if(this.giftList[ind].counds == 0){
+					this.giftList[ind].counds = 1
+				}else{
+					return
+				}
+				this.totalMoney()
+				this.$forceUpdate()
+			},
+			//渲染
+			page_reader(){
+				this.$api.get('accessories').then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.giftList = res.data
+						this.itemid = res.data[0].id
+						res.data.forEach(i=>{
+							i.counds = 0
+						})
+					}
+				})
+			},
+			//步进器
+			valChange(e,ind) {
+				this.giftList[ind].counds = e.value
+				this.totalMoney()
+				this.$forceUpdate()
+			},
+			//确定
+			skipVipConfirmOrder(){
+				let array_id = ''
+				let array_count = ''
+				var arr_list = this.giftList
+				this.giftList.forEach(i=>{
+					if(i.counds > 0){
+						array_id += i.id+','
+						array_count += i.counds + ','
+						// console.log("id"+array_id,"数量"+array_count)
+						arr_list.forEach(j=>{
+							if(i.id == j.id){
+								j.counds = i.counds
+							}
+						})
+					}
+				})
+				
+				let ids = {
+					id:array_id.substr(0,array_id.length - 1),
+					count:array_count.substr(0,array_count.length - 1),
+					total:this.total,
+					list:arr_list
+				}
+				uni.setStorageSync('ids',ids)
+				uni.navigateBack()
 			}
 		}
 	}
@@ -205,7 +249,8 @@
 		padding: 20upx;
 		background-color: #FFFFFF;
 		border-radius: 10upx;
-
+		
+		
 		.pjtx-box {
 			display: flex;
 			align-items: center;
@@ -238,10 +283,30 @@
 			.scroll-view_H {
 				display: flex;
 				white-space: nowrap;
-
+				position: relative;
+				height: 280rpx;
+				.zzfw-number-box {
+					display: flex;
+					justify-content: flex-end;
+					align-items: center;
+					position: absolute;right: 0;bottom: 0;
+					.zzfw-number-title {
+						font-size: 28upx;
+						color: #666666;
+						margin-right: 20upx;
+					}
+				}
 				.scroll_item {
 					display: inline-block;
 					width: 29%;
+					
+				}
+				.active{
+					color: #2d407a;
+					image{
+						box-sizing: border-box;
+						border: 1rpx solid #2d407a;
+					}
 				}
 			}
 
@@ -252,9 +317,16 @@
 					display: flex;
 					border-radius: 10upx;
 					box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.06);
-
+					position: relative;
+					view{
+						text-align: center;font-size: 38rpx;line-height: 170rpx;color: white;
+						position: absolute;left: 0;top: 0;
+						width: 100%;
+						height: 170rpx;background-color: rgba(0,0,0,0.22);
+					}
 					image {
 						width: 100%;
+						height: 170rpx;background-color: #eee;
 					}
 				}
 
@@ -265,17 +337,7 @@
 			}
 		}
 
-		.zzfw-number-box {
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-
-			.zzfw-number-title {
-				font-size: 28upx;
-				color: #666666;
-				margin-right: 20upx;
-			}
-		}
+		
 	}
 	.zzfw-bottom-box{
 		width: 100%;

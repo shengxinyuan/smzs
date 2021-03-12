@@ -2,19 +2,19 @@
 	<!-- 消息通知 -->
 	<view class="news">
 		<view class="list">
-			<view class="list_s" @click="go_listnew(1)">
+			<view class="list_s" @click="go_listnew(0)">
 				<view class="left_s">
 					<image src="/static/my/kefuimg.png" mode="aspectFill"></image>客服消息
 				</view>
 				<view class="num" v-if="badge.system_count">+{{badge.system_count}}</view>
 			</view>
-			<view class="list_s" @click="go_listnew(2)">
+			<view class="list_s" @click="go_listnew(1)">
 				<view class="left_s">
 					<image src="/static/my/xitunimg.png" mode="aspectFill"></image>系统消息
 				</view>
 				<view class="num" v-if="badge.reward_count">+{{badge.reward_count}}</view>
 			</view>
-			<view class="list_s" style="border: none;" @click="go_listnew(3)">
+			<view class="list_s" style="border: none;" @click="go_listnew(2)">
 				<view class="left_s">
 					<image src="/static/my/wuliuimg.png" mode="aspectFill"></image>物流消息
 				</view>
@@ -41,7 +41,12 @@
 		},
 		methods: {
 			go_listnew(e){
-				this.com.navto('newList?cate_id='+e)
+				if(e == 0){
+					this.com.navto('../service/service')
+				}else{
+					this.com.navto('newList?cate_id='+e)
+				}
+				
 			}
 		}
 	}
@@ -77,6 +82,7 @@
 					line-height: 120rpx;
 					align-items: center;
 					display: flex;
+					
 					image{
 					    width: 100rpx;
 					    height: 100rpx;

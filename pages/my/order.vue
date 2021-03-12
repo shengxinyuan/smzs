@@ -1,10 +1,12 @@
 <template>
  	<view class="content">
  		<view class="head">
- 			<view v-for="(item,index) in tabs" :key="index" :class="{title:current==item.id}" @click="tabClick(item.id,index)">
- 				{{item.name}}
- 				<view :class="{line:current==item.id}"></view>
- 			</view>
+ 			<scroll-view scroll-x="true" class="swiper-box">
+ 				<view v-for="(item,index) in tabs" :key="index" class="swiper_it" :class="{title:current==item.id}" @click="tabClick(item.id,index)">
+ 					{{item.name}}
+ 					<view :class="{line:current==item.id}"></view>
+ 				</view>
+ 			</scroll-view>
  		</view>
  		<view class="box" v-if="page_show">
 			 <swiper class="swiper" :current="current_ind" @change="page_swiper">
@@ -30,13 +32,13 @@
  		data() {
  			return {
  				tabs: [{name:'全部',id:0}, {name:'待付款',id:10}, {name:'待发货',id:20}, {name:'待收货',id:30},
-				{name:'待评价',id:40},{name:'已完成',id:50},{name:'退款',id:60}],
+				{name:'待评价',id:40},{name:'已完成',id:50},{name:'售后',id:60}],
  				list:[],
  				current: 0,
 				current_ind:0,
  				isShow: true,
 				page:1,
-				page_show:false
+				page_show:false,
  			}
  		},
  		onLoad(op) {
@@ -57,11 +59,34 @@
 			},
 			
 			page_cont(e){
+				
 				this.$api.get('orders',{page:e,status:this.current}).then(res=>{
 					// console.log(res.data.data)
 					if(res.status == 1){
+						if(res.data.data){
+							res.data.data.forEach(i=>{
+								//获取当前时间
+								if(i.status == 10){
+									let date = new Date().getTime()
+									let end = i.cancel_time * 1000
+									// 时间减当前时间小于0就删
+									let a = end - date
+									i.t_times = parseInt(a / 1000)
+									console.log(parseInt(a / 1000))
+									if(end - date <= 0){
+										this.$api.put('orders',{id:i.id,type:2}).then(res=>{
+											console.log(res)
+											if(res.status == 1){
+												this.$forceUpdate()
+											}
+										})
+									}
+								}
+							})
+						}
 						this.list = this.list.concat(res.data.data)
 						this.page_show = true
+						
 					}
 					if(e != 1){
 						if(res.data.data && res.data.data.length < 10 && e !=1){
@@ -123,6 +148,11 @@
  </script>
  
  
+ <style>
+	page{
+		background-color: #f6f6f6;
+	}
+ </style>
  <style lang="scss" scoped>
  	.content{
 		background-color: #f6f6f6;
@@ -137,10 +167,17 @@
  			justify-content: space-between;
  			height: 80rpx;
  			line-height: 80rpx;
- 			padding: 0 25rpx 0 35rpx;
+ 			padding:0 2%;
  			background-color: #fff;color: #999999;
  			text-align: center;
-			position: fixed;left: 0;top: 0;z-index: 20;
+			// position: fixed;left: 0;top: 0;z-index: 20;
+			.swiper-box{
+				display: flex;white-space: nowrap;
+				.swiper_it{
+					display: inline-block;
+					width: 18%;
+				}
+			}
  			.title {
  				font-size: 30rpx;color: #000000;
  				font-weight: bold;

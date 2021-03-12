@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "金店签名",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input"
+  }
+}

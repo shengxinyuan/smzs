@@ -15,34 +15,38 @@
 					<text class="sure" v-if="item.status == 60 && item.return_type == 3">售后成功</text>
 				</view>
 				<view class="shop_list" v-if="item.goods">
-					<image src="../../static/index/section.png" mode="aspectFill" @click="order_detail(item.id)"></image>
+					<image :src="item.goods.image" mode="aspectFill" @click="order_detail(item.id)"></image>
 					<view class="list_right">
 						<view @click="order_detail(item.id)">
-							<view class="title">足金项链 环环相扣</view>
-							<view class="Specifications">金重：5.8g<text class="num"> 款号：0141448</text></view>
-							<view class="price">￥1888</view>
+							<view class="title">{{item.goods.title}}</view>
+							<view class="Specifications">金重：{{item.goods.wage}}<text class="num"> 款号：{{item.goods.model_no}}</text></view>
+							<view class="shop_list_label">
+								<text>金价：{{item.gold_price}}</text><text>工费： {{item.labor_price}} </text>
+							</view>
+							<view class="price"><text>￥{{item.total}}</text>
+							 <text style="color: #999;"> *{{item.count}}</text></view>
 						</view>
 						
 					</view>
 				</view>
-				<view class="around">
-					<view class="">
-						共1件商品
-					</view>
-					<view>合计:<text class="money">￥1888</text></view>
-				</view>
+				
 				<view class="foot_s">
-					<view></view> <!-- 位置 -->
+					<view class="around">
+						<view style="margin-right: 20rpx;">
+							共1件
+						</view>
+						<view>合计:<text class="money">￥{{item.total}}</text></view>
+					</view>
 					<view class="foot_child">
 						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id)">取消订单</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 10" @click="order_detail(item.id)">去支付</view> <!-- // -->
-						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  <!-- // -->
-						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist_wl(item)">查看物流</view> <!-- // -->
+						<!-- <view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  -->
+						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist_wl(item.bn_id)">查看物流</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 30" @click="sure_details(item.id)">确认收货</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 40" @click="go_immed(item)">立即评价</view>
 						<view class="go_buy_s" v-if="item.status == 50" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 60 && item.return_type == 1" @click="shen_details(item.id)">撤销</view> 
-						<view class="go_buy" v-if="item.status == 60 && item.return_type == 2" @click="order_logist(item)">再次申请</view> <!-- // -->
+						<view class="go_buy" v-if="item.status == 50" @click="shouh">售后服务</view> <!-- // -->
+						<view class="go_buy" v-if="item.status == 60 && item.return_type == 2" @click="shouh">再次申请</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 60 && item.return_type == 3" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
 					</view>
 				</view>
@@ -81,6 +85,10 @@
 				console.log(e)
 				this.$emit('order_detail',e)
 			},
+			//售后
+			shouh(){
+				this.com.navto('../service/service')
+			},
 			//确认收货
 			sure_details(e){
 				let that = this
@@ -91,7 +99,7 @@
 							that.$api.put('orders',{id:e,type:1}).then(res=>{
 								console.log(res)
 								if(res.status == 1){
-									that.com.redto('./order?state='+ 20 +'&index='+ 2)
+									that.com.redto('./order?state='+ 30 +'&index='+ 3)
 								}else{
 									that.com.msg(res.message)
 								}
@@ -116,7 +124,7 @@
 					content:'您确定删除该订单吗？？',
 					success(a) {
 						if(a.confirm){
-							that.$api.put('orders',{id:e}).then(res=>{
+							that.$api.del('orders',{id:e}).then(res=>{
 								console.log(res)
 								if(res.status == 1){
 									if(ty == 50){
@@ -138,7 +146,10 @@
 			},
 			// 评论
 			go_immed(e){
-				this.com.navto('../my/evaluate?list='+JSON.stringify(e))
+				// this.com.navto('../my/evaluate?list='+JSON.stringify(e))
+				uni.navigateTo({
+					url:'../my/evaluate?list='+JSON.stringify(e)
+				})
 			},
 			//取消
 			order_quxiao(e){
@@ -150,7 +161,7 @@
 			},
 			//物流
 			order_logist_wl(e){
-				this.com.navto('./logistics?cont='+JSON.stringify(e))
+				this.com.navto('./logistr?cont='+e)
 			}
 		}
 	}
@@ -192,7 +203,7 @@
 				height: 250rpx;
 				display: flex;
 				align-items: center;
-				border-bottom: 1rpx solid #f6f6f6;
+				// border-bottom: 1rpx solid #f6f6f6;
 				
 				image{
 					width: 200rpx;
@@ -223,17 +234,21 @@
 					}
 					.price{
 						width: 100%;line-height: 70rpx;
-						color: #ba1a30;
-						text{
-							color: #999999;
-							text-decoration: line-through;
-						}
+						color: #ba1a30;display: flex;justify-content: space-between;
 					}
 					.Specifications{
-						width: 100%;color: #999;line-height: 60rpx;
+						width: 100%;color: #999;font-size: 26rpx;
 						display: flex;
 						.num{
 							color: #999;margin-left: 20rpx;
+						}
+					}
+					.shop_list_label{
+						
+						text{
+							display: inline-block;background-color: #eee;font-size: 24rpx;margin: 5rpx 10rpx 5rpx 0;
+							padding: 0 4rpx;border-radius: 5rpx;
+							color: #999;
 						}
 					}
 				}
@@ -243,8 +258,6 @@
 				height: 80rpx;
 				display: flex;
 				align-items: center;
-				justify-content: space-between;
-				border-bottom: 1rpx solid #eee;
 				.money{
 					color: #ba1a30;
 				}

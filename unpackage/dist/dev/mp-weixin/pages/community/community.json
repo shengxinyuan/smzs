@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "社交营销",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty",
+    "zs-login": "/components/zs-login/zs-login"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "引流拓客",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "zs-login": "/components/zs-login/zs-login"
+  }
+}

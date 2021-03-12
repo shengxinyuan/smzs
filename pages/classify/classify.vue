@@ -21,18 +21,17 @@
 			<!-- 轮播 -->
 			<view class="" style="width: 98%;height: 230rpx;background-color: orange;">
 				<swiper class="swiper" :indicator-dots="true" :autoplay="true" :circular="true" :interval="4000" :duration="500">
-					<swiper-item v-for="(it,ind) in bann" :key="ind">
-						<image :src="it.a" mode="aspectFill"></image>
+					<swiper-item v-for="(it,ind) in banners" :key="ind">
+						<image :src="it.image" mode="aspectFill"></image>
 					</swiper-item>
 				</swiper>
 			</view>
 			<!-- 轮播 -->
-			
 			<view v-for="item in slist" :key="item.id" class="s-list" :id="'main-'+item.id">
 				<text class="s-item"> {{item.title}}</text>
 				<view class="t-list">
 					<view @click="navToList(titem.id)" v-if="titem.pid == item.id" class="t-item" v-for="titem in tlist" :key="titem.id">
-						<image :src="titem.picture"></image>
+						<image :src="titem.image"></image>
 						<text>{{titem.title}}</text>
 					</view>
 				</view>
@@ -55,17 +54,17 @@
 				flist: [],
 				slist: [],
 				tlist: [],
-				bann: [
-					{a:"../../static/index/bann1.png"},
-					{a:"../../static/index/bann2.png"},
-					{a:"../../static/index/banner1.png"},
-				],
+				banners: [],
 			}
 		},
 		onLoad(){
 			this.loadData();
 		},
 		methods: {
+			// 搜索
+			search(){
+				this.com.navto('../index/search')
+			},
 			//拍照
 			camear(){
 				uni.chooseImage({
@@ -82,22 +81,8 @@
 			},
 			
 			loadData(){
-				// let list = Json.cateList
-				// list.forEach(item=>{
-					
-				// 	if(!item.pid){
-				// 		// this.flist.push(item);  //pid为父级id, 没有pid或者pid=0是一级分类
-				// 		// console.log(this.flist)
-				// 	}else if(!item.picture){
-				// 		this.slist.push(item); //没有图的是2级分类
-				// 		console.log(this.slist)
-				// 	}else{
-				// 		this.tlist.push(item); //3级分类
-							
-				// 	}
-				// }) 
 				this.$api.get('cate').then(res=>{
-					console.log(res.data.label)
+					// console.log(res.data.label)
 					this.flist=res.data.label
 					this.slist=res.data.label //2级分类
 					this.currentId = res.data.label[0].id
@@ -107,29 +92,29 @@
 								res.data.cate.forEach(it=>{
 									this.tlist.push(it)
 								})
-								
-								console.log(this.tlist)
+								// console.log(this.tlist)
 							}
 						})
 					})
-				
+				})
+				//轮播
+				this.$api.get('banner',{type:2}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.banners = res.data
+					}
 				})
 			},
 			//一级分类点击
 			tabtap(item){
-				// this.$api.get('cate',{label:item.id}).then(res=>{
-				// 	console.log(res)
-				// 	if(res.status == 1){
-				// 		this.tlist = res.data.cate
-				// 	}
-				// })
 				if(!this.sizeCalcState){
 					this.calcSize();
 				}
 				
 				this.currentId = item.id;
-				let index = this.slist.findIndex(sitem=>sitem.pid === item.id);
+				let index = this.slist.findIndex(sitem=>sitem.id === item.id);
 				this.tabScrollTop = this.slist[index].top;
+				console.log(this.tabScrollTop,'高度')
 			},
 			//右侧栏滚动
 			asideScroll(e){
@@ -140,7 +125,7 @@
 				let tabs = this.slist.filter(item=>item.top <= scrollTop).reverse();
 				// console.log(tabs)
 				if(tabs.length > 0){
-					this.currentId = tabs[0].pid;
+					this.currentId = tabs[0].id;
 				}
 			},
 			//计算右侧栏每个tab的高度等信息
@@ -151,12 +136,13 @@
 					view.fields({
 						size: true
 					}, data => {
-						item.top = h;
+						item.top = h + 115;
 						h += data.height;
 						item.bottom = h;
 					}).exec();
 				})
 				this.sizeCalcState = true;
+				console.log(this.slist,'数据')
 			},
 			navToList(e){
 				this.com.navto('./class_detail?classify_id='+e)

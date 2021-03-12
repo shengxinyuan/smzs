@@ -1,0 +1,1 @@
+<view class="data-v-0fd832f8"><view class="con data-v-0fd832f8"><view hidden="{{!(page_show)}}" class="jint data-v-0fd832f8"></view><view class="title data-v-0fd832f8"><view class="title_red data-v-0fd832f8">{{''+titleRed+''}}</view><view class="title_bla data-v-0fd832f8">{{''+title+''}}</view></view></view></view>

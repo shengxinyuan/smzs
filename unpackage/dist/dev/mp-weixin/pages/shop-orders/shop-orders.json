@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "商城订单",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-tabs": "/node-modules/uview-ui/components/u-tabs/u-tabs",
+    "u-popup": "/node-modules/uview-ui/components/u-popup/u-popup"
+  }
+}

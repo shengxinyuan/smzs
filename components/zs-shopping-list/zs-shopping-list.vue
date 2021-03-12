@@ -1,20 +1,20 @@
 <template>
 	<view class="cont">
-		<view class="cont_item" v-for="(it,ind) in 6" :key="ind" @click="go_shopdetail(it.id)" >
+		<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
 			<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> <!-- 爆款推荐 -->
-			<image class="images" src="../../static/shopping.png" mode="aspectFill"></image>
+			<image class="images" :src="it.image" mode="aspectFill"></image>
 			<view class="it_tit">
-				纯金项链
+				{{it.title}}
 			</view>
 			<view class="it_price">
-				￥{{ 1988 }}
+				￥{{ it.price }}
 			</view>
 			<view class="it_selt">
 				<view class="it_selt_l">
-					<text>￥{{ 1688 }}</text><image src="../../static/pifa.png" mode=""></image>
+					<text>￥{{ it.price_vip }}</text><image src="../../static/pifa.png" mode=""></image>
 				</view>
 				<view class="it_selt_r">
-					已售{{ 99 }}件
+					已售{{ it.sale }}件
 				</view>
 			</view>
 		</view>
@@ -41,43 +41,46 @@
 
 <style lang="scss" scoped>
 .cont{
-	width: 100%;
+	width: 100%;padding: 0 2%;
 	display: flex;flex-wrap: wrap;
 	.cont_item{
 		width: 49%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
-		margin-top: 20rpx;overflow: hidden; padding: 2%;
-		position: relative;
+		margin-top: 20rpx;overflow: hidden; 
+		position: relative;padding-bottom: 10rpx;
 		.imagea{
-			width: 70rpx;height: 84rpx;
+			width: 56rpx;height: 70rpx;
 			position: absolute;left: 22rpx;top: 0;
-			z-index: 10;
+			z-index: 20;
 		}
 		.images{
 			width: 100%;
-			height: 280rpx;
+			height: 350rpx;
 		}
 		.it_tit{
-			font-size: 30rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 60rpx;
+			padding-left: 10rpx;
+			font-size: 28rpx;width: 100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 56rpx;
 		}
 		.it_price{
-			font-weight: bold;font-size: 30rpx;line-height: 60rpx;
+			padding-left: 10rpx;
+			font-weight: bold;font-size: 30rpx;
 		}
 		.it_selt{
+			padding-left: 10rpx;
 			width: 100%;display: flex;justify-content: space-between;
 			line-height: 40rpx;
 			.it_selt_l{
-				padding-top: 10rpx;
+				display: flex;
 				text{
 					color: #ea5b72;font-size: 26rpx;
 				}
 				image{
-					width: 80rpx; height: 30rpx;
+					width: 60rpx; height: 24rpx;margin-top: 10rpx;
 				}
 			}
 			.it_selt_r{
 				width: 150rpx;
-				color: #998;line-height: 50rpx;font-size: 26rpx;
+				color: #998;font-size: 22rpx;text-align: right;margin-right: 20rpx;
 				white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
 			}
 		}

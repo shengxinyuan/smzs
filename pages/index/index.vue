@@ -3,20 +3,19 @@
 		<!-- 自定义头部 -->
 		<view class="header" :style="{ 'background-color': backgroundColor }">
 			<view class="city" @click="page_my">
-				<image src="../../static/logo.png" mode="aspectFill" class="city_a"></image>
-				<image src="../../static/userimg.png" mode="widthFix" class="city_b"></image>
+				<image :src="member || dft_photo" mode="aspectFill" class="city_a"></image>
+				<image src="../../static/userimg.png" mode="widthFix" v-if="huiy_show && member" class="city_b"></image>
+				<view class="notlogin" v-show="isLogin">未登录</view>
 			</view>
 			<view class="input-view" :style="{'backgroundColor' : indexbackcolor}">
 				<view class=""  @click="saoma">
-					<uni-icons class="input-uni-icon" type="scan" size="22" color="#666666" /><text style="color: #999;margin-left: 16rpx;"> ▏</text>
+					<uni-icons class="input-uni-icon" type="scan" size="20" color="#999999" /><text style="color: #999999;margin-left: 20rpx;"> ▏</text>
 				</view>
 				<input confirm-type="search" class="nav-bar-input" type="text" :disabled="true" placeholder="输入搜索关键词" @click="search">
-				<view style="margin-top: 10rpx;" @click="camear">
-					<u-icon name="camera" size="44" color="#666666"></u-icon>
-				</view>
+				<u-icon name="camera" size="40" color="#999999" @click="camear"></u-icon>
 			</view>
 			<view class="rig" :style="{'color': headcolor}"  @click="go_pages('../information/information')">
-				 <u-icon name="chat" size="50"></u-icon>消息
+				 <u-icon name="chat" size="38" class="chat-icon"></u-icon>消息
 			</view>
 		</view>
 		<!-- banner部分 -->
@@ -26,13 +25,12 @@
 					<image :src="it.image" mode="aspectFill"></image>
 				</swiper-item>
 			</swiper>
-			<view class="swiper-dots">
+			<!-- <view class="swiper-dots">
 				<view :class="swiperCurrent == ind ? 'bann_h_act' : 'bann_h'" v-for="(its,ind) in index_data.flash" :key="ind"></view>
-			</view>
+			</view> -->
 			<view class="trumpet">
 				<u-icon name="shopping-cart-fill" color="white" size="36"></u-icon>
 				<swiper class="swiper_three"  :autoplay="true" :circular="true" :interval="3000" :duration="100" disable-touch="true"><!-- 5000 4800 -->
-					
 					<swiper-item v-for="(it,ind) in index_data.order" :key="ind">
 						{{it.member}}：{{it.title}}
 					</swiper-item>
@@ -47,8 +45,8 @@
 				<view class="king_pic_a">
 					<zs-title :titleRed="'实时'" :title="'金价'" :page_show="true"></zs-title>
 					<view class="times">
-						<u-icon name="clock-fill" size="36" color="#3b4e85" style="margin-right: 10rpx;margin-top: 16rpx;"></u-icon>
-						2020/10/14 13:52:32
+						<u-icon name="clock-fill" size="24" color="#3b4e85" style="margin-right: 10rpx;margin-top: 16rpx;"></u-icon>
+						{{gold_price.time}}
 					</view>
 				</view>
 				<!-- 表格 -->
@@ -60,25 +58,36 @@
 						<view>卖出价</view>
 						<view>涨跌</view>
 					</view>
-					<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" v-for="(it,ind) in 5" :key="ind">
-						<view>黄金99.95</view>
-						<view>360.00</view>
-						<view>357.01</view>
-						<view>359.80</view>
-						<view> <text v-if="ind %2 == 0" style="color: #5cb671;">↑ 2.23</text><text style="color: #f5553f;" v-else>↓ 2.23</text> </view>
+					<view class="swipers_d">
+						<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" v-for="(it,ind) in gold_price.data" :key="ind">
+							<view>{{it.title}}</view>
+							<view>{{it.new_price}}</view>
+							<view>{{it.buy_price}}</view>
+							<view>{{it.sell_price}}</view>
+							<view v-if="it.proportion_type == 0" 
+							style="color: #5cb671; display: flex; justify-content: center;">
+								<u-icon name="arrow-downward"></u-icon>
+								<text>{{it.proportion}}</text>
+							</view>
+							<view style="color: #f5553f; display: flex; justify-content: center;" 
+							v-else>
+								<u-icon name="arrow-upward"></u-icon>
+								<text>{{it.proportion}}</text>
+							</view>
+						</view>
 					</view>
 				</view>
 			</view>
 			<!-- 九宫格 -->
 			<view class="nine_g">
-				<view class="nine_g_child" v-for="(it,ind) in index_data.label" :key="ind" @click="go_pages('./nine_nav')">
+				<view class="nine_g_child" v-for="(it,ind) in index_data.label" :key="ind" v-if="ind <= 7" @click="go_textrue(it.id)">
 					<view class="nine_g_child_tit">
 						{{it.title}}
 					</view>
-					<!-- <view class="nine_g_child_cla">
-						高保值 更安全
-					</view> -->
-					<image src="../../static/nine.png" mode=""></image>
+					<view class="nine_g_child_cla">
+						{{it.remark}}
+					</view>
+					<image :src="it.image" mode="aspectFill"></image>
 				</view>
 			</view>
 			<!-- 活动专区 -->
@@ -92,8 +101,8 @@
 								<text class="hour timer">{{end_seckill}}</text>
 							</view>
 						</view>
-						<view style="color: #a6a6a6;">
-							更多好货 <u-icon name="arrow-right-double"></u-icon>
+						<view style="color: #999999;font-size: 22rpx;">
+							更多好货 <u-icon name="arrow-right"></u-icon>
 						</view>
 					</view>
 					<scroll-view class="floor-list" scroll-x>
@@ -103,7 +112,7 @@
 								class="floor-item"
 								@click="go_shopdetail(item.id)"
 							>
-								<image src="../../static/community/list_03.png" mode=""></image>
+								<image :src="item.image" mode=""></image>
 								<view class="title">￥{{item.price}}</view>
 								<view class="price">￥{{ item.price_make }}</view>
 							</view>
@@ -119,17 +128,15 @@
 								<text class="hour timer">物有所值</text>
 							</view>
 						</view>
-						<view style="color: #a6a6a6;">
-							更多好货 <u-icon name="arrow-right-double"></u-icon>
+						<view style="color: #a6a6a6;font-size: 24rpx;">
+							更多好货 <u-icon name="arrow-right"></u-icon>
 						</view>
 					</view>
 					<scroll-view class="floor-list" scroll-x>
 						<view class="scoll-wrapper">
 							<view v-for="(item, index) in index_data.group" :key="index"
-								class="floor-item"
-								@click="go_teamshop(item.id)"
-							>
-								<image src="../../static/community/list_01.png" mode="aspectFill"></image>
+								class="floor-item" @click="go_teamshop(item.id)">
+								<image :src="item.image" mode="aspectFill"></image>
 								<view class="title">￥{{item.price}}</view>
 								<view class="price">￥{{ item.price_make }}</view>
 							</view>
@@ -141,29 +148,32 @@
 			
 			<!-- 每周上新 -->
 			<view class="seckill-section_mz">
-				<zs-title :title="'每周上新'"></zs-title>
-				<swiper class="swiper_two" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500">
-					<swiper-item v-for="(it,ind) in index_data.news" :key="ind">
+				<zs-title :title="'每周上新'" :page_show="true"></zs-title>
+				<swiper class="swiper_two" @change="swiperChange_b" :autoplay="true" :circular="true" :interval="4000" :duration="500">
+					<swiper-item v-for="(it,ind) in index_data.news" :key="ind" style="height: 540rpx;">
 						<image :src="it.image" mode="aspectFill"></image>
 						<view class="swiper_item_tit">
-							{{it.title}}
+							{{it.title}} 
 						</view>
 						<view class="swiper_item_cont">
 							<u-parse :html="it.content"></u-parse>
 						</view>
 					</swiper-item>
 				</swiper>
+				<view class="swiper-dots">
+					<view :class="swiperCurrent_b == ind ? 'bann_h_act' : 'bann_h'" v-for="(its,ind) in index_data.news" :key="ind"></view>
+				</view>
 			</view>
 			<!-- 精选专题 -->
 			<view class="choiceness">
 				<view class="choiceness_child">
-					<view class="choiceness_item" v-for="(it,ind) in 4" :key="ind" @click="special_cli(ind)">
-						<image src="../../static/index/banner1.png" mode="aspectFill"></image>
+					<view class="choiceness_item" v-for="(it,ind) in index_data.zhuanti" :key="ind" @click="special_cli(it.id,it.title)" v-if="ind <= 4">
+						<image :src="it.image" mode="aspectFill"></image>
 						<view class="item_tit">
-							定制专区
+							{{it.title}}
 						</view>
 						<view class="item_cla">
-							最适合的
+							{{it.remark}}
 						</view>
 					</view>
 				</view>
@@ -175,104 +185,164 @@
 					{{it.title}}
 				</view>
 			</scroll-view>
-			
 			<!-- 商品列表 -->
 			<!-- <zs-shopping-list></zs-shopping-list> -->
 			
 		</view>
 		<view class="classify">
-			<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="nav_ind" @shop_confim="shop_confim"></zs-shoplist-type>
+			<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="nav_ind" :shop_subject_id="''" @shop_confim="shop_confim"></zs-shoplist-type>
 			
 		</view>
-		 <drag-button :isDock="true" :existTabBar="true" @btnClick="btnClick" />
+		 <drag-button :isDock="true" :existTabBar="true" @btnClick="go_pages('../service/service')"/>
 		<!-- tabbar -->
 		<zs-tabbar :tab_ind="1"></zs-tabbar>
 		<!-- tabbar -->
+		<!-- /普通优惠券 -->
+		<zs-coupon-put v-if="ptcoupon" :list="coupon_data" @nopop="nopop"></zs-coupon-put>
+		<!-- //新人优惠券 -->
+		<zs-coupon-xr v-if="xrcoupon" :list="coupon_data" @nopop="nopop"></zs-coupon-xr>
 	</view>
 </template>
 
 <script>
 	// import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
-	import dragButton from "@/components/drag-button/drag-button.vue";
+	// import dragButton from "@/components/drag-button/drag-button.vue";
 	export default {
 		data() {
 			return {
+				puytcopup:0,//普通优惠券
 				tops:0,
-				bann: [
-					{a:"../../static/index/bann1.png"},
-					{a:"../../static/index/bann2.png"},
-					{a:"../../static/index/banner1.png"},
-				],
 				swiperCurrent:0,
+				swiperCurrent_b:0,
 				backgroundColor:'',//标题栏背景色
 				headcolor:'#fff',//消息颜色
 				indexbackcolor:'rgba(255,2555,255,0.28)',//导航栏搜索框背景色
 				end_time:'',//秒杀到期
-				end_seckill:'00天00:00:00',//倒计时
+				end_seckill:'00:00:00:00',//倒计时
 				nav_ind:0,//导航
 				show:true,
 				value1: 1,
 				index_data:'',//首页数据
 				shop_list:'',
-				list:''
+				list:'',
+				huiy_show:false,//会员状态
+				member: '',
+				gold_price:[],
+				coupon_data:'',
+				ptcoupon:false,//普通优惠券状态
+				xrcoupon:false,//新人优惠券状态
+				second:'',
+				dft_photo: '../../static/tabbar/shopsale.png',
+				isLogin: false
 			}
 		},
-		// mounted() {
-		// 	var query = uni.createSelectorQuery()
-		// 	//获取对应模块到顶部的距离
-		// 	//评论
-		// 	query.select('.classify').boundingClientRect((res) => {
-		// 		console.log(res)
-		// 		this.pingl = Math.floor(res.top)
-		// 		console.log(this.pingl)
-		// 	}).exec()
-		// },
 		onPageScroll(e){
 			// console.log(e)
 			this.backgroundColor = 'rgba(255,255,255,'+e.scrollTop / 180 +')' 
 			this.headcolor = 'rgba(0,0,0,'+e.scrollTop / 180 +')'
-			this.indexbackcolor = 'rgba(241,241,241,'+e.scrollTop / 180 +')'//导航栏搜索框背景色	
+			this.indexbackcolor = 'rgba(241,241,241,'+e.scrollTop / 180 +')'//导航栏搜索框背景色
 			if(e.scrollTop < 40){
 				this.headcolor = '#fff'
 				this.indexbackcolor ='rgba(255,2555,255,0.28)'//导航栏搜索框背景色
 			}
 		},
 		// components: {uniNavBar},
+		onUnload() {
+			uni.setStorageSync('coupon',0)
+		},
 		onLoad() {
+			let a = uni.getStorageSync("token")
+			if(!a){
+				this.isLogin = true
+			} else{
+				this.isLogin = false
+			}
+			//头像
+			this.member = uni.getStorageSync('member_info_img')
 			this.ent_time_s()//倒计时
 			this.page_render()
 		},
 		onShow() {
-			
+			this.member = uni.getStorageSync('member_info_img')
+			console.log(this.member)
+			let vip = uni.getStorageSync('viptype')
+			// 会员
+			if(vip){
+				this.huiy_show = true
+			}else{
+				this.huiy_show = false
+			}
+			this.puytcopup = uni.getStorageSync('coupon')
+			if(this.puytcopup == 0){
+				this.coupon(this.puytcopup)
+			}else{
+				this.coupon(this.puytcopup)
+			}
 		},
-		watch:{
-			// shop_list(a,b){
-			// 	console.log(a)
-			// }
+		onPullDownRefresh(){
+			this.member = uni.getStorageSync('member_info_img')
+			this.page_render()
 		},
 		methods: {
 			page_render(){
 				this.$api.get('index').then(res=>{
-					console.log(res.data)
+					// console.log(res.data)
 					if(res.status == 1){
 						this.index_data = res.data
-						this.end_time = res.data.kill.title
+						this.end_time = res.data.kill.title_end
 						this.nav_ind = res.data.cates[0].id
+						
+						uni.setStorageSync('jinx',this.index_data.zhuanti)//精选专题
+						
 						this.nac_cla(res.data.cates[0].id)
+						this.ent_time_s()//倒计时
+						uni.stopPullDownRefresh()
+						
 					}
 				})
+				//实时金价
+				this.$api.get('gold_price').then(res=>{
+					// console.log(res)
+					if(res.status == 1){
+						this.gold_price = res
+					}
+				})
+			},
+			//弹框隐藏
+			nopop(){
+				this.ptcoupon = false//普通优惠券状态
+				this.xrcoupon = false//新人优惠券状态
+			},
+			// 优惠券
+			coupon(e){
+				this.$api.post('coupon',{type:e}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.coupon_data = res.data
+						if(this.puytcopup == 0 && res.data.data != ''){
+							this.ptcoupon = true
+						}
+						if(this.puytcopup == 1 && res.data.data != ''){
+							this.xrcoupon = true
+						}
+					}
+				})
+			},
+			//点击材质
+			go_textrue(e){
+				this.com.navto('./nine_nav?id='+e+'&data='+JSON.stringify(this.index_data.label))
 			},
 			//秒杀进详情
 			go_shopdetail(e){
 				if(this.end_seckill == '秒杀已结束'){
 					this.com.msg('本轮秒杀已经结束，请期待下一期')
 				}else{
-					this.com.navto('../../pages/index/shop_detail?shop_id='+e)
+					this.com.navto('../../pages/index/Activityshop_detail?shop_id='+e+'&type='+2+'&second='+this.second)
 				}
 			},
 			//团购进详情
 			go_teamshop(e){
-				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
+				this.com.navto('../../pages/index/Activityshop_detail?shop_id='+e+'&type='+1)
 			},
 			// 确定筛选
 			shop_confim(e){
@@ -291,13 +361,9 @@
 			go_pages(e){
 				this.com.navto(e)
 			},
-			//点击客服
-			btnClick(){
-				this.com.msg('客服')
-			},
 			// 搜索
 			search(){
-				
+				this.com.navto('./search')
 			},
 			//拍照
 			camear(){
@@ -319,13 +385,12 @@
 				});
 			},
 			//专题点击
-			special_cli(e){
-				console.log(e)
+			special_cli(id,type){
 				//定制
-				if(e == 0){
+				if(type == '定制专区'){
 					this.com.navto('./customization')
 				}else{
-					this.com.navto('./Selected_topics')
+					this.com.navto('./Selected_topics?id='+id+'&type='+JSON.stringify(this.index_data.zhuanti))
 				}
 				
 			},
@@ -334,6 +399,10 @@
 			swiperChange(e) {
 				const index = e.detail.current;
 				this.swiperCurrent = index;
+			},
+			swiperChange_b(e) {
+				const index = e.detail.current;
+				this.swiperCurrent_b = index;
 			},
 			//导航栏点击
 			nac_cla(e){
@@ -358,6 +427,7 @@
 				let data = new Date()
 				let state = data.getTime()
 				let reslut = this.end_time *1000 - state
+				
 				let tim = setInterval(()=>{
 					if(reslut <= 0){
 						clearInterval(tim)
@@ -368,7 +438,7 @@
 					}
 					
 				},1000)
-				
+				this.second  = Math.floor(reslut /1000)
 			},
 			ss(e){
 				let [day,hh,ff,ss] = [0,0,0,0]
@@ -381,24 +451,31 @@
 				let m = ff > 9 ? ff : `0${ff}`;
 				let s = ss > 9 ? ss : `0${ss}`;
 				// console.log( d+"天"+h+":"+m+":"+s)
-				return d +'天'+h+":"+m+":"+s
+				return d +':'+h+":"+m+":"+s
 			}
 		},
 		
 	}
 </script>
+<style>
+	page{
+		background-color: #F6F6F6;
+	}
+</style>
 
 <style lang="scss" scoped>
-	
-	
+	.content{
+		padding-bottom: 10upx;
+	}
 	.scroll-view_H{
 		display: flex;white-space: nowrap;line-height: 90rpx;height: 90rpx;border-bottom: 1rpx solid #eee;
 		.nav_swiper{
-			width: 20%;text-align: center;
+			width: 20%;text-align: center;font-size: 30upx;
 			display: inline-block;
 			position: relative;
 			&.active{
 				color: #2d407a;
+				font-weight: bold;
 				&:before{
 					content: '';
 					position: absolute;
@@ -414,9 +491,22 @@
 			}
 		}
 	}
+	.notlogin{
+		width: 56upx;
+		text-align: center;
+			font-size: 16upx;
+			color: #333333;
+			border: solid 0.5rpx #F1F1F1;
+			background-color: #FFFFFF;
+			border-radius: 4upx;
+			position: absolute;
+			left: 0upx;
+			bottom: 0upx;
+			opacity: 0.8;
+		}
 	.classify{
 		width: 100%;
-		margin-bottom: 150rpx;background-color: #F6F6F6;
+		margin-bottom: 150rpx;background-color: #F6F6F6;font-size: 26upx;
 	}
 	@import './index.scss'
 	

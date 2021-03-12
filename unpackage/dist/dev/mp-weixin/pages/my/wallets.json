@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我的钱包",
+  "navigationBarBackgroundColor": "#21346b",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon"
+  }
+}

@@ -1,25 +1,25 @@
 <template>
 	<view class="service-tel-box">
 		<view class="tel">
-			<view class="u-upload-box">
-				<u-upload 
-				:action="action"
-				:max-count="maxCount"
+			<view class="u-upload-box" @click="shopLogoPopup">
+				<!-- <u-upload :action="action" ref="uUpload" :header="token"
+				:max-count="1"
 				:width="width"
-				:height="height"></u-upload>
+				:height="height"></u-upload> -->
+				<image class="shop-photo" :src="shopPhoto" mode="aspectFill"></image>
 			</view>
 		</view>
 		<view class="show-switch-box">
 			<view class="show-switch-up">
 				<view>商城中展示:</view>
-				<u-switch v-model="checked" active-color="#2d407a" size="40"></u-switch>
+				<u-switch v-model="checked" active-color="#2d407a" size="40" @change="change"></u-switch>
 			</view>
 			<view class="show-switch-down">
 				<u-icon class="icon warning" name="warning"></u-icon>
 				<text>商城显示开关按钮可以控制商城是否显示此信息。</text>
 			</view>
 			<view class="zl-btn">
-				<button class="btn">保存</button>
+				<button class="btn" @click="save">保存</button>
 			</view>
 		</view>
 	</view>
@@ -29,16 +29,70 @@
 	export default {
 		data() {
 			return {
-				action: '',
-				maxCount: 1,
+				
+				token:{
+					token:uni.getStorageSync('token')
+				},
 				width: 230,
 				height: 230,
-				checked: true
+				checked: false,
+				lists:[],
+				image:'',
+				shopPhoto: '',
 			}
 		},
+		onLoad(e){
+			console.log(e)
+			this.checked = e.is_qr_code == 1 ? true : false
+			this.shopPhoto = e.qr_code
+		},
 		methods: {
-			change(status) {
-				console.log(status);
+			change(e) {
+				this.checked = e
+			},
+			//保存
+			save(){
+				// console.log(this.lists)
+				let arr = {
+					qr_code:this.shopPhoto,
+					is_qr_code:this.checked ? 1 : 2
+				}
+				this.$api.post("manage",arr).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.msg(res.message)
+						uni.navigateBack()
+					}
+					
+				})
+			},
+			shopLogoPopup() {
+				let that = this
+				uni.chooseImage({
+					sourceType: ['camera '], //从相册选择
+					success: (chooseImageRes) => {
+						console.log(chooseImageRes)
+						const tempFilePaths = chooseImageRes.tempFilePaths[0]
+						console.log(chooseImageRes.tempFilePaths[0])
+						uni.uploadFile({
+							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+							filePath: tempFilePaths,
+							name: 'file',
+							formData: {
+								'user': 'test'
+							},
+							header:{
+								'token':uni.getStorageSync('token')
+							},
+							success: (up) => {
+								that.image = JSON.parse(up.data).data
+								// console.log(JSON.parse(up.data))
+								that.shopPhoto = that.image
+							}
+						});
+						
+					}
+				});
 			},
 		}
 	}
@@ -60,6 +114,9 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				image{
+					width: 400rpx;height: 400rpx;
+				}
 			}
 		}
 

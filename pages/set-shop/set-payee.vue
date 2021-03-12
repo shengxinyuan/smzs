@@ -7,7 +7,11 @@
 				</view>
 				<view class="weixin-title">微信收款码</view>
 			</view>
-			<view class="right" @click="openPopup">
+			<view class="right" @click="skipAddPayeeCode(1)" v-if="wechat_image ==''">
+				<view class="add-title">去添加</view>
+				<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+			</view>
+			<view class="right" @click="openPopup(wechat_image,1)" v-else>
 				<view class="right-title">预览</view>
 				<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 			</view>
@@ -19,8 +23,12 @@
 				</view>
 				<view class="weixin-title">支付宝收款码</view>
 			</view>
-			<view class="right" @click="skipAddPayeeCode">
+			<view class="right" @click="skipAddPayeeCode(2)" v-if="alipay_image ==''">
 				<view class="add-title">去添加</view>
+				<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+			</view>
+			<view class="right" @click="openPopup(alipay_image,2)" v-else>
+				<view class="right-title">预览</view>
 				<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 			</view>
 		</view>
@@ -29,15 +37,15 @@
 		<u-popup v-model="popupShow" mode="center" border-radius="10" :closeable="false" width="550" :zoom="false">
 			<view class="popup-box">
 				<view class="popup-up-box">
-					<view class="title">微信收款码</view>
-					<view class="right" @click="skipAddPayeeCode">
+					<view class="title">{{nums == 1 ? '微信' : '支付宝'}}收款码</view>
+					<view class="right" @click="skipAddPayeeCode(nums)">
 						<text class="change">修改</text>
 						<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 					</view>
 				</view>
 				<view class="popup-down-box">
 					<view class="payee-code">
-						<image src="../../static/set-shop/skma.png" mode="widthFix"></image>
+						<image :src="preview" mode="widthFix"></image>
 					</view>
 				</view>
 			</view>
@@ -49,16 +57,29 @@
 	export default {
 		data() {
 			return {
-				popupShow: false
+				popupShow: false,
+				wechat_image:'',
+				alipay_image:'',
+				preview:'',//预览图片
+				nums:0,//类型
+				
 			}
 		},
+		onLoad(e){
+			console.log(e)
+			this.wechat_image = e.wechat_image
+			this.alipay_image = e.alipay_image
+		},
 		methods: {
-			openPopup(){
+			openPopup(e,num){
 				this.popupShow = true
+				this.preview = e
+				this.nums = num
 			},
-			skipAddPayeeCode(){
-				uni.navigateTo({
-					url:'add-payee-code'
+			//收款设置
+			skipAddPayeeCode(e){
+				uni.redirectTo({
+					url:'add-payee-code?id='+e+'&wechat_image='+this.wechat_image+'&alipay_image='+this.alipay_image
 				})
 			}
 		}

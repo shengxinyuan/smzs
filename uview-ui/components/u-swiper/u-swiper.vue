@@ -1,20 +1,19 @@
 <template>
-	<view class="u-swiper-wrap" :style="{
-		borderRadius: `${borderRadius}rpx`
-	}">
-		<swiper :current="elCurrent" @change="change" @animationfinish="animationfinish" :interval="interval" :circular="circular" :duration="duration" :autoplay="autoplay"
+	<view class="u-swiper-wrap" :style="{borderRadius: `${borderRadius}rpx`}">
+		<swiper :current="elCurrent"  @change="change($event)"  @animationfinish="animationfinish" :interval="interval" :circular="circular" :duration="duration" :autoplay="autoplay"
 		 :previous-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'" :next-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'"
 		 :style="{
 				height: height + 'rpx',
 				backgroundColor: bgColor
 			}">
 			<swiper-item class="u-swiper-item" v-for="(item, index) in list" :key="index">
-				<view class="u-list-image-wrap" @tap.stop.prevent="listClick(index)" :class="[uCurrent != index ? 'u-list-scale' : '']" :style="{
+				<view class="u-list-image-wrap" @tap.stop.prevent="listClick(item)" :class="[uCurrent != index ? 'u-list-scale' : '']" :style="{
 						borderRadius: `${borderRadius}rpx`,
 						transform: effect3d && uCurrent != index ? 'scaleY(0.9)' : 'scaleY(1)',
 						margin: effect3d && uCurrent != index ? '0 40rpx' : 0,
+						'background-image':'url('+item.image+')',
 					}">
-					<image class="u-swiper-image" :src="item[name] || item" :mode="imgMode"></image>
+					<image class="u-swiper-image" :src="item.member_id" :mode="imgMode"></image>
 					<view v-if="title && item.title" class="u-swiper-title u-line-1" :style="[{
 							'padding-bottom': titlePaddingBottom}, titleStyle]">
 						{{ item.title }}
@@ -239,9 +238,10 @@
 	}
 
 	.u-swiper-image {
-		width: 100%;
+		position: absolute;left: 35%;bottom: 2%;
+		width: 160rpx;
 		will-change: transform;
-		height: 100%;
+		height: 160rpx;
 		/* #ifndef APP-NVUE */
 		display: block;
 		/* #endif */
@@ -317,6 +317,7 @@
 		transition: all 0.5s;
 		overflow: hidden;
 		box-sizing: content-box;
+		background-size: 100% 100%;
 		position: relative;
 	}
 	.u-swiper-title {

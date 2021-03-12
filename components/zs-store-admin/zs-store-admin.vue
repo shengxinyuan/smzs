@@ -61,35 +61,31 @@
 		props:{
 			skip:{
 				type: Boolean,
-			}
+			},
+			menber_json:{},
+			jinx:{}
 		},
 		methods:{
 			goto_vip_set(ind){
 				let that = this
 				if(this.skip == true){
-					if(ind == 2){
+					if(ind == 0){
+						this.com.navto('../../pages/service/my-dp-html') 
+						// plus.runtime.openURL("http://zhuanshi.nxm.wanheweb.com/smsj/index.html#/");
+					}else if(ind == 1){
+						this.com.navto('../../pages/shop-orders/shop-orders')
+					}else if(ind == 2){
 						this.com.navto('../../pages/set-shop/set-shop')
 					} else if(ind == 3){
 						this.com.navto('../../pages/community/shop-code')
-					} else if(ind == 5){
+					} else if(ind == 4){
+						this.com.navto('../../pages/community/my-gold-prices')
+					}else if(ind == 5){
 						this.com.navto('../../pages/community/talk')
 					} else if(ind == 6){
 						this.com.navto('../../pages/community/community')
 					} else if(ind == 7){
-						this.com.navto('../../pages/selected-topics/selected-topics')
-					} else if(ind == 4){
-						this.com.navto('../../pages/community/my-gold-prices')
-					} else if(ind == 1){
-						this.com.navto('../../pages/shop-orders/shop-orders')
-					}else{
-						uni.showModal({
-							content:"你还不是VIP,是否开通?",
-							success(a) {
-								if(a.confirm){
-									that.com.navto('../../pages/my/vip_member')
-								}
-							}
-						})
+						this.com.navto('../../pages/index/Selected_topics?id='+this.jinx[1].id+'&type='+JSON.stringify(this.jinx))
 					}
 				}
 			

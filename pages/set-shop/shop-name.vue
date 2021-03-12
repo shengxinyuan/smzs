@@ -5,7 +5,7 @@
 			<u-input v-model="value" :type="type" :border="border" :clearable="clearable" />
 		</view>
 		<view class="zl-btn">
-			<button class="btn" @click="save()">保存</button>
+			<button class="btn" @click="save">保存</button>
 		</view>
 	</view>
 </template>
@@ -30,26 +30,13 @@
 		},
 		methods: {
 			save(){
-				console.log(this.value)
-				
-				
-				//写入数据库
 				let params = {
 					title : this.value ,
 					// id : this.id
 				}
-				console.log(params)
-				
 				this.$api.post('manage', params ).then(res=>{
-					console.log(res)
-					uni.showToast({
-						title : res.message
-					})
-					if(res.status == 1){
-						uni.setStorageSync('shop_title', this.value)
-						uni.navigateBack() 
-					}
-
+					this.com.msg(res.message)
+					uni.navigateBack()
 				})
 				
 			}

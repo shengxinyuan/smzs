@@ -1,0 +1,17 @@
+{
+  "navigationBarTitleText": "首页",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "light",
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "zs-title": "/components/zs-title/zs-title",
+    "u-parse": "/node-modules/uview-ui/components/u-parse/u-parse",
+    "zs-shoplist-type": "/components/zs-shoplist-type/zs-shoplist-type",
+    "drag-button": "/components/drag-button/drag-button",
+    "zs-tabbar": "/components/zs-tabbar/zs-tabbar",
+    "zs-coupon-put": "/components/zs-coupon-put/zs-coupon-put",
+    "zs-coupon-xr": "/components/zs-coupon-xr/zs-coupon-xr"
+  }
+}

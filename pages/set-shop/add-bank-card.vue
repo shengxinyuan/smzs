@@ -3,20 +3,23 @@
 		<view class="add-box">
 			<view class="add-min-box">
 				<view class="title">银行卡账号：</view>
-				<input class="input" :value="valueId" type="text" :placeholder="placeholder01" />
+				<input class="input" v-model="valueId" type="text" :placeholder="placeholder01" />
 			</view>
 			<view class="add-min-box">
 				<view class="title">银行卡姓名：</view>
-				<input class="input" :value="valueName" type="text" :placeholder="placeholder02" />
+				<input class="input" v-model="valueName" type="text" :placeholder="placeholder02" />
 			</view>
 			<view class="add-min-box">
 				<view class="title">绑定手机号码：</view>
-				<input class="input" :value="valueTelephone" type="text" :placeholder="placeholder03" />
+				<input class="input" v-model="valueTelephone" type="text" :placeholder="placeholder03" maxlength="11"/>
 			</view>
 			<view class="add-min-box">
 				<view class="title">请输入验证码：</view>
-				<input class="input" :value="valueCode" type="text" :placeholder="placeholder04" />
-				<view class="get-code">获取验证码</view>
+				<input class="input" v-model="valueCode" type="text" :placeholder="placeholder04" />
+				
+				<view class="get-code" @click="go_note" v-if="code_show">{{timetit}}</view>
+				<view class="get-code" v-else>{{time}}</view>
+				
 			</view>
 		</view>
 		<view class="bottom-btn">
@@ -32,18 +35,82 @@
 				valueId:'',
 				placeholder01:'请输入银行卡账号',
 				valueName:'',
-				placeholder02:'请输入账号真实姓名',
+				placeholder02:'请输入您的真实姓名',
 				valueTelephone:'',
 				placeholder03:'请输入绑定手机号码',
 				valueCode:'',
-				placeholder04:'请输入验证码'
+				placeholder04:'请输入验证码',
+				timetit:'获取验证码',
+				time:60,
+				setInt:'',
+				code_show:true,
+				note:'',
+				xg_id:'',//修改时id
+			}
+		},
+		onUnload() {
+			clearInterval(this.time)
+		},
+		onLoad(op) {
+			console.log(op)
+			if(op.datas){
+				this.xg_id = JSON.parse(op.datas)
+				this.valueId = this.xg_id.account_number
+				this.valueName = this.xg_id.name
+				this.valueTelephone = this.xg_id.mobile
 			}
 		},
 		methods: {
+			//保存
 			skipSetWithdraws(){
-				uni.navigateTo({
-					url:'set-withdraws'
+				if(this.valueId =='' || this.valueName =="" || this.valueTelephone == '' || this.valueCode == ""){
+					this.com.msg('请确认信息填写完整')
+					return false
+				}else if(this.note != this.valueCode){
+					this.com.msg('验证码错误')
+					return false
+				}
+				let data = {
+					type:1,
+					account_number:this.valueId,
+					name:this.valueName,
+					mobile:this.valueTelephone,
+					id:this.xg_id == undefined ? '' : this.xg_id
+				}
+				this.$api.post('information',data).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						if(this.xg_id != '' || this.xg_id !== undefined){
+							this.com.redto('../set-shop/set-withdraw?tit='+'修改成功')
+						}else{
+							this.com.redto('../set-shop/set-withdraw?tit='+'提交成功')
+						}
+					}
 				})
+			},
+			//获取验证码
+			go_note(){
+				if(this.valueTelephone == '' || !(/^1[3456789]\d{9}$/).test(this.valueTelephone)){
+					this.com.msg('请检查手机号')
+				}else{
+					this.time = 60
+					this.code_show = false
+					this.setInt = setInterval(()=>{
+						if(this.time ==0){
+							this.timetit = "再次获取"
+							this.code_show = true
+							clearInterval(this.setInt)
+						}else{
+							this.time -=1
+						}
+					},1000)
+					this.$api.get('messagecode',{mobile:this.valueTelephone}).then(res=>{
+						console.log(res)
+						if(res.status == 1){
+							this.note = res.data.note
+						}
+					})
+				}
 			}
 		}
 	}

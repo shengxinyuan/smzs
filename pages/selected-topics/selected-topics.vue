@@ -4,7 +4,7 @@
 		<view class="zl-box">
 			<block v-for="(selectionItem,selectionIndex) in selectionList" :key="selectionIndex">
 				<view class="selection-box" @click="skipSelectionDetails">
-					<image :src="selectionItem.image" mode="widthFix"></image>
+					<image :src="selectionItem.image" mode="aspectFill"></image>
 					<view class="selection-title">
 						<text>{{selectionItem.title}}</text>
 					</view>
@@ -18,22 +18,22 @@
 	export default {
 		data() {
 			return {
-				selectionList: [{
-						image: '../../static/selection/hunjia_02.png',
-						title: '婚嫁三金，结婚必选爆款清单'
-					},
-					{
-						image: '../../static/selection/hunjia_02.png',
-						title: '婚嫁三金，结婚必选爆款清单'
-					},
-					{
-						image: '../../static/selection/hunjia_02.png',
-						title: '婚嫁三金，结婚必选爆款清单'
-					}
-				]
+				selectionList: []
 			}
 		},
+		onLoad() {
+			this.page_reader()
+		},
 		methods: {
+			//页面渲染
+			page_reader(){
+				this.$api.get('subject').then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.selectionList = res.data
+					}
+				})
+			},
 			skipSelectionDetails() {
 				uni.navigateTo({
 					url: 'selection-details'
@@ -56,8 +56,9 @@
 			position: relative;
 
 			image {
-				width: 100%;
+				width: 100%;height: 100%;
 				border-radius: 10upx;
+				background-color: #eee;
 			}
 
 			.selection-title {

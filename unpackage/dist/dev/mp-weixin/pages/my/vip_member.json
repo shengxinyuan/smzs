@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "超级会员",
+  "navigationBarBackgroundColor": "#242c2e",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "zs-title": "/components/zs-title/zs-title",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-parse": "/node-modules/uview-ui/components/u-parse/u-parse",
+    "u-popup": "/node-modules/uview-ui/components/u-popup/u-popup",
+    "zs-button": "/components/zs-button/zs-button"
+  }
+}

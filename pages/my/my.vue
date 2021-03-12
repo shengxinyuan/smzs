@@ -24,17 +24,17 @@
 				<view class="userinfo_ch">
 					<view class="userinfo_img" @click="go_pages('./user_text')">
 						<!-- <image :src="menber.avatar" class="user_imga" mode=""></image> -->
-						<image  src="../../static/community/photo.png"  class="user_imga" mode=""></image>
+						<image  :src="menber.avatar"  class="user_imga" mode=""></image>
 						<image src="../../static/userimg.png" class="user_imgb" v-show="huiy_show" mode=""></image>
 					</view>
 					<view class="userinfo_text">
 						<view class="text_top">
-							<view class="user_name">{{menber.nickname}}</view>
+							<view class="user_name"> {{name_mobile}} </view>
 							<view class="user_qda" v-if="!menber.if_sign" @click="qiandao(1)"><u-icon name="order"></u-icon>立即签到</view>
 							<view class="user_qda" v-else @click="qiandao(2)"><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
 						</view>
 						<view class="user_phone">
-							手机号：{{menber.mobile}}
+							手机号：{{test(menber.mobile)}}
 						</view>
 						<view class="user_invite">
 							<view @click="qrcode_show = true">
@@ -200,10 +200,10 @@
 								<image src="../../static/my/city.png" mode=""></image> 城市合伙人中心
 							</view>
 						</view>
-						<view class="order_childs_a" v-if="huiy_show" @click="go_pages('./city_partnerCenter')">
+						<view class="order_childs_a" v-if="partner" @click="go_pages('./city_partnerCenter')">
 							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
 								<view class="it_num">
-									10人
+									{{memberpar.partner_member}}人
 								</view>
 								<view class="">
 									累计
@@ -211,7 +211,7 @@
 							</view>
 							<view class="orders_it">
 								<view class="it_num">
-									80000
+									{{memberpar.commission}}
 								</view>
 								<view class="">
 									本月收益
@@ -222,13 +222,13 @@
 						<view class="order_childs_a" v-else>
 							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
 								<view class="it_num">
-									8市
+									{{menber.city_count}}市
 								</view>
 								<view class="">
 									已申请
 								</view>
 							</view>
-							<view class="orders_it" @click="go_pages('./goto_vip')">
+							<view class="orders_it" @click="go_pages_pros(menber.if_partner)">
 								<view class="it_num_but">
 									立即加入
 								</view>
@@ -240,21 +240,21 @@
 					</view>
 				</view>
 				<!-- 店铺管理 -->
-				<zs-store-admin :skip='!huiy_show'></zs-store-admin>
+				<zs-store-admin :skip='huiy_show' :jinx="jinx"></zs-store-admin>
 				<!-- 综合管理 -->
-				<zs-synth-admin></zs-synth-admin>
+				<zs-synth-admin @zh_guan='zh_guan'></zs-synth-admin>
 				
 			</view>
 			<!-- 为您推荐 -->
 			<image class="tuij" src="../../static/my/tuijain_bgimg.png" mode=""></image>
 			<!-- 商品列表 -->
-			<view style="position: relative;padding: 0 3%;">
-				<zs-shopping-list></zs-shopping-list>
+			<view style="position: relative;padding: 0 2%;">
+				<zs-shopping-list :shop_list="shop_tuij"></zs-shopping-list>
 				
 			</view>
 		</view>
 		<!-- 签到 -->
-		<zs-popup v-if="qd_show" :king="'金币'" :king_nam="'+'+ 5" :bgimage="bgimage" @nopop="no_pop"></zs-popup>
+		<zs-popup v-if="qd_show" :king="'金币'" :king_nam="'+'+ gold_nums" :bgimage="bgimage" @nopop="no_pop"></zs-popup>
 		<!-- //二维码 -->
 		<zs-popup v-if="qrcode_show" :bgimage="qrcode_image" @nopop="no_pop"></zs-popup>
 		<!-- 我的邀请人 -->
@@ -276,6 +276,8 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 分享 -->
+		<zs-share ref="share" @shaer_app="shaer_app" :contentHeight="400" :hasTabbar="true"></zs-share>
 	</view>
 </template>
 
@@ -283,8 +285,10 @@
 	export default {
 		data() {
 			return {
+				partner:true,
+				gold_nums:0,
 				backgroundColor:"",//导航背景
-				huiy_show:true,//会员状态
+				huiy_show:false,//会员状态
 				show:false,//我的邀请人
 				bgimage:'url(../../static/my/qiandao.png)',
 				qd_show:false,//popup组件显示
@@ -328,41 +332,71 @@
 					}
 				],
 				menber:'',//个人信息
-				end_time:1613701693,//vip到期
+				shop_tuij:'',
+				jinx:'',
+				memberpar:'',//业绩
+				name_mobile:''
 			}
 		},
 		//下拉刷新
 		onPullDownRefresh(){
-			
+			this.page_info()
 		},
 		//页面滑动
 		onPageScroll(e){
-			// console.log(e)
-			// if(e.scrollTop >20){
-				this.backgroundColor = 'rgba(255,220,89, ' + e.scrollTop / 80 + ')' 
-			// }else{
-				// this.backgroundColor = ''
+			this.backgroundColor = 'rgba(255,220,89, ' + e.scrollTop / 80 + ')' 
 
-			// }
 		},
 		onShow() {
 			this.page_info()
-			// let vip = uni.getStorageSync('viptype')
-			// console.log(vip)
-			// 会员
-			// if(vip){
-			// 	this.huiy_show = true
-			// }else{
-			// 	this.huiy_show = false
-			// }
+			this.jinx = uni.getStorageSync('jinx')
 		},
 		methods: {
+			//综合管理
+			zh_guan(e){
+				if(e==0){
+					uni.share({
+					    provider: "weixin",
+					    scene: "WXSceneSession",
+					    type: 0,
+					    href: 'http://zhuanshi.nxm.wanheweb.com/smsj/index.html#/pages/index/share?shop_id=' + 6,
+					    title: '奢美饰界',
+					    summary: "我在奢美饰界发现好物，快来看看！",
+					    imageUrl: '../../static/my/city.png',
+					    success: function (res) {
+							console.log(res)
+					    },fail: function (err) {
+							console.log(err)
+					        // that.com.msg('失败')
+					    }
+					});      
+				}else if(e==1){
+					this.com.navto('../community/platform-ask')
+				}else if(e==2){
+					this.com.navto('../my/olie_course')
+				}else if(e==3){
+					this.com.navto('../my/fankui')
+				}else if(e==4){
+					this.com.navto('../my/aboutus')
+				}else if(e==5){
+					this.com.navto('../service/service')
+				}else if(e==6){
+					this.com.navto('../community/platform-gold-prices')
+				}
+			},
+			test(a){
+				a = "" + a
+				let arr = a.split("")
+				arr.splice(3,4,"****")
+				return arr.join("")
+			},
 			page_info(){
 				this.$api.get('member').then(res=>{
 					console.log(res)
 					if(res.status == 1){
+						uni.stopPullDownRefresh()
 						let date = new Date().getTime()
-						let end = res.data.vip_time
+						let end = res.data.vip_time * 1000
 						if(end  <= date){
 							uni.setStorageSync("viptype", false)
 							this.huiy_show = false
@@ -370,7 +404,17 @@
 							uni.setStorageSync("viptype", true)
 							this.huiy_show = true
 						}
-						
+						uni.setStorageSync('member_info_img',res.data.avatar)
+						uni.setStorageSync('menber_json',res.data)
+						// 合伙人
+						if(res.data.if_partner != 1){
+							this.partner = false
+						}else{
+							this.partner = true
+						}
+						if(res.data.nickname == res.data.mobile){
+							this.name_mobile = res.data.nickname.replace(/(\d{3})(\d{4})(\d{4})/,'$1****$3')
+						}
 						this.menber = res.data
 						this.qrcode_image = res.data.qrcode
 						this.wallet = [
@@ -387,8 +431,23 @@
 								name:"累计返现(元)"
 							}
 						]
+						this.$api.get('memberpartner').then(res=>{
+							console.log(res)
+							if(res.status==1){
+								this.memberpar = res.data
+							}
+						})
+						//推荐商品
+						this.$api.get('hotgoods').then(res=>{
+							console.log(res)
+							if(res.status == 1){
+								this.shop_tuij = res.data
+							}
+						})
 					}
 				})
+				
+				
 			},
 			//订单详情
 			go_order(e,ind){
@@ -398,7 +457,14 @@
 			go_pages(e){
 				this.com.navto(e)
 			},
-			
+			go_pages_pros(e){
+				console.log(e)
+				if(e == 2 || e == 3){
+					this.com.navto('./goto_vip')
+				}else if(e == 0){
+					this.com.msg('正在审核中~')
+				}
+			},
 			//我的邀请人
 			my_yaoq(){
 				this.show = true
@@ -415,6 +481,8 @@
 					this.qd_show = true
 					this.$api.put('gold').then(res=>{
 						console.log(res)
+						this.gold_nums = res.message
+						this.page_info()
 					})
 				}else{
 					this.com.msg('您已经签到过了')

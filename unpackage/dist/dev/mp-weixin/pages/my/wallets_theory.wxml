@@ -1,0 +1,1 @@
+<view><zs-text vue-id="8b6f817c-1" content="{{cont}}" bind:__l="__l"></zs-text></view>

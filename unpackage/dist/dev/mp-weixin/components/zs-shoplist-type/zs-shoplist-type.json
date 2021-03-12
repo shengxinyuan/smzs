@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-popup": "/node-modules/uview-ui/components/u-popup/u-popup",
+    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty",
+    "zs-login": "/components/zs-login/zs-login"
+  }
+}

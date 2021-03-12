@@ -2,7 +2,7 @@
 	<!-- 编辑用户名 -->
 	<view>
 		<view class="zl-box">
-			<u-input v-model="value" :type="type" :border="border" :clearable="clearable" />
+			<u-input v-model="value" :type="type" :border="border" :clearable="true" />
 		</view>
 		<view class="zl-btn">
 			<button class="btn" @click="save()">保存</button>
@@ -18,7 +18,6 @@
 				type: 'textarea',
 				passwordIcon: true,
 				border: false,
-				clearable:true
 			}
 		},
 		onLoad(e){
@@ -41,7 +40,6 @@
 						remark : res.message
 					})
 					if(res.status == 1){
-						uni.setStorageSync('shop_remark', this.value)
 						uni.navigateBack() 
 					}
 				})

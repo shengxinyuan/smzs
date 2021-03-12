@@ -1,63 +1,65 @@
 <template>
 	<view>
+		
 		<view class="header" >
 			<view class="header_va">
 				购物车
 			</view>
-			<view class="rig" @click="go_address">
-				 <u-icon name="map" size="36"></u-icon> 收货地址: 相城区德成嘉园广场十九楼万禾网络科技
+			<view class="rig" @click="go_address" v-if="shop_list.address">
+				 <u-icon name="map" size="26"></u-icon>
+				 <text class="address">收货地址: {{shop_list.address.province+shop_list.address.city+shop_list.address.area+shop_list.address.address}}</text>
 			</view>
 		</view>
 		<!-- 加载页 -->
 		<view  v-if="page_show">
 			<view class="cart_shopping">
 				<!-- 空状态 -->
-				<view v-if="!cart_show">
-					<view class="cart_shop_item" v-for="(it,ind) in 5" :key="ind">
+				<view v-if="cart_show">
+					<view class="cart_shop_item" v-for="(it,ind) in shop_list.data" :key="ind">
 						<view class="cart_shop_item_child">
 							<view class="cart_shop_item_l">
-								<u-checkbox-group @change="checkboxGroupChange">
-									<u-checkbox  shape="circle" active-color="#dd2626" size="40"
-										@change="checkboxChange" 
-										v-model="qx_type" 
-										:name="1"
+								<u-checkbox-group @change="checkbox_d(it.id,it.count)">
+									<u-checkbox  shape="circle" active-color="#dd2626" size="36"
+										v-model="it.status == check" 
+										:name="1" 
 									>
 									</u-checkbox>
 								</u-checkbox-group>
 							</view>
-							<view class="cart_shop_item_c" @click="go_shopdetail(1)">
-								<image src="../../static/index/bann1.png" mode="aspectFill"></image>
+							<view class="cart_shop_item_c" @click="go_shopdetail(it.shop_goods_id)">
+								<image :src="it.image" mode="aspectFill"></image>
 							</view>
 							<view class="cart_shop_item_r">
 								<view class="it_title">
-									足金项链 足金项链足金项链足金项链足金项链
+									{{it.title}}
 								</view>
 								<view class="it_speac">
 									<view >
-										金重:25g
+										金重：{{it.weight}}
 									</view>
 									<view>
-										款号:ZJJ45874
+										款号：{{it.model_no}}
 									</view>
 								</view>
-								<view class="it_speac_bs">
-									<view >
-										金料：￥19800.00
+								<view class="it_speac_bs" >
+									<view v-if="vip_type">
+										金料：￥{{it.price_vip}}
+									</view>
+									<view v-else>
+										金料：￥{{it.price_normal}}
 									</view>
 									<view>
-										附加费：￥18.63
-									</view>
-									<view>
-										工费： ￥4.50
+										工费：￥{{it.labor}}
 									</view>
 								</view>
 							</view>
 						</view>
 						<view class="item_js">
 							<view style="color: #dd2626;">
-								￥ <text style="font-size: 32rpx;">19823.16</text>
+								<text class="rmb">￥</text>
+								<text style="font-size: 30rpx;">{{it.xiaoj}}</text>
 							</view>
-							<u-number-box :min="1" :long-press="false"></u-number-box>
+							<u-number-box v-model="it.count" :step="1" :min="1" :long-press="false" @change="number_box($event,it.id)"></u-number-box>
 						</view>
 					</view>
 				</view>
@@ -67,21 +69,23 @@
 				</view>
 			</view>
 			<!-- 、、小结 -->
-			<view v-if="!cart_show">
+			<view v-if="cart_show">
 				<view class="js_canchu">
-					金料： 18748.00 工费：84.00 金重： 34.89g
+					<text>金料：{{goldl}}</text>
+					<text>工费：{{wage}}</text>
+					<text>金重：{{goldwrig}}</text>
 				</view>
 				<view class="jis_but">
-					<u-checkbox-group @change="checkboxGroupChange">
-						<u-checkbox  shape="circle" active-color="#dd2626" size="40"
+					<u-checkbox-group @change="checkboxChange_qx">
+						<u-checkbox  shape="circle" active-color="#dd2626" size="36"
 							@change="checkboxChange" 
 							v-model="qx_type" 
 							:name="1"
-						>全选
+						><text style="font-size: 26upx;">全选</text>
 						</u-checkbox>
 					</u-checkbox-group>
 					<view class="jis_right">
-						<view style="color: #999;"><!-- <u-icon name="trash" size="40"></u-icon> -->删除选中</view>
+						<view style="color: #999;" @click="del_cart"><!-- <u-icon name="trash" size="40"></u-icon> -->删除选中</view>
 						<view class="jis_butcolor" @click="skipVipConfirmOrder">去结算</view>
 					</view>
 				</view>
@@ -91,7 +95,6 @@
 		<view v-else style="padding-top: 20%;">
 			<zs-login></zs-login>
 		</view>
-		
 		<!-- tabbar -->
 		<zs-tabbar :tab_ind="4"></zs-tabbar>
 		<!-- tabbar -->
@@ -102,24 +105,166 @@
 	export default {
 		data() {
 			return {
-				qx_type:false,
-				cart_show:false,//购物车空白显示
+				cart_show:false,//购物车空白显示 
 				page_show:true,//页面加载显示
+				shop_list:[],
+				vip_type:false,
+				check:1,
+				qx_type:false,//全选
+			}
+		},
+		onShow() {
+			this.page_show = false
+			this.page_reader()
+		},
+		watch:{
+			shop_list(a){
+				this.shop_list.data.every(i=>{
+					if(i.status == 1){
+						return this.qx_type = true
+					}else{
+						return this.qx_type = false
+					}
+				})
+			}
+		},
+		computed:{
+			//金料
+			goldl(){
+				let arr = 0
+				let vip = uni.getStorageSync('viptype')
+				if(vip && this.shop_list.data){
+					this.shop_list.data.forEach(i=>{
+						if(i.status == 1){
+							arr +=  JSON.parse(i.price_vip) * i.count
+						}
+					})
+					this.vip_type = true
+				}else{
+					this.shop_list.data.forEach(i=>{
+						if(i.status == 1){
+							arr +=  JSON.parse(i.price_normal)* i.count
+						}
+					})
+					this.vip_type = false
+				}
+				return arr.toFixed(2)
+			},
+			//工费
+			wage(){
+				let arr = 0
+				this.shop_list.data.forEach(i=>{
+					if(i.status == 1){
+						arr +=  JSON.parse(i.labor)* i.count
+					}
+				})
+				return arr.toFixed(2)
+			},
+			//金重
+			goldwrig(){
+				let arr = 0
+				this.shop_list.data.forEach(i=>{
+					if(i.status == 1){
+						arr +=  JSON.parse(i.weight)* i.count
+					}
+				})
+				return arr.toFixed(2)
 			}
 		},
 		methods: {
+			page_reader(){
+				this.$api.get('cart').then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.shop_list = res.data
+						this.page_show = true 
+						if(res.data.data && res.data.data.length >0){
+							this.cart_show = true
+						}
+						// 会员
+						let vip = uni.getStorageSync('viptype')
+						if(vip){
+							res.data.data.forEach(i=>{
+								i.xiaoj = JSON.parse(i.price_vip) + JSON.parse(i.labor)
+							})
+							this.vip_type = true
+						}else{
+							res.data.data.forEach(i=>{
+								i.xiaoj = JSON.parse(i.price_normal) + JSON.parse(i.labor)
+							})
+							this.vip_type = false
+						}
+					}
+				})
+			},
+			//单选
+			checkbox_d(e,num){
+				this.$api.put('cart',{status:1,cart_id:e,count:num}).then(res=>{
+					console.log(res)
+					if(res.status==1){
+						this.page_reader()
+					}
+				})
+			},
+			//全选
+			checkboxChange_qx(e){
+				this.$api.get('cartselections').then(res=>{
+					if(res.status == 1){
+						this.page_reader()
+					}
+				})
+			},
+			//修改数量
+			number_box(e,id){
+				console.log(e.value,id)
+				this.$api.put('cart',{cart_id:id,count:e.value}).then(res=>{
+					console.log(res)
+					if(res.status==1){
+						this.page_reader()
+					}
+				})
+			},
 			go_address(){
-				this.com.navto('../my/receiving')
+				this.com.navto('../my/receiving?is_mine='+1)
 			},
 			//详情
 			go_shopdetail(e){
 				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
 			},
+			//结算
 			skipVipConfirmOrder(){
 				uni.navigateTo({
 					url:'../vip-confirm-order/vip-confirm-order'
 				})
-			}
+			},
+			//选中删除
+			del_cart(){
+				let that = this
+				let arr = ''
+				this.shop_list.data.forEach(i=>{
+					if(i.status == 1){
+						arr += i.id+','
+					}
+				})
+				if(arr == ''){
+					this.com.msg('没有选中的商品')
+				}else{
+					uni.showModal({
+						content:'确认删除选中商品吗?',
+						success(q) {
+							if(q.confirm){
+								that.$api.del('cart',{cart_id:arr.substr(0,arr.length -1)}).then(res=>{
+									console.log(res)
+									if(res.status == 1){
+										that.com.msg(res.message)
+										that.page_reader()
+									}
+								})
+							}
+						}
+					})
+				}
+			},
 		}
 	}
 </script>
@@ -130,13 +275,10 @@
 	}
 </style>
 <style lang="scss" scoped>
-	.js_canchu{
-		width: 100%;line-height: 60rpx;padding: 0 3%;background-color: white;color: #999;
-		position: fixed;left: 0;bottom: 200rpx;border-bottom: 1rpx dashed #999;
-	}
+	
 .cart_shopping{
 	width: 100%;
-	padding: 160rpx 3% 260rpx 0;
+	padding: 150rpx 3% 260rpx 3%;
 	
 	.cart_shop_item{
 		background-color: white;margin-bottom: 20rpx;
@@ -144,15 +286,19 @@
 		border-radius: 10rpx;
 		.item_js{
 			padding-left: 36%;margin-top: 28rpx;display: flex;justify-content: space-between;
+			.rmb{
+				font-size: 22upx;
+			}
 		}
 		.cart_shop_item_child{
 			display: flex;
 		}
 		.cart_shop_item_l{
-			width: 10%;padding-top: 80rpx,
+			width: 8%;padding-top: 80rpx,
 		}
 		.cart_shop_item_c{
-			width: 200rpx;height: 200rpx;overflow: hidden;border-radius: 16rpx;
+			width: 160rpx;height: 160rpx;overflow: hidden;border-radius: 10rpx;
+			border: solid 0.5upx #f1f1f1;
 			image{
 				width: 100%;height: 100%;
 			}
@@ -160,23 +306,23 @@
 		.cart_shop_item_r{
 			width: 59%;padding-left: 20rpx;
 			.it_title{
-				font-size: 32rpx;
+				font-size: 28rpx;
 				white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 			}
 			.it_speac{
-				display: flex;line-height: 56rpx;color: #999;
+				display: flex;align-items: center; line-height: 56rpx;color: #999;font-size: 22upx;
 				view{
-					width: 60%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+					white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 				}
 				view:nth-child(1){
-					width: 36%;
+					padding-right: 30upx;
 				}
 			}
 			.it_speac_bs{
-				display: flex;color: #999;flex-wrap: wrap;
+				display: flex;align-items: center; color: #999;flex-wrap: wrap;
 				view{
-					font-size: 26rpx;margin: 2rpx;padding: 0 5rpx;border-radius: 6rpx;
-					background-color: #F1F1F1;
+					font-size: 20rpx;border-radius: 6rpx;
+					background-color: #F1F1F1;margin-right: 20upx;padding: 2upx 10upx;
 				}
 			}
 		}
@@ -185,38 +331,49 @@
 
 .jis_but{
 		padding: 0 3%;
-		width: 100%;height: 100rpx;line-height: 100rpx;background-color: white;
+		width: 100%;height: 100rpx;background-color: white;
 		position: fixed;left: 0;bottom: 100rpx;
-		display: flex;justify-content: space-between;
+		display: flex;justify-content: space-between;align-items: center;
 		.jis_right{
-			display: flex;justify-content: space-between;
+			display: flex;justify-content: space-between;align-items: center;
 			view{
+				font-size: 24upx;
 				margin: 0 10rpx;
 			}
 			.jis_butcolor{
-				padding: 0 30rpx;color: #fff;border-radius: 50rpx;
-				margin-top: 15rpx;
-				height: 70rpx;
-				line-height: 70rpx;
-				background-color: #dd2626;
+				padding: 0 45rpx;color: #fff;border-radius: 50rpx;
+				height: 56rpx;
+				line-height: 56upx;
+				background-image: linear-gradient(0deg,#eb4241 0%,#ef463f 100%);
 			}
 		}
 	}
 .header{
 	position: fixed;left: 0;top: 0;
-	height: 145rpx;width: 100%;
-	padding-top: 55rpx;padding-left: 30rpx;
+	height: 140rpx;width: 100%;
+	padding-top: 40rpx;padding-left: 30rpx;
 	display: flex;
-	z-index: 999;background-color: white;
+	align-items: center;
+	z-index: 999;background-color: #F1F1F1;
 	.header_va{
-		width: 20%;
-		font-size: 40rpx;line-height: 90rpx;
+		padding-right: 26upx;
+		font-size: 34rpx;
 	}
 	.rig{
 		width: 78%;color: #999;
-		line-height: 100rpx;
-		font-size: 28rpx;
+		display: flex;align-items: center;
+		font-size: 22rpx;
 		white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+		.address{
+			padding-left: 6upx;
+		}
 	}
 }
+.js_canchu{
+		width: 100%;line-height: 60rpx;padding: 0 3%;background-color: white;color: #999;
+		position: fixed;left: 0;bottom: 200rpx;border-bottom: 1rpx dashed #999;font-size: 22upx;
+		text{
+			margin-right: 20upx;
+		}
+	}
 </style>

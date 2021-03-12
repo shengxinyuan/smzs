@@ -1,39 +1,48 @@
 <template>
 	<view class="zl-box">
-		<block v-for="(item,index) in list" :key="index">
+		<view class="head" @click="goto_top">
+			<view class="head_left">
+				<u-icon name="arrow-left" size="40" ></u-icon>
+			</view>
+			<view class="head_cont">
+				{{title}} 
+			</view>
+		</view>
+		
+		<block>
 			<view class="gold-prices-box">
 				<view class="gold-prices-box-up">
-					<view class="up-title">{{item.goldTitle}}</view>
-					<view class="up-prices">
+					<view class="up-title">{{title}}</view>
+					<view class="up-prices"> 
 						<text class="rmb">￥</text>
-						<text class="number">{{item.goldPrice}}/g</text>
+						<text class="number">{{parseFloat(sumPrice01) + parseFloat(sumPrice02)}}/g</text>
 					</view>
 				</view>
 				<view class="gold-prices-box-down">
 					<view class="price-box">
 						<view class="price-min-box">
 							<view class="left">
-								<view class="left-title">{{item.title01}}</view>
-								<view class="left-price">￥{{item.price01}}/g</view>
+								<view class="left-title">今日料价</view>
+								<view class="left-price">￥{{item.total_price}}/g</view>
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
-								<input class="input" type="number" :value="item.value01" />
+								<input class="input" type="number" v-model="value01" :placeholder="value01" @input="checka"/>
 								<view class="right-symbol">=</view>
 							</view>
-							<view class="right-price">￥{{item.sumPrice01}}/g</view>
+							<view class="right-price">￥{{sumPrice01}}/g</view>
 						</view>
 						<view class="price-min-box">
 							<view class="left">
-								<view class="left-title">{{item.title02}}</view>
-								<view class="left-price">￥4.2/g</view>
+								<view class="left-title">工费</view>
+								<view class="left-price">￥{{item.wage}}/g</view>
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
-								<input class="input" type="number" :value="item.value02" />
+								<input class="input" type="number" v-model="value02" :placeholder="value02"  @input="checkb"/>
 								<view class="right-symbol">=</view>
 							</view>
-							<view class="right-price">￥{{item.sumPrice02}}/g</view>
+							<view class="right-price">￥{{sumPrice02}}/g</view>
 						</view>
 					</view>
 					<view class="circle-left"></view>
@@ -42,21 +51,21 @@
 			</view>
 		</block>
 		<view class="explain">
-			<view class="explain-title">{{explainTitle}}</view>
+			<view class="explain-title">说明</view>
 			<view>
 				<view>
-					{{explain01}}
+					1、倍率设置：APP端的批发拿货价x您设置的倍率=您的商城售价
 				</view>
 				<view>
-					{{explain02}}
+					2、XXX倍率修改后，本平台仍将显示您的拿货成本价格；
 				</view>
 				<view>
-					{{explain03}}
+					3、修改的倍率仅用于您的批发商商城
 				</view>
 			</view>
 		</view>
 		<view class="bottom-btn">
-			<button class="btn" @click="skipShopGoldPrice">{{btnName}}</button>
+			<button class="btn" @click="skipShopGoldPrice">保存</button>
 		</view>
 	</view>
 </template>
@@ -65,58 +74,120 @@
 	export default {
 		data() {
 			return {
-				list: [{
-						goldTitle: '足金999',
-						goldPrice: '451.2',
-						title01: '今日料价',
-						price01: '407',
-						value01: '233',
-						sumPrice01: '427',
-						title02: '工费',
-						price02: '4.2',
-						value02: '4',
-						sumPrice02: '8.2'
-					},
-					{
-						goldTitle: '足金999.9',
-						goldPrice: '451.2',
-						title01: '今日料价',
-						price01: '407',
-						value01: '233',
-						sumPrice01: '427',
-						title02: '工费',
-						price02: '4.2',
-						value02: '4',
-						sumPrice02: '8.2'
-					}
-				],
-				explainTitle:'说明',
-				explain01:'1、倍率设置：APP端的批发拿货价x您设置的倍率=您的商城售价',
-				explain02:'2、XXX倍率修改后，本平台仍将显示您的拿货成本价格；',
-				explain03:'3、修改的倍率仅用于您的批发商商城',
-				btnName:'保存'
+				item: [],
+				gold_id:0,
+				value01:'',
+				value02:'',
+				la:'',
+				lb:'',
+				vala:'',
+				valb:''
 			}
 		},
+		computed:{
+			
+			//料价
+			sumPrice01(){
+				let arr = 0
+				if(this.item){
+					let num = this.lb
+					if(this.value01 == ''){
+						arr =  num + this.vala
+					}else{
+						arr =  num + JSON.parse(this.value01)
+					}
+				}
+				return arr
+			},
+			//工费
+			sumPrice02(){
+				let arr = 0
+				if(this.item){
+					let num = this.la
+					if(this.value02 == ''){
+						arr =  num + this.valb
+					}else{
+						arr =  num + JSON.parse(this.value02)
+					}
+				}
+				return arr
+			}, 
+		},
+		onLoad(op) {
+			this.title = op.title+'金价' 
+			this.gold_id = op.id
+			this.page_reader()
+		},
 		methods: {
-			skipShopGoldPrice(){
-				uni.navigateTo({
-					url:'shop-gold-price'
+			page_reader(){
+				this.$api.get('managegold',{id:this.gold_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.item = res.data
+						this.value01 = JSON.parse(res.data.new_price) //料价
+						this.value02 = JSON.parse(res.data.commerical_wage)
+						this.la =  JSON.parse(res.data.wage)
+						this.lb =  JSON.parse(res.data.total_price)
+					}
 				})
-			}
+			},
+			//保存
+			skipShopGoldPrice(){
+				let arr = JSON.parse(this.value01)
+				let att = JSON.parse(this.value02)
+				this.$api.post('managegold',{new_price:arr.toFixed(2),commerical_wage:att.toFixed(2),id:this.gold_id}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.com.redto('./shop-gold-price?tit='+'修改成功')
+					}
+				})
+				
+			},
+			//返回
+			goto_top(){
+				uni.navigateBack()
+			},
+			checka(e) {
+				//正则表达试
+				e.target.value = (e.target.value.match(/^\d*(\.?\d{0,2})/g)[0]) || null
+				//重新赋值给input
+				this.$nextTick(() => {
+					this.value01= e.target.value
+				})
+			},
+			checkb(e) {
+				//正则表达试
+				e.target.value = (e.target.value.match(/^\d*(\.?\d{0,2})/g)[0]) || null
+				//重新赋值给input
+				this.$nextTick(() => {
+					this.value02= e.target.value
+				})
+			},
 		}
 	}
 </script>
 
 <style lang="scss">
+	.head{
+		width: 100%;display: flex;
+		font-size: 32rpx;margin-top: 60rpx;padding-bottom: 30rpx;
+		.head_left{
+			width: 14%;padding-left: 1%;
+		}
+		.head_cont{
+			margin-left: 24%;
+		}
+	}
+	
 	.zl-box {
 		padding: 20upx 30upx;
 	}
 
 	.gold-prices-box {
 		margin-bottom: 30upx;
-
+		margin-top: 30rpx;
 		.gold-prices-box-up {
-			width: 100%;
+			width: 100%; 
 			height: 80upx;
 			padding: 0 60upx;
 			background-image: linear-gradient(180deg,
@@ -164,7 +235,7 @@
 					margin-bottom: 30upx;
 
 					.left {
-						width: 23%;
+						width: 28%;
 						text-align: center;
 						padding-right: 20upx;
 

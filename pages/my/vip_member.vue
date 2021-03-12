@@ -2,113 +2,134 @@
 	<view>
 		<view class="header">
 			<view class="header_l">
-				<image src="../../static/index/share_moment.png" alt="">
+				<image :src="pag_data.avatar" alt="">
 				<view class="header_l_child">
-					<view>你的名字</view>
-					<text>2020-10-08 到期</text>
+					<view>{{pag_data.nickname}}</view>
+					<text v-if="huiy_show">{{pag_data.vip_date}} 到期</text>
 				</view>
 			</view>
-			<view class="header_r">
+			<view class="header_r" v-if="huiy_show" @click="go_imment">
 				<text>立即续费</text>
 			</view>
 		</view>
 		<view class="cont">
 			<zs-title :title="'专享特权'" ></zs-title>
 			<view class="nav_nine">
-				<view class="nav_items" v-for="(it,ind) in list" :key="ind">	
-					<image :src="it.img" mode=""></image>
+				<view class="nav_items" v-for="(it,ind) in list.top" :key="ind" @click="">	
+					<image :src="it.image" mode=""></image>
 					<view>
-						{{it.name}}
+						{{it.title}}
 					</view>
 				</view>
 			</view> 
 			<!-- 小喇叭 -->
 			<view class="trumpet">
 				<image src="../../static/my/trumpet.png" mode=""></image>
-				<text>会员连续包1年/2年/3年，分别立减  30元/ 40元/ 50元 </text> 
+				<text>{{list.title}}</text> 
 			</view>
 			<!-- //购买 -->
 			<view class="buy_vip">
-				<view class="vip_item" :class="ind == buy_ind ? 'vip_item_act' : ''" v-for="(it,ind) in 3" :key="ind" @click="buy_cli(ind)">
+				<view class="vip_item" :class="it.id == buy_ind ? 'vip_item_act' : ''" v-for="(it,ind) in list.end" v-if="ind != 0" :key="ind" 
+				@click="buy_cli(it)">
 					<view class="it_top">
-						连续包 1 年
+						{{it.title}}
 					</view>
 					<view class="it_c">
-						￥<text>398</text>
+						￥<text>{{it.money}}</text>
 					</view>
 					<view class="it_bot">
-						￥428 /年
+						￥{{it.old_money}}
 					</view>
 				</view>
 			</view>
 			<view class="buy_vip_s">
-				<view class="vip_item" :class="buy_ind_s == 1 ? 'vip_item_act' : ''" @click="buy_cli_s(1)">
+				<view class="vip_item">
 					<view class="it_top">
 						邀请好友免费享会员
 					</view>
 					<view class="it_c"></view>
 					<view class="it_bot">
-						邀请10名好友注册并开通会员即可享受一年免费会员哦
+						邀请{{list.people_invited}}名好友注册并开通会员即可享受{{list.is_year == 0? list.number_year+'月' : list.number_year+'年'}}免费会员哦
 					</view>
 					<view class="it_but">
 						<u-icon name="plus-people-fill" color="#daa856" size="60"></u-icon>
-						<view class="it_but_share">
+						<view class="it_but_share" v-if="list.people_invited != 0" >
 							立即分享
+						</view>
+						<view class="it_but_share" v-else @click="go_getvip">
+							立即领取
 						</view>
 					</view>
 				</view>
-				<view class="vip_item" :class="buy_ind_s == 2 ? 'vip_item_act' : ''" @click="buy_cli_s(2)">
+				<view class="vip_item" :class="buy_ind == it.id ? 'vip_item_act' : ''" 
+				  v-for="(it,ind) in list.end" :key="ind" v-if="ind == 0" @click="buy_cli(it)">
 					<view class="it_top">
-						体验 1 个月
+						{{it.title}}
 					</view>
 					<view class="it_c">
-						￥<text>40</text>
+						￥<text>{{it.money}}</text>
 					</view>
 					<view class="it_bot">
-						体验 1 个月
+						{{it.title}}
 					</view>
 				</view>
 			</view>
 			<!-- //开通按钮 -->
-			<view class="op_but">
+			<view class="op_but" @click="go_imment">
 				立即开通
 			</view>
 			<view style="font-size: 26rpx;color: #999;padding: 0 20rpx;line-height: 36rpx;margin-bottom: 60rpx ;">
-				开通注意事项
+				<u-parse :html="list.title2"></u-parse>
 			</view>
 			<!-- 问答 -->
 			<zs-title :title="'专享特权'" ></zs-title>
 			<view class="nav_nine">
-				<view class="nav_items" v-for="(it,ind) in list_two" :key="ind" @click="cli_quest(it.name)">	
-					<image :src="it.img" mode=""></image>
+				<view class="nav_items" v-for="(it,ind) in list.middle" :key="ind" @click="cli_quest(it.content)">	
+					<image :src="it.image" mode=""></image>
 					<view>
-						{{it.name}}
+						{{it.title}}
 					</view>
 				</view>
 			</view>
 			<!-- 回答 -->
 			<view class="answer"> 
-				<view class="answer_title">
-					{{answer_name}}
-				</view>
-				<view class="answer_names">
-					专享特权
-				</view>
-				<view class="answer_cont">
-					操蛋的，精神不好
-				</view>
+				<!-- <view class="answer_title">
+					{{}}
+				</view> -->
+				<u-parse :html="title_val"></u-parse>
 			</view>
 		</view>
 		<!-- //支付定位 -->
 		<view class="pay_posi" v-if="buy_ind != -1">
 			<view class="pay_posi_l">
-				连续包 1 年
-				<view>￥398</view>
+				{{datas.title}}
+				<view>￥{{datas.money}}</view>
 			</view>
-			<view class="pay_posi_l_r">
+			<view class="pay_posi_l_r" @click="go_imment">
 				立即开通
 			</view>
 		</view>
+		<u-popup v-model="show" mode="bottom">
+			<view class="pupop">
+				<view class="pupop_title">
+					选择支付方式
+				</view>
+				<view class="pupop_item" v-for="(pay,ind) in pay" :key="ind" @click="pay_type(ind)">
+					<view>
+						<label class="radio">
+							<view class="">
+								<radio :checked="ind == pay_ind" />
+								{{pay.name}}
+							</view>
+							<u-icon name="zhifubao-circle-fill" size="40rpx" color="#007AFF" v-if="ind == 0"></u-icon>
+							<u-icon name="weixin-circle-fill" size="40rpx" color="#18B566" v-else-if="ind == 1"></u-icon>
+							<u-icon name="rmb-circle-fill" size="40rpx" color="#F0AD4E" v-else></u-icon> 
+						</label>
+					</view>
+				</view>
+				<zs-button buttitle="支付" @but_cli="immediately_k(buy_ind)"></zs-button>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -116,71 +137,159 @@
 	export default{
 		data(){
 			return{
-				list:[
-					{
-						img:'../../static/my/fenxiao.png',
-						name:'分销商城'
-					},
-					{
-						img:'../../static/my/lingshou.png',
-						name:'零售调价'
-					},
-					{
-						img:'../../static/my/yinxiao.png',
-						name:'社交营销'
-					},
-					{
-						img:'../../static/my/vip_tuok.png',
-						name:'引流拓客'
-					},
-					{
-						img:'../../static/my/libao.png',
-						name:'专属礼包'
-					}
-					
-				],
-				list_two:[
-					{
-						img:'../../static/my/onea.png',
-						name:'一件起批'
-					},
-					{
-						img:'../../static/my/oneb.png',
-						name:'享批发价'
-					},
-					{
-						img:'../../static/my/onec.png',
-						name:'那货便捷'
-					},
-					{
-						img:'../../static/my/oned.png',
-						name:'周周上新款'
-					},
-					{
-						img:'../../static/my/onee.png',
-						name:'专属礼包'
-					}
-					
-				],
+				list:[],
 				buy_ind:-1,
-				buy_ind_s:0,
-				answer_name:"一件起批"
+				huiy_show:false,
+				datas:'',
+				show:false,
+				pay:[
+					{
+						name:'支付宝'
+					},
+					{
+						name:'微信支付'
+					},
+					{
+						name:'余额支付'
+					}
+				],
+				pay_ind:0,
+				title_val:''
 			}
 		},
+		onLoad(op) {
+			// console.log(op.it)
+			this.pag_data = uni.getStorageSync('menber_json')
+			
+			this.page_reader()
+			let vip = uni.getStorageSync('viptype')
+			console.log(vip)
+			// 会员
+			if(vip){
+				this.huiy_show = true
+			}else{
+				this.huiy_show = false
+			}
+		},
+		onUnload() {
+			clearInterval(this.time)
+		},
 		methods:{
-			//购买会员
-			buy_cli(e){
-				this.buy_ind = e
-				this.buy_ind_s = -1 //两个的取消状态
+			page_reader(){
+				this.$api.get('vip').then(res=>{
+					console.log(res)
+					this.list = res.data
+					this.title_val = res.data.middle[0].content
+				})
 			},
-			// 折扣分享
-			buy_cli_s(e){
-				this.buy_ind = -1 //三个的取消状态
-				this.buy_ind_s = e
+			//领取vip
+			go_getvip(){
+				this.$api.put('vip').then(res=>{
+					console.log(res)
+					this.com.msg(res.message)
+				})
+			},
+			//选择支付方式
+			pay_type(e){
+				console.log(e)
+				this.pay_ind = e
+			},
+			//购买会员类型
+			buy_cli(e){
+				this.buy_ind = e.id
+				this.datas = e
 			},
 			//问答
 			cli_quest(e){
-				this.answer_name = e
+				this.title_val = e
+			},
+			//支付宝
+			zfb_alipay(e){
+				uni.requestPayment({
+					provider: 'alipay',
+					orderInfo:e,
+					success: function(res) {
+					   uni.showToast({
+					   		title:'支付成功..',icon:'none'
+					   })
+					   this.show = false
+					  // let aq = 2
+					  // this.time = setInterval(()=>{
+					  // 	aq -=1
+					  // 	if(aq == 0){
+							// uni.navigateBack()
+					  // 		clearInterval(this.time)
+					  // 	}
+					  // },1000)
+					},
+					fail: function(err) {
+						uni.showToast({
+							title:'失败',icon:'none'
+						})
+					}
+				});
+			},
+			//微信
+			weixin(arr){
+				uni.requestPayment({
+					provider: 'wxpay',
+					orderInfo:{
+						"appid": arr.appid,
+						"noncestr": arr.noncestr,
+						"package": 'Sign=WXPay', // 固定值，以微信支付文档为主
+						"partnerid": arr.partnerid,
+						"prepayid": arr.prepayid,
+						"timestamp": arr.timestamp,
+						"sign": arr.sign // 根据签名算法生成签名
+					},
+					success: function(res) { 
+						// console.log(res)
+					   uni.showToast({
+							title:'支付成功..',icon:'none'
+					   })
+					   this.show = false
+					   // let aq = 2
+					   // this.time = setInterval(()=>{
+					   // 	aq -=1
+					   // 	if(aq == 0){
+					   // 		uni.navigateBack()
+					   // 		clearInterval(this.time)
+					   // 	}
+					   // },1000)
+					},fail: function(err) { 
+						console.log(err)
+						uni.showToast({
+							title:'支付失败',icon:'none'
+						})
+					}
+				});
+			},
+			//支付
+			immediately_k(e){
+				//支付宝				
+				this.$api.post('vippay',{vip_id:this.buy_ind,type:this.pay_ind}).then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						if(this.pay_ind == 0){ 
+							this.zfb_alipay(res.data)
+						}else if(this.pay_ind == 1){
+							this.weixin(res.data)
+						}else {
+							this.show = false
+							uni.showToast({
+								title:'支付成功..',icon:'none'
+							})
+						}
+					}
+				})
+			},
+			//立即开通
+			go_imment(){
+				if(this.buy_ind == -1){
+					this.com.msg('请选择开通类型')
+				}else{
+					this.show = true
+				}
 			}
 		}
 		
@@ -188,6 +297,18 @@
 </script>
 
 <style scoped lang="scss">
+	.pupop{
+		padding: 20rpx 40rpx;color: #F0AD4E;
+		.pupop_title{
+			font-size: 32rpx;text-align: center;line-height: 77rpx;
+		}
+		.pupop_item{
+			line-height: 100rpx;
+			.radio{
+				display: flex;justify-content: space-between;
+			}
+		}
+	}
 	.pay_posi{
 		position: fixed;left: 0;bottom: 0;z-index: 99;
 		width: 100%;background-color: #F1F1F1;display: flex;justify-content: space-between;padding: 16rpx 4%;
@@ -246,7 +367,7 @@
 				width: 30%;text-align: center;border: 4rpx solid #F1F1F1;padding: 20rpx;
 				border-radius: 20rpx;
 				.it_top{
-					font-size: 30rpx;line-height: 66rpx;font-weight: bold;
+					font-size: 30rpx;line-height: 66rpx;font-weight: bold;white-space: nowrap;
 				}
 				.it_c{
 					color: #daa856;
@@ -270,6 +391,7 @@
 				border-radius: 20rpx;
 				.it_top{
 					font-size: 30rpx;line-height: 66rpx;font-weight: bold;
+					white-space: nowrap;
 				}
 				.it_c{
 					color: #daa856;

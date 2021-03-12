@@ -1,11 +1,6 @@
 <template>
 	<view style="width: 100%;">
 		<scroll-view class="scroll" scroll-x >
-			<view class="scroll_child" :class="{active:head_ind == ''}" @click="nav_cli('')">
-				<view class="">
-					全部
-				</view>
-			</view>
 			<view class="scroll_child" v-for="(it,ind) in lists" :key="ind" :class="{active:it.id == head_ind}" @click="nav_cli(it.id)">
 				<view class="">
 					{{it.title}}
@@ -20,20 +15,11 @@
 		data() {
 			return {
 				head_ind:0,
-				list:[
-					{name:"全部"},
-					{name:"黄金"},
-					{name:"铂金"},
-					{name:"18K金"},
-					{name:"24K金"},
-					{name:"白银"},
-					{name:"钻石"},
-					{name:"珍珠"}
-				]
 			}
 		},
 		props:{
-			lists:{}
+			lists:{},
+			head_ind:{}
 		},
 		methods:{
 			nav_cli(e){

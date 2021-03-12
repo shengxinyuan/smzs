@@ -1,0 +1,1 @@
+<view><view class="add-payee-code-image"><image src="../../static/set-shop/add_code.png" mode="widthFix"></image></view><view class="bottom-box"><view class="notice">{{''+noticeText+''}}</view><view class="bottom-btn"><button data-event-opts="{{[['tap',[['uploadcode',['$event']]]]]}}" class="btn" bindtap="__e">上传二维码</button></view></view></view>

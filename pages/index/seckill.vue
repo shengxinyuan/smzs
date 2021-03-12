@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<scroll-view class="nav_head" scroll-x="true">
-			<view class="head_item"  v-for="(it,ind) in list.top" :key="ind" @click="navhead_cli(it.id)">
+			<view class="head_item"  v-for="(it,ind) in list.top" :key="ind" @click="navhead_cli(it.id,it.title)">
 				<view class="it_tiem" :class="{acts:navIndex == it.id}">
 					{{it.time}}
 				</view>
@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<view class="shop_cont">
-			<zs-shoplist-seckill :types="2" :lists="list.data"></zs-shoplist-seckill>
+			<zs-shoplist-seckill :types="2" :second="second" :titles="titles" :lists="list.data"></zs-shoplist-seckill>
 		</view>
 	</view>
 </template>
@@ -44,16 +44,24 @@
 				],
 				navIndex:0,
 				end_time:'',//秒杀到期
-				end_seckill:'00天00:00:00',//倒计时
+				end_seckill:'00:00:00:00',//倒计时
 				type_id:'',
+				titles:'',
+				second:0
 			}
 		},
 		onLoad(op){
 			// console.log(op)
 			this.page_reader()
 		},
+		watch:{
+			titles(a){
+				console.log(a)
+			}
+		},
 		methods:{
-			navhead_cli(e){
+			navhead_cli(e,t){
+				this.titles = t
 				this.navIndex = e
 				this.$api.get('activity',{type:2,type_id:e}).then(res=>{
 					console.log(res)
@@ -78,9 +86,11 @@
 							//获取抢购中的 时间戳和id
 							if(i.id == e){
 								this.end_time = i.end_time
+								// this.ent_time_s()
 							}
 						})
 						this.list = res.data
+						
 					}
 					
 				})
@@ -90,7 +100,6 @@
 					console.log(res)
 					if(res.status == 1){
 						// 
-						
 						let arr = 0
 						let title = ''
 						let data = new Date().getTime()
@@ -103,10 +112,13 @@
 							let js = i.end_time *1000
 							if(ks < data && js > data){
 								i.title = "抢购中"
+								this.navhead_cli(i.id,"抢购中")
 							}else if( js < data ){
 								i.title = "已结束"
+								this.titles = "已结束"
 							}else if(ks > data){
 								i.title = "即将开始"
+								this.titles = "即将开始"
 							}
 							//获取抢购中的 时间戳和id
 							if(i.T_F == 2){
@@ -125,11 +137,11 @@
 				let state = data.getTime()
 				// console.log(state)
 				let reslut = this.end_time *1000 -state
-				// console.log(reslut)
+				this.second  = Math.floor(reslut /1000)
 				let tim = setInterval(()=>{
 					if(reslut <= 0){
 						clearInterval(tim)
-						this.end_seckill = "秒杀已结束"
+						this.end_seckill = "00:00:00:00"
 					}else{
 						reslut -=1000
 						this.end_seckill = this.ss(reslut)
@@ -148,7 +160,7 @@
 				let m = ff > 9 ? ff : `0${ff}`;
 				let s = ss > 9 ? ss : `0${ss}`;
 				// console.log( d+"天"+h+":"+m+":"+s)
-				return d +'天'+h+":"+m+":"+s 
+				return d +':'+h+":"+m+":"+s 
 			}
 		}
 	}
