@@ -84,6 +84,11 @@
 	}
 </script>
 
+<style>
+	page{
+		background-color: #F6F6F6;
+	}
+</style>
 <style lang="scss" scoped>
 	.header{
 		position: fixed;left: 0;top: 0;
