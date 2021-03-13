@@ -748,9 +748,6 @@
 				width: 64upx;
 				height: 64upx;
 			}
-			.left-icon{
-				color: #eeeeee;
-			}
 		}
 	}
 
