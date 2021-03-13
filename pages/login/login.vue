@@ -213,7 +213,9 @@
 								let time = setInterval(()=>{
 									if(arr == 0){
 										clearInterval(time)
-										this.com.rel('../index/index')
+										uni.reLaunch({
+											url:'../index/index'
+										})
 									}else{
 										arr -= 1 
 									}

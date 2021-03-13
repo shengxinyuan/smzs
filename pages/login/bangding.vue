@@ -34,7 +34,7 @@
 				note:'',
 				time:60,
 				noclick:true,
-				but_show:false
+				but_show:true
 			}
 		},
 		methods: {

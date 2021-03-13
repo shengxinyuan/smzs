@@ -11,7 +11,7 @@
 				<view class=""  @click="saoma">
 					<uni-icons class="input-uni-icon" type="scan" size="20" color="#999999" /><text style="color: #999999;margin-left: 20rpx;"> ▏</text>
 				</view>
-				<input confirm-type="search" class="nav-bar-input" type="text" :disabled="true" placeholder="输入搜索关键词" @click="search">
+				<input confirm-type="search" class="nav-bar-input" type="text" :disabled="true" :placeholder="search_old" @click="search(search_old)">
 				<u-icon name="camera" size="40" color="#999999" @click="camear"></u-icon>
 			</view>
 			<view class="rig" :style="{'color': headcolor}"  @click="go_pages('../information/information')">
@@ -21,7 +21,7 @@
 		<!-- banner部分 -->
 		<view class="page_cont">
 			 <swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000" :duration="500">
-				<swiper-item v-for="(it,ind) in index_data.flash" :key="ind">
+				<swiper-item v-for="(it,ind) in index_data.flash" :key="ind" @click="bann_nav(it)">
 					<image :src="it.image" mode="aspectFill"></image>
 				</swiper-item>
 			</swiper>
@@ -233,7 +233,8 @@
 				xrcoupon:false,//新人优惠券状态
 				second:'',
 				dft_photo: '../../static/tabbar/shopsale.png',
-				isLogin: false
+				isLogin: false,
+				search_old:'输入搜索关键词',//搜索历史
 			}
 		},
 		onPageScroll(e){
@@ -278,6 +279,11 @@
 			}else{
 				this.coupon(this.puytcopup)
 			}
+			if(uni.getStorageSync('neirong')){
+				let arr = uni.getStorageSync("neirong")
+				console.log(JSON.parse(arr))
+				this.search_old = JSON.parse(arr)[0]
+			}
 		},
 		onPullDownRefresh(){
 			this.member = uni.getStorageSync('member_info_img')
@@ -307,6 +313,11 @@
 						this.gold_price = res
 					}
 				})
+			},
+			//轮播
+			bann_nav(e){
+				console.log(e)
+				plus.runtime.openURL(e.url);
 			},
 			//弹框隐藏
 			nopop(){
@@ -362,8 +373,13 @@
 				this.com.navto(e)
 			},
 			// 搜索
-			search(){
-				this.com.navto('./search')
+			search(e){
+				if(uni.getStorageSync('neirong')){
+					this.com.navto('./search?tit='+e)
+				}else{
+					this.com.navto('./search')
+				}
+				
 			},
 			//拍照
 			camear(){

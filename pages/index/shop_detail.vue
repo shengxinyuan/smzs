@@ -57,13 +57,20 @@
 					</view>
 					<view class="price-box_r">
 						<view class="min-box">
-							<u-icon name="heart" size="42"></u-icon>
-							<view>收藏</view>
+							<view v-if="shop_det.T_F_collect" @click="like_collect(shop_det.id)">
+								<u-icon class="s_icon" name="heart-fill" color="#DD524D" size="38"></u-icon>
+								<view style="color: #DD524D;">已收藏</view>
+							</view>
+							<view v-else @click="like_collect(shop_det.id)">
+								<u-icon class="s_icon" name="heart" size="38"></u-icon>
+								<view>收藏</view>
+							</view>
 						</view>
-						<view class="">
-							<image src="../../static/index/search_icon.png" mode="aspectFill"></image>
+						<view class="min-box" @click="onc_bj(shop_det.title)">
+							<image src="../../static/index/search_icon.png" mode=""></image>
 							<view>一键比价</view>
 						</view>
+
 						<view class="min-box-tt" @click="skipShare" v-show="vip_type">
 							<u-icon name="share" size="42"></u-icon>
 							<view>店铺分享</view>
@@ -168,7 +175,7 @@
 						<image src="../../static/index/index.png" mode="aspectFill"></image>
 						<view>首页</view>
 					</view>
-					<view class="three_icons" @click="">
+					<view class="three_icons" @click="goto_page('../service/service')">
 						<image src="../../static/index/kf.png" mode="aspectFill"></image>
 						<view>客服</view>
 					</view>
@@ -176,16 +183,6 @@
 						<image src="../../static/index/cart.png" mode="aspectFill"></image>
 						<view>购物车</view>
 					</view>
-					<!-- <view class="three_icons">
-						<view v-if="shop_det.T_F_collect" @click="like_collect(shop_det.id)">
-							<u-icon class="s_icon" name="star-fill" color="#DD524D" size="38"></u-icon>
-							<view style="color: #DD524D;">已收藏</view>
-						</view>
-						<view v-else @click="like_collect(shop_det.id)">
-							<image src="../../static/index/cart.png" mode="aspectFill"></image>
-							<view>购物车</view>
-						</view>
-					</view> -->
 					<view class="anniu">
 						<view class="add_car" @click="payment_yes(0)">加入购物车</view>
 						<view class="buy" @click="payment_yes(1)">立即购买</view>
@@ -359,7 +356,13 @@
 				}).exec()
 			
 			},
-			
+			//一键比价
+			onc_bj(e){
+				// uni.navigateTo({
+				// 	url:'./taobao?url='+e
+				// })
+				plus.runtime.openURL("https://uland.taobao.com/sem/tbsearch?refpid=mm_26632258_3504122_32538762&keyword="+e);
+			},
 			valChange(e) {
 				// console.log('当前值为: ' + e.value)
 				this.shop_num = e.value
@@ -839,7 +842,6 @@
 			.price-box_r {
 				text-align: center;
 				display: flex;align-items: center;
-
 				image {
 					width: 38rpx;
 					height: 38rpx;
@@ -1374,7 +1376,6 @@
 			}
 
 			.three_icons {
-
 				width: 95rpx;
 				display: flex;
 				flex-wrap: wrap;
