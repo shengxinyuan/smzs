@@ -2,25 +2,19 @@
 	<view class="container">
 		<view class="header_bait" :style="{'background-color': bgcolor,'opacity':opacity}">
 			<view class="toubu">
-				<view class="header_left" @click="goto_top">
-					<u-icon name="arrow-left" size="54"></u-icon>
+				<view class="header_left-c" @click="goto_top">
+					<u-icon class="left-icon" name="arrow-left" size="40"></u-icon>
 				</view>
 				<view class="center">
 					<view class="center_it" :class="{active:head_ind == ind}" v-for="(it,ind) in headlist" :key="ind" @click="head_nav_cli(ind)"> 
 						{{it.name}}
 					</view>
 				</view>
-				<view class="head_share" @click="share">
-					<u-icon name="zhuanfa" size="54"></u-icon>
-				</view>
 			</view>
 		</view>
 		<view class="header">
 			<view class="header_left" @click="goto_top">
-				<u-icon name="arrow-left" size="60"></u-icon>
-			</view>
-			<view class="header_left" @click="share">
-				<u-icon name="zhuanfa" size="60"></u-icon>
+				<image src="../../static/index/back1.png" mode="aspectFill"></image>
 			</view>
 		</view>
 		<!-- banner轮播 -->
@@ -32,11 +26,11 @@
 					</view>
 				</swiper-item>
 			</swiper>
-			<!-- <view class="swiper-dots">
+			<view class="swiper-dots">
 				<text class="num">{{swiperCurrent+1}}</text>
 				<text class="sign">/</text>
-				<text class="num">{{imgList.length}}</text>
-			</view> -->
+				<text class="num" v-if="shop_det.album">{{shop_det.album.length}}</text>
+			</view>
 		</view>
 		<!-- 横条 -->
 		<view class="trabecula" v-if="detail_type == 1">
@@ -65,7 +59,6 @@
 				剩余{{shop_det.stock}}件
 			</view>
 		</view>
-		
 		<!-- <view class="shopping_text">
 			<view class="text-item" v-if="vip_type">
 				<view class="">
@@ -78,10 +71,12 @@
 			<view class="shop_introduce"> 
 				{{shop_det.remark}}
 			</view>
-			<view class="Rapid_delivery">
-				<u-icon name="car-fill" style="margin-right: 10rpx;"></u-icon>急速出货  16:30前下单当日货品可发货，定制产品除外。
-			</view>
 		</view> -->
+		<view class="Rapid_delivery">
+			<image src="../../static/index/ji.png" mode="aspectFill"></image>
+			<text style="margin-right: 16upx;">急速出货</text>
+			<text>16:30前下单当日货品可发货，定制产品除外。</text>
+		</view>
 		<view class="group_sty" v-if="detail_type == 1">
 			<view class="group_child" v-for="(it,ind) in pi_group" :key="ind" >
 				<view class="child_l">
@@ -102,11 +97,13 @@
 		<view class="eva-section" id="evaluate">
 			<view class="section_title" @click="goto_page('./evaluate?id='+shop_id)" v-if="commentlist">
 				<view class="tit_l">
-					<text></text>
-					宝贝评价（{{commentlist.total}}）
+					<text class="pk"></text>
+					<text class="pj">宝贝评价</text>
+					<text class="numbers">（{{commentlist.total}}）</text>
 				</view>
-				<view style="color: #999;">
-					查看更多＞
+				<view style="color: #999; font-size: 24upx;">
+					<text>查看更多</text>
+					<u-icon name="arrow-right"></u-icon>
 				</view>
 			</view>
 			<view class="eva-box">
@@ -617,29 +614,33 @@
 		padding-bottom: 160upx;
 	}
 	.header_bait{
-		width: 100%;height: 150rpx;background-color: white;padding-top: 60rpx;
-		position: fixed;left: 0;top: 0;z-index: 99;
+		width: 100%;height: 160rpx;background-color: white;padding-top: 60rpx;
+		position: fixed;left: 0;top: 0;z-index: 99;line-height: 100upx;
 		.toubu{
-			padding: 0 16rpx;
-			line-height: 100rpx;
-			display: flex;justify-content: space-between;
+			padding: 0 3%;
+			display: flex;align-items: center;
+			.header_left-c{
+				width: 24%;
+				display: flex;align-items: center;
+			}
 			.center{
-				width: 60%;line-height: 78rpx;font-size: 32rpx;display: flex;
+				width: 60%;font-size: 30rpx;display: flex;
 				.center_it{
 					width: 25%;text-align: center;
 					position: relative;
-					&.active{
+					&.active {
 						color: #2d407a;
-						&:before{
+					
+						&:before {
 							content: '';
 							position: absolute;
-							left: 22%;
+							left: 31%;
 							bottom: 20%;
 							transform: translateY(-50%);
-							height: 7rpx;
-							width: 56%;
+							height: 6rpx;
+							width: 38%;
 							background-color: #2d407a;
-							border-radius: 0 4px 4px 0;
+							border-radius: 4px;
 							opacity: .8;
 						}
 					}
@@ -652,9 +653,16 @@
 		position: absolute;left: 0;top: 66rpx;z-index: 20; 
 		
 		.header_left{
-			text-align: center;padding-top: 12rpx;
-			width: 80rpx;height: 80rpx;background-color: rgba(0,0,0,0.5);border-radius: 50%;
-			color: #fff;
+			// text-align: center;padding-top: 12rpx;
+			// width: 80rpx;height: 80rpx;background-color: rgba(0,0,0,0.5);border-radius: 50%;
+			// color: #fff;
+			image{
+				width: 64upx;
+				height: 64upx;
+			}
+		}
+		.header_left-c{
+			
 		}
 	}
 	.icon-you{
@@ -694,7 +702,7 @@
 		padding: 0 3%;
 		display: flex;justify-content: space-between;
 		.trabecula_l{
-			font-weight: bold;font-size: 32rpx;
+			font-weight: bold;font-size: 30rpx;
 		}
 	}
 	/* 标题简介 */
@@ -781,8 +789,17 @@
 		.shop_introduce{
 			font-size: 28rpx;color: #333;line-height: 42rpx;padding: 10rpx 0;
 		}
-		.Rapid_delivery{
-			color: #999;line-height: 70rpx;white-space: nowrap;
+	}
+	.Rapid_delivery {
+		padding: 20upx;
+		color: #999;
+		font-size: 22upx;
+		background-color: #FFFFFF;
+		display: flex;align-items: center;
+		image{
+			width: 24upx;
+			height: 24upx;
+			margin-right: 16upx;
 		}
 	}
 	//拼团
@@ -828,11 +845,22 @@
 		.section_title{
 			width: 100%;display: flex;justify-content: space-between;padding-bottom: 20rpx;
 			line-height: 44rpx;
-			.tit_l{
+			.tit_l {
 				display: flex;
-				text{
-					display: inline-block;width: 12rpx;height: 100%;background-image: linear-gradient(#445589,#fff);
+				align-items: center;
+			
+				.pk {
+					display: inline-block;
+					width: 12rpx;
+					height: 100%;
+					background-image: linear-gradient(#445589, #fff);
 					margin-right: 16rpx;
+				}
+				.pj{
+					font-size: 28upx;
+				}
+				.numbers{
+					font-size: 22upx;
 				}
 			}
 		}

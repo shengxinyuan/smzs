@@ -327,7 +327,7 @@
 			// 优惠券
 			coupon(e){
 				this.$api.post('coupon',{type:e}).then(res=>{
-					// console.log(res)
+					console.log(res)
 					if(res.status == 1){
 						this.coupon_data = res.data
 						if(this.puytcopup == 0 && res.data.data != ''){
