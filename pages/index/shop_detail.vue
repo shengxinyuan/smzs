@@ -373,7 +373,6 @@
 					if (res.status == 1) {
 						this.shop_det = res.data
 						this.shoptype_id = res.data.id
-						this.scrolls()
 						this.stynumber = [{
 								name: '款号',
 								num: res.data.model_no
@@ -395,9 +394,9 @@
 								num: res.data.min_g + '-' + res.data.max_g
 							}
 						]
-						
 						// sku
 						this.sku()
+						this.scrolls()
 					}
 				})
 				//推荐商品
@@ -471,7 +470,7 @@
 				this.com.navto(e)
 			},
 			skipIndex(){
-				uni.switchTab({
+				uni.reLaunch({
 					url:'./index'
 				})
 			},

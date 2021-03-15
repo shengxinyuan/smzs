@@ -49,6 +49,8 @@
 								}
 							}
 						})
+					}else{
+						this.com.msg(res.message)
 					}
 				})
 				

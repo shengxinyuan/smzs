@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="cont">
-			<view class="cont_child" :style="{'background-image':bgimage}">
+			<view class="cont_child" :style="{'background-image':'url('+bgimage+')'}">
 				<view class="cont_text">
 					<text class="text_a"> {{king}} </text> <text class="text_b">{{king_nam}} </text>
 				</view>

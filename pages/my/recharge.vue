@@ -25,6 +25,10 @@
 						}else{
 							this.weixin(res.data)
 						}
+					}else{
+						uni.showToast({
+							title:res.message,icon:'none'
+						})
 					}
 				})
 			},
