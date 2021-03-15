@@ -651,7 +651,7 @@
             "path" : "pages/community/shop-code",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "平台二维码",
+                "navigationBarTitleText": "店铺二维码",
                 "enablePullDownRefresh": false,
 				"navigationBarBackgroundColor":"#FFFFFF"
             }
@@ -824,6 +824,26 @@
         ,{
             "path" : "pages/index/taobao",
             "style" : {}
+        }
+        ,{
+            "path" : "pages/share/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"navigationStyle":"custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/index/mshare",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "一键分享",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
         }
     ],
 	"globalStyle": {
