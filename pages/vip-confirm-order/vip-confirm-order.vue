@@ -22,7 +22,7 @@
 			<!-- 邮寄 --> 
 			<view class="tabs-first-box" > 
 				<!-- 邮寄地址 --> 
-				<view class="first-box-one" v-if="current == 0" @click="go_pages_add">
+				<view class="first-box-one" v-if="current == 0 || current == 3" @click="go_pages_add">
 					<view > 
 						<view v-if="address">
 							<view class="user-box">
@@ -49,18 +49,18 @@
 				<view v-if="current == 1">
 					<!-- 寄件地址 -->
 					<view class="second-box-one">
-						<view @click="go_pages('../my/receiving?is_mine='+ 1 +'&type='+0)">
+						<view @click="go_pages('../my/receiving?is_mine=1' +'&type=0' + '&isShow=1' + '&current='+ current)">
 							<view>
 								<view class="send-image">
 									<image src="../../static/vip-order/ji.png" mode="widthFix"></image>
 								</view>
-								<view class="mail-box" v-if="address">
+								<view class="mail-box" v-if="address_send">
 									<view class="user-box">
-										<view class="user-name">{{address.contact}}</view>
-										<view class="user-telephone">{{address.mobile}}</view>
+										<view class="user-name">{{address_send.contact}}</view>
+										<view class="user-telephone">{{address_send.mobile}}</view>
 									</view>
 									<view class="user-address">
-										<text>{{address.province + address.city + address.area + address.address}}</text>
+										<text>{{address_send.province + address_send.city + address_send.area + address_send.address}}</text>
 									</view>
 								</view>
 								<view v-else>
@@ -75,7 +75,7 @@
 							<image src="../../static/vip-order/vip_01.png" mode="widthFix"></image>
 						</view>
 					</view>
-					<view class="second-box-one" @click="go_pages('../my/receiving?is_mine='+ 0 +'&type='+0)">
+					<view class="second-box-one" @click="go_pages('../my/receiving?is_mine=0' +'&type=0' + '&isShow=2' + '&current='+ current)">
 						<view>
 							<view>
 								<view class="send-image">
@@ -87,7 +87,7 @@
 										<view class="user-telephone">{{address_bier.mobile}}</view>
 									</view>
 									<view class="user-address">
-										<text>{{address_bier.province + address_bier.city + address.area + address_bier.address}}</text>
+										<text>{{address_bier.province + address_bier.city + address_bier.area + address_bier.address}}</text>
 									</view>
 								</view>
 								<view v-else>
@@ -120,7 +120,7 @@
 					</view>
 				</view>
 				<!-- 送货上门 -->
-				<view class="first-box-one" v-if="current == 3">
+				<!-- <view class="first-box-one" v-if="current == 3">
 					<view>
 						<view v-if="address">
 							<view class="user-box">
@@ -141,15 +141,16 @@
 					<view>
 						<image src="../../static/vip-order/vip_01.png" mode="widthFix"></image>
 					</view>
-				</view>
+				</view> -->
 				<view v-if="viptype">
 					<!-- 速运 保价 -->
 					<view class="first-box-two" v-if="current == 0 || current == 1">
 						<view>
-							<view>
+							<view v-show="current == 0">
 								<view class="express-left">
 									<view class="express-sf">
-										<image src="../../static/vip-order/sf_01.png" mode="widthFix"></image>
+										<image src="/static/vip-order/sf_01.png" 
+										mode="aspectFill"></image>
 									</view>
 									<view class="sf">顺丰速运</view>
 								</view>
@@ -159,25 +160,27 @@
 								</view>
 							</view>
 							<view>
-								<view class="parcel-left">
-									<view class="parcel-bj">
-										<image src="../../static/vip-order/bao_01.png" mode="widthFix"></image>
-									</view>
-									<view class="baojia">保价</view>
+								<view class="" style="display: flex;align-items: center;">
+									<image style="width: 35rpx;height: 35rpx;flex-shrink: 0;" 
+									src="/static/vip-order/bao_01.png"
+									mode="aspectFill"></image>
+									<view class="baojia" style="margin: 0 10rpx;">保价</view>
 								</view>
-								<view class="parcel-right">
-									<text class="zhuyi">*</text>
-									<text style="white-space: nowrap;">因商品为贵重物品，故保价必选，请选择保价方式</text>
-								</view>
+							</view>
+							<view class="parcel-right">
+								<text class="zhuyi">*</text>
+								<text style="white-space: nowrap;">因商品为贵重物品，故保价必选，请选择保价方式</text>
 							</view>
 							<view class="parcel-btns">
 								<view class="parcel-sf" :class="{backimg:imgind == 0}" @click="baojia_cli(0)">
 									<text class="sf-title">顺丰保价</text>
-									<text class="sf-cost">（保费{{ zhanshi.sf_valuation /100}}%）</text>
+									<text class="sf-cost" 
+									style="display: block;">（保费{{ zhanshi.sf_valuation /100}}%）</text>
 								</view>
 								<view class="parcel-tpy" :class="{backimg:imgind == 1}" @click="baojia_cli(1)">
 									<text class="tpy-title">太平洋保价</text>
-									<text class="tpy-cost">（保费 {{zhanshi.ocean_valuation  /1000}}%）</text>
+									<text class="tpy-cost" 
+									style="display: block;">（保费 {{zhanshi.ocean_valuation  /1000}}%）</text>
 								</view>
 							</view>
 							<view>
@@ -252,8 +255,8 @@
 								<view class="goods-details">
 									<view class="goods-title">{{firstItem.title}}</view>
 									<view class="goods-text-one">
-										<text>金重：{{firstItem.wage}}</text>
-										<text>款号：{{firstItem.model_no}}</text>
+										<text>金重：{{firstItem.wage}}g</text>
+										<text>条码：{{firstItem.bar_code}}</text>
 									</view>
 									<view class="goods-text-two">
 										<view class="goods-text-two-min-box">
@@ -261,13 +264,18 @@
 											<text v-else>金料：￥{{firstItem.gold_g_vip}}</text>
 										</view>
 										<view class="goods-text-two-min-box">
-											<text>工费：￥{{firstItem.labor_money}}</text>
+											<text>工费：￥{{((firstItem.labor_money/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
 										</view>
 									</view>
-									<view class="money-box">
-										<text class="rmb">￥</text>
-										<text class="integer" v-if="!viptype">{{firstItem.goods_money_normal}}</text>
-										<text class="integer" v-else>{{firstItem.goods_money_vip}}</text>
+									<view class="money-box" style="display: flex;justify-content: space-between;">
+										<view class="">
+											<text class="rmb">￥</text>
+											<text class="integer" v-if="!viptype">{{firstItem.goods_money_normal}}</text>
+											<text class="integer" v-else>{{firstItem.goods_money_vip}}</text>
+										</view>
+										<view style="color: #999;">
+											*{{firstItem.order_count}}
+										</view>
 									</view>
 								</view>
 							</view>
@@ -276,7 +284,7 @@
 						<view class="aggregate-box">
 							<text class="aggregate-title">总计</text>
 							<text class="aggregate-text">金料￥{{goldPrice}}</text>
-							<text class="aggregate-text"> 工费￥{{processCost}}</text>
+							<text class="aggregate-text"> 工费：￥{{processCost}}</text>
 						</view>
 					</view>
 				</view>
@@ -291,7 +299,7 @@
 						<view>
 							金币抵扣 
 						</view>
-						<view>-￥ {{goldBuckle}}({{goldBuckle * zhanshi.gold_money}}金币)</view>
+						<view>-￥ {{goldBuckle}}({{(goldBuckle * zhanshi.gold_money).toFixed(0)}}金币)</view>
 					</view>
 					<view class="first-box-six-min-v" @click="skipDiscountSelect">
 						<view>优惠券</view>
@@ -367,17 +375,22 @@
 								<text>{{liread}}元</text>
 							</view>
 						</view>
-						<u-switch v-model="checked03" size="26" @change="vip_kait" active-color="#2d407a" inactive-color="#cccccc"></u-switch>
+						<u-switch v-model="checked03" 
+						size="26" 
+						@change="vip_kait" 
+						active-color="#2d407a" 
+						inactive-color="#cccccc"></u-switch>
 					</view>
 				</view>
 				<view class="bottom-v">
 					<view class="money-box">
 						<text class="rmb">￥</text>
-						<text class="integer">{{total.toFixed(2)}}</text>
+						<text class="integer">{{total <= 0? 0.01 : total.toFixed(2)}}</text>
+						<text v-if="!viptype" style="font-size: 24rpx;">(保价费及其他￥{{hezi_pic/1+sign_num/1+sign_certificate/1+nums_bj/1}})</text>
 					</view>
 					<view class="bottom-v-right" >
 						<view class="right-left" v-if="viptype">
-							<text>利润合计：￥{{liread}}</text>
+							<text>本单可省：￥{{liread}}</text>
 						</view>
 						<view class="right-right"  @click="submit_order">
 							<view >提交订单
@@ -431,6 +444,7 @@
 				viptype:false ,
 				total : 0 ,
 				address:'',//我的
+				address_send:'',//寄件人地址
 				address_bier:'',//别人的
 				postage : 0 ,
 				hezi:"",//盒子数据
@@ -447,7 +461,11 @@
 				coupon_id:0,//优惠券低
 				guaq_pic_show:false,
 				guaq_show:false,
-				cli_type:true
+				cli_type:true,//防抖
+				hezi_ids:0,
+				guaqian:0,
+				zhens:0,
+				types:0,
 			}
 		},
 		onUnload() {
@@ -457,6 +475,7 @@
 			console.log(op)
 			// console.log(JSON.parse(op.data))
 			if(op.data){
+				this.types = op.types
 				this.datas = JSON.parse(op.data)
 				if(this.datas && this.datas.cantuan !== undefined){
 					this.cantuan_id = this.datas.cantuan
@@ -480,6 +499,7 @@
 			//删除地址
 			uni.removeStorageSync('address')
 			uni.removeStorageSync('address_bier')
+			uni.removeStorageSync('address_send')
 			uni.removeStorageSync('ids')
 			uni.removeStorageSync("coupon")
 		},
@@ -487,11 +507,13 @@
 			zj_pic(a,b){
 				console.log(a,b)
 			},
+			//vip状态
 			viptype(){
 				if(this.viptype_num == 1){
 					this.total = this.total + JSON.parse(this.zhanshi.vip)
 				}
-			}
+			},
+			deep:true
 		},
 		computed:{
 			liread(){
@@ -506,25 +528,86 @@
 			//商品价格
 			shop_price(){
 				let arr = 0
-				arr = this.goldPrice + this.processCost
-				return arr.toFixed(2)
+				if(this.viptype){
+					arr = this.zhanshi.money_vip 
+				}else{
+					arr = this.zhanshi.money
+				}
+				return arr
 			},
 			//最终价格
 			zj_pic(){
-				if(this.ind == 1 && this.current == 0 || this.current == 1){
-					if(this.guaq_pic_show == true){
-						this.total = this.goldPrice + this.processCost + this.hezi_pic - this.coupon + this.goldBuckle + parseFloat(this.postage) + this.nums_bj + JSON.parse(this.zhanshi.sign_certificate)
-						if(this.guaq_show == true){
-							this.total = this.goldPrice + this.processCost + this.hezi_pic - this.coupon + this.goldBuckle + parseFloat(this.postage) + this.nums_bj + JSON.parse(this.zhanshi.sign_certificate) +JSON.parse(this.zhanshi.sign)
+				if(this.current == 0 || this.current == 1){ //有邮费的
+					if(this.ind == 1){ //寄付 0到付
+						//证书为true
+						if(this.guaq_pic_show == true){
+							//挂签
+							if(this.guaq_show == true){
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.nums_bj + this.zhens + this.guaqian
+							}else{
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.nums_bj + this.zhens
+							}
+						}else{
+							//挂签为
+							if(this.guaq_show == true){
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.nums_bj + this.guaqian
+							}else{
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.nums_bj
+							}
 						}
 					}else{
-						this.total = this.goldPrice + this.processCost + this.hezi_pic - this.coupon + this.goldBuckle + parseFloat(this.postage) + this.nums_bj
+						//证书为true
+						if(this.guaq_pic_show == true){
+							//挂签
+							if(this.guaq_show == true){
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.nums_bj + this.zhens + this.guaqian
+							}else{
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.nums_bj + this.zhens
+							}
+						}else{
+							//挂签为
+							if(this.guaq_show == true){
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.nums_bj + this.guaqian
+							}else{
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.nums_bj
+							}
+						}
 					}
-				}else{
-					if(this.current == 3){
-						this.total = this.goldPrice + this.processCost + this.hezi_pic - this.coupon + this.goldBuckle + this.zhanshi.shipping_fee + this.nums_bj
-					}else{
-						this.total = this.goldPrice + this.processCost + this.hezi_pic - this.coupon + this.goldBuckle + this.nums_bj
+				}else{ //自提
+					if(this.current == 2){
+						//证书为true
+						if(this.guaq_pic_show == true){
+							//挂签
+							if(this.guaq_show == true){
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon  + this.zhens + this.guaqian
+							}else{
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.zhens
+							}
+						}else{
+							//挂签为
+							if(this.guaq_show == true){
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.guaqian
+							}else{
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon
+							}
+						}
+					}else if(this.current == 3){  //送货上门
+						//证书为true
+						if(this.guaq_pic_show == true){
+							//挂签
+							if(this.guaq_show == true){
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage)  + this.zhens + this.guaqian
+							}else{
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.zhens
+							}
+						}else{
+							//挂签为
+							if(this.guaq_show == true){
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.guaqian
+							}else{
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage)
+							}
+						}
 					}
 				}
 			},
@@ -534,33 +617,37 @@
 				if(this.zhanshi.data){
 					this.zhanshi.data.forEach(i=>{
 						if(this.viptype){
-							arr += JSON.parse(i.gold_g_vip) 
+							arr += JSON.parse(i.gold_g_vip)
 						}else{
 							arr += JSON.parse(i.gold_g_normal) 
 						}
 					})
 				}
-				return arr
+				return arr.toFixed(2)
 			},
 			//工费
 			processCost(){
 				let arr = 0
 				if(this.zhanshi.data){
 					this.zhanshi.data.forEach(i=>{
-						if(this.viptype){
-							arr += JSON.parse(i.labor_money) 
-						}else{
-							arr += JSON.parse(i.labor_money) 
-						}
+						arr += JSON.parse(i.labor_money) 
 					})
 				}
-				return arr
+				// console.log(arr)
+				return arr.toFixed(2)
 			},
 		},
 		onShow() {
 			//获取地址
 			if(uni.getStorageSync('address')){
 				this.address = uni.getStorageSync('address') //自己的
+				
+				//运费
+				this.freight()
+			}
+			// 获取寄件人地址
+			if(uni.getStorageSync('address_send')){
+				this.address_send = uni.getStorageSync('address_send') 
 				
 				//运费
 				this.freight()
@@ -574,27 +661,23 @@
 			//盒子手绳等
 			if(uni.getStorageSync('ids')){
 				this.hezi = uni.getStorageSync('ids')
-				console.log(this.hezi)
 				this.hezi_pic = this.zhanshi.packing_money + this.hezi.total
-			}else{
-				this.hezi_pic = this.zhanshi.packing_money + JSON.parse(this.zhanshi.peijian_price)
 			}
 			//优惠券
 			if(uni.getStorageSync('coupon')){
 				let arr = uni.getStorageSync('coupon')
-				 this.coupon = arr.price
-				 this.coupon_id = arr.id
-				console.log(arr)
+				this.coupon = arr.price
+				this.coupon_id = arr.id
+				this.$forceUpdate()
 			}
 		},
-		
 		methods: {
 			//开vip
 			vip_kait(e){
 				console.log(e)
 				if(e == true){
 					this.viptype_num = 1
-					this.viptype = true
+					this.viptype = true 
 				}else{
 					this.viptype_num = 0
 					this.total = this.total - JSON.parse(this.zhanshi.vip)
@@ -631,29 +714,42 @@
 				this.com.navto(e)
 			},
 			go_pages_add(){
-				this.com.navto('../my/receiving?is_mine='+ 1 +'&type='+0)
+				this.com.navto('../my/receiving?is_mine='+ 1 +'&type='+0 + '&current='+ this.current)
 			},
 			//挂签
 			guaq(e){
 				this.guaq_show = e
+				let ar = 0
+				this.zhanshi.data.forEach(i=>{
+					ar += i.order_count * i.sign
+				})
+				console.log(ar)
+				this.guaqian = ar
 				if(e == true){
 					this.sign_num = 1
-					this.total = this.total + JSON.parse(this.zhanshi.sign)
+				// 	this.total = this.total + ar
 				}else{
 					this.sign_num = 0
-					this.total = this.total -  JSON.parse(this.zhanshi.sign)
+				// 	this.total = this.total - ar
 				}
+				// console.log(this.total)
 			},
 			//证书
 			guaq_pic(e){
 				this.guaq_pic_show = e
+				let ar = 0
+				this.zhanshi.data.forEach(i=>{
+					ar += i.order_count * i.sign_certificate
+				})
+				console.log(ar)
 				if(e == true){
 					this.sign_certificate = 1
-					this.total = this.total + JSON.parse(this.zhanshi.sign_certificate)
+					this.zhens = ar
 				}else{
 					this.sign_certificate = 0
-					this.total = this.total - JSON.parse(this.zhanshi.sign_certificate)
+					// this.total = this.total - ar
 				}
+				console.log(this.total)
 			},
 			baojia_cli(e){
 				this.imgind = e
@@ -685,6 +781,7 @@
 			}, 
 			//配送方式
 			fuk(e){
+				// 1寄付 0到付
 				this.ind = e
 			},
 			//页面渲染
@@ -694,8 +791,14 @@
 					if(res.status == 1){
 						this.zhanshi =res.data
 						this.address = res.data.address_mine //我的默认
-
-						this.address_bier = res.data.address_not_mine
+						console.log(this.types)
+						if(this.types == 1 ){
+							this.address_bier = res.data.address_not_mine
+						}
+						if(this.types == 0){
+							this.address_bier = res.data.address_not_mine
+							this.address_send = res.data.address_not_mine
+						}
 						
 						this.hezi_pic = res.data.packing_money + JSON.parse(res.data.peijian_price) //盒子价格
 						if(uni.getStorageSync('viptype')){
@@ -743,12 +846,15 @@
 					num = this.zhanshi.gold / this.zhanshi.gold_money
 				}
 				// console.log(num)
-				this.goldBuckle = parseInt(num) 
+				this.goldBuckle = num < 1 ? 0 : num
 				// console.log(this.goldBuckle)
 			},
 			changeTabs(index) {
 				console.log(index)
 				this.current = index
+				if(index == 1){
+					this.ind = 1
+				}
 				this.freight()
 			},
 			change(status) {
@@ -787,7 +893,6 @@
 					})
 					
 				}
-				
 				uni.navigateTo({
 					url:'../my/discount_select?ids='+ids+'&price='+price
 				})
@@ -798,42 +903,49 @@
 					this.com.msg('请添加收货地址')
 					return false
 				}
+				if(this.address_bier.id === undefined && this.current == 1){
+					this.com.msg('请添加代发收货地址')
+					return false
+				}
 				let data = {
 					valuation:this.nums_bj,							//保价金额（不保价则不传）
 					goods_id:this.datas.goods_id === undefined?0:this.datas.goods_id,//主商品id(购物车则不传
 					sku_id:this.datas.sku_id === undefined?0:this.datas.sku_id,		//skuid(购物车则不传			
 					count:this.datas.count === undefined?0:this.datas.count,	//数量(购物车则不传	是	[string]		
 					type:this.shoptypes === undefined ? 0 :this.shoptypes,			//0-普通商品 1-团购 2-秒杀	是	[string]
-					address_id:this.address.id,				//收货地址	是	[string]
-					shop_accessories_ids:this.hezi.id === undefined?0:this.hezi.id,		//传入配件ids
-					shop_accessories_counts:this.hezi.count=== undefined?0:this.hezi.count,//配件数量,隔开
+					address_id:this.current == 1 ? this.address_bier.id : this.address.id,				//收货地址	是	[string]
+					shop_accessories_ids:this.hezi.id === undefined?this.zhanshi.peijian_id:this.hezi.id,		//传入配件ids
+					shop_accessories_counts:this.hezi.count=== undefined?1:this.hezi.count,//配件数量,隔开
 					vip:this.viptype_num,					//是否开vip 1-是 0-不开	是
 					message:this.textarea_val,				//备注 有则传
-					store_address_id:this.address_bier.id === undefined ? 0 : this.address_bier.id,	//代发时 选择代发地址id	是
+					store_address_id:this.current == 1 ? this.address.id : 0,	//代发时 选择代发地址id	是
 					sf_change:this.ind,						//0-到付 1-寄付	是
 					sign_certificate:this.sign_certificate,	//判断是否有证书 1需要 否则 0	是
 					sign:this.sign_num,						//判断是否挂签 1需要 否则 0是
-					gold:this.goldBuckle < 1 ? 0 : 1,  			//判断是否使用金币 1使用 否则0
+					gold:this.goldBuckle < 1 ? 0 : 1,  			//判断是否使用金币 1使用 否则0 
 					group_id:this.cantuan_id,	 			//拼团则传拼团id(加入拼团
 					activity_id:this.datas.kaituan === undefined?0:this.datas.kaituan,	//创建拼团时传 拼团活动id	是
 					sf_type:this.current + 1 ,//	1-邮寄 2-代发 3-自提 4-送货上门
 					coupon_id:this.coupon_id,
 					bn:this.datas.bn === undefined ? '' : this.datas.bn
 				}
+				console.log(data) 
 				let payment_data={
 					vip:this.viptype_num,
 					menber_price:this.zhanshi.member_money,
-					shop_price:this.total
+					shop_price:this.total <=0 ? 0.01 : this.total
 				}
 				//送货上门
 				if(this.cli_type){
+					this.cli_type = false
+					this.com.msg('正在生成订单')
 					if(this.current == 3){
 						if(this.address.area == this.zhanshi.area){
 							this.$api.post('orders',data).then(res=>{
 								console.log(res)
 								this.com.msg(res.message)
 								if(res.status == 1){
-									this.cli_type = false
+									
 									let arr = 2
 									this.time = setInterval(()=>{
 										if(arr == 0){
@@ -855,7 +967,7 @@
 							console.log(res)
 							this.com.msg(res.message+',请勿操作')
 							if(res.status == 1){
-								this.cli_type = false
+								
 								let arr = 2
 								this.time = setInterval(()=>{
 									if(arr == 0){
@@ -915,7 +1027,7 @@
 	}
 
 	.tabs-box {
-		margin-top: 60rpx;
+		// margin-top: 60rpx;
 		padding: 2% 3%;
 		.tabs-box_top{
 			width: 100%;display: flex;justify-content: space-between;
@@ -995,12 +1107,12 @@
 			display: flex;
 
 			.express-sf {
-				width: 10%;
 				display: flex;
 				align-items: center;
 
 				image {
-					width: 100%;
+					width: 35rpx;
+					height: 35rpx;
 				}
 			}
 
@@ -1042,32 +1154,19 @@
 		border-top: solid 2upx #eeeeee;
 
 		.parcel-left {
-			width: 16%;
-			display: flex;
-
-			.parcel-bj {
-				width: 31%;
-				display: flex;
-				align-items: center;
-
-				image {
-					width: 100%;
-				}
-			}
 
 			.baojia {
 				font-size: 28upx;
 				padding-left: 10upx;
 			}
 		}
-
-		.parcel-right {
-			font-size: 26upx;
-			color: #999999;
-
-			.zhuyi {
-				color: #f8c35c;
-			}
+	}
+	.parcel-right {
+		font-size: 26upx;
+		color: #999999;
+	
+		.zhuyi {
+			color: #f8c35c;
 		}
 	}
 
@@ -1075,6 +1174,7 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
+		margin-top: 20rpx;
 
 		.sf-title,
 		.tpy-title {
@@ -1088,8 +1188,8 @@
 		}
 
 		.parcel-sf {
-			width: 45%;
-			padding: 18upx 0;
+			flex: 1;
+			padding: 20upx 0;
 			text-align: center;
 			
 			border-radius: 6upx;
@@ -1100,23 +1200,7 @@
 				position: absolute;
 				top: 0;
 				right: 0;
-
-				.triangle-topright {
-					width: 0;
-					height: 0;
-					border-top: 36upx solid #2d407a;
-					border-left: 46upx solid transparent;
-
-					.duihao {
-						font-size: 20upx;
-						color: #FFFFFF;
-						position: absolute;
-						top: 0;
-						right: 0;
-					}
-				}
 			}
-
 		}
 		.backimg{
 			background-image: url(../../static/index/back.png);background-size: 100% 100%;
@@ -1643,11 +1727,11 @@
 		align-items: center;
 
 		.open-super-members-log {
-			width: 5%;
+			// width: 5%;
 			display: flex;
 
 			image {
-				width: 100%;
+				width: 36upx;
 			}
 		}
 

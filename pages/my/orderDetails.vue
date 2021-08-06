@@ -72,7 +72,7 @@
 					工费
 				</view>
 				<view class="statis_r">
-					￥{{shop_det.total_labor_price}}
+					￥{{(shop_det.total_labor_price)}}
 				</view>
 			</view>
 			<view class="statis">
@@ -99,10 +99,12 @@
 				<view class="list_right">
 					<view @click="order_detail(item.id)">
 						<view class="title">{{its.title}}</view>
-						<view class="Specifications">金重：{{its.sku.weight}}<text class="num"> 款号：{{shop_det.model_no}}</text></view>
+						<view class="Specifications">金重：{{its.sku.weight}}g<text class="num"> 条码：{{its.sku.bar_code}}</text></view>
 						<view class="list_right_its">
-							<text >金料:￥{{its.gold_price}} </text>	
-							<text >工费:￥{{its.labor_price}} </text>
+							<text v-if="its.is_height == 1">
+								金价：￥{{its.gold_price}}</text>
+							<text v-if="its.is_height == 2">金价：￥0</text>
+							<text >工费:￥{{((its.labor_price/1)/(its.sku.weight/1)).toFixed(2)}}/g </text>
 						</view>
 						<view class="price">￥{{its.total}} <text>*{{its.count}}</text></view>
 					</view>
@@ -116,7 +118,9 @@
 		
 		<view class="st_data" style="margin-bottom: 60rpx;">
 			<view class="statis" v-if="shop_det.message">
-				<textarea :placeholder="'备注'+shop_det.message" :disabled="true" />
+				<view class="" style="flex-shrink: 0;">备注：</view>
+				<textarea style="background-color: #EEEEEE;padding: 20rpx;border-radius: 10rpx;height: 100rpx;color: #999;" v-model="shop_det.message || '无'"
+				placeholder="备注" :disabled="true" />
 			</view>
 			<!-- 工费 -->
 			<view class="statis">
@@ -256,7 +260,7 @@
 				let payment_data={
 					vip:this.shop_det.vip,
 					menber_price:this.shop_det.member_money,
-					shop_price:this.shop_det.total
+					shop_price:JSON.parse(this.shop_det.total)
 				}
 				uni.navigateTo({
 					url:'../my/payments?data='+this.shop_det.bn+'&shop='+JSON.stringify(payment_data)
@@ -320,7 +324,7 @@
 	.st_data{
 		margin: 20rpx 0;
 		.statis{
-			width: 100%;background-color: white;display: flex;justify-content: space-between;
+			width: 100%;background-color: white;display: flex;justify-content: space-between;align-items: center;
 			padding: 20rpx 3%;font-size: 30rpx;
 			textarea{
 				width: 100%;font-size: 28rpx;

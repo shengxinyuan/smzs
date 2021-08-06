@@ -15,8 +15,8 @@
 			</view>
 			<input type="text" value="" v-model="user_id" placeholder="请输入身份证号" />
 		</view>
-		<view class="">
-			<zs-button @but_cli="but_cli"> </zs-button>
+		<view class="bottom-box">
+			<view class="login_s" @click="but_cli">确定</view>
 		</view>
 	</view>
 </template>
@@ -59,14 +59,29 @@
 </style>
 <style lang="scss" scoped>
 	.inputs{
-		background-color: #fff;padding: 3%;margin-bottom: 2rpx;
+		background-color: #fff;padding: 20rpx 30rpx;margin-bottom: 2rpx;
 		display: flex;justify-content: space-between;
 		input{
-			width: 70%;
+			width: 70%;color: #666;
+			font-size: 28rpx;
 			text-align: right;
 		}
 	}
 	.sos_sty{
+		font-size: 24rpx;
 		width: 100%;padding: 2% 3%;background-color: #fffaf0;color: #f9dcc2;margin-bottom: 24rpx;
+	}
+	.bottom-box{
+		padding: 0 30rpx;
+		.login_s{
+			width: 100%;
+			height: 72rpx;
+			text-align: center;
+			line-height: 72rpx;
+			border-radius: 50rpx;
+			background-color: #1E3066;
+			color: #fff;
+			margin-top: 100rpx;
+		}
 	}
 </style>

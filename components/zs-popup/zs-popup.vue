@@ -48,7 +48,7 @@
 				color: #af8a59;margin-right: 20rpx;
 			}
 			.text_b{
-				font-size: 34rpx;
+				font-size: 26rpx;
 			}
 		}
 	}

@@ -1,0 +1,1 @@
+<view><web-view src="{{'http://zhuanshi.nxm.wanheweb.com/smsj/#/pages/index/index?token='+tok}}"></web-view></view>

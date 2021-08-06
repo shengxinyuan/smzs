@@ -19,7 +19,7 @@
 						<view v-else style="padding-top: 25%;"><u-empty text="暂无该类订单" mode="order"></u-empty> </view>
 			 		</scroll-view>
 			 	</swiper-item>
-			 </swiper>
+			 </swiper> 
  		</view>
  		<view v-else style="width: 100%;height: 100vh;padding: 28% 46%;"> 
  			<u-loading mode="flower" size="60"></u-loading>
@@ -160,7 +160,7 @@
 		height: 100vh;
 		display: flex;
 		flex-wrap: wrap;
-		padding-bottom: 30rpx;padding-top: 70rpx;
+		padding-bottom: 30rpx;
  		.head {
  			width: 100%;
  			display: flex;
@@ -170,7 +170,7 @@
  			padding:0 2%;
  			background-color: #fff;color: #999999;
  			text-align: center;
-			// position: fixed;left: 0;top: 0;z-index: 20;
+			position: fixed;left: 0;top: 0rpx;z-index: 20;
 			.swiper-box{
 				display: flex;white-space: nowrap;
 				.swiper_it{

@@ -25,7 +25,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 .zl-box {
-  padding: 20rpx 40rpx;
+  padding: 3%;
 }
 .tabs-one-title {
   font-size: 22rpx;
@@ -164,5 +164,65 @@
   font-size: 22rpx;
   text-align: center;
   margin-top: 10rpx;
+}
+.king_pic {
+  margin-bottom: 20rpx;
+  background-color: white;
+  border-radius: 10rpx;
+}
+.king_pic .king_pic_a {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.king_pic .king_pic_a .times {
+  color: #999;
+  line-height: 60rpx;
+  font-size: 24rpx;
+}
+.king_pic .tabs {
+  width: 100%;
+  font-size: 22rpx;
+}
+.king_pic .tabs .swipers_d {
+  height: 304rpx;
+  overflow-y: scroll;
+}
+.king_pic .tabs .tabs_tr {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.king_pic .tabs .tabs_tr view {
+  width: 20%;
+  text-align: center;
+  height: 58rpx;
+  line-height: 60rpx;
+  background-color: #fff0d7;
+  margin: 2rpx;
+  border-radius: 4rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.king_pic .tabs .tabs_td {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.king_pic .tabs .tabs_td view {
+  width: 20%;
+  text-align: center;
+  height: 58rpx;
+  line-height: 60rpx;
+  background-color: #fffcf7;
+  margin: 2rpx;
+  border-radius: 4rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 

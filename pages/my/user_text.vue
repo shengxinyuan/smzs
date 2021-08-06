@@ -32,7 +32,7 @@
 			<view class="per_list" @click="go_enter">城市定位
 			    <view class="list_s" style="color: #999;">
 					苏州市
-					<u-icon name="arrow-right" color="#706f6c" size="20"></u-icon>
+					<!-- <u-icon name="arrow-right" color="#706f6c" size="20"></u-icon> -->
 			    </view>
 			</view>
 		</view>
@@ -57,7 +57,7 @@
 		<u-picker mode="time" v-model="user_birthday_show" @confirm="go_brith"></u-picker>
 		<!-- 保存 -->
 		<view class="">
-			<zs-button @but_cli="go_usertext"> </zs-button>
+			<zs-button @but_cli="go_usertext"></zs-button>
 		</view>
 	</view>
 </template>
@@ -133,9 +133,9 @@
 					success: (chooseImageRes) => {
 						console.log(chooseImageRes)
 						const tempFilePaths = chooseImageRes.tempFilePaths[0]
-						console.log(chooseImageRes.tempFilePaths[0])
+						// console.log(chooseImageRes.tempFilePaths[0])
 						uni.uploadFile({
-							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+							url: 'http://zuanshi.dis.wanheweb.com/api/uploads',
 							filePath: tempFilePaths,
 							name: 'file',
 							formData: {
@@ -145,8 +145,9 @@
 								'token':uni.getStorageSync('token')
 							},
 							success: (up) => {
+								
 								that.image = JSON.parse(up.data).data
-								// console.log(JSON.parse(up.data))
+								console.log(JSON.parse(up.data))
 								that.images_ava = that.image
 								// console.log(this.images_ava)
 								that.show = false
@@ -187,10 +188,17 @@
 				 birthday:this.birthday}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
+						let b = uni.getStorageSync('member_info')
+						b.avatar = this.images_ava
+						b.nickname = this.names
+						b.birthday = this.birthday
+						uni.setStorageSync('member_info',b)
 						uni.showToast({
 							title:'修改成功',icon:'none'
 						})
-						this.pages_ty()
+						setTimeout(function() {
+							uni.navigateBack()
+						}, 1000)
 					}
 				})
 			},
@@ -229,10 +237,10 @@
 					text-align: right;
 				}
 				image{
-					border: 1rpx solid #999;
-					width: 85rpx;
+					// border: 1rpx solid #999;
+					width: 86rpx;
 					border-radius: 100rpx;
-					height: 85rpx;
+					height: 86rpx;
 				}
 				.u-icon{
 					margin-left: 15rpx;

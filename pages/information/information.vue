@@ -6,19 +6,19 @@
 				<view class="left_s">
 					<image src="/static/my/kefuimg.png" mode="aspectFill"></image>客服消息
 				</view>
-				<view class="num" v-if="badge.system_count">+{{badge.system_count}}</view>
+				<!-- <view class="num" v-if="badge.system_count">+{{badge.system_count}}</view> -->
 			</view>
 			<view class="list_s" @click="go_listnew(1)">
 				<view class="left_s">
 					<image src="/static/my/xitunimg.png" mode="aspectFill"></image>系统消息
 				</view>
-				<view class="num" v-if="badge.reward_count">+{{badge.reward_count}}</view>
+				<view class="num" v-if="badge.system_count">+{{badge.system_count}}</view>
 			</view>
 			<view class="list_s" style="border: none;" @click="go_listnew(2)">
 				<view class="left_s">
 					<image src="/static/my/wuliuimg.png" mode="aspectFill"></image>物流消息
 				</view>
-				<view class="num" v-if="badge.overdue_count">+{{badge.overdue_count}}</view>
+				<view class="num" v-if="badge.reward_count">+{{badge.reward_count}}</view>
 			</view>
 		</view>
 	</view>

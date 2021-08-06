@@ -4,7 +4,7 @@
 			<view class="order_box">
 				<view class="order_head" @click="order_detail(item.bn)">
 					订单编号：<text class="time">{{item.bn,10}}</text> 
-					<text class="sure" v-if="item.status == 10">待付款</text>
+					<text class="sure" v-if="item.status == 10">待确认</text>
 				</view>
 				<view v-if="item.data[0]">
 					<view class="shop_list"  v-for="(its,ind) in item.data[0]">
@@ -12,9 +12,9 @@
 						<view class="list_right" v-if="its.goods">
 							<view @click="order_detail(item.bn,10)">
 								<view class="title">{{its.goods.title}}</view>
-								<view class="Specifications">金重：{{its.goods.wage}}<text class="num"> 款号：{{its.goods.model_no}}</text></view>
+								<view class="Specifications">金重：{{its.goods.weight}}g<text class="num"> 条码：{{its.goods.bar_code}}</text></view>
 								<view class="shop_list_label">
-									<text>金价：{{its.gold_price}}</text><text>工费： {{its.labor_price}} </text>
+									<text>金价：￥{{its.gold_price}}</text><text>工费：￥{{((its.labor_price/1)/(its.goods.weight/1)).toFixed(2)}}/g </text>
 								</view>
 								<view class="price"><text>￥{{its.total}}</text>
 								 <text style="color: #999;"> *{{its.count}}</text></view>
@@ -34,7 +34,7 @@
 					<view></view> <!-- 位置 -->
 					<view class="foot_child">
 						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id)">取消订单</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 10" @click="order_details_x(item.bn,10)">平台下单
+						<view class="go_buy" v-if="item.status == 10 && item.T_F == 0" @click="order_details_x(item.bn,10)">平台下单
 							<!-- <u-count-down :timestamp="item.t_times" :show-hours="false"></u-count-down> -->
 						</view> <!-- // -->
 						<view class="go_buy_s" v-if="item.status == 20" @click="order_logist(item)">退款</view>  <!-- // -->
@@ -88,7 +88,7 @@
 					bn: e === undefined ? a : e,
 					current:1
 				}
-				this.com.navto('../vip-confirm-order/vip-confirm-order?data=' + JSON.stringify(data))
+				this.com.navto('../vip-confirm-order/vip-confirm-order?data=' + JSON.stringify(data) + '&types=1')
 			},
 			//订单详情
 			order_detail(e,status){

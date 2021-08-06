@@ -172,7 +172,7 @@
  			padding:0 2%;
  			background-color: #fff;color: #999999;
  			text-align: center;
-			// position: fixed;left: 0;top: 0;z-index: 20;
+			position: fixed;left: 0;top: 0rpx;z-index: 20;
 			.swiper-box{
 				
 				display: flex;white-space: nowrap;

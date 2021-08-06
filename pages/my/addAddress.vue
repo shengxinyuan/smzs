@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="p2">
 			<view class="item" >
-				<text>收件人</text>
+				<text>姓名</text>
 				<view class="right">
 					<input type="text" v-model="editForm.username" placeholder="请输入收件人姓名" />
 				</view>
@@ -26,35 +26,39 @@
 					<textarea  v-model="editForm.address" nowrap="10" placeholder="请填写详细地址" />
 				</view>
 			</view>
-			<view class="item ">
+			<view class="item u-m-t-0" v-if="is_mine == 1">
 				<text>地址标签</text>
 				<view class="right">
 					<view :class="{act:labind == 1}" @click="label(1)">家</view>
 					<view :class="{act:labind == 2}" @click="label(2)">公司</view>
 				</view>
 			</view>
-			<view class="item ">
-				<text>收件人真实姓名</text>
+			<view class="item " v-if="onShow == 1">
+				<text>真实姓名</text>
 				<view class="right">
 					<input type="text" v-model="Realityname" placeholder="请输入真实姓名,负责会导致不能收货" />
 				</view>
 			</view>
-			<view class="item ">
+			<view class="item " v-if="onShow == 1">
 				<text>身份证号码</text>
 				<view class="right">
 					<input type="text" v-model="idcard" placeholder="请输入有效身份证号码" maxlength="18"/>
 				</view>
 			</view>
-			<view class="item item-bd"> <!-- v-if="address_id == 0 ? true : false" -->
+			<view class="item item-bd" v-if="is_mine == 1"> <!-- v-if="address_id == 0 ? true : false" -->
 				<text>设置默认地址</text>
 				<view class="right">
 					<switch :checked="address_mor==1?true:false" style="transform:scale(0.9)" @change="Change" color="#1e2f64" />
 				</view>
 			</view>
 		</view>
-		<view >
+		<view v-show="onShow == 0">
 			<button class="btn_sty" v-if="but_true" >保存</button>
-			<button class="btn" v-else @click="save">保存</button>
+			<button class="btn" v-else @click="save(1)">保存</button>
+		</view>
+		<view v-show="onShow == 1">
+			<button class="btn_sty" v-if="but_real" >保存</button>
+			<button class="btn" v-else @click="save(2)">保存</button>
 		</view>
 	</view>
 </template>
@@ -64,6 +68,7 @@
 		data() {
 			return {
 				show:false,
+				onShow: 0,
 				pcd: 'fdsdsaf',
 				detail:"",
 				detail1:"",
@@ -88,6 +93,7 @@
 		},
 		onLoad(op) {
 			this.is_mine = op.is_mine
+			this.onShow = op.onShow
 			// console.log(JSON.parse(op.type))
 			let arr = JSON.parse(op.type)
 				this.editForm.username = arr.contact
@@ -103,12 +109,21 @@
 		computed:{
 			but_true(){
 				let arr
-				if(this.editForm.username =='' || this.editForm.mobile == '' || this.editForm.address == '' || this.regions == '' || this.Realityname == '' || this.idcard==""){
+				if(this.editForm.username =='' || this.editForm.mobile == '' || this.editForm.address == '' || this.regions == ''){
 					arr = true
 				}else{
 					arr = false
 				}
 				return arr
+			},
+			but_real(){
+				let arr1
+				if(this.editForm.username =='' || this.editForm.mobile == '' || this.editForm.address == '' || this.regions == '' || this.Realityname == '' || this.idcard==""){
+					arr1 = true
+				}else{
+					arr1 = false
+				}
+				return arr1
 			}
 		},
 		methods:{
@@ -135,40 +150,72 @@
 				}
 			},
 			//地址接口
-			address_reader(){
-				let data = {
-					contact:this.editForm.username,
-					mobile:this.editForm.mobile,
-					province:this.province,
-					city:this.city,
-					area:this.area,
-					address:this.editForm.address,
-					label:this.labind,
-					address_id:this.address_id,//地址id，修改传
-					truename:this.Realityname,
-					id_number:this.idcard,
-					is_mine:this.is_mine,
-					is_default:this.address_type
-				}
-				this.$api.post('address',data).then(res=>{
-					console.log(res)
-					this.com.msg(res.message)
-					if(res.status == 1){
-						this.com.three_back( )
+			address_reader(e){
+				if(e == 1){
+					let data = {
+						contact:this.editForm.username,
+						mobile:this.editForm.mobile,
+						province:this.province,
+						city:this.city,
+						area:this.area,
+						address:this.editForm.address,
+						label:this.labind,
+						address_id:this.address_id,//地址id，修改传
+						truename:'',
+						id_number:'',
+						is_mine:this.is_mine,
+						is_default:this.address_type
 					}
-				})
+					this.$api.post('address',data).then(res=>{
+						console.log(res)
+						this.com.msg(res.message)
+						if(res.status == 1){
+							this.com.three_back()
+						}
+					})
+				}
+				if(e == 2){
+					let data = {
+						contact:this.editForm.username,
+						mobile:this.editForm.mobile,
+						province:this.province,
+						city:this.city,
+						area:this.area,
+						address:this.editForm.address,
+						label:this.labind,
+						address_id:this.address_id,//地址id，修改传
+						truename:this.Realityname,
+						id_number:this.idcard,
+						is_mine:this.is_mine,
+						is_default:this.address_type
+					}
+					this.$api.post('address',data).then(res=>{
+						console.log(res)
+						this.com.msg(res.message)
+						if(res.status == 1){
+							this.com.three_back()
+						}
+					})
+				}
 			},
 			//保存
-			save(){
-				let idcard_code = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+			save(e){
 				if(!(/^1[345678]\d{9}$/.test(this.editForm.mobile))){
 					uni.showToast({
 						title:'手机号不正确',icon:'none'
 					})
-				}else if(!idcard_code.test(this.idcard)){
-					this.com.msg("身份证有误")
-				}else{
-					this.address_reader()
+					return
+				}
+				if(e == 1){
+					this.address_reader(1)
+				}
+				if(e == 2){
+					let idcard_code = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+					if(!idcard_code.test(this.idcard)){
+						this.com.msg("身份证有误")
+						return
+					}
+					this.address_reader(2)
 				}
 			},
 		}
@@ -185,7 +232,7 @@
 		.p2{
 
 			.item{
-				width: 100%;line-height: 88rpx;padding: 0 20rpx;
+				width: 100%;line-height: 88rpx;padding: 0 30rpx;
 				display: flex;
 				justify-content: space-between;
 				background-color: #fff;

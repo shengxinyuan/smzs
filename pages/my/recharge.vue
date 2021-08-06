@@ -16,8 +16,8 @@
 		},
 		methods:{
 			but_cli(num,val){
-				// console.log(num,val.toFixed(2))
-				this.$api.post('top_up',{total:val.toFixed(2),type:num}).then(res=>{
+				console.log(num,val)
+				this.$api.post('top_up',{total:val,type:num}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						if(num == 1){

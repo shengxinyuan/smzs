@@ -3,7 +3,7 @@
 		<uni-nav-bar left-icon="back" @clickLeft="goto_top" :title="title"></uni-nav-bar>
 		
 		<view class="gold-ratio-box">
-			<view class="title">{{ratioTitle}}</view>
+			<view class="title">{{title}}</view>
 			<input class="input" type="number" v-model="value" @input="chack"/>
 		</view>
 		<view class="explain">
@@ -49,7 +49,7 @@
 				this.$api.get('managegold',{id:this.gold_id}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.value = res.data.ratio_price
+						this.value = res.data.ratio_price+''
 					}
 				})
 			},
@@ -62,10 +62,10 @@
 				})
 			},
 			chack(e){
-				e.target.value = parseInt(e.target.value)
+				// e.target.value = parseInt(e.target.value)
 				//重新赋值给input
 				this.$nextTick(() => {
-					this.value= e.target.value
+					this.value= e.target.value+''
 				})
 			},
 			//返回

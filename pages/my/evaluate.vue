@@ -32,7 +32,7 @@
 				datas:'',
 				list:[],
 				textvalue:'',
-				action: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+				action: 'http://zuanshi.dis.wanheweb.com/api/uploads',
 				token:{
 					token:uni.getStorageSync('token')
 				},

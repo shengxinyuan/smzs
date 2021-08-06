@@ -5,17 +5,17 @@
 				<image :src="pag_data.avatar" alt="">
 				<view class="header_l_child">
 					<view>{{pag_data.nickname}}</view>
-					<text v-if="huiy_show">{{pag_data.vip_date}} 到期</text>
+					<text style="font-size: 26upx;" v-if="huiy_show">{{list.vip_time}} 到期</text>
 				</view>
 			</view>
 			<view class="header_r" v-if="huiy_show" @click="go_imment">
-				<text>立即续费</text>
+				<text style="font-size: 26upx;">立即续费</text>
 			</view>
 		</view>
 		<view class="cont">
 			<zs-title :title="'专享特权'" ></zs-title>
 			<view class="nav_nine">
-				<view class="nav_items" v-for="(it,ind) in list.top" :key="ind" @click="">	
+				<view class="nav_items" v-for="(it,ind) in list.top" :key="ind" @click="go_to">	
 					<image :src="it.image" mode=""></image>
 					<view>
 						{{it.title}}
@@ -44,38 +44,42 @@
 			</view>
 			<view class="buy_vip_s">
 				<view class="vip_item">
-					<view class="it_top">
+					<view class="it_top" style="font-size: 28upx;">
 						邀请好友免费享会员
 					</view>
 					<view class="it_c"></view>
-					<view class="it_bot">
+					<view class="it_bot" style="font-size: 26upx;">
 						邀请{{list.people_invited}}名好友注册并开通会员即可享受{{list.is_year == 0? list.number_year+'月' : list.number_year+'年'}}免费会员哦
 					</view>
 					<view class="it_but">
-						<u-icon name="plus-people-fill" color="#daa856" size="60"></u-icon>
-						<view class="it_but_share" v-if="list.people_invited != 0" >
-							立即分享
+						<view style="display: flex;align-items: center;">
+							<u-icon name="plus-people-fill" color="#daa856" size="60"></u-icon>
+							<text style="color: #999;margin-left: 10upx;font-size: 24upx;">已邀请{{list.ppid_number}}名</text>
 						</view>
-						<view class="it_but_share" v-else @click="go_getvip">
+						<view class="it_but_share" v-if="ppid_number >= people_invited" @click="go_getvip">
 							立即领取
 						</view>
+						<view class="it_but_share" v-else @click="app_share">
+							立即分享
+						</view>
+						
 					</view>
 				</view>
 				<view class="vip_item" :class="buy_ind == it.id ? 'vip_item_act' : ''" 
 				  v-for="(it,ind) in list.end" :key="ind" v-if="ind == 0" @click="buy_cli(it)">
-					<view class="it_top">
+					<view class="it_top" style="font-size: 28upx;">
 						{{it.title}}
 					</view>
 					<view class="it_c">
 						￥<text>{{it.money}}</text>
 					</view>
-					<view class="it_bot">
+					<view class="it_bot" style="font-size: 26upx;">
 						{{it.title}}
 					</view>
 				</view>
 			</view>
 			<!-- //开通按钮 -->
-			<view class="op_but" @click="go_imment">
+			<view class="op_but" style="" @click="go_imment">
 				立即开通
 			</view>
 			<view style="font-size: 26rpx;color: #999;padding: 0 20rpx;line-height: 36rpx;margin-bottom: 60rpx ;">
@@ -154,11 +158,13 @@
 					}
 				],
 				pay_ind:0,
-				title_val:''
+				title_val:'',
+				ppid_number: 0,
+				people_invited: 0,
+				
 			}
 		},
-		onLoad(op) {
-			// console.log(op.it)
+		onLoad() {
 			this.pag_data = uni.getStorageSync('menber_json')
 			
 			this.page_reader()
@@ -175,18 +181,46 @@
 			clearInterval(this.time)
 		},
 		methods:{
+			//
+			go_to(){
+					this.com.navto('./aboutus')
+			},
 			page_reader(){
 				this.$api.get('vip').then(res=>{
 					console.log(res)
 					this.list = res.data
+					this.people_invited = res.data.people_invited
+					this.ppid_number = res.data.ppid_number
 					this.title_val = res.data.middle[0].content
+					console.log(this.people_invited)
+					console.log(this.ppid_number)
 				})
+			},
+			//分享
+			app_share(){
+				uni.share({
+				    provider: "weixin",
+				    scene: "WXSceneSession",
+				    type: 0,
+				    href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.pag_data.bn,
+				    title: '奢美饰界',
+				    summary: "我在奢美饰界发现好物，快来看看！",
+				    imageUrl: '../../static/logos.jpg',
+				    success: function (res) {
+						console.log(res)
+						this.page_reader()
+				    },fail: function (err) {
+						console.log(err)
+				        // that.com.msg('失败')
+				    }
+				});      
 			},
 			//领取vip
 			go_getvip(){
 				this.$api.put('vip').then(res=>{
 					console.log(res)
 					this.com.msg(res.message)
+					this.page_reader()
 				})
 			},
 			//选择支付方式
@@ -280,6 +314,10 @@
 								title:'支付成功..',icon:'none'
 							})
 						}
+					} else {
+						uni.showToast({
+							title:'支付失败..',icon:'none'
+						})
 					}
 				})
 			},
@@ -367,12 +405,12 @@
 				width: 30%;text-align: center;border: 4rpx solid #F1F1F1;padding: 20rpx;
 				border-radius: 20rpx;
 				.it_top{
-					font-size: 30rpx;line-height: 66rpx;font-weight: bold;white-space: nowrap;
+					line-height: 66rpx;font-weight: bold;white-space: nowrap;
 				}
 				.it_c{
 					color: #daa856;
 					text{
-						font-size: 38rpx;font-weight: bold;line-height: 76rpx;
+						font-size: 34rpx;font-weight: bold;line-height: 76rpx;
 					}
 				}
 				.it_bot{
@@ -396,7 +434,7 @@
 				.it_c{
 					color: #daa856;
 					text{
-						font-size: 38rpx;font-weight: bold;line-height: 76rpx;
+						font-size: 34rpx;font-weight: bold;line-height: 76rpx;
 					}
 				}
 				.it_bot{
@@ -406,7 +444,8 @@
 					display: flex;justify-content: space-between;line-height: 50rpx;
 					.it_but_share{
 						background-color: #daa856;margin-top: 10rpx;
-						;padding: 0 20rpx;border-radius: 40rpx; 
+						padding: 0 20rpx;border-radius: 40rpx; 
+						font-size: 26upx;
 					}
 				}
 			}
@@ -420,7 +459,7 @@
 		//立即开通
 		.op_but{
 			width: 96%;background-image: linear-gradient(90deg,#f1dab0,#ffcb6b);
-			line-height: 90rpx;text-align: center;color: #52300f;font-size: 34rpx;font-weight: bold;
+			line-height: 80rpx;text-align: center;color: #52300f;font-size: 30rpx;font-weight: bold;
 			border-radius: 50rpx;margin: 40rpx 0 20rpx 2%;
 		}
 	}
@@ -436,7 +475,7 @@
 			}
 			.header_l_child{
 				view{
-					font-size: 34rpx;line-height: 60rpx;font-weight: bold;
+					font-size: 32rpx;line-height: 60rpx;font-weight: bold;
 				}
 				text{
 					color: #999;

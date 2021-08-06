@@ -24,6 +24,9 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.content.data-v-47977456 {
+  padding-bottom: 100rpx;
+}
 .nav_head.data-v-47977456 {
   height: 90rpx;
   line-height: 86rpx;
@@ -38,7 +41,7 @@
   position: relative;
 }
 .nav_head .nav_l.act.data-v-47977456 {
-  color: #000;
+  color: #000000;
 }
 .nav_head .nav_l.act.data-v-47977456:before {
   content: '';
@@ -62,10 +65,10 @@
   border-bottom: solid 2rpx #eeeeee;
 }
 .tabs-first.data-v-47977456 {
-  padding: 0 0 30rpx 0;
+  padding: 20rpx 0 30rpx 0;
 }
 .share-text.data-v-47977456 {
-  margin: 20rpx 0;
+  margin-top: 20rpx;
   text-align: center;
   font-size: 24rpx;
   color: #999999;

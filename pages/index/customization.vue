@@ -20,16 +20,16 @@
 		</view>
 		<view class="content">
 			<textarea value="" placeholder="请输入定制描述" v-model="discride"/>
-			<view class="">
+			<view class="u-m-t-20">
 				请上传图片
 			</view>
-			<view class="">
+			<view class="u-p-b-20" style="border-bottom: 1rpx solid #F6F6F6;">
 				<u-upload :action="action" ref="uUpload" max-count="3" :header="token"></u-upload>
 			</view>
-			<view class="" style="margin-top: 30rpx;">
+			<view class="" style="margin-top: 20rpx;">
 				请上传视频
 			</view>
-			<view class="vid_f">
+			<view class="vid_f u-p-b-20" style="border-bottom: 1rpx solid #F6F6F6;">
 				<view class="vid_f_child" v-for="(it,ind) in ship_list" :key="ind">
 					<video v-if="ship_list !=''" :src="it" controls></video>
 					<view class="del_b" @click="del_vid(ind)">
@@ -47,7 +47,6 @@
 				</view>
 			</view>
 		</view>
-		
 		<view class="button_b">
 			<zs-button :buttitle="'提交'" @but_cli="but_cli" ></zs-button>
 		</view>
@@ -61,7 +60,7 @@
 				name:'',
 				phone:'',
 				discride:'',
-				action: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+				action: 'http://zuanshi.dis.wanheweb.com/api/uploads',
 				lists:[],
 				ship_list:[],
 				token:{
@@ -91,7 +90,7 @@
 							that.com.msg("正在上传")
 							// return
 							uni.uploadFile({
-								url: 'http://zhuanshi.nxm.wanheweb.com/api/uploadVideo', //仅为示例，非真实的接口地址
+								url: 'http://zuanshi.dis.wanheweb.com/api/uploadVideo', //仅为示例，非真实的接口地址
 								filePath: src,
 								name: 'file',
 								
@@ -165,8 +164,30 @@
 				this.$api.post('customization',data).then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.com.msg(res.message)
-						this.com.three_back()
+						// this.com.msg(res.message)
+						uni.showModal({
+							title:res.message,
+							content:'请添加客服微信:'+res.data,
+							confirmText:'复制并打开微信',
+							cancelText:'复制并返回',
+							success(a) {
+								if(a.confirm){
+									uni.setClipboardData({
+									    data: res.data,
+									    success: function () {
+											plus.runtime.openURL("weixin://");
+									    }
+									});
+								}else{
+									uni.setClipboardData({
+									    data: res.data,
+									    success: function () {
+											uni.navigateBack()
+									    }
+									});
+								}
+							}
+						})
 					}
 				})
 			}
@@ -180,7 +201,7 @@
 	background-color: white;
 	.user_item{
 		padding: 0 3%;
-		display: flex;font-size: 30rpx;
+		display: flex;
 		.it_left{
 			width: 20%;line-height: 80rpx;
 			
@@ -188,8 +209,9 @@
 		.it_right{
 			width: 80%;padding-top: 20rpx;
 			input{
+				font-size: 28rpx;
 				width: 100%;
-				display: inline-block;font-size: 30rpx;
+				display: inline-block;
 			}
 		}
 	}
@@ -197,7 +219,8 @@
 .content{
 	width: 100%;background-color: white;padding: 3%;
 	textarea{
-		width: 100%;height: 260rpx;font-size: 30rpx;
+		width: 100%;height: 260rpx;font-size: 28rpx;
+		border-bottom: 1rpx solid #F6F6F6;
 	}
 	.vid_f{
 		width: 100%;
@@ -223,6 +246,5 @@
 			}
 		}
 	}
-	
 }
 </style>

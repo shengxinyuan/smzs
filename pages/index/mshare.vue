@@ -1,43 +1,53 @@
 <template>
 	<view class="zl-box">
 		<view class="box-one">
-			<view class="title"><text>{{title}}</text></view>
-			<view class="text"><text>{{text}}</text></view>
-			<view><text>成色：{{purity}}</text></view>
-			<view class="weight"><text>克重：{{weight}}</text></view>
+			<view class="title"><text>{{datas.title}}</text></view>
+			<view class="text"><text>{{datas.remark}}</text></view>
+			<view><text>成色：{{datas.texture}}</text></view>
+			<view class="weight"><text>克重：{{datas.min_g + '-' + datas.max_g}}</text></view>
 		</view>
 		<view class="box-two">
-			<u-checkbox-group>
+			<u-checkbox-group v-for="(item,index) in datas.album" :key="index">
 				<view style="display: flex;justify-content: space-between;flex-wrap: wrap;">
-					<view class="photo-box" v-for="(item,index) in imgList" :key="index">
+					<view class="photo-box" v-if="index != 0">
 						<view class="photo">
-							<image src="../../static/index/ii.png" mode="aspectFill"></image>
+							<image :src="item.img0" mode="aspectFill"></image>
 						</view>
 						<view class="checkbox">
-							<u-checkbox @change="checkboxChange" v-model="item.checked" shape="circle" active-color="#2d407a"></u-checkbox>
+							<u-checkbox v-model="item.checked" @change="checkboxChange($event,index)" shape="circle"
+								active-color="#2d407a"></u-checkbox>
 						</view>
 					</view>
 				</view>
 			</u-checkbox-group>
 		</view>
 		<view class="bottom-box">
-			<view class="min-box">
+			<view class="min-box" @click="share(0)">
 				<image src="../../static/index/haoyou.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">微信好友</view>
 			</view>
-			<view class="min-box">
+			<view class="min-box" @click="share(1)">
 				<image src="../../static/index/pyq.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">朋友圈</view>
 			</view>
-			<view class="min-box">
+			<view class="min-box" @click="share(2)">
 				<image src="../../static/index/lianjie.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">分享链接</view>
 			</view>
-			<view class="min-box">
+			<view class="min-box" @click="share(3)">
 				<image src="../../static/index/save.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">生成海报</view>
 			</view>
 		</view>
+		<u-popup v-model="canvasShow" mode="center" z-index="999999999">
+			<view class="popup-box">
+				<view class="canvas-box">
+					<zs-lime-painter @success="path = $event" :board="base" isRenderImage>
+					</zs-lime-painter>
+				</view>
+				<view class="save" @click="saveImage">保存到相册</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -49,25 +59,255 @@
 				text: '设计师将龙凤呈祥与花卉、双喜元素结合，寓意佳偶天成，天生一对，婚后生活幸福美满',
 				purity: '足金999.9',
 				weight: '18.16g-18.41g',
-				imgList: [{
-						checked: false
-					},
-					{
-						checked: false
-					},
-					{
-						checked: false
-					},
-					{
-						checked: false
-					}
-				]
+				checked: false,
+				datas: [],
+				array: [], //处理数据
+				canvasShow: false,
+				goods: [],
+				member: [],
+				base: {
+					width: '520rpx',
+					height: '900rpx',
+					views: [{
+							type: 'image',
+							src: '',
+							css: {
+								left: '30rpx',
+								top: '40rpx',
+								width: '60rpx',
+								height: '60rpx',
+								radius: '50%',
+							}
+						},
+						{
+							type: 'text',
+							text: '',
+							css: {
+								color: '#666',
+								left: '110rpx',
+								top: '42rpx',
+								fontSize: '30rpx',
+							}
+						},
+						{
+							type: 'image',
+							src: '',
+							css: {
+								left: '0rpx',
+								top: '130rpx',
+								background: '#ccc',
+								width: 'auto',
+								height: 'auto',
+							}
+						},
+						{
+							type: 'text',
+							text: '',
+							css: {
+								color: '#666',
+								left: '30rpx',
+								top: '570rpx',
+								fontSize: '30rpx',
+							}
+						},
+						{
+							type: 'text',
+							text: '',
+							css: {
+								color: '#666',
+								left: '30rpx',
+								top: '620rpx',
+								fontSize: '28rpx',
+							}
+						},
+						{
+							type: 'text',
+							text: '',
+							css: {
+								color: '#666',
+								left: '250rpx',
+								top: '620rpx',
+								fontSize: '28rpx',
+							}
+						},
+						{
+							type: 'text',
+							text: '',
+							css: {
+								color: '#333',
+								left: '60rpx',
+								top: '690rpx',
+								fontSize: '34rpx',
+								fontWeight: 'bold'
+							}
+						},
+						{
+							type: 'image',
+							src: '',
+							css: {
+								left: '210rpx',
+								top: '760rpx',
+								background: '#ffffff',
+								width: '100rpx',
+								height: '100rpx',
+							}
+						},
+						{
+							type: 'text',
+							text: '扫一扫',
+							css: {
+								color: '#666',
+								left: '228rpx',
+								top: '850rpx',
+								fontSize: '22rpx',
+							}
+						},
+						// {
+						// 	type: 'text',
+						// 	text: '￥',
+						// 	css: {
+						// 		color: '#666',
+						// 		left: '30rpx',
+						// 		top: '698rpx',
+						// 		fontSize: '28rpx',
+						// 		fontWeight: 'bold'
+						// 	}
+						// },
+						// {
+						// 	type: 'text',
+						// 	text: '起',
+						// 	css: {
+						// 		color: '#333',
+						// 		left: '180rpx',
+						// 		top: '698rpx',
+						// 		fontSize: '28rpx',
+						// 		fontWeight: 'bold'
+						// 	}
+						// },
+					]
+				},
 			}
 		},
+		onLoad(e) {
+			console.log(JSON.parse(e.data))
+			this.goods = JSON.parse(e.data)
+			JSON.parse(e.data).album.forEach(a => {
+				a.checked = false
+			})
+			this.datas = JSON.parse(e.data)
+			this.member = uni.getStorageSync('member_info')
+		},
 		methods: {
-			checkboxChange(e) {
-				//console.log(e);
+			// 保存画布到相册
+			saveImage() {
+				this.canvasShow = false
+				uni.saveImageToPhotosAlbum({
+					filePath: this.path,
+					success(res) {
+						uni.showToast({
+							title: '已保存到相册',
+							icon: 'success',
+							duration: 2000
+						})
+					}
+				})
 			},
+			checkboxChange(e, ind) {
+				this.array = this.datas.album
+				console.log(this.array)
+				// for(let i in this.datas.album){
+				// 	this.array.push(e.value)
+				// 	console.log(this.array)
+				// }
+				// console.log(this.array)
+				// this.datas.album.forEach(it => {
+				// 	console.log(it)
+				// 	if (index != 0) {
+				// 		this.array.push(it)
+				// 		console.log(it)
+				// 	}
+				// })
+				// this.datas.album[e].checked = e.value
+				// console.log(this.array)
+			},
+			share(e) {
+				let that = this
+				let data = this.datas.title + "\n" + this.datas.remark + '\n' + '成色：' + this.datas.texture + '\n' + '克重：' +
+					this.datas.min_g + '-' + this.datas.max_g
+				console.log(data)
+				if (e == 0 || e == 1) {
+					uni.setClipboardData({
+						data: data,
+						success: function() {
+							uni.showToast({
+								title: '文字已复制到剪贴板',
+								icon: 'none'
+							})
+						}
+					});
+					console.log(this.array)
+					let num = 0
+					let arr = []
+					this.array.forEach(b => {
+						if (b.checked == true) {
+							arr.push(b)
+							uni.saveImageToPhotosAlbum({
+								filePath: b.img0,
+								success: function() {
+									num++
+									if (arr.length == num) {
+										uni.showModal({
+											title: '图片已保存，是否打开微信？',
+											success(mod) {
+												if (mod.confirm) {
+													plus.runtime.openURL("weixin://")
+												}
+											}
+										})
+									}
+								}
+							})
+						}
+					})
+				}
+				if (e == 2) {
+					//type 1 商品 0 首页
+					let data = {
+						id: this.datas.id,
+						type: 1,
+						name: this.member.id
+					}
+					uni.share({
+						provider: "weixin",
+						scene: "WXSceneSession",
+						type: 0,
+						href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/index/index?data=' + JSON
+							.stringify(data),
+						title: this.datas.title,
+						summary: this.datas.remark,
+						// imageUrl: this.datas.avatar,
+						imageUrl: '/static/logos.jpg',
+						success: function(res) {
+							// console.log(res) 
+						},
+						fail: function(err) {
+							// console.log(err)
+							// that.com.msg('失败')
+						}
+					});
+				}
+				if (e == 3) {
+					this.canvasShow = true
+					this.base.views[0].src = this.goods.comm_avatar
+					this.base.views[1].text = this.goods.comm_title
+					this.base.views[2].src = this.goods.image
+					this.base.views[3].text = this.goods.title
+					this.base.views[4].text = '款号：' + this.goods.model_no
+					this.base.views[5].text = '最小金重：' + this.goods.min_g
+					this.base.views[6].text = '￥' + this.goods.price + '起'
+					this.base.views[7].src = this.goods.comm_qrcode
+				}
+			}
 		}
 	}
 </script>
@@ -96,17 +336,23 @@
 
 		.box-two {
 			margin-top: 40upx;
-			
-			.photo-box{
+
+			.photo-box {
 				position: relative;
+
 				.photo {
+					margin-right: 10upx;
 					margin-bottom: 10upx;
+					display: flex;
+
 					image {
 						width: 220upx;
 						height: 220upx;
 						border-radius: 10upx;
+						background-color: #F1F1F1;
 					}
 				}
+
 				.checkbox {
 					position: absolute;
 					right: -24upx;
@@ -115,20 +361,52 @@
 			}
 		}
 	}
-	.bottom-box{
-		width: 100%;height: 180upx;
+
+	.bottom-box {
+		width: 100%;
+		height: 180upx;
 		padding: 0 50upx;
-		background-color: #fff;
-		display: flex;align-items: center;justify-content: space-between;
-		position: fixed;bottom: 0;left: 0;z-index: 998;
-		.min-box{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 998;
+
+		.min-box {
 			text-align: center;
 			font-size: 22upx;
 			color: #666666;
-			image{
+
+			image {
 				width: 80upx;
 				height: 80upx;
 			}
+		}
+	}
+
+	.popup-box {
+		width: 100%;
+
+		.canvas-box {
+			// width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.save {
+			width: 100%;
+			margin: 20rpx auto;
+			width: 200rpx;
+			height: 60rpx;
+			line-height: 60rpx;
+			background-color: #2d407a;
+			border-radius: 40rpx;
+			font-size: 24rpx;
+			text-align: center;
+			color: #fff;
 		}
 	}
 </style>

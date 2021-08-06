@@ -1,4 +1,4 @@
-const commoneUrl  = "http://zhuanshi.nxm.wanheweb.com/api/"; //公共路径 
+const commoneUrl  = "http://zuanshi.dis.wanheweb.com/api/"; //公共路径 
 var that = this
 //post请求封装
 function postRequest(url,data){
@@ -16,6 +16,7 @@ function postRequest(url,data){
 				'content-type': 'application/x-www-form-urlencoded','token':uni.getStorageSync('token')},
 			success:function(res){
 				resolve(res.data);
+				uni.hideToast()
 				if(res.data.message == 'token error'){
 					uni.showModal({
 						content:'您还未登录，是否登录？',
@@ -51,6 +52,7 @@ function getRequest(url,data){
 					'content-type': 'application/json','token':uni.getStorageSync('token')},
 				success:function(res){
 					resolve(res.data);
+					uni.hideToast()
 					if(res.data.message == 'token error'){
 						uni.showModal({
 							content:'您还未登录，是否登录？',
@@ -73,7 +75,7 @@ function getRequest(url,data){
 	return promise;
 }
 //put请求封装
-function putRequest(url,data){
+function putRequest(url,data,heads){
 	var promise = new Promise((resolve,reject) => {
 			var postData = data;
 			uni.request({
@@ -85,6 +87,7 @@ function putRequest(url,data){
 					'content-type': 'application/json','token': uni.getStorageSync('token')},
 				success:function(res){
 					resolve(res.data);
+					uni.hideToast()
 					if(res.data.message == 'token error'){
 						uni.showModal({
 							content:'您还未登录，是否登录？',
@@ -117,7 +120,7 @@ function delRequest(url,data){
 					'content-type': 'application/json','token': uni.getStorageSync('token')},
 				success:function(res){
 					resolve(res.data);
-					
+					uni.hideToast()
 					if(res.data.message == 'token error'){
 						uni.showModal({
 							content:'您还未登录，是否登录？',

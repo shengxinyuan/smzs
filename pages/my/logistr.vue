@@ -7,7 +7,9 @@
 			顺丰快递：{{numList.ship_bn}}
 		</view>
 		<view class="p1">
-			<u-steps :list="numList.logistic_detail" :current="numList.logistic_detail.length" activeColor="#000" direction="column"></u-steps>
+			<u-steps :list="numList.logistic_detail" 
+			:current="numList.logistic_detail.length" 
+			activeColor="#000" direction="column"></u-steps>
 		</view>
 		<!-- <view class="box">
 			<view class="p1 text">
@@ -46,7 +48,6 @@
 					console.log(res.data)
 					this.numList = res.data
 				})
-				
 			}
 		}
 	}

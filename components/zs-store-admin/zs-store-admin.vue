@@ -1,14 +1,16 @@
 <template>
 	<view>
 		<view class="orders_d">
-			<view style="display: flex;justify-content: space-between;margin-bottom: 10rpx;">
-				<view style="font-size: 30rpx;">
+			<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
+				<view style="font-weight: bold;">
 					店铺管理
 				</view>
 			</view>
 			<view style="display: flex;flex-wrap: wrap;">
 				<view class="orders_it" v-for="(it,ind) in store_admin" :key="ind" @click="goto_vip_set(ind)">
-					<image :src="it.img" mode=""></image>
+					<view class="images">
+						<image :src="it.img" mode="widthFix"></image>
+					</view>
 					<view class="">
 						{{it.name}}
 					</view>
@@ -87,8 +89,18 @@
 					} else if(ind == 7){
 						this.com.navto('../../pages/index/Selected_topics?id='+this.jinx[1].id+'&type='+JSON.stringify(this.jinx))
 					}
+				}else{
+					uni.showModal({
+						title:'您还不是会员，是否去开通？',
+						success(a) {
+							if(a.confirm){
+								uni.navigateTo({
+									url:'../../pages/my/vip_member'
+								})
+							}
+						}
+					})
 				}
-			
 			},
 		}
 	}
@@ -96,18 +108,22 @@
 
 <style lang="scss" scoped>
 .orders_d{
-	padding: 30rpx;background-color: white;margin-top: 26rpx;border-radius: 20rpx;
+	padding: 20rpx;background-color: white;margin-top: 16rpx;border-radius: 20rpx;
 	background-image: url(../../static/my/dianbu_bgimage.png);
 	background-size: 100% 100%;
 	.orders_it{
-		width: 25%;text-align: center;margin: 16rpx 0;
-		image{
-			width: 54rpx;height: 58rpx; 
+		width: 25%;
+		font-size: 24rpx;
+		color: #666;
+		margin-bottom: 10rpx;
+		text-align: center;
+		.images{
+			height: 80rpx;
+			display: flex;align-items: center;justify-content: center;
+			image{
+				width: 50rpx;
+			}
 		}
-		view{
-			margin-top: 16rpx;
-		}
-		
 	}
 }
 </style>

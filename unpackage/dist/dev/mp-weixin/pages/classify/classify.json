@@ -2,6 +2,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty",
     "zs-tabbar": "/components/zs-tabbar/zs-tabbar"
   }
 }

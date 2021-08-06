@@ -1,9 +1,9 @@
 {
     "name" : "奢美饰界",
-    "appid" : "__UNI__A8338BA",
+    "appid" : "__UNI__CDBC20A",
     "description" : "奢侈品交易平台",
-    "versionName" : "1.0.1",
-    "versionCode" : 101,
+    "versionName" : "1.0.5",
+    "versionCode" : 105,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -25,10 +25,17 @@
             "VideoPlayer" : {},
             "OAuth" : {},
             "Share" : {},
-            "Payment" : {}
+            "Payment" : {},
+            "Geolocation" : {},
+            "Push" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
+            /* 存储权限不退app*/
+            "permissionExternalStorage" : {
+                "request" : "once",
+                "prompt" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
+            },
             /* android打包配置 */
             "android" : {
                 "permissions" : [
@@ -53,10 +60,19 @@
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
+                ],
+                "abiFilters" : [ "armeabi-v7a", "x86" ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : "是否允许\"奢美钻石\"访问您的相册，用于上传更改用户头像？",
+                    "NSCameraUsageDescription" : "是否允许\"奢美钻石\"访问您的相册，用于上传更改用户头像？",
+                    "NSContactsUsageDescription" : "是否允许\"奢美钻石\"访问您的通讯录，仅用于呼叫人工客服？",
+                    "NSLocationWhenInUseUsageDescription" : "是否允许\"奢美钻石\"访问您的位置信息，用于获取您当前所在城市？",
+                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "是否允许\"奢美钻石\"访问您的位置信息，用于获取您当前所在城市？"
+                }
+            },
             /* SDK配置 */
             "sdkConfigs" : {
                 "ad" : {},
@@ -82,6 +98,16 @@
                         "appid" : "wx9f53e6e7b4021d81",
                         "UniversalLinks" : "https://shemeizb.com/"
                     }
+                },
+                "geolocation" : {
+                    "amap" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appkey_ios" : "e7acbc27aa1e92d71fee0f6b8b13bf04",
+                        "appkey_android" : "3968cda8ae3be1d61f3d8942325ee26f"
+                    }
+                },
+                "push" : {
+                    "unipush" : {}
                 }
             },
             "icons" : {
@@ -139,5 +165,9 @@
     },
     "uniStatistics" : {
         "enable" : false
+    },
+    "h5" : {
+        "template" : "",
+        "domain" : "http://zuanshi.nxm.wanheweb.com/smsj/"
     }
 }

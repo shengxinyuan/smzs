@@ -51,7 +51,7 @@
 			}
 		},
 		onLoad(op){
-			// console.log(op)
+			console.log(op)
 			this.page_reader()
 		},
 		watch:{
@@ -90,7 +90,7 @@
 							}
 						})
 						this.list = res.data
-						
+						console.log(this.list)
 					}
 					
 				})

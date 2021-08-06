@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<view class="order_time" v-for="(item,ind) of list" :key="ind">
+		<view class="order_time" v-for="(item,ind) of list" :key="ind" v-if="item.status != 10">
 			<view class="order_box">
 				<view class="order_head" @click="order_detail(item.id)">
 					订单编号：<text class="time">{{item.bn_id}}</text> 
@@ -20,9 +20,9 @@
 					<view class="list_right">
 						<view @click="order_detail(item.id)">
 							<view class="title">{{item.goods.title}}</view>
-							<view class="Specifications">金重：{{item.goods.wage}}<text class="num"> 款号：{{item.goods.model_no}}</text></view>
+							<view class="Specifications">金重：{{item.goods.weight}}g<text class="num"> 条码：{{item.goods.bar_code}}</text></view>
 							<view class="shop_list_label">
-								<text>金价：{{item.gold_price}}</text><text>工费： {{item.labor_price}} </text>
+								<text>金价：￥{{item.gold_price}}</text><text>工费：￥{{((item.labor_price/1)/(item.goods.weight/1)).toFixed(2)}}/g </text>
 							</view>
 							<view class="price"><text>￥{{item.total}}</text>
 							 <text style="color: #999;"> *{{item.count}}</text></view>

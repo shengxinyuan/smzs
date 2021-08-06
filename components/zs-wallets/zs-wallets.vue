@@ -76,7 +76,7 @@
 		data() {
 			return {
 				pay_type:1,
-				value:''
+				value:0
 				
 			};
 		},
@@ -102,6 +102,7 @@
 					arr = this.bank / 100
 				}
 				let at = arr * this.value
+				// console.log(at)
 				return at.toFixed(2)
 			},
 		},
@@ -118,9 +119,13 @@
 			},
 			but_cli(){
 				// console.log(this.fuwu_money,this.value)
+				if(this.pageType != 1){
+					let arr =this.value - this.fuwu_money
+					this.$emit('but_cli',this.pay_type,arr.toFixed(2),this.value)
+				}else{
+					this.$emit('but_cli',this.pay_type,this.value)
+				}
 				
-				let arr =this.value - this.fuwu_money
-				this.$emit('but_cli',this.pay_type,arr.toFixed(2))
 			}
 			
 		}

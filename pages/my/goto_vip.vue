@@ -13,8 +13,8 @@
 			<input type="text" placeholder="请输入" v-model="phone" maxlength="11"/>
 		</view>
 		<view class="inp_it" style="padding: 0 10%;">
-			<label class="radio" @click="radio_cli(1)"><radio value="r1" :checked="is_city == 1" />区域合伙人</label>
-			<label class="radio" @click="radio_cli(2)"><radio value="r2" :checked="is_city == 2" />城市合伙人</label>
+			<label class="radio" @click="radio_cli(1)"><radio color="#293C79" value="r1" :checked="is_city == 1" />区域合伙人</label>
+			<label class="radio" @click="radio_cli(2)"><radio color="#293C79" value="r2" :checked="is_city == 2" />城市合伙人</label>
 			
 		</view>
 		<view class="inp_it" @click="show = true">
@@ -35,8 +35,9 @@
 			</view>
 			<input type="text" placeholder="请选择" :disabled="true" v-model="reg_val_area"/>
 		</view>
-		<view style="margin-top: 140rpx;">
-			<zs-button :buttitle="'提交申请'" @but_cli="good"></zs-button>
+		<view class="btn-box">
+			<button @click="good">提交申请</button>
+			<!-- <zs-button :buttitle="'提交申请'" @but_cli="good"></zs-button> -->
 		</view> 
 		<u-popup v-model="show" mode="bottom">
 			<view class="popup">
@@ -180,14 +181,27 @@
 	}
 	.inp_it{
 		width: 100%;
-		display: flex;justify-content: space-between;
+		display: flex;justify-content: space-between;align-items: center;
 		line-height: 56rpx;margin-bottom: 50rpx;
+		radio{
+			transform: scale(0.8);
+		}
 		view{
 			width: 20%;text-align: center;font-size: 30rpx;
 		}
 		input{
 			height: 56rpx;padding-left: 20rpx;margin-left: 2%;
 			width: 78%;font-size: 28rpx;border: 2rpx solid #eee;
+		}
+	}
+	.btn-box{
+		padding: 0 30rpx;
+		margin-top: 100rpx;
+		button{
+			font-size: 30rpx;
+			background: #293C79;
+			color: #fff;
+			border-radius: 40rpx;
 		}
 	}
 </style>

@@ -16,7 +16,7 @@
 					<view>
 						￥{{it.price}}
 					</view>
-					<u-icon name="heart-fill" size="44"></u-icon>
+					<u-icon name="heart-fill" size="40"></u-icon>
 				</view>
 			</view>
 		</view>

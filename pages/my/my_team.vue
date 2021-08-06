@@ -20,8 +20,8 @@
 			</view>
 		</view>
 		<view class="qh_but">
-			<view class="qh_but_l" :class="{'avt':but_ind == 1}" @click="but_ind_cli(1)">一级团队成员 ({{num_s}})</view>
-			<view class="qh_but_l" :class="{'avt':but_ind == 2}" @click="but_ind_cli(2)">二级级团队成员({{num_two}})</view>
+			<view class="qh_but_l" :class="{'avt':but_ind == 1}" @click="but_ind_cli(1)">一级团队成员 ({{first_count}})</view>
+			<view class="qh_but_l" :class="{'avt':but_ind == 2}" @click="but_ind_cli(2)">二级级团队成员({{second_count}})</view>
 		</view>
 		<!-- //列表 -->
 		<view class="list" v-if="but_ind == 1">
@@ -55,9 +55,11 @@
 			return{
 				num:15121,
 				num_vip:2400,
-				names:"王志刚",
+				names:'',
 				but_ind:1,
-				team_data:''
+				team_data:[],
+				first_count:'',
+				second_count:'',
 			}
 		},
 		computed:{
@@ -99,10 +101,13 @@
 		methods:{
 			page_render(){
 				let arr = ''
+				let arr1 = ''
 				this.$api.get('team').then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.team_data = res.data
+						this.first_count = res.data.first_count
+						this.second_count = res.data.second_count
 						res.data.first.forEach(i=>{
 							this.names = i.nickname
 							if(this.names.length >= 2 && this.names.length < 4){
@@ -113,6 +118,17 @@
 								arr = this.names.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 							}
 							i.usename = arr
+						})
+						res.data.second.forEach(i=>{
+							this.names = i.nickname
+							if(this.names.length >= 2 && this.names.length < 4){
+								arr1 = this.names.replace(/^./g, '*');
+							}else if(this.names.length >= 4 && this.names.length < 11){
+								arr1 = this.names.replace(/^../g, '**');
+							}else if(this.names.length >= 11){
+								arr1 = this.names.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+							}
+							i.usename = arr1
 						})
 					}
 				})

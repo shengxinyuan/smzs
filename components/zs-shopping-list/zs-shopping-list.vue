@@ -6,12 +6,27 @@
 			<view class="it_tit">
 				{{it.title}}
 			</view>
-			<view class="it_price">
-				￥{{ it.price }}
-			</view>
-			<view class="it_selt">
+			<!-- 非会员用户 -->
+			<view class="it_selt" v-if="lv == 0">
 				<view class="it_selt_l">
-					<text>￥{{ it.price_vip }}</text><image src="../../static/pifa.png" mode=""></image>
+					<text>￥{{it.price}}</text>
+				</view>
+				<view style="display: flex;align-items: center;justify-content: space-between;">
+					<view class="it_selt_l">
+						<text style="color: #ea5b72;">￥{{it.price_vip}}</text>
+						<image class="u-m-l-16" src="../../static/pifa.png" mode=""></image>
+					</view>
+					<view class="it_selt_r">
+						已售{{ it.sale }}件
+					</view>
+				</view>
+			</view>
+			<!-- 会员用户 -->
+			<view class="it_selt" 
+			style="display: flex;align-items: center;justify-content: space-between;" 
+			v-if="lv !== 0">
+				<view class="it_selt_l">
+					<text style="color: #ea5b72;">￥{{ it.price_vip }}</text>
 				</view>
 				<view class="it_selt_r">
 					已售{{ it.sale }}件
@@ -29,7 +44,8 @@
 			};
 		},
 		props:{
-			shop_list:{}
+			shop_list:{},
+			lv:{default:0},
 		},
 		methods:{
 			go_shopdetail(e){
@@ -41,12 +57,12 @@
 
 <style lang="scss" scoped>
 .cont{
-	width: 100%;padding: 0 2%;
+	width: 100%;
 	display: flex;flex-wrap: wrap;
 	.cont_item{
 		width: 49%;margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
-		margin-top: 20rpx;overflow: hidden; 
+		margin-top: 10rpx;overflow: hidden; 
 		position: relative;padding-bottom: 10rpx;
 		.imagea{
 			width: 56rpx;height: 70rpx;
@@ -54,8 +70,10 @@
 			z-index: 20;
 		}
 		.images{
-			width: 100%;
+			width: 350rpx;
 			height: 350rpx;
+			background: url(../../static/loading.gif) no-repeat center;
+			background-size: 100% 84%;
 		}
 		.it_tit{
 			padding-left: 10rpx;
@@ -67,12 +85,12 @@
 		}
 		.it_selt{
 			padding-left: 10rpx;
-			width: 100%;display: flex;justify-content: space-between;
+			width: 100%;
 			line-height: 40rpx;
 			.it_selt_l{
 				display: flex;
 				text{
-					color: #ea5b72;font-size: 26rpx;
+					font-size: 30rpx;
 				}
 				image{
 					width: 60rpx; height: 24rpx;margin-top: 10rpx;

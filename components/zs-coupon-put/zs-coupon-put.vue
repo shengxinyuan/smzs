@@ -3,7 +3,7 @@
 		<view class="cont">
 			<view class="cont_child" :style="{'background-image':'url('+list.coupon_image+')'}">
 				<view class="child_title">
-					送您500元现金红包
+					<!-- 送您500元现金红包 -->
 				</view>
 				<view class="child_item" >
 					<view class="its" :style="{'background-image':bachild}" v-for="(it,ind) in list.data" :key="ind">

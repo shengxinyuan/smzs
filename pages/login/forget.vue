@@ -60,6 +60,7 @@
 					},1000)
 					this.$api.get('messagecode',{mobile:this.phone}).then(res=>{
 						console.log(res)
+						this.but_show = true
 					})
 				}
 				
@@ -74,11 +75,18 @@
 				if(this.but_show){
 					this.$api.post('changepassword',data).then(res=>{
 						console.log(res)
-						this.com.msg(res.message)
 						if(res.status == 1){
 							this.but_show = false
+							this.com.msg(res.message)
+							setTimeout(function() {
+								uni.navigateBack()
+							}, 1000)
+						} else {
+							this.com.msg(res.message)
 						}
 					})
+				} else {
+					this.com.msg('请先获取验证码!')
 				}
 			}
 		}

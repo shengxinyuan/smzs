@@ -10,8 +10,11 @@
 					<view class="it_tit">
 						{{it.title}}
 					</view>
-					<view class="seckill_pic">
+					<view class="seckill_pic" v-if="types == 2">
 						秒杀价
+					</view>
+					<view class="seckill_pic" v-if="types == 1">
+						团购价
 					</view>
 					<view class="it_selt_r">
 						剩余{{it.stock}}件
@@ -32,7 +35,6 @@
 					<!-- <view class="it_label">
 						<view>精品</view>
 					</view> -->
-					
 				</view>
 			</view>
 		</view>

@@ -43,10 +43,10 @@
 				<view class="list_right">
 					<view @click="order_detail(item.id)">
 						<view class="title">{{its.title}}</view>
-						<view class="Specifications">金重：{{its.sku.weight}}<text class="num"> 款号：{{shop_det.model_no}}</text></view>
+						<view class="Specifications">金重：{{its.sku.weight}}g<text class="num"> 条码：{{shop_det.bar_code}}</text></view>
 						<view class="list_right_its">
 							<text >金料:￥{{its.gold_price}} </text>	
-							<text >工费:￥{{its.labor_price}} </text>
+							<text >工费:￥{{its.labor_price}}/g </text>
 						</view>
 						<view class="price">￥{{its.total}} <text>*{{its.count}}</text></view>
 					</view>
@@ -296,7 +296,7 @@
 			}
 		}
 		.address_r{
-			display: flex;
+			width: 100%;
 			color: #333;
 			.address_r_l{
 				line-height: 40rpx;

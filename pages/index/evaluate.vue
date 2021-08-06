@@ -17,12 +17,12 @@
 					<image v-for="imgs in it.img" :src="imgs" mode="aspectFill" ></image>
 				</view>
 			</view>
+			<view v-if="shop_pj.length == 0" style="padding-top: 160rpx;">
+				<u-empty text="暂无评论" mode="message"></u-empty>
+			</view>
 			<view style="width: 100%;height: 80rpx;">
 				<uni-load-more :status="status" :content-text="contentText"></uni-load-more>
 			</view>
-		</view>
-		<view v-else style="padding-top: 160rpx;">
-			<u-empty text="暂无评论" mode="message"></u-empty>
 		</view>
 	</view>
 </template>
@@ -80,8 +80,11 @@
 					if(res.status == 1){
 						this.shop_pj = this.shop_pj.concat(res.data.data)
 					}
-					if(res.data.data && res.data.data < 10  ){
+					if(res.data.data && res.data.data.length < 10){
 						this.status = 'noMore'
+					}
+					if(this.shop_pj.length == 0){
+						this.contentText.contentnomore = ''
 					}
 				})
 			}

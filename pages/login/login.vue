@@ -1,6 +1,7 @@
 <template>
 	<view class="register">
 		<view style="width: 100%;">
+			<view class="u-font-16 u-m-t-50" style="text-align: right;color: #293C79;" @click="go">逛一逛</view>
 			<view class="head">
 				<view :class="['title',Inv==0?'choose':'']" @click="qieh(0)">验证码登录</view>
 				<view :class="['title',Inv==1?'choose':'']" @click="qieh(1)">账号密码登录</view>
@@ -8,10 +9,11 @@
 			<!-- 验证码登录 -->
 			<view class="choose_ka" v-show="Inv == 0">
 				<view class="write">
-					<input type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
+					<input type="text" v-model="phone" placeholder="请输入手机号" maxlength="11"/>
 				</view>
 				<view class="write">
-					<input type="text" v-model="note" @confirm="app_login" placeholder="输入验证码"/>
+					<input type="text" v-model="note" 
+					@confirm="app_login" placeholder="请输入验证码"/>
 					<text class="give" v-if="code_show" @click="acquireCode">{{code_tit}}</text>
 					<text style="margin-right: 20rpx;" v-else>{{ time }}s</text>
 				</view>
@@ -22,10 +24,10 @@
 			<!-- 账号密码登录 -->
 			<view class="choose_ka" v-show="Inv == 1">
 				<view class="write">
-					<input type="text" v-model="phone" placeholder="输入账号" maxlength="11"/>
+					<input type="text" v-model="phone" placeholder="请输入账号" maxlength="11"/>
 				</view>
 				<view class="write">
-					<input type="password" v-model="pass" @confirm="app_login" placeholder="输入密码"/>
+					<input type="password" v-model="pass" @confirm="app_login" placeholder="请输入密码"/>
 				</view>
 				<view class="other">
 					<text @click="go_register">注册</text>
@@ -34,13 +36,8 @@
 			</view>
 			<!-- ———————————————————————————— -->
 			<view class="login_s" @click="app_login">登录</view>
-			<view class="agreement">
-				<u-checkbox-group class="radio">
-					<u-checkbox size="45" shape="circle" v-model="checked"  active-color="#1E3066"></u-checkbox>
-					阅读并同意<text @click="agreement(1)">《平台服务协议》</text>及<text @click="agreement(0)">《隐私政策》</text>
-				</u-checkbox-group>
-			</view>
-			<view class="three_s">
+			
+			<view class="three_s" v-show="type">
 				<view class="titles">—————— 其他方式登录 ——————</view>
 				<view class="weixin" @click="weixin">
 					<view>
@@ -58,7 +55,6 @@
 	export default {
 		data() {
 			return {
-				checked:false,
 				Inv:0,
 				page_show:false,
 				phone:'',
@@ -68,17 +64,36 @@
 				code_tit:'获取验证码',
 				time:60,
 				code_show:true,//提示语显示
-				cli_type:true
+				cli_type:true,
+				type:false,
+				cid: '',
 			}
 		},
 		onLoad() {
+			let cid = uni.getStorageSync('clientid')
+			if(cid){
+				this.cid = cid
+				console.log(cid)
+			}
 			if(uni.getStorageSync("type")){
 				this.page_show = false
 			}else{
 				this.page_show = true
 			}
+			this.$api.get('ios').then(res=>{
+				if(res.data.type == 0){
+					this.type = true
+				}else{
+					this.type = false
+				}
+			})
 		},
 		methods:{
+			go(){
+				uni.redirectTo({
+					url:'../index/index'
+				})
+			},
 			qieh(e){
 				this.Inv = e
 				if(e == 0){
@@ -91,7 +106,6 @@
 			yesag(){
 				uni.setStorageSync("type",1)
 				this.page_show = false
-				this.checked = true
 			},
 			agreement(e){
 				if(e==1){
@@ -124,21 +138,17 @@
 			},
 			//登录
 			 app_login(){
-				if(this.checked == true){
-					if(this.cli_type){
-						this.login_function()
-					}
-				}else{
-					this.com.msg("请阅读并同意下方协议")
+				if(this.cli_type){
+					this.login_function()
 				}
-				
 			},
 			//登录封装
-			login_function(){
-				this.$api.post('login',{mobile:this.phone,password:this.pass,note:this.note}).then(res=>{
+			login_function(){ 
+				this.cli_type = false//防抖
+				this.$api.post('login',{mobile:this.phone,password:this.pass,note:this.note,cid:this.cid}).then(res=>{
 					console.log(res)
+					this.cli_type = false//防抖
 					if(res.status == 1){
-						this.cli_type = false//防抖
 						let date = new Date().getTime()
 						let end = res.data.member_info.vip_time * 1000
 						if(end  <= date){
@@ -164,6 +174,7 @@
 							}
 						},1000)
 					}else{
+						this.cli_type = true
 						this.com.msg(res.message) 
 					}
 				})
@@ -236,19 +247,20 @@
 		height: 100vh;
 		display: flex;
 		flex-wrap: wrap;
-		padding: 35rpx 35rpx;
+		padding: 50rpx;
 		.head{
 			width: 70%;
-			font-size: 38rpx;
-			font-weight: bolder;
-			margin:50rpx 0 80rpx 0;
-			display: flex;
+			margin: 50rpx 0;
+			display: flex;align-items: center;
 			justify-content: space-between;
 			.title{
-				color: #999;
+				font-size: 34rpx;
+				color: #333;
 			}
 			.choose{
-				color: #1E3066;
+				font-size: 36rpx;
+				font-weight: bolder;
+				color: #293C79;
 			}
 		}
 		.write{
@@ -259,12 +271,16 @@
 			align-items: center;
 			border-bottom: 1rpx solid #dedede;
 			margin-top: 20rpx;
-			.give{
-				padding:10rpx 20rpx;
-				border: 1rpx solid #1E3066;
-				color: #1E3066;
-				border-radius: 35rpx;
+			input{
 				font-size: 28rpx;
+			}
+			.give{
+				line-height: 50rpx;
+				padding:0rpx 20rpx;
+				border: 2rpx solid #293C79;
+				color: #293C79;
+				border-radius: 35rpx;
+				font-size: 24rpx;
 			}
 		}
 		.other{
@@ -273,16 +289,18 @@
 			line-height: 100rpx;
 			display: flex;
 			justify-content: space-between;
+			font-size: 26rpx;
+			color: #293C79;
 		}
 		.login_s{
 			width: 100%;
-			height: 80rpx;
+			height: 72rpx;
 			text-align: center;
-			line-height: 80rpx;
+			line-height: 72rpx;
 			border-radius: 50rpx;
 			background-color: #1E3066;
 			color: #fff;
-			margin-top: 100rpx;
+			margin-top: 200rpx;
 		}
 		.agreement{
 			width: 100%;

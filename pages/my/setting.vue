@@ -39,6 +39,8 @@
 					{tit:"关于我们"},
 					{tit:"意见反馈"},
 					{tit:"提现设置"},
+					{tit:"服务协议"},
+					{tit:"隐私政策"},
 				],
 				shiname:false
 			}
@@ -54,6 +56,7 @@
 					}
 				}
 			})
+			this.pag_data = uni.getStorageSync('menber_json')
 		},
 		methods:{
 			//退出
@@ -66,7 +69,10 @@
 						if (res.confirm) {
 							uni.removeStorageSync('token')
 							uni.removeStorageSync('member_info')
+							uni.removeStorageSync('member_info_img')
+							uni.removeStorageSync('menber_json')
 							uni.removeStorageSync('user_infotit')
+							uni.removeStorageSync('viptype')
 							uni.navigateTo({
 								url:'../login/login'
 							})
@@ -74,7 +80,6 @@
 						    console.log("取消")
 						}
 					}.bind(this)
-					
 				})
 			},
 			//
@@ -84,7 +89,21 @@
 				}else if(e == 1){
 					this.com.navto('./user_text')
 				}else if(e == 2){
-					this.com.navto('../../pages/community/shop-code')
+					uni.share({
+					    provider: "weixin",
+					    scene: "WXSceneSession",
+					    type: 0,
+					    href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/index/share?invcode='+ this.pag_data.bn,
+					    title: '奢美饰界',
+					    summary: "我在奢美饰界发现好物，快来看看！",
+					    imageUrl: '../../static/logos.jpg',
+					    success: function (res) {
+							console.log(res)
+					    },fail: function (err) {
+							console.log(err)
+					        // that.com.msg('失败')
+					    }
+					});      
 				}else if(e == 3){//新手教程
 					this.com.navto('./olie_course')
 				}else if(e == 4){ 
@@ -95,6 +114,10 @@
 					this.com.navto('./fankui')
 				}else if(e == 7){ //提现设置
 					this.com.navto('../set-shop/set-withdraw')
+				}else if(e == 8){ //服务协议
+					this.com.navto('../login/fuwu')
+				}else if(e == 9){ //隐私协议
+					this.com.navto('../login/yinsi')
 				}else if(e == 99){ //实名认证
 					this.com.navto('./Certification')
 				}

@@ -16,7 +16,7 @@
 						<view><image style="width: 60rpx; height: 60rpx;" src="../../static/bofang.png" mode=""></image></view>
 						<text>{{it.title}}</text>
 					</view>
-					<video :src="it.video" @play="play(it.id)" :id="'video'+it.id" @ended="end_vid(ind)" v-else :autoplay="true" controls></video>
+					<video :src="it.video" @play="play(it)" :id="'video'+it.id" @ended="end_vid(it)" v-else :autoplay="true" controls @pause="end_vid(it)"></video>
 				</view>
 			</view>
 			<view v-else>
@@ -70,12 +70,12 @@
 				this.page_show = false
 				this.$api.get('news',{label:e}).then(res=>{
 					console.log(res)
-					res.data.forEach(i=>{
+					res.data.news.forEach(i=>{
 						i.vid_show = true
 					})
 					if(res.status == 1){
 						this.page_show = true
-						this.vid = res.data
+						this.vid = res.data.news
 					}
 				})
 			},
@@ -90,7 +90,7 @@
 					})
 					if(res.status == 1){
 						this.page_show = true
-						this.vid = res.data
+						this.vid = res.data.news
 					}
 					
 				})
@@ -111,27 +111,51 @@
 			},
 			//开始播放
 			play(e){
-				let _this = this;
-				let currentId = 'video' + e;// 获取当前视频id
-				this.videoContent = uni.createVideoContext(currentId,_this).play();
+				const innerAudioContext = uni.createInnerAudioContext();
+				innerAudioContext.autoplay = true;
+				innerAudioContext.src = e.video;
+				// innerAudioContext.onPlay(() => {
+				//   console.log('开始播放');
+				// });
+				innerAudioContext.onPlay(() => {
+					console.log('播放');
+				});
+				innerAudioContext.onError((res) => {
+					console.log(res.errMsg);
+					console.log(res.errCode);
+				});
+		// 		let _this = this;
+		// 		let currentId = 'video' + e;// 获取当前视频id
+		// 		this.videoContent = uni.createVideoContext(currentId,_this).play();
 				
-				// 获取视频列表
-				let trailer = this.vid;
-				trailer.forEach((item, index) =>{	// 获取json对象并遍历, 停止非当前视频
-					if (item.src != null && item.src != "") {
-						let temp = 'video' + item.id;
-						if (temp != currentId) {
-							// 暂停其余视频
-							uni.createVideoContext(temp,_this).pause(); //暂停视频播放事件
-						}
-					}
+		// 		// 获取视频列表
+		// 		let trailer = this.vid;
+		// 		trailer.forEach((item, index) =>{	// 获取json对象并遍历, 停止非当前视频
+		// 			if (item.src != null && item.src != "") {
+		// 				let temp = 'video' + item.id;
+		// 				if (temp != currentId) {
+		// 					// 暂停其余视频
+		// 					uni.createVideoContext(temp,_this).pause(); //暂停视频播放事件
+		// 				}
+		// 			}
 	 
-				})
-				
+		// 		})
 			},
 			//结束播放
 			end_vid(e){
-				
+				const innerAudioContext = uni.createInnerAudioContext();
+				innerAudioContext.autoplay = false;
+				innerAudioContext.src = e.video;
+				// innerAudioContext.onPlay(() => {
+				//   console.log('开始播放');
+				// });
+				innerAudioContext.onPause(() => {
+					console.log('暂停');
+				});
+				innerAudioContext.onError((res) => {
+					console.log(res.errMsg);
+					console.log(res.errCode);
+				});
 			}
 		}  
 	}

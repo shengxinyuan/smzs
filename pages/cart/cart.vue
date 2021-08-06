@@ -1,14 +1,11 @@
 <template>
 	<view>
-		
-		<view class="header" >
-			<view class="header_va">
-				购物车
-			</view>
-			<view class="rig" @click="go_address" v-if="shop_list.address">
+		<view class="header" @click="go_address">
+			<view class="rig" v-if="shop_list.address">
 				 <u-icon name="map" size="26"></u-icon>
 				 <text class="address">收货地址: {{shop_list.address.province+shop_list.address.city+shop_list.address.area+shop_list.address.address}}</text>
 			</view>
+			<u-icon name="arrow-right" size="14" color="#999"></u-icon>
 		</view>
 		<!-- 加载页 -->
 		<view  v-if="page_show">
@@ -35,21 +32,24 @@
 								</view>
 								<view class="it_speac">
 									<view >
-										金重：{{it.weight}}
+										金重：{{it.weight}}g
 									</view>
 									<view>
-										款号：{{it.model_no}}
+										条码：{{it.bar_code}}
 									</view>
 								</view>
 								<view class="it_speac_bs" >
+									<view style="margin-top: 6rpx;">
+										库存：{{it.stock}}
+									</view>
 									<view v-if="vip_type">
 										金料：￥{{it.price_vip}}
 									</view>
 									<view v-else>
 										金料：￥{{it.price_normal}}
 									</view>
-									<view>
-										工费：￥{{it.labor}}
+									<view style="margin-top: 6rpx;">
+										工费：{{((it.labor/1)/(it.weight/1)).toFixed(2)}}/g
 									</view>
 								</view>
 							</view>
@@ -57,9 +57,9 @@
 						<view class="item_js">
 							<view style="color: #dd2626;">
 								<text class="rmb">￥</text>
-								<text style="font-size: 30rpx;">{{it.xiaoj}}</text>
+								<text style="font-size: 30rpx;">{{(it.xiaoj/1).toFixed(2)}}</text>
 							</view>
-							<u-number-box v-model="it.count" :step="1" :min="1" :long-press="false" @change="number_box($event,it.id)"></u-number-box>
+							<u-number-box v-model="it.count" :step="1" :max="it.stock" :min="1" :long-press="false" @change="number_box($event,it.id)"></u-number-box>
 						</view>
 					</view>
 				</view>
@@ -70,17 +70,17 @@
 			</view>
 			<!-- 、、小结 -->
 			<view v-if="cart_show">
-				<view class="js_canchu">
-					<text>金料：{{goldl}}</text>
-					<text>工费：{{wage}}</text>
-					<text>金重：{{goldwrig}}</text>
-				</view>
+				<!-- <view class="js_canchu">
+					<text>金料：￥{{goldl}}</text>
+					<text>工费：￥{{wage}}</text>
+					<text>金重：{{goldwrig}}g</text>
+				</view> -->
 				<view class="jis_but">
-					<u-checkbox-group @change="checkboxChange_qx">
+					<u-checkbox-group>
 						<u-checkbox  shape="circle" active-color="#dd2626" size="36"
 							@change="checkboxChange" 
 							v-model="qx_type" 
-							:name="1"
+							:name="1" 
 						><text style="font-size: 26upx;">全选</text>
 						</u-checkbox>
 					</u-checkbox-group>
@@ -97,6 +97,7 @@
 		</view>
 		<!-- tabbar -->
 		<zs-tabbar :tab_ind="4"></zs-tabbar>
+		<!-- <zs-tabbar-all></zs-tabbar-all> -->
 		<!-- tabbar -->
 	</view>
 </template>
@@ -171,6 +172,9 @@
 				return arr.toFixed(2)
 			}
 		},
+		onReady() {
+			uni.hideTabBar()
+		},
 		methods: {
 			page_reader(){
 				this.$api.get('cart').then(res=>{
@@ -207,7 +211,7 @@
 				})
 			},
 			//全选
-			checkboxChange_qx(e){
+			checkboxChange(e){
 				this.$api.get('cartselections').then(res=>{
 					if(res.status == 1){
 						this.page_reader()
@@ -239,7 +243,7 @@
 			},
 			//选中删除
 			del_cart(){
-				let that = this
+				let that = this;
 				let arr = ''
 				this.shop_list.data.forEach(i=>{
 					if(i.status == 1){
@@ -271,14 +275,14 @@
 
 <style>
 	page{
-		background-color: #F1F1F1;
+		background-color: #F6F6F6;
 	}
 </style>
 <style lang="scss" scoped>
 	
 .cart_shopping{
 	width: 100%;
-	padding: 150rpx 3% 260rpx 3%;
+	padding: 0rpx 3% 260rpx 3%;
 	
 	.cart_shop_item{
 		background-color: white;margin-bottom: 20rpx;
@@ -297,14 +301,15 @@
 			width: 8%;padding-top: 80rpx,
 		}
 		.cart_shop_item_c{
-			width: 160rpx;height: 160rpx;overflow: hidden;border-radius: 10rpx;
-			border: solid 0.5upx #f1f1f1;
+			// width: 160rpx;height: 160rpx;
+			overflow: hidden;border-radius: 10rpx;
+			// border: solid 0.5upx #f1f1f1;
 			image{
-				width: 100%;height: 100%;
+				width: 160rpx;height: 160rpx;
 			}
 		}
 		.cart_shop_item_r{
-			width: 59%;padding-left: 20rpx;
+			padding-left: 20rpx;
 			.it_title{
 				font-size: 28rpx;
 				white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
@@ -349,20 +354,20 @@
 		}
 	}
 .header{
-	position: fixed;left: 0;top: 0;
-	height: 140rpx;width: 100%;
-	padding-top: 40rpx;padding-left: 30rpx;
+	width: 100%;height: 80rpx;
+	padding: 0 30rpx;
 	display: flex;
 	align-items: center;
-	z-index: 999;background-color: #F1F1F1;
-	.header_va{
-		padding-right: 26upx;
-		font-size: 34rpx;
+	justify-content: space-between;
+	background-color: #f6f6f6;
+	.guanli{
+		font-size: 24rpx;
+		color: #999;
 	}
 	.rig{
 		width: 78%;color: #999;
 		display: flex;align-items: center;
-		font-size: 22rpx;
+		font-size: 24rpx;
 		white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 		.address{
 			padding-left: 6upx;

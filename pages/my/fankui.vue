@@ -14,7 +14,9 @@
 		<!-- <view class="phone_c">
 			<input type="text" placeholder="留下您的手机号,以便我们回复~" maxlength="11" v-model="phone"/>
 		</view> -->
-		<button class="btn" @click="confirm">确认提交</button>
+		<view class="btn-box">
+			<button class="btn" @click="confirm">确认提交</button>
+		</view>
 	</view>
 </template>
 
@@ -23,7 +25,7 @@
 	export default {
 		data() {
 			return {
-				action: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',//上传图片
+				action: 'http://zuanshi.dis.wanheweb.com/api/uploads',//上传图片
 				lists: [],
 				imgLists:'',
 				desc:'',
@@ -142,17 +144,16 @@
 			}
 		}
 
-		.btn {
-			margin-top: 75rpx;
-			margin-bottom: 30rpx;
-			width: 90%;
-			height: 80rpx;
-			line-height: 80rpx;
-			text-align: center;
-			background: #1C2E62;
-			color: #fff;
-			border-radius: 60rpx;
-			position: fixed;left: 5%;bottom: 40rpx;
+		.btn-box{
+			width: 100%;height: 100rpx; padding: 0 30rpx;
+			position: fixed;left: 0;bottom: 0rpx;
+			background-color: #fff;
+			.btn {
+				font-size: 30rpx;
+				background: #293C79;
+				color: #fff;
+				border-radius: 40rpx;
+			}
 		}
 	}
 </style>

@@ -56,22 +56,27 @@
 
 <style lang="scss" scoped>
 .toast{
-	position: fixed;left: 0;top: 0;
-	width: 100%;height: 100vh;background-color: rgba(0,0,0,0.36);
+	position: fixed;left: 0;top: 0;display: flex;align-items: center;justify-content: center;
+	width: 100%;height: 100vh;background-color: rgba(0,0,0,0.5);
 	.toast_it{
-		width: 80%;height: 660rpx;background-color: white;margin-left: 10%;margin-top: 40%;border-radius: 20rpx;
-		padding-top: 40rpx;
+		background-color: white;margin: 0 10%;border-radius: 20rpx;
+		line-height: 80rpx;padding: 20rpx;
 		.toast_it_title{
-			width: 100%;text-align: center;font-size: 40rpx;
+			width: 100%;text-align: center;font-size: 32rpx;
 		}
 		.toast_it_cont{
-			width: 100%;padding: 24rpx 50rpx;
-			line-height: 40rpx;font-size: 30rpx;
+			margin: 20rpx 0;
+			width: 100%;padding: 0rpx 40rpx;
+			line-height: 40rpx;font-size: 28rpx;
 		}
 		.toast_but{
-			width: 100%;display: flex;justify-content: space-between;font-size: 38rpx;line-height: 88rpx;border-top: 1rpx solid #f1f1f1;margin-top: 20rpx;
+			width: 100%;display: flex;justify-content: space-between;font-size: 32rpx;line-height: 60rpx;border-top: 2rpx solid #f6f6f6;
+			padding-top: 20rpx;
 			view{
 				width: 50%;text-align: center;
+			}
+			view:nth-child(1){
+				border-right: solid 2rpx #f6f6f6;
 			}
 		}
 	}

@@ -169,25 +169,25 @@
 		display: flex;
 		/* #endif */
 		flex-wrap: nowrap;
-		width: 120rpx;
-		padding: 0 6px;
+		// width: 120rpx;
+		padding: 0 10px;
 		justify-content: center;
 		align-items: center;
 	}
 
 	.uni-navbar__header-btns-left {
 		/* #ifndef APP-NVUE */
-		display: flex;
+		display: flex;align-items: center;
 		/* #endif */
-		width: 150rpx;
+		// width: 150rpx;
 		justify-content: flex-start;
 	}
 
 	.uni-navbar__header-btns-right {
 		/* #ifndef APP-NVUE */
-		display: flex;
+		display: flex;align-items: center;
 		/* #endif */
-		width: 150rpx;
+		// width: 150rpx;
 		padding-right: 30rpx;
 		justify-content: flex-end;
 	}

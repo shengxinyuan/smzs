@@ -1,4 +1,5 @@
 {
+  "component": true,
   "usingComponents": {
     "u-parse": "/node-modules/uview-ui/components/u-parse/u-parse"
   }

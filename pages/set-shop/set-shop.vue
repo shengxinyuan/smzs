@@ -147,7 +147,7 @@
 						const tempFilePaths = chooseImageRes.tempFilePaths[0]
 						console.log(chooseImageRes.tempFilePaths[0])
 						uni.uploadFile({
-							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+							url: 'http://zuanshi.dis.wanheweb.com/api/uploads',
 							filePath: tempFilePaths,
 							name: 'file',
 							formData: {

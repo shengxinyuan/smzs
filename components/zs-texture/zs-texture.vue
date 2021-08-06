@@ -19,7 +19,6 @@
 		},
 		props:{
 			lists:{},
-			head_ind:{}
 		},
 		methods:{
 			nav_cli(e){

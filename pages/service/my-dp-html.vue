@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<web-view src="http://zhuanshi.nxm.wanheweb.com/smsj/index.html#/"></web-view>
+		<web-view :src="'http://zuanshi.nxm.wanheweb.com/smsj/?token='+tok+'&name='+name"></web-view>
 	</view>
 </template>
 
@@ -8,8 +8,16 @@
 	export default {
 		data() {
 			return {
-				
+				tok:'',
+				name:'',
 			};
+		},
+		onLoad() {
+			this.tok = uni.getStorageSync('token')
+			console.log(this.tok)
+			let a = uni.getStorageSync('member_info')
+			this.name = a.id
+			console.log(this.name)
 		}
 	}
 </script>

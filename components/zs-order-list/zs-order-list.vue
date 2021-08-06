@@ -19,9 +19,12 @@
 					<view class="list_right">
 						<view @click="order_detail(item.id)">
 							<view class="title">{{item.goods.title}}</view>
-							<view class="Specifications">金重：{{item.goods.wage}}<text class="num"> 款号：{{item.goods.model_no}}</text></view>
+							<view class="Specifications">金重：{{item.goods.weight}}g<text class="num"> 条码：{{item.goods.bar_code}}</text></view>
 							<view class="shop_list_label">
-								<text>金价：{{item.gold_price}}</text><text>工费： {{item.labor_price}} </text>
+								<text v-if="item.goods.is_height == 1">
+									金价：￥{{item.gold_price}}</text>
+								<text v-if="item.goods.is_height == 2">金价：￥0</text>
+								<text>工费：￥{{((item.labor_price/1)/(item.goods.weight/1)).toFixed(2)}}/g </text>
 							</view>
 							<view class="price"><text>￥{{item.total}}</text>
 							 <text style="color: #999;"> *{{item.count}}</text></view>
@@ -35,7 +38,7 @@
 						<view style="margin-right: 20rpx;">
 							共1件
 						</view>
-						<view>合计:<text class="money">￥{{item.total}}</text></view>
+						<view>合计:<text class="money">￥{{item.total_money}}</text></view>
 					</view>
 					<view class="foot_child">
 						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id)">取消订单</view> <!-- // -->
@@ -96,7 +99,7 @@
 					content:'您确定收到货物了吗？',
 					success(a) {
 						if(a.confirm){
-							that.$api.put('orders',{id:e,type:1}).then(res=>{
+							that.$api.put('orders?id='+e+'&type='+1).then(res=>{
 								console.log(res)
 								if(res.status == 1){
 									that.com.redto('./order?state='+ 30 +'&index='+ 3)

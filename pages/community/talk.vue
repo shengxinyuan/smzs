@@ -88,7 +88,7 @@
 				this.$api.get('news',{label:e}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.detailsList = res.data
+						this.detailsList = res.data.news
 						this.page_show = true
 					}
 				})
@@ -137,7 +137,8 @@
 				width: 74%;
 				padding-right: 20upx;
 				.details-text{
-					font-size: 26upx;
+					font-size: 30upx;
+					font-weight: bold;
 				}
 				.bottom-show{
 					display: flex;

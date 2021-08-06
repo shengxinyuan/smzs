@@ -1,44 +1,55 @@
 <template>
-	<view class="content">
-		<view class="header" >
-			<view class="input-view" >
-				<input confirm-type="search" class="nav-bar-input" type="text" :disabled="true" placeholder="输入搜索关键词" @click="search">
-				<view style="margin-top: 10rpx;" @click="camear">
-					<u-icon name="camera" size="44" color="#666666"></u-icon>
+	<view class="">
+		<view style=""
+			:style="{'width':screenWidth + 'px'}">
+			<view :style="{ height: statusBarHeight + 'px'}"></view>
+			<view class="header" :style="{ height: height + 'px'}">
+				<view class="input-view" >
+					<input confirm-type="search" class="nav-bar-input" type="text" :disabled="true" placeholder="输入搜索关键词" @click="search">
+					<view style="margin-top: 10rpx;" @click="camear">
+						<!-- <u-icon name="camera" size="44" color="#666666"></u-icon> -->
+					</view>
+				</view>
+				<view class="rig" @click="go_pages('../information/information')">
+					 <u-icon name="chat" size="38"></u-icon>
+					 <text class="u-font-12 u-m-l-2">消息</text>
 				</view>
 			</view>
-			<view class="rig"   @click="go_pages('../information/information')">
-				 <u-icon name="chat" size="50"></u-icon>消息
-			</view>
 		</view>
-		
-		<scroll-view scroll-y class="left-aside">
-			<view v-for="(item,ind) in flist" :key="ind" class="f-item b-b" :class="{active: currentId == item.id}" @click="tabtap(item)">
-				{{item.title}}
-			</view>
-		</scroll-view>
-		<scroll-view scroll-with-animation scroll-y class="right-aside" @scroll="asideScroll" :scroll-top="tabScrollTop">
-			<!-- 轮播 -->
-			<view class="" style="width: 98%;height: 230rpx;background-color: orange;">
-				<swiper class="swiper" :indicator-dots="true" :autoplay="true" :circular="true" :interval="4000" :duration="500">
-					<swiper-item v-for="(it,ind) in banners" :key="ind">
-						<image :src="it.image" mode="aspectFill"></image>
-					</swiper-item>
-				</swiper>
-			</view>
-			<!-- 轮播 -->
-			<view v-for="item in slist" :key="item.id" class="s-list" :id="'main-'+item.id">
-				<text class="s-item"> {{item.title}}</text>
-				<view class="t-list">
-					<view @click="navToList(titem.id)" v-if="titem.pid == item.id" class="t-item" v-for="titem in tlist" :key="titem.id">
+		<view class="content">
+			<!-- 左侧 -->
+			<scroll-view scroll-y class="left-aside">
+				<view v-for="(item,ind) in flist" :key="ind" class="f-item b-b" :class="{active: currentId == item.id}" @click="tabtap(item.id,item.title)">
+					{{item.title}}
+				</view>
+			</scroll-view>
+			<!-- 右侧 -->
+			<scroll-view scroll-with-animation scroll-y class="right-aside" :scroll-top="tabScrollTop">
+				<!-- 轮播 -->
+				<view class="" style="width: 98%;height: 230rpx;background-color: orange;">
+					<swiper class="swiper" :indicator-dots="true" :autoplay="true" :circular="true" :interval="4000" :duration="500">
+						<swiper-item v-for="(it,ind) in banners" :key="ind" @click="bann_nav(it)">
+							<image :src="it.image" mode="aspectFill"></image>
+						</swiper-item>
+					</swiper>
+				</view>
+				<view class="one_list_sty"  v-if="tlist != ''">
+					{{one_listname}}
+				</view>
+				<view class="t-list" v-if="tlist != ''">
+					<view @click="navToList(titem.id,titem)" class="t-item" v-for="titem in tlist" :key="titem.id">
 						<image :src="titem.image"></image>
 						<text>{{titem.title}}</text>
 					</view>
 				</view>
-			</view>
-		</scroll-view>
+				<view v-else style="padding-top: 100rpx;">
+					<u-empty text="暂无内容" mode="data"></u-empty>
+				</view>
+			</scroll-view>
+		</view>
 		<!-- tabbar -->
 		<zs-tabbar :tab_ind="2"></zs-tabbar>
+		<!-- <zs-tabbar-all></zs-tabbar-all> -->
 		<!-- tabbar -->
 	</view>
 </template>
@@ -48,17 +59,35 @@
 	export default {
 		data() {
 			return {
+				height: '50',
 				sizeCalcState: false,
 				tabScrollTop: 0,
 				currentId: 1,
 				flist: [],
-				slist: [],
 				tlist: [],
 				banners: [],
+				one_listname:''
 			}
 		},
 		onLoad(){
 			this.loadData();
+		},
+		onReady() {
+			uni.hideTabBar()
+		},
+		computed: {
+			//获取系统状态栏高度
+			statusBarHeight() {
+				var that = this;
+				return uni.getSystemInfoSync().statusBarHeight
+			},
+			navbarHeight() {
+				var that = this;
+				return uni.getSystemInfoSync().statusBarHeight + that.height + 'px'
+			},
+			screenWidth() {
+				return uni.getSystemInfoSync().screenWidth;
+			}
 		},
 		methods: {
 			// 搜索
@@ -82,20 +111,10 @@
 			
 			loadData(){
 				this.$api.get('cate').then(res=>{
-					// console.log(res.data.label)
-					this.flist=res.data.label
-					this.slist=res.data.label //2级分类
-					this.currentId = res.data.label[0].id
-					res.data.label.forEach(i=>{
-						this.$api.get('cate',{label:i.id}).then(res=>{
-							if(res.data.cate !=''){
-								res.data.cate.forEach(it=>{
-									this.tlist.push(it)
-								})
-								// console.log(this.tlist)
-							}
-						})
-					})
+					console.log(res.data.label)
+					this.flist = res.data.label
+					
+					this.tabtap(res.data.label[0].id,res.data.label[0].title)
 				})
 				//轮播
 				this.$api.get('banner',{type:2}).then(res=>{
@@ -106,92 +125,63 @@
 				})
 			},
 			//一级分类点击
-			tabtap(item){
-				if(!this.sizeCalcState){
-					this.calcSize();
-				}
-				
-				this.currentId = item.id;
-				let index = this.slist.findIndex(sitem=>sitem.id === item.id);
-				this.tabScrollTop = this.slist[index].top;
-				console.log(this.tabScrollTop,'高度')
-			},
-			//右侧栏滚动
-			asideScroll(e){
-				if(!this.sizeCalcState){
-					this.calcSize();
-				}
-				let scrollTop = e.detail.scrollTop;
-				let tabs = this.slist.filter(item=>item.top <= scrollTop).reverse();
-				// console.log(tabs)
-				if(tabs.length > 0){
-					this.currentId = tabs[0].id;
-				}
-			},
-			//计算右侧栏每个tab的高度等信息
-			calcSize(){
-				let h = 0;
-				this.slist.forEach(item=>{
-					let view = uni.createSelectorQuery().select("#main-" + item.id);
-					view.fields({
-						size: true
-					}, data => {
-						item.top = h + 115;
-						h += data.height;
-						item.bottom = h;
-					}).exec();
+			tabtap(i,name){
+				this.currentId = i
+				this.one_listname = name
+				this.$api.get('cate',{label:i}).then(res=>{
+					console.log(res)
+					this.tlist = res.data.cate
 				})
-				this.sizeCalcState = true;
-				console.log(this.slist,'数据')
 			},
-			navToList(e){
-				this.com.navto('./class_detail?classify_id='+e)
-			}
+			navToList(e,v){
+				console.log(v.pid)
+				this.com.navto('./class_detail?classify_id='+e+'&pid='+v.pid)
+			},
+			//轮播跳转
+			// #ifdef APP-PLUS
+			bann_nav(e){
+				console.log(e)
+				plus.runtime.openURL(e.url);
+			},
+			// #endif
 		}
 	}
 </script>
 
-<style lang='scss'>
-	page,
-	.content {
-		height: 100%;
-		background-color: #f8f8f8;
-		display: flex;
-		.header{
-			position: fixed;left: 0;top: 0;
-			height: 145rpx;width: 100%;
-			padding-top: 55rpx;padding-left: 30rpx;
+<style lang="scss">
+	.header{
+		width: 100%;
+		padding: 0 30rpx;
+		display: flex;justify-content: space-between;align-items: center;
+		background-color: white;
+		.input-view {
+			width: 84%;
 			display: flex;
-			z-index: 999;background-color: white;
-			.input-view {
-				display: flex;
-				flex-direction: row;justify-content: space-between;
-				width: 68%;
-				flex: 1;
+			align-items: center;
+			// flex-direction: row;
+			justify-content: space-between;
+			// flex: 1;
+			padding: 0 15px;
+			background-color: #eee;
+			border-radius: 40px;
+			
+			input{
 				height: 60rpx;
-				border-radius: 15px;
-				padding: 0 15px;
-				margin: 7px 0;
-				line-height: 60rpx;
-				background-color: #eee;
-				
-				input{
-					width: 86%;
-					margin-top: 10rpx;
-					font-size: 30rpx;
-					
-				}
-			}
-			.rig{
-				width: 20%;
-				line-height: 100rpx;text-align: center;
-				font-size: 30rpx;
+				font-size: 28rpx;
 			}
 		}
+		.rig{
+			display: flex;align-items: center;
+		}
+	}
+	.content {
+		// height: 100%;
+		background-color: #f8f8f8;display: flex;
+		
 	}
 	.left-aside {
 		flex-shrink: 0;
-		width: 200upx;padding-bottom: 140rpx;padding-top: 160rpx;
+		width: 200upx;padding-bottom: 140rpx;
 		background-color: #fff;
 	}
 	.f-item {
@@ -200,21 +190,22 @@
 		justify-content: center;
 		width: 100%;
 		height: 100upx;
-		font-size: 28upx;
 		
 		position: relative;
 		&.active{
 			font-weight: bold;
 			background: #f8f8f8;
+			color: #2d407a;
 			&:before{
 				content: '';
 				position: absolute;
-				left: 0;
+				left: 20rpx;
 				top: 50%;
 				transform: translateY(-50%);
-				height: 36upx;
-				width: 7upx;
+				height: 30upx;
+				width: 10upx;
 				background-color: #2d407a;
+				border-radius: 6rpx 0rpx 0rpx 6rpx;
 				opacity: .8;
 			}
 		}
@@ -225,7 +216,7 @@
 		flex: 1;
 		overflow: hidden;
 		padding-left: 20upx;
-		padding-bottom: 140rpx;padding-top: 160rpx;
+		padding-bottom: 140rpx;
 		.swiper{
 			width: 100%;height: 100%;
 			image{
@@ -240,12 +231,17 @@
 		padding-top: 8upx;
 		font-size: 28upx;
 	}
+	.one_list_sty{
+		background-color: #fff;margin-top: 10rpx;
+		padding-left: 20rpx;
+	}
 	.t-list{
 		display: flex;
 		flex-wrap: wrap;
 		width: 100%;
 		background: #fff;
-		padding-top: 12upx;
+		
+		padding-top: 20rpx;
 		&:after{
 			content: '';
 			flex: 99;

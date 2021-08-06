@@ -5,15 +5,16 @@
 		</view>
 		<view class="zl-box">
 			<view class="min-box">
-				<input type="number" v-model="tel" placeholder="请输入手机号" maxlength="11" />
+				<input type="number" v-model="tel_value" placeholder="请输入手机号" maxlength="11" />
 				<view class="two">
-					<input class="code_input" type="number" v-model="code" placeholder="请输入验证码" maxlength="6" />
-					<view class="right">{{codeText}}</view>
+					<input class="code_input" type="number" v-model="code_value" placeholder="请输入验证码" maxlength="6" />
+					<text class="right" v-if="code_show" @click="acquireCode">{{code_tit}}</text>
+					<text class="right" style="background-color: #999;" v-else>{{ time }}s</text>
 				</view>
 			</view>
 		</view>
 		<view class="bottom-btn">
-			<button class="btn">免费注册领取现金红包</button>
+			<button class="btn"  @click="backPage">免费注册领取现金红包</button>
 		</view>
 	</view>
 </template>
@@ -22,13 +23,60 @@
 	export default {
 		data() {
 			return {
-				tel: '',
-				code: '',
-				codeText: '发送验证码'
+				tel_value:'',//手机号
+				code_value:'',//验证码
+				code_tit:'获取验证码',
+				time:'60',
+				code_show:true,//获取验证码
+				invcode:'',//邀请码
+			}
+		},
+		onLoad(op) {
+			if(op.invcode){
+				this.invcode = op.invcode
 			}
 		},
 		methods: {
-
+			//获取验证码
+			acquireCode(){
+				if(this.tel_value == '' || !(/^1[3456789]\d{9}$/).test(this.tel_value)){
+					this.com.msg('请检查手机号')
+				}else{
+					this.time = 60
+					this.code_show = false
+					let setInt = setInterval(()=>{
+						if(this.time ==0){
+							this.code_tit = "再次获取"
+							this.code_show = true
+						}else{
+							this.time -=1
+						}
+					},1000)
+					this.$api.get('messagecode',{mobile:this.tel_value}).then(res=>{
+						console.log(res)
+					})
+				}
+				
+			},
+			backPage(){
+				let data = {
+					mobile:this.tel_value,
+					note:this.code_value,
+					bn:0,
+					password:111111
+				}
+				this.$api.post('register',data).then(res=>{ 
+					console.log(res)
+					if(res.status == 1){
+						this.com.msg(res.message)
+						this.$api.post('coupon',{type:1,token:res.data.token}).then(res=>{
+							console.log(res)
+						})
+					}else{
+						this.com.msg(res.message)
+					}
+				})
+			}
 		}
 	}
 </script>

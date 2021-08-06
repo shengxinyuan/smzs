@@ -75,7 +75,7 @@
 						const tempFilePaths = chooseImageRes.tempFilePaths[0]
 						console.log(chooseImageRes.tempFilePaths[0])
 						uni.uploadFile({
-							url: 'http://zhuanshi.nxm.wanheweb.com/api/uploads',
+							url: 'http://zuanshi.dis.wanheweb.com/api/uploads',
 							filePath: tempFilePaths,
 							name: 'file',
 							formData: {
@@ -98,7 +98,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.service-tel-box {
 		padding: 0 30upx;
 
@@ -115,6 +115,7 @@
 				justify-content: center;
 				align-items: center;
 				image{
+					background-color: #F1F1F1;
 					width: 400rpx;height: 400rpx;
 				}
 			}

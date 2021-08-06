@@ -124,8 +124,8 @@
 					console.log(res)
 					if(res.status == 1){
 						this.item = res.data
-						this.value01 = JSON.parse(res.data.new_price) //料价
-						this.value02 = JSON.parse(res.data.commerical_wage)
+						this.value01 = JSON.parse(res.data.new_price)+'' //料价
+						this.value02 = JSON.parse(res.data.commerical_wage)+''
 						this.la =  JSON.parse(res.data.wage)
 						this.lb =  JSON.parse(res.data.total_price)
 					}
@@ -135,7 +135,7 @@
 			skipShopGoldPrice(){
 				let arr = JSON.parse(this.value01)
 				let att = JSON.parse(this.value02)
-				this.$api.post('managegold',{new_price:arr.toFixed(2),commerical_wage:att.toFixed(2),id:this.gold_id}).then(res=>{
+				this.$api.post('managegold',{price:arr.toFixed(2),commerical_wage:att.toFixed(2),id:this.gold_id}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.com.redto('./shop-gold-price?tit='+'修改成功')
@@ -152,7 +152,7 @@
 				e.target.value = (e.target.value.match(/^\d*(\.?\d{0,2})/g)[0]) || null
 				//重新赋值给input
 				this.$nextTick(() => {
-					this.value01= e.target.value
+					this.value01= e.target.value+''
 				})
 			},
 			checkb(e) {
@@ -160,7 +160,7 @@
 				e.target.value = (e.target.value.match(/^\d*(\.?\d{0,2})/g)[0]) || null
 				//重新赋值给input
 				this.$nextTick(() => {
-					this.value02= e.target.value
+					this.value02= e.target.value+''
 				})
 			},
 		}

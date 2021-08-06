@@ -25,6 +25,7 @@
 					</view>
 				</view>
 			</view>
+			<!-- /////////// -->
 			<view class="shop_tab">
 				<view class="tab_it" v-for="(it,ind) in tableList" :key="ind" @click="go_detail(it.id,it.ratio,it.title)">
 					{{it.title}} <u-icon name="arrow-right"></u-icon>
@@ -32,7 +33,7 @@
 			</view>
 		</view>
 
-		<!-- 自己设置 弹出层 -->
+		<!-- 自己设置 弹出层 -->	
 		<u-popup v-model="popupShow" mode="center" border-radius="10" :closeable="false" width="78%">
 			<view>
 				<view class="popup-box-up">

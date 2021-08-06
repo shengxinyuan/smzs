@@ -16,16 +16,16 @@
 			<view class="write">
 				<input type="text" v-model="invcode" placeholder="输入邀请码(选填)"/>
 			</view>
-			<view class="write">
-				所在地区 <view class="choose" @click="show = true">{{regions}}<u-icon name="arrow-right" color="#999" size="38"></u-icon></view>
-			</view>
+			<!-- <view class="write">
+				所在地区 <view class="choose" @click="show = true">{{regions}}<u-icon name="arrow-right" color="#999" size="28"></u-icon></view>
+			</view> -->
 			<u-picker v-model="show" mode="region" :params="params" @confirm="yes_addres" cancel-text="所在地区"></u-picker>
 			
 			<view class="login_s" @click="app_register">注册</view>
 			
 			<view class="agreement">
 				<u-checkbox-group class="radio">
-					<u-checkbox size="45" shape="circle" v-model="checked"  active-color="#1E3066"></u-checkbox>
+					<u-checkbox size="36" shape="circle" v-model="checked"  active-color="#1E3066"></u-checkbox>
 					阅读并同意<text @click="agreement(1)">《平台服务协议》</text>及<text @click="agreement(0)">《隐私政策》</text>
 				</u-checkbox-group>
 			</view>
@@ -38,7 +38,7 @@
 		data() {
 			return {
 				show:false,
-				regions:'请选择:',
+				regions:'请选择',
 				params: {
 					province: true,
 					city: true,
@@ -56,8 +56,49 @@
 				time:60,
 				code_show:true,//提示语显示
 				time:'',
-				log_show:true //防抖
+				log_show:true ,//防抖
+				cid: '',
 			}
+		},
+		onLoad() {
+			let cid = uni.getStorageSync('clientid')
+			if(cid){
+				this.cid = cid
+				console.log(cid)
+			}
+			let that = this
+			uni.getLocation({
+				geocode:true,
+				type:'wgs84',
+				success: (res) => {
+					console.log(res) 
+					// {
+					// 	"type": "WGS84",
+					// 	"altitude": 0,
+					// 	"latitude": 31.373744,
+					// 	"longitude": 120.635994,
+					// 	"speed": 0,
+					// 	"accuracy": 94,
+					// 	"address": {
+					// 		"country": "中国",
+					// 		"province": "江苏省",
+					// 		"city": "苏州市",
+					// 		"district": "相城区",
+					// 		"street": "华元路",
+					// 		"streetNum": "1201号",
+					// 		"poiName": "招商银行(苏州相城支行)",
+					// 		"cityCode": "0512"
+					// 	},
+					// 	"errMsg": "getLocation:ok"
+					// }
+					that.province = res.address.province
+					that.city = res.address.city
+					that.area = res.address.district
+					that.regions =  res.address.province+'-'+ res.address.city+'-'+ res.address.district
+				},fail(e) {
+					console.log(e)
+				}
+			})
 		},
 		methods:{
 			//获取验证码
@@ -89,7 +130,8 @@
 					bn:this.invcode,
 					province:this.province,
 					city:this.city,
-					area:this.area
+					area:this.area,
+					cid: this.cid
 				}
 				if(this.checked == false){
 					this.com.msg('请阅读并同意下方协议')
@@ -156,27 +198,32 @@
 		height: 100vh;
 		display: flex;
 		flex-wrap: wrap;
-		padding: 35rpx 35rpx;
+		padding: 50rpx;
 		.title{
 			width: 100%;
-			font-size: 38rpx;
+			font-size: 36rpx;
+			color: #293C79;
 			font-weight: bolder;
-			margin:50rpx 0 80rpx 0;
+			margin:50rpx 0;
 		}
 		.write{
 			width: 100%;
-			display: flex;
+			display: flex;align-items: center;
 			justify-content: space-between;
 			height: 100rpx;
 			align-items: center;
 			border-bottom: 1rpx solid #dedede;
 			margin-top: 20rpx;
-			.give{
-				padding:10rpx 20rpx;
-				border: 1rpx solid #1E3066;
-				color: #1E3066;
-				border-radius: 35rpx;
+			input{
 				font-size: 28rpx;
+			}
+			.give{
+				line-height: 50rpx;
+				padding:0rpx 20rpx;
+				border: 2rpx solid #293C79;
+				color: #293C79;
+				border-radius: 35rpx;
+				font-size: 24rpx;
 			}
 			.choose{
 				height: 100rpx;
@@ -184,19 +231,19 @@
 				align-items: center;
 				color: #999;
 				.u-icon{
-					margin-left: 20rpx;
+					margin-left: 10rpx;
 				}
 			}
 		}
 		.login_s{
 			width: 100%;
-			height: 80rpx;
+			height: 72rpx;
 			text-align: center;
-			line-height: 80rpx;
+			line-height: 72rpx;
 			border-radius: 50rpx;
 			background-color: #1E3066;
 			color: #fff;
-			margin-top: 80rpx;
+			margin-top: 100rpx;
 		}
 		.agreement{
 			width: 100%;

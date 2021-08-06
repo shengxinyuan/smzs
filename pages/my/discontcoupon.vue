@@ -24,7 +24,7 @@
 						</view>
 					</view>
 					<view class="position" v-if="remackind == ind && remack_show == true" @click="remack_show = false"> 
-						{{remack}} 
+						{{it.remark}} 
 					</view>
 				</view>
 				

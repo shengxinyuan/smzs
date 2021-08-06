@@ -34,8 +34,8 @@
 			</view>
 		</view>
 		<view v-if="navtype == 1">
-			<view class="tabs-one-title">
-				<text>更新时间：{{updateTime}}</text>
+			<view class="tabs-one-title" style="color: #999;">
+				<text>更新时间：{{gold_price.time}}</text>
 			</view>
 			<view class="tabs">
 				<view class="tabs_tr">
@@ -43,24 +43,24 @@
 					<view class="tab-min-box">产品名称</view>
 					<view class="tab-min-box">价格</view>
 				</view>
-				<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" v-for="(it,ind) in 5" :key="ind">
-					<view class="tab-min-box">周大福</view>
-					<view class="tab-min-box">黄金99.95</view>
-					<view class="tab-min-box">357.01</view>
+				<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" v-for="(it,ind) in gold_price.price" :key="ind">
+					<view class="tab-min-box">{{it.brand_title}}</view>
+					<view class="tab-min-box">{{it.title}}}</view>
+					<view class="tab-min-box">{{it.price}}</view>
 				</view>
 			</view>
 		</view>
 			<view class="scan-code-box">
 				<view class="scan-code-min-box">
 					<view class="scan-code-logo">
-						<image src="../../static/community/erweima.png" mode="widthFix"></image>
+						<image :src="gold_price.html" mode="widthFix"></image>
 					</view>
-					<view class="scan-code-title">{{scanCodeTitle}}</view>
+					<view class="scan-code-title">{{tiptext}}</view>
 				</view>
 			</view>
 			<view class="bottom-box">
 				<view class="share-box">
-					<view class="share-min-box">
+					<view class="share-min-box" @click="shares(0)">
 						<view class="share-logo">
 							<image src="../../static/community/haoyou.png" mode="widthFix"></image>
 						</view>
@@ -68,7 +68,7 @@
 					</view>
 				</view>
 				<view class="share-box">
-					<view class="share-min-box">
+					<view class="share-min-box" @click="shares(1)">
 						<view class="share-logo">
 							<image src="../../static/community/pyq.png" mode="widthFix"></image>
 						</view>
@@ -76,7 +76,7 @@
 					</view>
 				</view>
 				<view class="share-box">
-					<view class="share-min-box">
+					<view class="share-min-box" @click="shares(2)"> 
 						<view class="share-logo">
 							<image src="../../static/community/lianjie.png" mode="widthFix"></image>
 						</view>
@@ -97,6 +97,7 @@
 		},
 		data() {
 			return {
+				title:'',
 				modelData: [{
 						label: '店铺金价'
 					},
@@ -107,28 +108,90 @@
 				initIndex: 0,
 				navtype:0,
 				updateTime: '2020/10/14 13:52:32',
-				scanCodeTitle:'扫码进店',
+				tiptext:'扫码进店',
 				gold_price:[]
 			}
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+			    title: this.title
+			});
+			let at = uni.getStorageSync('member_info')
+			console.log(at)
 			//实时金价
-			this.$api.get('gold_price').then(res=>{
-				// console.log(res)
+			this.$api.get('gold_price',{id:at.id}).then(res=>{
+				console.log(res)
 				if(res.status == 1){
 					this.gold_price = res
 				}
 			})
-			// #ifdef APP-PLUS
-			const currentWebvie = this.$mp.page.$getAppWebview();
-			currentWebvie.setTitleNViewButtonStyle(0, {
-				text:'老凤祥' 
-			});
-			// #endif
+			this.$api.get("manage").then(res=>{
+				console.log(res)
+				this.goldname = res.data
+				// #ifdef APP-PLUS
+				const currentWebvie = this.$mp.page.$getAppWebview();
+				currentWebvie.setTitleNViewButtonStyle(0, {
+					text:res.data.title  
+				});
+				// #endif
+			})
 		},
 		methods: {
 			tabsChange(index) {
 				this.navtype = index
+			},
+			//分享
+			shares(e){
+				// pages/community/my-gold-prices
+				let arr = 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店'
+				if(e == 0){
+					uni.share({
+					    provider: "weixin",
+					    scene: "WXSceneSession", 
+					    type: 0, 
+					    href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
+					    title: '今日金价',
+					    summary: "以上金价仅供参考，结算以实时金价为准！",
+					    imageUrl: this.goldname.avatar,
+					    success: function (res) {
+							console.log(res)
+					    },fail: function (err) {
+							console.log(err)
+					    }
+					});      
+				}else if(e == 1){
+					uni.share({
+					    provider: "weixin",
+					    scene: "WXSenceTimeline",
+					    type: 0,
+					    href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
+					    title: '今日金价',
+					    summary: "以上金价仅供参考，结算以实时金价为准！",
+					    imageUrl: this.goldname.avatar,
+						success: function (res) {
+							console.log(res)
+						},fail: function (err) {
+							console.log(err)
+						}
+					});
+				}else if(e == 2){
+					uni.setClipboardData({
+					    data: arr,
+					    success: function () {
+							uni.hideToast()
+							uni.showModal({
+								content:'已复制链接，是否打开微信？',
+								confirmText:'打开微信',
+								cancelText:'取消',
+								success(a) {
+									if(a.confirm){
+										plus.runtime.openURL("weixin://");
+									}
+								}
+							})
+					    }
+					});
+				}
 			}
 		}
 	}
@@ -140,7 +203,6 @@
 	}
 	.tabs-one-title{
 		font-size: 22upx;
-		color: #666666;
 		margin: 20upx 0;
 	}
 	.tabs{
@@ -228,6 +290,7 @@
 		}
 	}
 	.king_pic{
+		margin-bottom: 20rpx;
 		background-color: white;
 		border-radius: 10rpx;
 		.king_pic_a{

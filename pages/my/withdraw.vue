@@ -26,12 +26,14 @@
 		methods:{
 			//提现成功
 			
-			but_cli(e,money){
+			but_cli(e,money,total){
+				console.log(e,money)
 				let that = this
 				let data = {
 					price:money,
 					member_account_id:e,
-					title:e == 1?'支付宝' : '银行卡'
+					title:e == 1?'支付宝' : '银行卡',
+					total:total
 				}
 				this.$api.post('withdrawal',data).then(res=>{
 					console.log(res)
@@ -49,6 +51,8 @@
 								}
 							}
 						})
+					}else if(res.status == 2){
+						this.com.navto('../set-shop/set-withdraw')
 					}else{
 						this.com.msg(res.message)
 					}

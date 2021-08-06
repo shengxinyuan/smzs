@@ -8,7 +8,6 @@
     "pages/index/nine_nav",
     "pages/index/group_book",
     "pages/login/login",
-    "pages/information/information",
     "pages/information/newList",
     "pages/login/register",
     "pages/login/forget",
@@ -44,22 +43,10 @@
     "pages/my/vip_member",
     "pages/cart/cart",
     "pages/cart/payment",
-    "components/zs-tabbar/zs-tabbar",
     "pages/message/message",
-    "components/zs-title/zs-title",
-    "components/zs-classifytype/zs-classifytype",
-    "components/zs-popup/zs-popup",
-    "components/zs-store-admin/zs-store-admin",
-    "components/zs-synth-admin/zs-synth-admin",
-    "components/zs-share/zs-share",
     "pages/information/information",
-    "components/zs-text/zs-text",
-    "components/zs-wallets/zs-wallets",
-    "components/zs-button/zs-button",
     "pages/vip-confirm-order/vip-confirm-order",
     "pages/vip-confirm-order/added-services",
-    "components/zs-inputs/zs-inputs",
-    "components/zs-collect-list/zs-collect-list",
     "pages/selected-topics/selected-topics",
     "pages/selected-topics/selection-details",
     "pages/community/community",
@@ -73,18 +60,12 @@
     "pages/set-shop/shop-data",
     "pages/set-shop/shop-certificate",
     "pages/set-shop/shop-gold-price",
-    "components/zs-shoplist-type/zs-shoplist-type",
-    "components/zs-shoplist-seckill/zs-shoplist-seckill",
-    "components/zs-order-list/zs-order-list",
-    "components/zs-order-df/zs-order-df",
     "pages/set-shop/set-payee",
     "pages/set-shop/set-withdraw",
     "pages/set-shop/gold-prices",
     "pages/set-shop/gold-ratio",
-    "components/zs-texture/zs-texture",
     "pages/set-shop/add-payee-code",
     "pages/set-shop/add-alipay",
-    "components/zs-video-up/zs-video-up",
     "pages/index/Selected_topics",
     "pages/set-shop/add-bank-card",
     "pages/set-shop/set-withdraws",
@@ -95,7 +76,6 @@
     "pages/community/platform-ask",
     "pages/shop-orders/order-submit-success",
     "pages/my/aboutus",
-    "components/zs-toast-hear/zs-toast-hear",
     "pages/login/fuwu",
     "pages/login/yinsi",
     "pages/classify/class_detail",
@@ -108,8 +88,11 @@
     "pages/index/search",
     "pages/my/evaluate",
     "pages/my/talk_detail",
-    "components/zs-coupon-put/zs-coupon-put",
-    "components/zs-coupon-xr/zs-coupon-xr"
+    "pages/vip-confirm-order/orderDetails",
+    "pages/service/my-dp-html",
+    "pages/index/taobao",
+    "pages/share/index",
+    "pages/index/mshare"
   ],
   "subPackages": [],
   "window": {
@@ -117,6 +100,29 @@
     "navigationBarTitleText": "",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "/pages/index/index"
+      },
+      {
+        "pagePath": "pages/my/my"
+      },
+      {
+        "pagePath": "/pages/cart/cart"
+      },
+      {
+        "pagePath": "/pages/classify/classify"
+      },
+      {
+        "pagePath": "/pages/selts/selts"
+      }
+    ]
   },
   "usingComponents": {}
 }

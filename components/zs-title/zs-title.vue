@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view class="con">
-			<view class="jint" v-show="page_show">
+		<view class="con" v-show="page_show">
+			<view class="jint">
 				
 			</view>
 			<view class="title">

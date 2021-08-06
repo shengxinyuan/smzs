@@ -84,7 +84,6 @@
 		},
 		onLoad() {
 			this.page_reader()
-			
 		},
 		methods: {
 			//点击切换
@@ -104,7 +103,6 @@
 					this.codeImg = this.swiperList[e].image
 					this.qrcode_img =  this.swiperList[e].member_id
 				}
-				
 			},
 			canvas(){
 				let that = this
@@ -143,53 +141,83 @@
 			},
 			share(e){
 				this.canvas()
-				if(e == 0){
-					let that = this
-					uni.canvasToTempFilePath({
-						canvasId:'my_codes',
-						success(re) {
-							console.log(re)
-							uni.share({
-							    provider: "weixin",
-							    scene: "WXSceneSession",
-							    type: 2,
-							    imageUrl:re.tempFilePath,
-							    success: function (res) {
-							        console.log("success:" + JSON.stringify(res));
-							    },
-							    fail: function (err) {
-							        console.log("fail:" + JSON.stringify(err));
-							    }
-							});
-						},fail(err){
-							console.log(err)
-						},complete(es){
-							console.log(es)
-						}
-					})
-				}else{
-					uni.canvasToTempFilePath({
-						canvasId:'my_codes',
-						success(re) {
-							console.log(re)
-							uni.share({
-							    provider: "weixin",
-							    scene: "WXSenceTimeline",
-							    type: 2,
-							    imageUrl: re.tempFilePath,
-							    success: function (res) {
-							        console.log("success:" + JSON.stringify(res));
-							    },
-							    fail: function (err) {
-							        console.log("fail:" + JSON.stringify(err));
-							    }
-							});
-						},fail(err){
-							console.log(err)
-						},complete(es){
-							console.log(es)
-						}
-					})
+				let that = this
+				if(this.navnum == 1 ){
+					if(e == 0){
+						uni.canvasToTempFilePath({
+							canvasId:'my_codes',
+							success(re) {
+								console.log(re)
+								uni.share({
+								    provider: "weixin",
+								    scene: "WXSceneSession",
+								    type: 2,
+								    imageUrl:re.tempFilePath,
+								    success: function (res) {
+								        console.log("success:" + JSON.stringify(res));
+								    },
+								    fail: function (err) {
+								        console.log("fail:" + JSON.stringify(err));
+								    }
+								});
+							},fail(err){
+								console.log(err)
+							},complete(es){
+								console.log(es)
+							}
+						})
+					}else{
+						uni.canvasToTempFilePath({
+							canvasId:'my_codes',
+							success(re) {
+								console.log(re)
+								uni.share({
+								    provider: "weixin",
+								    scene: "WXSenceTimeline",
+								    type: 2,
+								    imageUrl: re.tempFilePath,
+								    success: function (res) {
+								        console.log("success:" + JSON.stringify(res));
+								    },
+								    fail: function (err) {
+								        console.log("fail:" + JSON.stringify(err));
+								    }
+								});
+							},fail(err){
+								console.log(err)
+							},complete(es){
+								console.log(es)
+							}
+						})
+					}
+				}else{ // 简单二维码
+					if(e == 0){
+						uni.share({
+						    provider: "weixin",
+						    scene: "WXSceneSession",
+						    type: 2,
+						    imageUrl:that.swiperList[0].member_id,
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+					}else{
+						uni.share({
+						    provider: "weixin",
+						    scene: "WXSenceTimeline",
+						    type: 2,
+						    imageUrl: that.swiperList[0].member_id,
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+					}
 				}
 			}
 		}

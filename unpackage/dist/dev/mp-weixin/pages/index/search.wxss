@@ -1,3 +1,8 @@
+
+page{
+	background-color: #F1F1F1;
+}
+
 @charset "UTF-8";
 /**
  * 这里是uni-app内置的常用样式变量
@@ -35,6 +40,7 @@
 }
 .box.data-v-64d2b7fe {
   width: 100%;
+  padding-bottom: 30rpx;
 }
 .zl-box.data-v-64d2b7fe {
   width: 90%;
@@ -100,7 +106,7 @@
   padding: 0 50rpx;
 }
 .zl-search-history text.data-v-64d2b7fe {
-  background-color: #f3f3f3;
+  background-color: #fff;
   margin: 15rpx;
   padding: 0 25rpx;
   text-align: center;

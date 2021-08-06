@@ -3,7 +3,7 @@
 		<view class="header">
 			<view class="header_white" :style="{background:background }">
 				<view class="gototop" @click="gotoppage">
-					<u-icon name="arrow-left" size="50"></u-icon>
+					<u-icon name="arrow-left" size="40"></u-icon>
 				</view>
 			</view>
 			<view class="me_gold">
@@ -11,7 +11,7 @@
 			</view>
 			<view class="gold_statis">
 				<view class="statis_top">
-					当前金币：<text style="font-size: 44rpx;font-weight: 600;">{{num_s}}</text>
+					当前金币：<text style="font-size: 40rpx;font-weight: 600;">{{num_s}}</text>
 				</view>
 				<view class="statis_bot">
 					<u-icon name="volume-fill" size="30"></u-icon>
@@ -105,11 +105,11 @@
 				padding-left: 30rpx;
 			}
 		}
-		.me_gold{width: 100%;padding: 0 5%;margin-bottom: 20rpx;font-size: 34rpx;}
+		.me_gold{width: 100%;padding: 0 5%;margin-bottom: 20rpx;font-size: 32rpx;}
 		.gold_statis{
 			width: 90%;height: 240rpx;padding: 20rpx;margin: 0 5%;border-radius: 14rpx;
 			box-shadow: 0 0 10rpx 2rpx #f7dead;
-			background-color: #fff;font-size: 34rpx;
+			background-color: #fff;font-size: 30rpx;
 			position: relative;
 			image{
 				position: absolute;right: 0;top: 60rpx;
