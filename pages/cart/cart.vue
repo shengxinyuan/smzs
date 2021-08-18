@@ -42,14 +42,27 @@
 									<view style="margin-top: 6rpx;">
 										库存：{{it.stock}}
 									</view>
-									<view v-if="vip_type">
-										金料：￥{{it.price_vip}}
+									<view v-if="it.is_height == 1">
+										<view v-if="vip_type">
+											金价：￥{{((it.price_vip/1)/(it.weight/1)).toFixed(2)}}/g
+										</view>
+										<view v-else>
+											金价：￥{{((it.price_normal/1)/(it.weight/1)).toFixed(2)}}/g
+										</view>
 									</view>
-									<view v-else>
-										金料：￥{{it.price_normal}}
+									<view v-if="it.is_height == 2">
+										<view v-if="vip_type">
+											金价：￥0.00/g
+										</view>
+										<view v-else>
+											金价：￥0.00/g
+										</view>
 									</view>
-									<view style="margin-top: 6rpx;">
+									<view style="margin-top: 6rpx;" v-if="it.is_height == 1">
 										工费：{{((it.labor/1)/(it.weight/1)).toFixed(2)}}/g
+									</view>
+									<view class="" v-if="it.is_height == 2">
+										工费：0.00/g
 									</view>
 								</view>
 							</view>
@@ -137,14 +150,14 @@
 				if(vip && this.shop_list.data){
 					this.shop_list.data.forEach(i=>{
 						if(i.status == 1){
-							arr +=  JSON.parse(i.price_vip) * i.count
+							arr +=  JSON.parse(i.price_vip)
 						}
 					})
 					this.vip_type = true
 				}else{
 					this.shop_list.data.forEach(i=>{
 						if(i.status == 1){
-							arr +=  JSON.parse(i.price_normal)* i.count
+							arr +=  JSON.parse(i.price_normal)
 						}
 					})
 					this.vip_type = false
@@ -289,7 +302,7 @@
 		padding: 20rpx;
 		border-radius: 10rpx;
 		.item_js{
-			padding-left: 36%;margin-top: 28rpx;display: flex;justify-content: space-between;
+			padding-left: 34%;margin-top: 28rpx;display: flex;justify-content: space-between;
 			.rmb{
 				font-size: 22upx;
 			}

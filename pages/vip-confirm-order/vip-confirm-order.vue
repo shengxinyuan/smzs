@@ -259,12 +259,19 @@
 										<text>条码：{{firstItem.bar_code}}</text>
 									</view>
 									<view class="goods-text-two">
-										<view class="goods-text-two-min-box">
-											<text v-if="!viptype">金料：￥{{firstItem.gold_g_normal}}</text>
-											<text v-else>金料：￥{{firstItem.gold_g_vip}}</text>
+										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 1">
+											<text v-if="!viptype">金价：￥{{((firstItem.goods_money_normal/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
+											<text v-else>金价：￥{{((firstItem.goods_money_vip/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
 										</view>
-										<view class="goods-text-two-min-box">
+										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 2">
+											<text v-if="!viptype">金价：￥0.00/g</text>
+											<text v-else>金价：￥0.00/g</text>
+										</view>
+										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 1">
 											<text>工费：￥{{((firstItem.labor_money/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
+										</view>
+										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 2">
+											<text>工费：￥0.00/g</text>
 										</view>
 									</view>
 									<view class="money-box" style="display: flex;justify-content: space-between;">
@@ -295,7 +302,7 @@
 						<view>商品金额</view>
 						<view>￥{{shop_price}}</view>
 					</view>
-					<view class="first-box-six-min-v">
+					<view class="first-box-six-min-v">	
 						<view>
 							金币抵扣 
 						</view>
@@ -350,8 +357,6 @@
 					</u-popup>
 				</view>
 			</view>
-
-			
 		</view>
 		<!--  底部-->
 		<view class="tabs-second-box" >

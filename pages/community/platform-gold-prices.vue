@@ -128,13 +128,13 @@
 			//分享
 			shares(e){
 				// pages/community/my-gold-prices
-				let arr = 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' +'奢美饰界' +'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码注册下载'
+				let arr = 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' +'奢美饰界' +'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码注册下载'
 				if(e == 0){
 					uni.share({
 					    provider: "weixin",
 					    scene: "WXSceneSession", 
 					    type: 0,
-					    href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' +'奢美饰界'+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码注册下载',
+					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' +'奢美饰界'+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码注册下载',
 					    title: '在这里采购黄金，一件起批，省钱省事！',
 					    summary: "款式多/有图片/有视频/有尺寸/有克重,工厂工费，实时金价",
 					    imageUrl: '../../static/logos.jpg',

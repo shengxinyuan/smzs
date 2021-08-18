@@ -10,7 +10,10 @@
 					</view>
 				</view>
 				<view class="head-box-right">
-					<view class="title">更新方式</view>
+					<view class="title">
+						<text>基础金价为实时更新与系统同步</text>
+					</view>
+					<!-- <view class="title">更新方式</view>
 					<view class="uni-padding-wrap">
 						<radio-group @change="radioChange">
 							<view class="radio-box" @click="openPopup(1)">
@@ -22,12 +25,12 @@
 									<radio value="r2" :class="indexd == 0" :color="Color" :style="styleSize" />{{radio02}}</label>
 							</view>
 						</radio-group>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<!-- /////////// -->
 			<view class="shop_tab">
-				<view class="tab_it" v-for="(it,ind) in tableList" :key="ind" @click="go_detail(it.id,it.ratio,it.title)">
+				<view class="tab_it" v-for="(it,ind) in tableList" :key="ind" @click="go_detail(it.id,it.ratio,it.title,it)">
 					{{it.title}} <u-icon name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -144,10 +147,9 @@
 					}
 					this.com.msg(res.message)
 				})
-				
 			},
-			go_detail(id,type,title){
-				if(type == 1){ //1倍率 2 价格
+			go_detail(id,type,title,v){
+				if(v.gold_price_id == 0){ //1倍率 2 价格
 					this.com.navto('./gold-ratio?id='+id+'&title='+title)
 				}else{
 					this.com.navto('./gold-prices?id='+id+'&title='+title)
@@ -217,6 +219,10 @@
 
 			.head-box-right {
 				width: 50%;
+				padding: 50rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 
 				.title {
 					font-size: 24upx;

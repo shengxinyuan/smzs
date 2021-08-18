@@ -74,7 +74,7 @@
 
 					<view class="min-box-tt" @click="skipShare" v-show="vip_type">
 						<u-icon name="share" size="42"></u-icon>
-						<view>店铺分享</view>
+						<view>分享</view>
 					</view>
 				</view>
 			</view>
@@ -249,7 +249,7 @@
 		<!-- 视频播放弹窗 -->
 		<view class="video-popup" v-if="videoShow" @click="zanting" @touchmove.prevent>
 			<view class="video">
-				<video id="myVideo" :src="shop_det.video" :autoplay="true" loop muted show-play-btn controls
+				<video id="myVideo" :src="shop_det.video" :autoplay="true" loop show-play-btn controls
 					objectFit="cover" @pause="ZhanTing" @ended="ZhanTing"></video>
 			</view>
 		</view>
@@ -531,14 +531,15 @@
 			},
 			//购物车
 			goto_cart() {
-				this.com.rel('../cart/cart')
+				uni.redirectTo({
+					url: '../cart/cart'
+				})
 			},
-
 			goto_page(e) {
 				this.com.navto(e)
 			},
 			skipIndex() {
-				uni.reLaunch({
+				uni.redirectTo({
 					url: './index'
 				})
 			},
@@ -724,7 +725,7 @@
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/index/index?data=' +
+						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' +
 							JSON.stringify(data),
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,
@@ -743,7 +744,7 @@
 						provider: "weixin",
 						scene: "WXSenceTimeline",
 						type: 0,
-						href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/index/index?data=' +
+						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' +
 							JSON.stringify(data),
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,

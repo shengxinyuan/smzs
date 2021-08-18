@@ -1,48 +1,49 @@
 <template>
 	<view class="zl-box">
-		<view class="head" @click="goto_top">
+		<!-- <view class="head" @click="goto_top">
 			<view class="head_left">
 				<u-icon name="arrow-left" size="40" ></u-icon>
 			</view>
 			<view class="head_cont">
 				{{title}} 
 			</view>
-		</view>
+		</view> -->
 		
 		<block>
 			<view class="gold-prices-box">
 				<view class="gold-prices-box-up">
 					<view class="up-title">{{title}}</view>
-					<view class="up-prices"> 
+					<!-- <view class="up-prices"> 
 						<text class="rmb">￥</text>
 						<text class="number">{{parseFloat(sumPrice01) + parseFloat(sumPrice02)}}/g</text>
-					</view>
+					</view> -->
 				</view>
 				<view class="gold-prices-box-down">
 					<view class="price-box">
-						<view class="price-min-box">
+						<view class="price-min-box" style="border-bottom: solid 2rpx #EEEEEE;padding-bottom: 20rpx;">
 							<view class="left">
 								<view class="left-title">今日料价</view>
 								<view class="left-price">￥{{item.total_price}}/g</view>
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
-								<input class="input" type="number" v-model="value01" :placeholder="value01" @input="checka"/>
+								<input class="input" type="number" v-model="value01" :placeholder="value01" @input="checka" />
 								<view class="right-symbol">=</view>
 							</view>
-							<view class="right-price">￥{{sumPrice01}}/g</view>
+							<view class="right-price">￥{{sumPrice01.toFixed(2)}}/g</view>
 						</view>
-						<view class="price-min-box">
+						<view class="price-min-box" v-for="(it,index) in list" :key="index" 
+						@click="checked(index)">
 							<view class="left">
-								<view class="left-title">工费</view>
-								<view class="left-price">￥{{item.wage}}/g</view>
+								<view class="left-title">{{it.title || '工费'}}</view>
+								<view class="left-price">￥{{it.wage}}/g</view>
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
-								<input class="input" type="number" v-model="value02" :placeholder="value02"  @input="checkb"/>
+								<input class="input" type="number" v-model="it.commerical_wage" :placeholder="it.commerical_wage" @input="checkb" />
 								<view class="right-symbol">=</view>
 							</view>
-							<view class="right-price">￥{{sumPrice02}}/g</view>
+							<view class="right-price">￥{{(it.sumPrice/1).toFixed(2)}}/g</view>
 						</view>
 					</view>
 					<view class="circle-left"></view>
@@ -81,7 +82,10 @@
 				la:'',
 				lb:'',
 				vala:'',
-				valb:''
+				valb:'',
+				list: [],
+				index: 0,
+				data: [],
 			}
 		},
 		computed:{
@@ -92,28 +96,31 @@
 				if(this.item){
 					let num = this.lb
 					if(this.value01 == ''){
-						arr =  num + this.vala
+						arr =  num/1 + this.vala/1
 					}else{
-						arr =  num + JSON.parse(this.value01)
+						arr =  num/1 + JSON.parse(this.value01)/1
 					}
 				}
 				return arr
 			},
 			//工费
-			sumPrice02(){
-				let arr = 0
-				if(this.item){
-					let num = this.la
-					if(this.value02 == ''){
-						arr =  num + this.valb
-					}else{
-						arr =  num + JSON.parse(this.value02)
-					}
-				}
-				return arr
-			}, 
+			// sumPrice02(){
+			// 	let arr = 0
+			// 	if(this.item){
+			// 		let num = this.la
+			// 		if(this.value02 == ''){
+			// 			arr =  num + this.valb
+			// 		}else{
+			// 			arr =  num + JSON.parse(this.value02)
+			// 		}
+			// 	}
+			// 	return arr
+			// }, 
 		},
 		onLoad(op) {
+			uni.setNavigationBarTitle({  
+				title: op.title+'金价'  
+			})  
 			this.title = op.title+'金价' 
 			this.gold_id = op.id
 			this.page_reader()
@@ -127,15 +134,25 @@
 						this.value01 = JSON.parse(res.data.new_price)+'' //料价
 						this.value02 = JSON.parse(res.data.commerical_wage)+''
 						this.la =  JSON.parse(res.data.wage)
+						console.log(this.la)
 						this.lb =  JSON.parse(res.data.total_price)
+						res.data.other.forEach(item=>{
+							item.sumPrice = item.wage/1 + item.commerical_wage/1
+						})
+						this.list = res.data.other
 					}
 				})
 			},
 			//保存
 			skipShopGoldPrice(){
 				let arr = JSON.parse(this.value01)
-				let att = JSON.parse(this.value02)
-				this.$api.post('managegold',{price:arr.toFixed(2),commerical_wage:att.toFixed(2),id:this.gold_id}).then(res=>{
+				let datas = {
+					id: this.gold_id,
+					price: this.value01,
+					ratio_price: '',
+					data: JSON.stringify(this.list)
+				}
+				this.$api.post('managegold',datas).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.com.redto('./shop-gold-price?tit='+'修改成功')
@@ -152,17 +169,22 @@
 				e.target.value = (e.target.value.match(/^\d*(\.?\d{0,2})/g)[0]) || null
 				//重新赋值给input
 				this.$nextTick(() => {
-					this.value01= e.target.value+''
+					this.value01 = e.target.value + ''
 				})
 			},
 			checkb(e) {
 				//正则表达试
-				e.target.value = (e.target.value.match(/^\d*(\.?\d{0,2})/g)[0]) || null
+				// e.target.value = (e.target.value.match(/^\d*(\.?\d{0,2})/g)[0]) || null
 				//重新赋值给input
 				this.$nextTick(() => {
-					this.value02= e.target.value+''
+					return false
 				})
+				this.list[this.index].commerical_wage = e.target.value
+				this.list[this.index].sumPrice = (this.list[this.index].wage/1 + e.target.value/1)
 			},
+			checked(i){
+				this.index = i
+			}
 		}
 	}
 </script>
@@ -185,11 +207,10 @@
 
 	.gold-prices-box {
 		margin-bottom: 30upx;
-		margin-top: 30rpx;
 		.gold-prices-box-up {
 			width: 100%; 
 			height: 80upx;
-			padding: 0 60upx;
+			padding: 0 30upx;
 			background-image: linear-gradient(180deg,
 				#f3e9df 0%,
 				#f6efe9 100%);
@@ -232,7 +253,7 @@
 				.price-min-box {
 					display: flex;
 					align-items: center;
-					margin-bottom: 30upx;
+					margin-bottom: 25upx;
 
 					.left {
 						width: 28%;

@@ -1,6 +1,6 @@
 <template>
 	<view class="zl-box">
-		<uni-nav-bar left-icon="back" @clickLeft="goto_top" :title="title"></uni-nav-bar>
+		<!-- <uni-nav-bar left-icon="back" @clickLeft="goto_top" :title="title"></uni-nav-bar> -->
 		
 		<view class="gold-ratio-box">
 			<view class="title">{{title}}</view>
@@ -40,6 +40,9 @@
 			}
 		},
 		onLoad(op) {
+			uni.setNavigationBarTitle({
+				title: op.title+'金价'  
+			})  
 			this.title = op.title+'金价'
 			this.gold_id = op.id
 			this.page_reader()
@@ -54,7 +57,13 @@
 				})
 			},
 			skipShopGoldPrice(){
-				this.$api.post('managegold',{ratio_price:this.value,id:this.gold_id}).then(res=>{
+				let data = {
+					ratio_price:this.value,
+					id:this.gold_id,
+					price: '',
+					data: ''
+				}
+				this.$api.post('managegold',data).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.com.redto('./shop-gold-price?tit='+'修改成功')
@@ -79,9 +88,8 @@
 <style lang="scss">
 	.zl-box{
 		padding: 30upx;
-		border-top: solid 2upx #f6f6f6;
+		// border-top: solid 2upx #f6f6f6;
 		.gold-ratio-box{
-			margin-top: 20upx;
 			margin-bottom: 30upx;
 			.title{
 				font-size: 30upx;

@@ -63,7 +63,7 @@
 					商品汇总
 				</view>
 				<view class="statis_r">
-					共 {{shop_det.count}} 件 ￥{{shop_det.total}}
+					共 {{shop_det.count}} 件 ￥{{all_goods_price.toFixed(2)}}
 				</view>
 			</view>
 			<!-- 工费 -->
@@ -72,7 +72,7 @@
 					工费
 				</view>
 				<view class="statis_r">
-					￥{{(shop_det.total_labor_price)}}
+					￥{{(all_labor_price.toFixed(2))}}
 				</view>
 			</view>
 			<view class="statis">
@@ -95,25 +95,26 @@
 				</view> -->
 			</view>
 			<view class="shop_list"  v-for="(its,ind) in shop_det.order_goods">
-				<image :src="its.image" mode="aspectFill" @click="order_detail(item.id,10)"></image>
+				<image :src="its.image" mode="aspectFill"></image>
 				<view class="list_right">
-					<view @click="order_detail(item.id)">
+					<view>
 						<view class="title">{{its.title}}</view>
 						<view class="Specifications">金重：{{its.sku.weight}}g<text class="num"> 条码：{{its.sku.bar_code}}</text></view>
 						<view class="list_right_its">
 							<text v-if="its.is_height == 1">
-								金价：￥{{its.gold_price}}</text>
-							<text v-if="its.is_height == 2">金价：￥0</text>
-							<text >工费:￥{{((its.labor_price/1)/(its.sku.weight/1)).toFixed(2)}}/g </text>
+								金价：￥{{(((its.total/1)-((its.labor_price/1)))/(its.sku.weight/1)).toFixed(2)}}/g</text>
+							<text v-if="its.is_height == 2">金价：￥0.00/g</text>
+							<text v-if="its.is_height == 1">工费:￥{{((its.labor_price/1)/(its.sku.weight/1)).toFixed(2)}}/g </text>
+							<text v-if="its.is_height == 2">工费：￥0.00/g</text>
 						</view>
-						<view class="price">￥{{its.total}} <text>*{{its.count}}</text></view>
+						<view class="price">￥{{((its.total/1)-((its.labor_price/1))).toFixed(2)}} <text>*{{its.count}}</text></view>
 					</view>
 				</view>
 			</view>
-			<view class="heji">
+			<!-- <view class="heji">
 				<text  class="heji_l">共 {{shop_det.count}} 件</text>
 				<text class="heji_r"> 合计：<text>￥{{shop_det.total}}</text></text>
-			</view>
+			</view> -->
 		</view>
 		
 		<view class="st_data" style="margin-bottom: 60rpx;">
@@ -151,7 +152,10 @@
 				timestamp:0,
 				order_id:0,
 				shop_det:'',
-				status:''
+				status:'',
+				all_goods_price: 0,
+				all_labor_price: 0,
+				all_total: 0,
 			}
 		},
 		watch:{
@@ -181,6 +185,11 @@
 						console.log(end_time) 
 						let reslut = end_time - state
 						this.timestamp = Math.floor(reslut / 1000)
+						for (let i in res.data.order_goods) {
+							this.all_goods_price += (((res.data.order_goods[i].total/1)-(res.data.order_goods[i].labor_price/1))/1)
+							this.all_labor_price += (res.data.order_goods[i].labor_price/1)
+							this.all_total += (res.data.order_goods[i].total/1)
+						}
 					}
 				})
 			},
@@ -377,7 +386,7 @@
 				.list_right_its{
 					display: flex;flex-wrap: wrap;
 					text{
-						display: inline-block;padding: 2rpx 10rpx;background-color: #eee;font-size: 24rpx;margin: 4rpx 10rpx;white-space: nowrap;
+						display: inline-block;padding: 2rpx 10rpx;background-color: #eee;font-size: 24rpx;margin: 4rpx 10rpx 4rpx 0;white-space: nowrap;
 						border-radius: 6rpx;color: #999;
 					}
 				}
@@ -412,7 +421,7 @@
 			.heji_r{
 				font-size: 28rpx;
 				text{
-					color: #ee453f;font-size: 34rpx;
+					color: #ba1a30;font-size: 34rpx;
 				}
 			}
 		}

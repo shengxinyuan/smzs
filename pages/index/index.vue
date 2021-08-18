@@ -228,7 +228,8 @@
 			</view>
 			<!-- 筛选 -->
 			<scroll-view class="scroll-view_H" scroll-x="true">
-				<view id="demo1" class="nav_swiper" :class="{active: it.id == nav_ind }" @click="nac_cla(it.id)"
+				<view id="demo1" class="nav_swiper" :class="{active: it.id == nav_ind }" 
+				@click="nac_cla(it.id)"
 					v-for="(it,ind) in index_data.cates" :key="ind">
 					{{it.title}}
 				</view>
@@ -239,6 +240,11 @@
 		<view class="classify">
 			<zs-shoplist-type :shop_list="shop_list1" :lists="list" :cate_fist_id="nav_ind" :shop_subject_id="''"
 				@shop_confim="shop_confim" :lv="lv"></zs-shoplist-type>
+				<view class=""
+				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
+				v-if="shop_list1.length > 0">
+					{{ loadingText }}
+				</view>
 
 		</view>
 		<drag-button :isDock="true" :existTabBar="true" @btnClick="go_pages('../service/service')" />
@@ -253,7 +259,7 @@
 		<!-- 视频播放弹窗 -->
 		<view class="video-popup" v-if="videoShow" @click="zanting" @touchmove.prevent>
 			<view class="video">
-				<video id="myVideo" :src="video_url" :autoplay="true" loop muted show-play-btn controls
+				<video id="myVideo" :src="video_url" :autoplay="true" loop show-play-btn controls
 					objectFit="cover" @pause="zanting1" @ended="zanting1"></video>
 			</view>
 		</view>
@@ -280,7 +286,7 @@
 				show: true,
 				value1: 1,
 				index_data: '', //首页数据
-				shop_list1: '',
+				shop_list1: [],
 				list: '',
 				huiy_show: false, //会员状态
 				lv: 0,
@@ -297,6 +303,9 @@
 				videoShow: false,
 				video_url: '',
 				autoplay: false,
+				current_page: 1,
+				last_page: 1,
+				loadingText: '上拉加载更多',
 			}
 		},
 		onPageScroll(e) {
@@ -310,6 +319,18 @@
 				this.headcolor = '#fff'
 				this.indexbackcolor = 'rgba(255,2555,255,0.2)' //导航栏搜索框背景色
 			}
+		},
+		onReachBottom() {
+			if(this.current_page === this.last_page){
+				this.loadingText = '没有更多了'
+				return
+			}
+			if(this.loadingText === '正在加载中...'){
+				return
+			}
+			this.loadingText = '正在加载中...'
+			this.current_page = this.current_page + 1
+			this.get_data(this.nav_ind)
 		},
 		// components: {uniNavBar},
 		onUnload() {
@@ -445,9 +466,7 @@
 			},
 			// 视频暂停
 			zanting1() {
-				if (this.autoplay == true) {
-					this.autoplay = false
-				}
+				this.autoplay = !this.autoplay
 			},
 			//弹框隐藏
 			nopop() {
@@ -606,23 +625,45 @@
 			//导航栏点击
 			nac_cla(e) {
 				this.nav_ind = e
+				this.current_page = 1
+				this.shop_list1 = []
 				//商品
-				this.$api.post('goods', {
-					cate_fist_id: this.nav_ind
-				}).then(res => {
-					// console.log(res)
-					if (res.status == 1) {
-						this.shop_list1 = []
-						this.shop_list1 = res.data.data
-					}
-				})
+				this.get_data(this.nav_ind)
 				//筛选条件
 				this.$api.get('screen', {
-					cate_id: this.nav_ind
+					cate_id: this.nav_ind,
 				}).then(res => {
 					// console.log(res)
 					if (res.status == 1) {
 						this.list = res.data
+					}
+				})
+			},
+			get_data(cid){
+				uni.showLoading()
+				this.$api.post('goods', {
+					cate_fist_id: cid,
+					page: this.current_page
+				}).then(res => {
+					// console.log(res)
+					if (res.status == 1) {
+						// this.shop_list1 = []
+						var a = res.data.current_page
+						var b = res.data.last_page
+						if (res.data.data) {
+							this.last_page = res.data.last_page
+							this.current_page = res.data.current_page
+							this.shop_list1 = this.shop_list1.concat(res.data.data) 
+							console.log(this.shop_list1)
+							if (a == b) {
+								this.loadingText = '没有更多了'
+							} else {
+								this.loadingText = '上拉加载更多'
+							}
+						}
+						uni.hideLoading()
+					} else {
+						uni.hideLoading()
 					}
 				})
 			},

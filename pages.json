@@ -494,13 +494,15 @@
 		}, {
 			"path": "pages/set-shop/gold-prices",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#FFFFFF"
 			}
 
 		}, {
 			"path": "pages/set-shop/gold-ratio",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#FFFFFF"
 			}
 		}, {
 			"path": "pages/set-shop/add-payee-code",

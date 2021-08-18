@@ -392,7 +392,7 @@
 					    provider: "weixin",
 					    scene: "WXSceneSession",
 					    type: 0,
-					    href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.menber.bn,
+					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.menber.bn,
 					    title: '奢美饰界',
 					    summary: "我在奢美饰界发现好物，快来看看！",
 					    imageUrl: '../../static/logos.jpg',

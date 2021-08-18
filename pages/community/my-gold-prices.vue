@@ -143,13 +143,13 @@
 			//分享
 			shares(e){
 				// pages/community/my-gold-prices
-				let arr = 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店'
+				let arr = 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店'
 				if(e == 0){
 					uni.share({
 					    provider: "weixin",
 					    scene: "WXSceneSession", 
 					    type: 0, 
-					    href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
+					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
 					    title: '今日金价',
 					    summary: "以上金价仅供参考，结算以实时金价为准！",
 					    imageUrl: this.goldname.avatar,
@@ -164,7 +164,7 @@
 					    provider: "weixin",
 					    scene: "WXSenceTimeline",
 					    type: 0,
-					    href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
+					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
 					    title: '今日金价',
 					    summary: "以上金价仅供参考，结算以实时金价为准！",
 					    imageUrl: this.goldname.avatar,

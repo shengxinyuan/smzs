@@ -31,15 +31,15 @@
 				<view style="margin-top: 6upx;">朋友圈</view>
 			</view>
 			<view class="min-box" @click="share(2)">
-				<image src="../../static/index/lianjie.png" mode="aspectFill"></image>
+				<image src="/static/index/lianjie.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">分享链接</view>
 			</view>
 			<view class="min-box" @click="share(3)">
-				<image src="../../static/index/save.png" mode="aspectFill"></image>
+				<image src="/static/index/save.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">生成海报</view>
 			</view>
 		</view>
-		<u-popup v-model="canvasShow" mode="center" z-index="999999999">
+		<u-popup v-model="canvasShow" mode="center" z-index="9999">
 			<view class="popup-box">
 				<view class="canvas-box">
 					<zs-lime-painter @success="path = $event" :board="base" isRenderImage>
@@ -67,7 +67,7 @@
 				member: [],
 				base: {
 					width: '520rpx',
-					height: '900rpx',
+					height: 'auto',
 					views: [{
 							type: 'image',
 							src: '',
@@ -125,8 +125,8 @@
 							text: '',
 							css: {
 								color: '#666',
-								left: '250rpx',
-								top: '620rpx',
+								left: '30rpx',
+								top: '670rpx',
 								fontSize: '28rpx',
 							}
 						},
@@ -135,8 +135,8 @@
 							text: '',
 							css: {
 								color: '#333',
-								left: '60rpx',
-								top: '690rpx',
+								left: '30rpx',
+								top: '710rpx',
 								fontSize: '34rpx',
 								fontWeight: 'bold'
 							}
@@ -146,22 +146,22 @@
 							src: '',
 							css: {
 								left: '210rpx',
-								top: '760rpx',
+								top: '780rpx',
 								background: '#ffffff',
 								width: '100rpx',
 								height: '100rpx',
 							}
 						},
-						{
-							type: 'text',
-							text: '扫一扫',
-							css: {
-								color: '#666',
-								left: '228rpx',
-								top: '850rpx',
-								fontSize: '22rpx',
-							}
-						},
+						// {
+						// 	type: 'text',
+						// 	text: '扫一扫',
+						// 	css: {
+						// 		color: '#666',
+						// 		left: '228rpx',
+						// 		top: '850rpx',
+						// 		fontSize: '22rpx',
+						// 	}
+						// },
 						// {
 						// 	type: 'text',
 						// 	text: '￥',
@@ -281,7 +281,7 @@
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: 'http://zuanshi.nxm.wanheweb.com/smsj/index.html#/pages/index/index?data=' + JSON
+						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' + JSON
 							.stringify(data),
 						title: this.datas.title,
 						summary: this.datas.remark,
