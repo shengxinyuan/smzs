@@ -378,11 +378,14 @@
 			uni.hideTabBar()
 		},
 		onShow() {
-			this.page_info()
-			this.jinx = uni.getStorageSync('jinx')
-			let b = uni.getStorageSync('member_info')
-			this.lv = b.lv
-			console.log(this.lv)
+			let a = uni.getStorageSync('token')
+			if (a) {
+				this.page_info()
+				this.jinx = uni.getStorageSync('jinx')
+				let b = uni.getStorageSync('member_info')
+				this.lv = b.lv
+				console.log(this.lv)
+			}
 		},
 		methods: {
 			//综合管理

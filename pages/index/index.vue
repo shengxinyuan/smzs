@@ -400,32 +400,6 @@
 			}
 		},
 		methods: {
-			// 顶部导航栏点击按钮
-			onClickBtn(data) {
-				//console.log(data);
-				uni.showToast({
-					title: `key为 ${data.key} 的按钮`,
-					icon: 'none',
-					duration: 1300
-				});
-			},
-			// 当输入完点击完成时触发
-			searchConfirm(data) {
-				//console.log(data.value);
-				uni.showToast({
-					title: `输入了${data.value}`,
-					icon: 'none',
-					duration: 1300
-				});
-			},
-			// 当点击了搜索框时触发
-			searchClick(data) {
-				uni.showToast({
-					title: `点击了搜索框`,
-					icon: 'none',
-					duration: 1300
-				});
-			},
 			page_render() {
 				this.$api.get('index').then(res => {
 					// console.log(res.data)

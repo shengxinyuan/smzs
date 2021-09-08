@@ -30,6 +30,11 @@
 				</view> -->
 		</view>
 		<zs-shopping-list :shop_list="shop_tuij" :lv="lv"></zs-shopping-list>
+		<view class=""
+		style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
+		v-if="shop_tuij.length > 0">
+			{{ loadingText }}
+		</view>
 	</view>
 </template>
 
@@ -49,12 +54,26 @@
 				},
 				search_s: "", //搜索关键字
 				history: [], //搜索历史
-				shop_tuij: '',
-				shop_list: [],
-				list: '',
+				shop_tuij: [],
 				nav_ind: 0,
 				lv: 0,
+				key: '',
+				current_page: 1,
+				last_page: 1,
+				loadingText: '上拉加载更多',
 			}
+		},
+		onReachBottom() {
+			if(this.current_page === this.last_page){
+				this.loadingText = '没有更多了'
+				return
+			}
+			if(this.loadingText === '正在加载中...'){
+				return
+			}
+			this.loadingText = '正在加载中...'
+			this.current_page = this.current_page + 1
+			this.get_data(this.key)
 		},
 		onLoad(e) {
 			//获取会员状态
@@ -71,6 +90,7 @@
 				let aq = uni.getStorageSync('neirong')
 				this.history = JSON.parse(aq)
 			}
+			console.log(this.shop_tuij)
 			// //推荐商品
 			// this.$api.get('hotgoods').then(res=>{
 			// 	console.log(res)
@@ -81,35 +101,18 @@
 		},
 		methods: {
 			g_search(key) {
-				this.$api.post('goods', {
-					key: key
-				}).then(res => {
-					// console.log(res)
-					if (res.status == 1) {
-						this.shop_tuij = res.data.data
-						if (res.data.data.length == 0) {
-							this.com.msg('暂无该类商品')
-						}
-					}
-				})
+				this.get_data(key)
 			},
 			go_search(data) {
+				console.log(data)
 				console.log(data.value)
+				this.shop_tuij = []
 				let key = data.value
+				this.key = data.value
 				if (key == "") {
 					this.com.msg('搜索内容不能为空')
 				} else {
-					this.$api.post('goods', {
-						key: key
-					}).then(res => {
-						console.log(res)
-						if (res.status == 1) {
-							this.shop_tuij = res.data.data
-							if (res.data.data.length == 0) {
-								this.com.msg('暂无该类商品')
-							}
-						}
-					})
+					this.get_data(key)
 					if (this.history.indexOf(key) == -1) {
 						this.history.unshift(key) //unshift:跟push性质一样 区别就是将新添加的数据放在第一位
 					}
@@ -148,8 +151,36 @@
 			again(item) {
 				console.log(item)
 				this.config.search.value = item
+				this.key = item
 				this.g_search(item)
-			}
+			},
+			get_data(key){
+				uni.showLoading()
+				this.$api.post('goods', {
+					key: key,
+					page: this.current_page
+				}).then(res => {
+					// console.log(res)
+					if (res.status == 1) {
+						var a = res.data.current_page
+						var b = res.data.last_page
+						if (res.data.data) {
+							this.last_page = res.data.last_page
+							this.current_page = res.data.current_page
+							this.shop_tuij = this.shop_tuij.concat(res.data.data) 
+							console.log(this.shop_tuij)
+							if (a == b) {
+								this.loadingText = '没有更多了'
+							} else {
+								this.loadingText = '上拉加载更多'
+							}
+						}
+						uni.hideLoading()
+					} else {
+						uni.hideLoading()
+					}
+				})
+			},
 		}
 	}
 </script>

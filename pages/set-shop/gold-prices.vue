@@ -23,7 +23,7 @@
 						<view class="price-min-box" style="border-bottom: solid 2rpx #EEEEEE;padding-bottom: 20rpx;">
 							<view class="left">
 								<view class="left-title">今日料价</view>
-								<view class="left-price">￥{{item.total_price}}/g</view>
+								<view class="left-price">￥{{item.new_price}}/g</view>
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
@@ -131,11 +131,11 @@
 					console.log(res)
 					if(res.status == 1){
 						this.item = res.data
-						this.value01 = JSON.parse(res.data.new_price)+'' //料价
+						this.value01 = res.data.price //料价
 						this.value02 = JSON.parse(res.data.commerical_wage)+''
 						this.la =  JSON.parse(res.data.wage)
 						console.log(this.la)
-						this.lb =  JSON.parse(res.data.total_price)
+						this.lb =  JSON.parse(res.data.new_price)
 						res.data.other.forEach(item=>{
 							item.sumPrice = item.wage/1 + item.commerical_wage/1
 						})

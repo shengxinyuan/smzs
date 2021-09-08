@@ -690,7 +690,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/set-shop/add_shop_image",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑店铺照片",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "",

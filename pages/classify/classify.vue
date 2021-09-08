@@ -134,8 +134,9 @@
 				})
 			},
 			navToList(e,v){
+				console.log(v)
 				console.log(v.pid)
-				this.com.navto('./class_detail?classify_id='+e+'&pid='+v.pid)
+				this.com.navto('./class_detail?classify_id='+e+'&pid='+this.currentId)
 			},
 			//轮播跳转
 			// #ifdef APP-PLUS

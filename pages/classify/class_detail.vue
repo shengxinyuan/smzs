@@ -1,9 +1,14 @@
 <template>
 	<view>
 		<zs-hx-navbar :config="config" @searchClick="searchClick"></zs-hx-navbar>
-		<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="cate_id" @shop_confim="shop_confim" :lv="lv">
+		<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="cate_id" @shop_confim="shop_confim"
+			:lv="lv">
 		</zs-shoplist-type>
-	</view>
+		<view class=""
+		style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
+		v-if="shop_list.length > 0">
+			{{ loadingText }}
+		</view>
 	</view>
 </template>
 
@@ -12,7 +17,7 @@
 		data() {
 			return {
 				config: {
-					backgroundColor: [1,'#293C79'],
+					backgroundColor: [1, '#293C79'],
 					color: '#ffffff',
 					search: {
 						value: '',
@@ -25,6 +30,9 @@
 				list: '', //筛选条件
 				shop_list: [],
 				pid: 0,
+				current_page: 1,
+				last_page: 1,
+				loadingText: '上拉加载更多',
 			}
 		},
 		onLoad(op) {
@@ -34,6 +42,18 @@
 			this.pid = op.pid
 			console.log(op)
 			this.page_render()
+		},
+		onReachBottom() {
+			if (this.current_page === this.last_page) {
+				this.loadingText = '没有更多了'
+				return
+			}
+			if (this.loadingText === '正在加载中...') {
+				return
+			}
+			this.loadingText = '正在加载中...'
+			this.current_page = this.current_page + 1
+			this.get_data()
 		},
 		methods: {
 			//页面渲染
@@ -47,13 +67,35 @@
 						this.list = res.data
 					}
 				})
+				this.get_data()
+			},
+			get_data(){
+				uni.showLoading()
 				this.$api.post('goods', {
 					cate_fist_id: this.cate_id,
-					shop_label_cate_id : this.pid
+					shop_label_cate_id: this.pid,
+					page: this.current_page
 				}).then(res => {
-					console.log(res)
+					// console.log(res)
 					if (res.status == 1) {
-						this.shop_list = res.data.data
+						// this.shop_list1 = []
+						var a = res.data.current_page
+						var b = res.data.last_page
+						if (res.data.data) {
+							this.page_login = true
+							this.last_page = res.data.last_page
+							this.current_page = res.data.current_page
+							this.shop_list = this.shop_list.concat(res.data.data) 
+							console.log(this.shop_list)
+							if (a == b) {
+								this.loadingText = '没有更多了'
+							} else {
+								this.loadingText = '上拉加载更多'
+							}
+							uni.hideLoading()
+						} else {
+							uni.hideLoading()
+						}
 					}
 				})
 			},

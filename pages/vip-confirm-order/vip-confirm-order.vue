@@ -288,11 +288,11 @@
 							</view>
 						</block>
 						
-						<view class="aggregate-box">
+						<!-- <view class="aggregate-box">
 							<text class="aggregate-title">总计</text>
 							<text class="aggregate-text">金料￥{{goldPrice}}</text>
 							<text class="aggregate-text"> 工费：￥{{processCost}}</text>
-						</view>
+						</view> -->
 					</view>
 				</view>
 

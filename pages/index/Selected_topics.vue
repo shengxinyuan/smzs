@@ -15,6 +15,11 @@
 			<!-- <zs-shoplist-type></zs-shoplist-type> -->
 			<zs-shoplist-type :shop_list="shop_list" :lists="lists" @shop_confim="shop_confim" :cate_fist_id="''"
 				:shop_subject_id="nav_idnex" :lv="lv"></zs-shoplist-type>
+				<view class=""
+				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
+				v-if="shop_list.length > 0">
+					{{ loadingText }}
+				</view>
 		</view>
 	</view>
 </template>
@@ -28,7 +33,22 @@
 				lists: [],
 				shop_list: [],
 				lv: 0,
+				current_page: 1,
+				last_page: 1,
+				loadingText: '上拉加载更多',
 			};
+		},
+		onReachBottom() {
+			if(this.current_page === this.last_page){
+				this.loadingText = '没有更多了'
+				return
+			}
+			if(this.loadingText === '正在加载中...'){
+				return
+			}
+			this.loadingText = '正在加载中...'
+			this.current_page = this.current_page + 1
+			this.get_data(this.nav_idnex)
 		},
 		onLoad(op) {
 			//获取会员状态
@@ -40,10 +60,9 @@
 			this.nav_cli(op.id)
 		},
 		onPageScroll(e) {
-			console.log(e)
+			// console.log(e)
 		},
 		methods: {
-			//
 			shop_confim(e) {
 				this.$api.post('goods', e).then(res => {
 					console.log(res)
@@ -55,21 +74,33 @@
 
 			nav_cli(e) {
 				this.nav_idnex = e
+				this.get_data(e)
+			},
+			get_data(e){
 				this.$api.post('goods', {
-					shop_subject_id: e
+					shop_subject_id: e,
+					page: this.current_page
 				}).then(res => {
-					console.log(res)
+					// console.log(res)
 					if (res.status == 1) {
-						this.shop_list = res.data.data
+						// this.shop_list1 = []
+						var a = res.data.current_page
+						var b = res.data.last_page
+						if (res.data.data) {
+							this.page_login = true
+							this.last_page = res.data.last_page
+							this.current_page = res.data.current_page
+							this.shop_list = this.shop_list.concat(res.data.data) 
+							console.log(this.shop_list)
+							if (a == b) {
+								this.loadingText = '没有更多了'
+							} else {
+								this.loadingText = '上拉加载更多'
+							}
+						}
 					}
 				})
-				// this.$api.get('screen').then(res => {
-				// 	console.log(res)
-				// 	if (res.status == 1) {
-				// 		this.lists = res.data
-				// 	}
-				// })
-			}
+			},
 		}
 	}
 </script>

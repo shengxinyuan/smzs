@@ -65,6 +65,7 @@
 				canvasShow: false,
 				goods: [],
 				member: [],
+				vip_type: false,
 				base: {
 					width: '520rpx',
 					height: 'auto',
@@ -195,7 +196,16 @@
 				a.checked = false
 			})
 			this.datas = JSON.parse(e.data)
+			console.log(this.datas)
 			this.member = uni.getStorageSync('member_info')
+			let vip = uni.getStorageSync('viptype')
+			// console.log(vip)
+			// 会员
+			if (vip) {
+				this.vip_type = true
+			} else {
+				this.vip_type = false
+			}
 		},
 		methods: {
 			// 保存画布到相册
@@ -297,15 +307,21 @@
 					});
 				}
 				if (e == 3) {
+					let price = ''
+					if (this.vip_type == true) {
+						price = this.datas.price_vip
+					} else {
+						price = this.datas.price
+					}
 					this.canvasShow = true
-					this.base.views[0].src = this.goods.comm_avatar
-					this.base.views[1].text = this.goods.comm_title
-					this.base.views[2].src = this.goods.image
-					this.base.views[3].text = this.goods.title
-					this.base.views[4].text = '款号：' + this.goods.model_no
-					this.base.views[5].text = '最小金重：' + this.goods.min_g
-					this.base.views[6].text = '￥' + this.goods.price + '起'
-					this.base.views[7].src = this.goods.comm_qrcode
+					this.base.views[0].src = this.datas.comm_avatar
+					this.base.views[1].text = this.datas.comm_title
+					this.base.views[2].src = this.datas.image
+					this.base.views[3].text = this.datas.title
+					this.base.views[4].text = '款号：' + this.datas.model_no
+					this.base.views[5].text = '最小金重：' + this.datas.min_g
+					this.base.views[6].text = '￥' + this.datas.price + '起'
+					this.base.views[7].src = this.datas.comm_qrcode
 				}
 			}
 		}

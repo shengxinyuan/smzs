@@ -100,6 +100,19 @@
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
+			<view style="padding: 30rpx;">
+				<view style="display: flex;align-items: center;justify-content: space-between;">
+					<text>店铺照片</text>
+					<view @click="skip_up">
+						<text style="color: #999999;">编辑</text>
+						<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+					</view>
+				</view>
+				<view style="margin-top: 30rpx;" v-if="data.image">
+					<image style="width: 100%;height: 360rpx;border-radius: 10rpx;" 
+					:src="data.image" mode="aspectFill"></image>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -117,7 +130,7 @@
 				shopAddress: '',
 				show: false,
 				text: 'uni.request',
-				avatar:''
+				avatar:'',
 			}
 		},
 		onLoad(op) {
@@ -130,6 +143,11 @@
 			})
 		},
 		methods: {
+			skip_up(){
+				uni.navigateTo({
+					url: './add_shop_image'
+				})
+			},
 			//图片预览
 			imgpreview(e){
 				let arr = []
