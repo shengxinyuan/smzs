@@ -14,7 +14,7 @@
 			</view>
 		</view>
 		<view class="bottom-btn">
-			<button class="btn"  @click="backPage">免费注册领取现金红包</button>
+			<button class="btn"  @click="backPage">注册</button>
 		</view>
 	</view>
 </template>

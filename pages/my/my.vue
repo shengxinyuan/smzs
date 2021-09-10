@@ -24,12 +24,12 @@
 						<!-- <image :src="menber.avatar" class="user_imga" mode=""></image> -->
 						<image  :src="menber.avatar" class="user_imga" 
 						mode="aspectFill"></image>
-						<image src="../../static/userimg.png" class="user_imgb" 
-						v-show="lv == 1" mode="widthFix"></image>
-						<image src="../../static/my/chengshi.png" class="user_imgb" 
-						v-show="lv == 3" mode="widthFix"></image>
-						<image src="../../static/my/quyu.png" class="user_imgb" 
-						v-show="lv == 2" mode="widthFix"></image>
+						<image src="/static/userimg.png" class="user_imgb" 
+						v-if="lv == 1" mode="widthFix"></image>
+						<image src="/static/my/chengshi.png" class="user_imgb" 
+						v-if="lv == 3" mode="widthFix"></image>
+						<image src="/static/my/quyu.png" class="user_imgb" 
+						v-if="lv == 2" mode="widthFix"></image>
 					</view>
 					<view class="userinfo_text">
 						<view class="text_top">
@@ -368,11 +368,13 @@
 		//下拉刷新
 		onPullDownRefresh(){
 			this.page_info()
+			setTimeout(function() {
+				uni.stopPullDownRefresh()
+			}, 1000);
 		},
 		//页面滑动
 		onPageScroll(e){
-			this.backgroundColor = 'rgba(255,220,89, ' + e.scrollTop / 80 + ')' 
-
+			this.backgroundColor = 'rgba(255,220,89, ' + e.scrollTop / 80 + ')'
 		},
 		onReady() {
 			uni.hideTabBar()
@@ -381,10 +383,7 @@
 			let a = uni.getStorageSync('token')
 			if (a) {
 				this.page_info()
-				this.jinx = uni.getStorageSync('jinx')
-				let b = uni.getStorageSync('member_info')
-				this.lv = b.lv
-				console.log(this.lv)
+				// this.jinx = uni.getStorageSync('jinx')
 			}
 		},
 		methods: {
@@ -398,12 +397,11 @@
 					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.menber.bn,
 					    title: '奢美饰界',
 					    summary: "我在奢美饰界发现好物，快来看看！",
-					    imageUrl: '../../static/logos.jpg',
+					    imageUrl: '/static/logos.jpg',
 					    success: function (res) {
 							console.log(res)
 					    },fail: function (err) {
 							console.log(err)
-					        // that.com.msg('失败')
 					    }
 					});      
 				}else if(e==1){
@@ -431,17 +429,17 @@
 				this.$api.get('member').then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						uni.stopPullDownRefresh()
+						this.lv = res.data.lv
 						let date = new Date().getTime()
 						let end = res.data.vip_time * 1000
 						if(end  <= date){
-							uni.setStorageSync("viptype", false)
 							this.huiy_show = false
+							uni.setStorageSync("viptype", false)
 						}else{
-							uni.setStorageSync("viptype", true)
 							this.huiy_show = true
+							uni.setStorageSync("viptype", true)
 						}
-						uni.setStorageSync('member_info_img',res.data.avatar) //头像
+						uni.setStorageSync("member_info",res.data)
 						uni.setStorageSync('menber_json',res.data)
 						
 						// 合伙人
@@ -732,7 +730,7 @@
 					background-color: #F1F1F1;
 				}
 				.user_imgb{
-					width: 180rpx;height: 180rpx;position: absolute;left: -44rpx;top: -36rpx;
+					width: 180rpx;height: auto;position: absolute;left: -44rpx;top: -36rpx;
 				}
 			}
 			.userinfo_text{

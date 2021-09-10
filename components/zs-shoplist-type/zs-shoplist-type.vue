@@ -36,7 +36,7 @@
 								<!-- 内容 -->
 								<view class="item_child">
 									<view class="child_v" v-for="(cit,index) in it.data"
-										@click="cli_it(cit.id,ind,index)" 
+										@click="cli_it(cit.id,ind,index,it,cit)" 
 										:class="{active:cit.state == true}">
 										{{cit.title}}
 									</view>
@@ -83,7 +83,7 @@
 					<view class="it_tit">
 						{{it.title}}
 					</view>
-					<view class="it_selt" v-if="lv !== 0">
+					<view class="it_selt" v-if="lv">
 						<view class="it_selt_l">
 							<text><text style="">￥</text>{{it.price_vip}}</text>
 						</view>
@@ -91,10 +91,10 @@
 							已售{{it.sale}}件
 						</view>
 					</view>
-					<view class="it_price" v-if="lv == 0">
+					<view class="it_price" v-if="!lv">
 						<text style="font-size: 22rpx;">￥</text>{{ it.price }}
 					</view>
-					<view class="it_selt" v-if="lv == 0">
+					<view class="it_selt" v-if="!lv">
 						<view class="it_selt_l">
 							<text>￥{{it.price_vip}}</text>
 							<image class="u-m-l-16" src="../../static/pifa.png" mode=""></image>
@@ -121,15 +121,15 @@
 						</view>
 						<view class="it_text_cen">
 							<!-- 非会员用户展示价格 -->
-							<view class="it_price" v-if="lv == 0">
+							<view class="it_price" v-if="!lv">
 								<text style="font-weight: none;">￥</text>{{ it.price }}
 							</view>
-							<view class="it_selt_l" v-if="lv == 0">
+							<view class="it_selt_l" v-if="!lv">
 								<text><text style="">￥</text>{{it.price_vip}}</text>
 								<image class="u-m-l-16" src="../../static/pifa.png" mode=""></image>
 							</view>
 							<!-- 会员用户展示价格 -->
-							<view class="it_selt_l" v-if="lv !== 0">
+							<view class="it_selt_l" v-if="lv">
 								<text><text style="">￥</text>{{it.price_vip}}</text>
 							</view>
 						</view>
@@ -157,7 +157,8 @@
 				sale: 0, //	排序 1-降序 2-升序			
 				key: '', //	关键字
 				cate_id: 0, //分类id
-				shop_label_cate_id: 0, //筛选款式
+				shop_label_cate_id: 0, //筛选款式id
+				shop_label_texture_id: 0,//材质分类id
 				sku_value: '', //筛选时sku的值
 				min_g: '', //最小重量
 				max_g: '', //最大重量
@@ -180,21 +181,19 @@
 			page_login: {
 				default: true
 			}, //加载页
-			shop_label_texture_id: {}, //材质
 			shaix_type: {}, //筛选类型
 			lv: {
-				default: 0
+				default: false
 			},
 		},
 		methods: {
 			//点击选项
-			cli_it(mid, find, index) {
-				let arr = this.lists[find]
-				// console.log(find,arr)
+			cli_it(mid, find, index, it, cit) {
+				let arr = it
 				arr.data.forEach(a => {
 					a.state = false
 				})
-				arr.data[index].state = true
+				cit.state = true
 				this.$forceUpdate()
 				//获取参数
 				if (find == 0) {
@@ -208,14 +207,14 @@
 					arr.data.forEach(i => {
 						if (i.state == true) {
 							this.shop_label_cate_id = i.id
-							console.log(this.cate_id)
+							console.log(this.shop_label_cate_id)
 						}
 					})
 				} else if (find == 2) {
 					arr.data.forEach(i => {
 						if (i.state == true) {
 							this.shop_label_texture_id = i.id
-							console.log(this.cate_id)
+							console.log(this.shop_label_texture_id)
 						}
 					})
 				}
@@ -251,13 +250,14 @@
 					cate_id: this.cate_id, //分类id
 					cate_fist_id: this.cate_fist_id === undefined ? '' : this.cate_fist_id, //筛选分类
 					shop_label_cate_id: this.shop_label_cate_id === undefined ? '' : this.shop_label_cate_id, //筛选款式
-					shop_label_texture_id: this.shop_label_texture_id === undefined ? '' : this
-					.shop_label_texture_id, //筛选材质
+					shop_label_texture_id: this.shop_label_texture_id === undefined ? '' : this.shop_label_texture_id, //筛选材质
 					sku_value: this.sku_value, //筛选时sku的值
 					shop_subject_id: this.shop_subject_id === undefined ? '' : this.shop_subject_id, //专题
 					min_g: this.min_g, //最小重量
 					max_g: this.max_g, //最大重量
+					page: 1,
 				}
+				console.log(data)
 				this.$emit('shop_confim', data)
 				this.show = false
 			},
@@ -276,14 +276,9 @@
 					shop_subject_id: this.shop_subject_id === undefined ? '' : this.shop_subject_id, //专题
 					min_g: this.min_g, //最小重量
 					max_g: this.max_g, //最大重量
+					page: 1,
 				}
-				this.$api.post('goods', data).then(res => {
-					console.log(res)
-					if (res.status == 1) {
-
-						this.shop_list = res.data.data
-					}
-				})
+				this.$emit('shop_confim', data)
 			},
 			shaix() {
 				this.show = true

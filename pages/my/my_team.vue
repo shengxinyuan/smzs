@@ -21,31 +21,55 @@
 		</view>
 		<view class="qh_but">
 			<view class="qh_but_l" :class="{'avt':but_ind == 1}" @click="but_ind_cli(1)">一级团队成员 ({{first_count}})</view>
-			<view class="qh_but_l" :class="{'avt':but_ind == 2}" @click="but_ind_cli(2)">二级级团队成员({{second_count}})</view>
+			<view class="qh_but_l" :class="{'avt':but_ind == 2}" @click="but_ind_cli(2)">二级团队成员({{second_count}})</view>
 		</view>
 		<!-- //列表 -->
-		<view class="list" v-if="but_ind == 1">
-			<view class="list_item" v-for="(it,ind) in team_data.first" :key="ind">
-				<image :src="it.avatar" mode=""></image>
-				<view class="list_item_name">
-					{{it.usename}}
+		<template v-if="teamfirst.length > 0 && but_ind == 1">
+			<view class="list">
+				<view class="list_item" v-for="(it,ind) in teamfirst" :key="ind">
+					<view style="display: flex;align-items: center;">
+						<image :src="it.avatar" mode=""></image>
+						<view class="list_item_name">
+							{{it.mobile}}
+						</view>
+						<text class="list_item_vip" v-if="it.vip_type == 1">
+							超级会员
+						</text>
+					</view>
+					<view>
+						<text style="font-size: 26rpx;">{{it.truename}}</text>
+					</view>
 				</view>
-				<text class="list_item_vip" v-if="vip">
-					超级会员
-				</text>
 			</view>
-		</view>
-		<view class="list" v-else>
-			<view class="list_item" v-for="(it,ind) in team_data.second" :key="ind">
-				<image :src="it.avatar" mode=""></image>
-				<view class="list_item_name">
-					{{it.usename}}
+		</template>
+		<template v-if="teamfirst.length <= 0 && but_ind == 1">
+			<view style="margin-top: 10%;">
+				<u-empty text="团队成员为空" mode="data"></u-empty>
+			</view>
+		</template>
+		<template v-if="teamsecond.length > 0 && but_ind == 2">
+			<view class="list">
+				<view class="list_item" v-for="(it,ind) in teamsecond" :key="ind">
+					<view style="display: flex;align-items: center;">
+						<image :src="it.avatar" mode=""></image>
+						<view class="list_item_name">
+							{{it.mobile}}
+						</view>
+						<text class="list_item_vip" v-if="it.vip_type == 1">
+							超级会员
+						</text>
+					</view>
+					<view>
+						<text style="font-size: 26rpx;">{{it.truename}}</text>
+					</view>
 				</view>
-				<text class="list_item_vip" v-if="vip">
-					超级会员
-				</text>
 			</view>
-		</view>
+		</template>
+		<template v-if="teamsecond.length <= 0 && but_ind == 2">
+			<view style="margin-top: 10%;">
+				<u-empty text="团队成员为空" mode="data"></u-empty>
+			</view>
+		</template>
 	</view>
 </template>
 
@@ -60,6 +84,8 @@
 				team_data:[],
 				first_count:'',
 				second_count:'',
+				teamfirst: [],
+				teamsecond: [],
 			}
 		},
 		computed:{
@@ -81,19 +107,6 @@
 				}
 				return arr
 			},
-			//会员到期时间
-			vip(){
-				let arr = ''
-				let date = new Date().getTime()
-				this.team_data.first.forEach(i=>{
-					arr = i.vip_time *1000
-					if(date < arr){
-						return true
-					}else{
-						return false
-					}
-				})
-			}
 		},
 		onLoad() {
 			this.page_render()
@@ -105,9 +118,40 @@
 				this.$api.get('team').then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.team_data = res.data
+						
 						this.first_count = res.data.first_count
 						this.second_count = res.data.second_count
+						
+						if (res.data.first.length > 0) {
+							let str = ''
+							let date = new Date().getTime()
+							res.data.first.forEach(i=>{
+								str = i.vip_time *1000
+								if(date < str){
+									i.vip_type = 1
+								}else{
+									i.vip_type = 0
+								}
+							})
+						}
+						this.teamfirst = res.data.first
+						
+						if (res.data.second.length > 0) {
+							let str1 = ''
+							let date1 = new Date().getTime()
+							res.data.second.forEach(i=>{
+								str1 = i.vip_time *1000
+								if(date1 < str1){
+									i.vip_type = 1
+								}else{
+									i.vip_type = 0
+								}
+							})
+						}
+						this.teamsecond = res.data.second
+						
+						this.team_data = res.data
+						
 						res.data.first.forEach(i=>{
 							this.names = i.nickname
 							if(this.names.length >= 2 && this.names.length < 4){
@@ -168,16 +212,16 @@
 	.list{
 		width: 100%;background-color: #FFFFFF;padding: 20rpx;border-radius: 16rpx;
 		.list_item{
-			width: 100%;display: flex;
+			width: 100%;display: flex;align-items: center;justify-content: space-between;
 			image{
-				width: 86rpx;height: 86rpx;border-radius: 50%;margin-right: 20rpx;
+				width: 86rpx;height: 86rpx;border-radius: 50%;margin-right: 10rpx;
 			}
 			.list_item_name{
-				line-height: 86rpx;font-size: 34rpx;
+				line-height: 86rpx;font-size: 28rpx;
 			}
 			.list_item_vip{
-				padding: 2;padding: 0 24rpx;height: 40rpx;margin-top: 25rpx;color: #fff;
-				background-color: #ffd775;border-radius: 10rpx;margin-left: 20rpx;
+				padding: 0 24rpx;height: 40rpx;color: #fff;
+				background-color: #ffd775;border-radius: 10rpx;margin-left: 10rpx;font-size: 24rpx;line-height: 40rpx;
 			}
 		}
 	}

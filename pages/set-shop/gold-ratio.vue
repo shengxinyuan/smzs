@@ -41,9 +41,9 @@
 		},
 		onLoad(op) {
 			uni.setNavigationBarTitle({
-				title: op.title+'金价'  
+				title: op.title+'加价倍率'  
 			})  
-			this.title = op.title+'金价'
+			this.title = op.title+'加价倍率'
 			this.gold_id = op.id
 			this.page_reader()
 		},

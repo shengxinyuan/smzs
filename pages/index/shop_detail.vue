@@ -168,15 +168,15 @@
 		<view class="add_bottom">
 			<view class="add_con">
 				<view class="three_icons" @click="skipIndex">
-					<image src="../../static/index/index.png" mode="aspectFill"></image>
+					<image src="../../static/index/index.png" mode="widthFix"></image>
 					<view>首页</view>
 				</view>
 				<view class="three_icons" @click="goto_page('../service/service')">
-					<image src="../../static/index/kf.png" mode="aspectFill"></image>
+					<image src="../../static/index/kf.png" mode="widthFix"></image>
 					<view>客服</view>
 				</view>
 				<view class="three_icons" @click="goto_cart">
-					<image src="../../static/index/cart.png" mode="aspectFill"></image>
+					<image src="../../static/index/cart.png" mode="widthFix"></image>
 					<view>购物车</view>
 				</view>
 				<view class="anniu">
@@ -1494,7 +1494,8 @@
 			.three_icons {
 				width: 100rpx;
 				display: flex;
-				flex-wrap: wrap;
+				flex-direction: column;
+				align-items: center;
 				font-size: 20rpx;
 				color: #333;
 
@@ -1506,8 +1507,7 @@
 
 				image {
 					width: 36upx;
-					height: 36upx;
-					margin-left: 28rpx;
+					height: auto;
 				}
 			}
 

@@ -287,12 +287,12 @@
 						type: 1,
 						name: this.member.id
 					}
+					console.log(data)
 					uni.share({
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' + JSON
-							.stringify(data),
+						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' + JSON.stringify(data),
 						title: this.datas.title,
 						summary: this.datas.remark,
 						// imageUrl: this.datas.avatar,

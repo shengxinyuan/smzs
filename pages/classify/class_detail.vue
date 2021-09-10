@@ -30,6 +30,8 @@
 				list: '', //筛选条件
 				shop_list: [],
 				pid: 0,
+				params: [],
+				filtrate: 0,
 				current_page: 1,
 				last_page: 1,
 				loadingText: '上拉加载更多',
@@ -53,32 +55,41 @@
 			}
 			this.loadingText = '正在加载中...'
 			this.current_page = this.current_page + 1
-			this.get_data()
+			this.params.page = this.current_page
+			let params = {
+				cate_fist_id: this.cate_id,
+				shop_label_cate_id: this.pid,
+				page: this.current_page
+			}
+			if (this.filtrate == 1) {
+				this.get_data(this.params)
+			} else {
+				this.get_data(params)
+			}
 		},
 		methods: {
 			//页面渲染
 			page_render() {
 				//筛选条件
 				this.$api.get('screen', {
-					cate_id: this.cate_id
+					cate_id: this.cate_id,
+					shop_label_cate_id: 1
 				}).then(res => {
-					// console.log(res)
 					if (res.status == 1) {
 						this.list = res.data
 					}
 				})
-				this.get_data()
-			},
-			get_data(){
-				uni.showLoading()
-				this.$api.post('goods', {
+				let params = {
 					cate_fist_id: this.cate_id,
 					shop_label_cate_id: this.pid,
 					page: this.current_page
-				}).then(res => {
-					// console.log(res)
+				}
+				this.get_data(params)
+			},
+			get_data(params){
+				uni.showLoading()
+				this.$api.post('goods', params).then(res => {
 					if (res.status == 1) {
-						// this.shop_list1 = []
 						var a = res.data.current_page
 						var b = res.data.last_page
 						if (res.data.data) {
@@ -101,12 +112,15 @@
 			},
 			// 确定筛选
 			shop_confim(e) {
-				this.$api.post('goods', e).then(res => {
-					console.log(res)
-					if (res.status == 1) {
-						this.shop_list = res.data.data
-					}
-				})
+				this.current_page = 1
+				this.shop_list = []
+				this.filtrate = 1
+				let obj = {}
+				obj = e
+				obj.page = this.current_page
+				obj.shop_label_cate_id = this.pid
+				this.params = e
+				this.get_data(this.params)
 			},
 			searchClick() {
 				this.com.navto('../index/search')

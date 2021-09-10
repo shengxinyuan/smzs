@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view class="header" @click="go_address">
-			<view class="rig" v-if="shop_list.address">
+		<view class="header" v-if="shop_list.address" @click="go_address">
+			<view class="rig">
 				 <u-icon name="map" size="26"></u-icon>
 				 <text class="address">收货地址: {{shop_list.address.province+shop_list.address.city+shop_list.address.area+shop_list.address.address}}</text>
 			</view>
@@ -44,10 +44,10 @@
 									</view>
 									<view v-if="it.is_height == 1">
 										<view v-if="vip_type">
-											金价：￥{{((it.price_vip/1)/(it.weight/1)).toFixed(2)}}/g
+											金价：￥{{((it.price_vip/1)/(it.weight/1)-((it.labor/1)/(it.weight/1))).toFixed(2)}}/g
 										</view>
 										<view v-else>
-											金价：￥{{((it.price_normal/1)/(it.weight/1)).toFixed(2)}}/g
+											金价：￥{{((it.price_normal/1)/(it.weight/1)-((it.labor/1)/(it.weight/1))).toFixed(2)}}/g
 										</view>
 									</view>
 									<view v-if="it.is_height == 2">

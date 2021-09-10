@@ -260,8 +260,8 @@
 									</view>
 									<view class="goods-text-two">
 										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 1">
-											<text v-if="!viptype">金价：￥{{((firstItem.goods_money_normal/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
-											<text v-else>金价：￥{{((firstItem.goods_money_vip/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
+											<text v-if="!viptype">金价：￥{{(firstItem.gold_g_normal/1).toFixed(2)}}/g</text>
+											<text v-else>金价：￥{{(firstItem.gold_g_vip/1).toFixed(2)}}/g</text>
 										</view>
 										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 2">
 											<text v-if="!viptype">金价：￥0.00/g</text>

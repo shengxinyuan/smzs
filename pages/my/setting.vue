@@ -21,7 +21,7 @@
 		</view>
 		<!-- 按钮 -->
 		<view class="log_out" @click="log_outs">
-			退出登录
+			<button type="default">退出登录</button>
 		</view>
 	</view>
 </template>
@@ -132,9 +132,14 @@
 </style>
 <style lang="scss" scoped>
 	.log_out{
-		width: 90%;padding: 20rpx;border-radius: 50rpx;border: 1rpx solid #dd2626;
-		font-size: 30rpx;color: #dd2626;text-align: center;
-		position: fixed;left: 5%;bottom: 10%;
+		padding: 20rpx;
+		position: fixed;left: 0;bottom: 0;right: 0;
+		button{
+			border-radius: 50rpx;
+			border: 1rpx solid #dd2626;
+			font-size: 32rpx;
+			color: #dd2626;
+		}
 	}
 	.items{
 		padding: 0 3%;

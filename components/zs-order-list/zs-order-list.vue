@@ -23,7 +23,7 @@
 							<view class="Specifications">金重：{{item.goods.weight}}g<text class="num"> 条码：{{item.goods.bar_code}}</text></view>
 							<view class="shop_list_label">
 								<text v-if="item.goods.is_height == 1">
-									金价：￥{{(((item.total/1)-((item.labor_price/1)))/(item.goods.weight/1)).toFixed(2)}}/g</text>
+									金价：￥{{((item.gold_price/1)/(item.goods.weight/1)).toFixed(2)}}/g</text>
 								<text v-if="item.goods.is_height == 2">金价：￥0.00/g</text>
 								<text v-if="item.goods.is_height == 1">工费：￥{{((item.labor_price/1)/(item.goods.weight/1)).toFixed(2)}}/g </text>
 								<text v-if="item.goods.is_height == 2">工费：￥0.00/g</text>

@@ -103,6 +103,7 @@
 				<u-parse :html="title_val"></u-parse>
 			</view>
 		</view>
+		<view style="height: 120rpx;"></view>
 		<!-- //支付定位 -->
 		<view class="pay_posi" v-if="buy_ind != -1">
 			<view class="pay_posi_l">

@@ -239,7 +239,7 @@
 		</view>
 		<view class="classify">
 			<zs-shoplist-type :shop_list="shop_list1" :lists="list" :cate_fist_id="nav_ind" :shop_subject_id="''"
-				@shop_confim="shop_confim" :lv="lv"></zs-shoplist-type>
+				@shop_confim="shop_confim" :lv="huiy_show"></zs-shoplist-type>
 				<view class=""
 				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 				v-if="shop_list1.length > 0">
@@ -303,6 +303,8 @@
 				videoShow: false,
 				video_url: '',
 				autoplay: false,
+				filtrate: 0,
+				params: [],
 				current_page: 1,
 				last_page: 1,
 				loadingText: '上拉加载更多',
@@ -330,37 +332,41 @@
 			}
 			this.loadingText = '正在加载中...'
 			this.current_page = this.current_page + 1
-			this.get_data(this.nav_ind)
+			this.params.page = this.current_page
+			let params = {
+				cate_fist_id: this.nav_ind,
+				page: this.current_page
+			}
+			if (this.filtrate == 1) {
+				this.get_data(this.params)
+			} else {
+				this.get_data(params)
+			}
 		},
-		// components: {uniNavBar},
 		onUnload() {
 			uni.setStorageSync('coupon', 0)
 		},
-		onReady() {
-			// uni.hideTabBar()
-		},
 		onLoad() {
+			let date = new Date().getTime()
+			this.ent_time_s() //倒计时
+			let params = {
+				cate_fist_id: this.nav_ind,
+				page: this.current_page
+			}
+			this.page_render()
+		},
+		onShow() {
 			let a = uni.getStorageSync("token")
-			// console.log(a)
 			if (!a) {
 				this.isLogin = false
 			} else {
 				this.isLogin = true
 			}
-			//头像
-			this.member = uni.getStorageSync('member_info_img')
-			this.ent_time_s() //倒计时
-			this.page_render()
-		},
-		onShow() {
 			//获取会员状态
 			let b = uni.getStorageSync('member_info')
 			if (b) {
 				this.avatar = b.avatar
 				this.lv = b.lv
-				console.log(this.lv)
-				this.member = uni.getStorageSync('member_info_img')
-				// console.log(this.member)
 			}
 			let vip = uni.getStorageSync('viptype')
 			// 会员
@@ -377,13 +383,15 @@
 			}
 			if (uni.getStorageSync('neirong')) {
 				let arr = uni.getStorageSync("neirong")
-				console.log(JSON.parse(arr))
 				this.search_old = JSON.parse(arr)[0]
 			}
 		},
 		onPullDownRefresh() {
-			this.member = uni.getStorageSync('member_info_img')
+			this.get_member()
 			this.page_render()
+			setTimeout(function() {
+				uni.stopPullDownRefresh()
+			}, 1000);
 		},
 		computed: {
 			//获取系统状态栏高度
@@ -400,9 +408,27 @@
 			}
 		},
 		methods: {
+			get_member(){
+				if (this.isLogin) {
+					this.$api.get('member').then(res=>{
+						if(res.status == 1){
+							this.lv = res.data.lv
+							let date = new Date().getTime()
+							let end = res.data.vip_time * 1000
+							if(end  <= date){
+								this.huiy_show = false
+								uni.setStorageSync("viptype", false)
+							}else{
+								this.huiy_show = true
+								uni.setStorageSync("viptype", true)
+							}
+							uni.setStorageSync("member_info",res.data)
+						}
+					})
+				}
+			},
 			page_render() {
 				this.$api.get('index').then(res => {
-					// console.log(res.data)
 					this.nac_cla(res.data.cates[0].id)
 					if (res.status == 1) {
 						this.index_data = res.data
@@ -410,12 +436,10 @@
 						this.nav_ind = res.data.cates[0].id
 						uni.setStorageSync('jinx', this.index_data.zhuanti) //精选专题
 						this.ent_time_s() //倒计时
-						uni.stopPullDownRefresh()
 					}
 				})
 				//实时金价
 				this.$api.get('gold_price').then(res => {
-					// console.log(res)
 					if (res.status == 1) {
 						this.gold_price = res
 					}
@@ -423,8 +447,6 @@
 			},
 			//轮播 跳转
 			bann_nav(e, i) {
-				console.log(e)
-				console.log(i)
 				this.video_url = e.video
 				if (!this.video_url) {
 					if (e.url) {
@@ -452,7 +474,6 @@
 				this.$api.post('coupon', {
 					type: e
 				}).then(res => {
-					console.log(res)
 					if (res.status == 1) {
 						this.coupon_data = res.data
 						if (this.puytcopup == 0 && res.data.data != '') {
@@ -509,12 +530,14 @@
 			},
 			// 确定筛选
 			shop_confim(e) {
-				this.$api.post('goods', e).then(res => {
-					// console.log(res)
-					if (res.status == 1) {
-						this.shop_list1 = res.data.data
-					}
-				})
+				this.current_page = 1
+				this.shop_list1 = []
+				this.filtrate = 1
+				let obj = {}
+				obj = e
+				obj.page = this.current_page
+				this.params = obj
+				this.get_data(this.params)
 			},
 			//个人中心
 			page_my() {
@@ -565,11 +588,8 @@
 						that.$api.post('listpage', {
 							url: res.result
 						}).then(res => {
-							console.log(res)
 							that.com.msg(res.message)
 						})
-						// console.log('条码类型：' + res.scanType);
-						// console.log('条码内容：' + res.result);
 					}
 				});
 			},
@@ -600,35 +620,33 @@
 			nac_cla(e) {
 				this.nav_ind = e
 				this.current_page = 1
+				this.filtrate = 0
 				this.shop_list1 = []
-				//商品
-				this.get_data(this.nav_ind)
+				// 商品
+				let params = {
+					cate_fist_id: e,
+					page: this.current_page
+				}
+				this.get_data(params)
 				//筛选条件
 				this.$api.get('screen', {
 					cate_id: this.nav_ind,
 				}).then(res => {
-					// console.log(res)
 					if (res.status == 1) {
 						this.list = res.data
 					}
 				})
 			},
-			get_data(cid){
+			get_data(params){
 				uni.showLoading()
-				this.$api.post('goods', {
-					cate_fist_id: cid,
-					page: this.current_page
-				}).then(res => {
-					// console.log(res)
+				this.$api.post('goods',params).then(res => {
 					if (res.status == 1) {
-						// this.shop_list1 = []
 						var a = res.data.current_page
 						var b = res.data.last_page
 						if (res.data.data) {
 							this.last_page = res.data.last_page
 							this.current_page = res.data.current_page
-							this.shop_list1 = this.shop_list1.concat(res.data.data) 
-							console.log(this.shop_list1)
+							this.shop_list1 = this.shop_list1.concat(res.data.data)
 							if (a == b) {
 								this.loadingText = '没有更多了'
 							} else {

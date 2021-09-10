@@ -12,8 +12,7 @@
 			</scroll-view>
 		</view>
 		<view class="contes">
-			<zs-shoplist-type :shop_list="shop_list" :lists="lists" :lv="lv" :page_login="page_login"
-				:shop_label_texture_id="currend" :shaix_type="'3'" @shop_confim="shop_confim"></zs-shoplist-type>
+			<zs-shoplist-type :shop_list="shop_list" :lists="lists" :lv="lv" :page_login="page_login" :shaix_type="'3'" @shop_confim="shop_confim"></zs-shoplist-type>
 				<view class=""
 				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 				v-if="shop_list.length > 0">
@@ -43,22 +42,33 @@
 				lists: [],
 				page_login: true,
 				lv: 0,
+				params: [],
+				filtrate: 0,
 				current_page: 1,
 				last_page: 1,
 				loadingText: '上拉加载更多',
 			}
 		},
 		onReachBottom() {
-			if(this.current_page === this.last_page){
+			if (this.current_page === this.last_page) {
 				this.loadingText = '没有更多了'
 				return
 			}
-			if(this.loadingText === '正在加载中...'){
+			if (this.loadingText === '正在加载中...') {
 				return
 			}
 			this.loadingText = '正在加载中...'
 			this.current_page = this.current_page + 1
-			this.get_data(this.currend)
+			this.params.page = this.current_page
+			let params = {
+				shop_label_texture_id: this.currend,
+				page: this.current_page
+			}
+			if (this.filtrate == 1) {
+				this.get_data(this.params)
+			} else {
+				this.get_data(params)
+			}
 		},
 		onLoad(op) {
 			//获取会员状态
@@ -75,12 +85,15 @@
 			},
 			//传值
 			shop_confim(e) {
-				this.$api.post('goods', e).then(res => {
-					// console.log(res)
-					if (res.status == 1) {
-						this.shop_list = res.data.data
-					}
-				})
+				this.current_page = 1
+				this.shop_list = []
+				this.filtrate = 1
+				let obj = {}
+				obj = e
+				obj.page = this.current_page
+				obj.shop_label_texture_id = this.currend
+				this.params = obj
+				this.get_data(this.params)
 			},
 			//点击
 			nav_cli(e) {
@@ -88,9 +101,14 @@
 				this.page_login = false
 				this.currend = e
 				this.current_page = 1
+				this.filtrate = 0
 				this.shop_list = []
 				//商品
-				this.get_data(e)
+				let params = {
+					shop_label_texture_id: e,
+					page: this.current_page
+				}
+				this.get_data(params)
 				this.$api.get('screen', {
 					type: 2
 				}).then(res => {
@@ -100,14 +118,9 @@
 					}
 				})
 			},
-			get_data(cid){
-				this.$api.post('goods', {
-					shop_label_texture_id: cid,
-					page: this.current_page
-				}).then(res => {
-					// console.log(res)
+			get_data(params){
+				this.$api.post('goods', params).then(res => {
 					if (res.status == 1) {
-						// this.shop_list1 = []
 						var a = res.data.current_page
 						var b = res.data.last_page
 						if (res.data.data) {
