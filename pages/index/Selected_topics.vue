@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="head">
-			<image src="../../static/selection/hunjia_02.png" mode=""></image>
+			<image :src="selected_image" mode=""></image>
 		</view>
 		<view class="fixeds" id="evaluate">
 			<scroll-view class="swiper" scroll-x>
@@ -36,6 +36,7 @@
 				current_page: 1,
 				last_page: 1,
 				loadingText: '上拉加载更多',
+				selected_image: '',
 			};
 		},
 		onReachBottom() {
@@ -51,6 +52,7 @@
 			this.get_data(this.nav_idnex)
 		},
 		onLoad(op) {
+			this.site_data()
 			//获取会员状态
 			let b = uni.getStorageSync('member_info')
 			this.lv = b.lv
@@ -101,6 +103,14 @@
 					}
 				})
 			},
+			site_data(){
+				this.$api.get('site').then(res=>{
+					console.log(res)
+					if(res.status == 1){
+						this.selected_image = res.message.selected_image
+					}
+				})
+			}
 		}
 	}
 </script>

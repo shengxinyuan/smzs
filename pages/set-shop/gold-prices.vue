@@ -27,7 +27,7 @@
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
-								<input class="input" type="number" v-model="value01" :placeholder="value01" @input="checka" />
+								<input class="input" type="digit" v-model="value01" :placeholder="value01" @input="checka" />
 								<view class="right-symbol">=</view>
 							</view>
 							<view class="right-price">￥{{sumPrice01.toFixed(2)}}/g</view>
@@ -40,7 +40,7 @@
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
-								<input class="input" type="number" v-model="it.commerical_wage" :placeholder="it.commerical_wage" @input="checkb" />
+								<input class="input" type="digit" v-model="it.commerical_wage" :placeholder="it.commerical_wage" @input="checkb" />
 								<view class="right-symbol">=</view>
 							</view>
 							<view class="right-price">￥{{(it.sumPrice/1).toFixed(2)}}/g</view>
@@ -155,7 +155,14 @@
 				this.$api.post('managegold',datas).then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.com.redto('./shop-gold-price?tit='+'修改成功')
+						uni.showToast({
+							title: '修改成功',
+							icon: 'none'
+						});
+						setTimeout(function() {
+							uni.navigateBack()
+						}, 1000);
+						// this.com.redto('./shop-gold-price?tit='+'修改成功')
 					}
 				})
 				

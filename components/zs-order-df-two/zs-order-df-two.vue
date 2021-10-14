@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<view class="order_time" v-for="(item,ind) of list" :key="ind">
+		<view class="order_time" v-for="(item,index) of list" :key="index">
 			<view class="order_box">
 				<view class="order_head" @click="order_detail(item.bn)">
 					订单编号：<text class="time">{{item.bn,10}}</text> 
@@ -33,7 +33,7 @@
 				<view class="foot_s">
 					<view></view> <!-- 位置 -->
 					<view class="foot_child">
-						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id)">取消订单</view> <!-- // -->
+						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id,index)">取消订单</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 10 && item.T_F == 0" @click="order_details_x(item.bn,10)">平台下单
 							<!-- <u-count-down :timestamp="item.t_times" :show-hours="false"></u-count-down> -->
 						</view> <!-- // -->
@@ -64,19 +64,13 @@
 		},
 		methods:{
 			//取消订单
-			no_order(e){
-				let that = this
+			no_order(e,i){
+				let _that = this
 				uni.showModal({
 					content:'确认取消该订单吗？',
 					success(re) {
 						if(re.confirm){
-							that.$api.put('orders',{id:e,type:2,is_h5:1}).then(res=>{
-								if(res.status == 1){
-									that.com.redto('./order?state='+ 10 +'&index='+ 1)
-								}else{
-									that.com.msg(res.message)
-								}
-							})
+							_that.$emit('cancel_detail', e, i)
 						}
 					}
 				})

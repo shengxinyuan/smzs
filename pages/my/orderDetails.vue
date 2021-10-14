@@ -72,7 +72,7 @@
 					工费
 				</view>
 				<view class="statis_r">
-					￥{{(all_labor_price.toFixed(2))}}
+					￥{{(((shop_det.order_goods[0].labor_price/1)+(shop_det.order_goods[0].labor_price_add/1))/(shop_det.order_goods[0].sku.weight/1)).toFixed(2)}}
 				</view>
 			</view>
 			<view class="statis">
@@ -104,7 +104,7 @@
 							<text v-if="its.is_height == 1">
 								金价：￥{{((its.gold_price/1)/(its.sku.weight/1)).toFixed(2)}}/g</text>
 							<text v-if="its.is_height == 2">金价：￥0.00/g</text>
-							<text v-if="its.is_height == 1">工费:￥{{((its.labor_price/1)/(its.sku.weight/1)).toFixed(2)}}/g </text>
+							<text v-if="its.is_height == 1">工费:￥{{(((its.labor_price/1)+((its.labor_price_add/1)))/(its.sku.weight/1)).toFixed(2)}}/g </text>
 							<text v-if="its.is_height == 2">工费：￥0.00/g</text>
 						</view>
 						<view class="price">￥{{((its.total/1)-((its.labor_price/1))).toFixed(2)}} <text>*{{its.count}}</text></view>

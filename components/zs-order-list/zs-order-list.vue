@@ -25,7 +25,8 @@
 								<text v-if="item.goods.is_height == 1">
 									金价：￥{{((item.gold_price/1)/(item.goods.weight/1)).toFixed(2)}}/g</text>
 								<text v-if="item.goods.is_height == 2">金价：￥0.00/g</text>
-								<text v-if="item.goods.is_height == 1">工费：￥{{((item.labor_price/1)/(item.goods.weight/1)).toFixed(2)}}/g </text>
+								<text v-if="item.goods.is_height == 1">
+									工费：￥{{(((item.labor_price/1)+(item.labor_price_add/1))/(item.goods.weight/1)).toFixed(2)}}/g </text>
 								<text v-if="item.goods.is_height == 2">工费：￥0.00/g</text>
 							</view>
 							<view class="price"><text>￥{{((item.total/1)-((item.labor_price/1))).toFixed(2)}}</text>

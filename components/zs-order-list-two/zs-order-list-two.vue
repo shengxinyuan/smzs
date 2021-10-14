@@ -39,7 +39,7 @@
 						<view>合计:<text class="money">￥{{item.total}}</text></view>
 					</view>
 					<view class="foot_child">
-						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id)">取消订单</view> <!-- // -->
+						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id,ind)">取消订单</view> <!-- // -->
 						<view class="go_buy" v-if="item.status == 10" @click="order_details_x(item.bn_id,item.bn)">平台下单</view> <!-- // -->
 						<!-- <view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  -->
 						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist_wl(item.bn_id,item.bn)">查看物流</view>
@@ -70,15 +70,14 @@
 		},
 		methods:{
 			//取消订单
-			no_order(e){
-				this.$api.put('orders',{id:e,is_h5:1}).then(res=>{
-					console.log(res)
-					if(res.status == 1){
-						this.com.msg(res.message)
-						this.com.redto('./order?state='+ 10 +'&index='+ 1)
-						// this.$forceUpdate()
-					}else{
-						this.com.msg(res.message)
+			no_order(e,i){
+				let _that = this
+				uni.showModal({
+					content:'确认取消该订单吗？',
+					success(re) {
+						if(re.confirm){
+							_that.$emit('cancel_detail', e, i)
+						}
 					}
 				})
 			},

@@ -1,9 +1,11 @@
 <template>
-	<view class="zl-page"><strong></strong>
+	<view class="zl-page">
+		<!-- <strong></strong> -->
 		<view class="zl-top-title-box">
 			<u-icon class="icon warning" name="warning"></u-icon>
 			<text class="titles">收货人必须填写真实姓名，否则不能发货！</text>
 		</view>
+		<view style="height: 60rpx;"></view>
 		<view class="tabs-box">
 			<view class="tabs-box_top">
 				<view class="top_left">
@@ -268,7 +270,12 @@
 											<text v-else>金价：￥0.00/g</text>
 										</view>
 										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 1">
-											<text>工费：￥{{((firstItem.labor_money/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
+											<template v-if="viptype">
+												<text>工费：￥{{((firstItem.labor_money/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
+											</template>
+											<template v-else>
+												<text>工费：￥{{((firstItem.labor_money/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
+											</template>
 										</view>
 										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 2">
 											<text>工费：￥0.00/g</text>
@@ -336,7 +343,6 @@
 					</view>
 					<textarea v-if="input_show" v-model="textarea_val" placeholder="" />
 				</view>
-
 				<!-- 价格样本 -->
 				<view>
 					<u-popup v-model="popupShow01" mode="center" border-radius="10" :zoom="false" :closeable="true" width="85%">
@@ -371,20 +377,22 @@
 					<view class="open-super-members-box">
 						<view>
 							<view class="open-super-members-log">
-								<image src="../../static/vip-order/vip_02.png" mode="widthFix"></image>
+								<image src="/static/vip-order/vip_02.png" mode="widthFix"></image>
 							</view>
 							<view class="open-super-members-title">
-								<text>开通超级会员，本单预计可省</text>
+								<text>开通超级会员360/年，本单预计可省</text>
 							</view>
 							<view class="open-super-members-price">
 								<text>{{liread}}元</text>
 							</view>
 						</view>
-						<u-switch v-model="checked03" 
-						size="26" 
-						@change="vip_kait" 
-						active-color="#2d407a" 
-						inactive-color="#cccccc"></u-switch>
+						<view style="flex-shrink: 1;">
+							<u-switch v-model="checked03"
+							size="26" 
+							@change="vip_kait" 
+							active-color="#2d407a" 
+							inactive-color="#cccccc"></u-switch>
+						</view>
 					</view>
 				</view>
 				<view class="bottom-v">
@@ -788,6 +796,12 @@
 			fuk(e){
 				// 1寄付 0到付
 				this.ind = e
+				if (e == 0) {
+					this.nums_bj = 0
+				}
+				if (e == 1) {
+					this.baojia_cli(this.imgind)
+				}
 			},
 			//页面渲染
 			page_reader(){
@@ -880,7 +894,6 @@
 						url:'added-services?price='+this.zhanshi.packing_money
 					})
 				}
-				
 			},
 			skipDiscountSelect(){
 				//ids
@@ -950,7 +963,6 @@
 								console.log(res)
 								this.com.msg(res.message)
 								if(res.status == 1){
-									
 									let arr = 2
 									this.time = setInterval(()=>{
 										if(arr == 0){
@@ -1009,7 +1021,7 @@
 		}
 	}
 	.zl-page{
-		width: 100%;
+		
 	}
 	.xiangyou {
 		font-size: 30upx;
@@ -1730,26 +1742,32 @@
 		height: 68upx;
 		display: flex;
 		align-items: center;
+		flex: 1;
+		margin-right: 20rpx;
 
 		.open-super-members-log {
 			// width: 5%;
 			display: flex;
+			flex-shrink: 1;
 
 			image {
 				width: 36upx;
+				height: auto;
 			}
 		}
 
 		.open-super-members-title {
-			font-size: 26upx;
+			flex: 1;
+			font-size: 24upx;
 			font-weight: bold;
 			color: #1c2c5c;
-			margin-left: 20upx;
+			margin-left: 10upx;
 		}
 
 		.open-super-members-price {
+			flex-shrink: 1;
 			padding: 4upx 10upx;
-			margin-left: 20upx;
+			margin-left: 10upx;
 			background-image: linear-gradient(90deg,
 				#2b3f7d 0%,
 				#1b2c60 100%);

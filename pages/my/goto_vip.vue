@@ -150,6 +150,9 @@
 				}
 				this.$api.post('partner',data).then(res=>{
 					this.com.msg(res.message)
+					if (res.status == 1) {
+						uni.navigateBack()
+					}
 				})
 			},
 			//单选

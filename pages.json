@@ -179,15 +179,15 @@
 			"style": {
 				"navigationBarTitleText": "我的钱包",
 				"navigationBarBackgroundColor": "#21346b",
-				"navigationBarTextStyle": "white",
-				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"text": "说明",
-							"fontSize": "34rpx"
-						}]
-					}
-				}
+				"navigationBarTextStyle": "white"
+				// "app-plus": {
+				// 	"titleNView": {
+				// 		"buttons": [{
+				// 			"text": "说明",
+				// 			"fontSize": "34rpx"
+				// 		}]
+				// 	}
+				// }
 			}
 		}, {
 			"path": "pages/my/wallets_theory",
@@ -695,6 +695,15 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "编辑店铺照片",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/index/share_shop_detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             

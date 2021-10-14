@@ -65,10 +65,12 @@
 				canvasShow: false,
 				goods: [],
 				member: [],
+				goods_data: [],
 				vip_type: false,
 				base: {
 					width: '520rpx',
 					height: 'auto',
+					background: '#FFFFFF',
 					views: [{
 							type: 'image',
 							src: '',
@@ -107,7 +109,7 @@
 							css: {
 								color: '#666',
 								left: '30rpx',
-								top: '570rpx',
+								top: '600rpx',
 								fontSize: '30rpx',
 							}
 						},
@@ -117,7 +119,7 @@
 							css: {
 								color: '#666',
 								left: '30rpx',
-								top: '620rpx',
+								top: '650rpx',
 								fontSize: '28rpx',
 							}
 						},
@@ -127,7 +129,7 @@
 							css: {
 								color: '#666',
 								left: '30rpx',
-								top: '670rpx',
+								top: '700rpx',
 								fontSize: '28rpx',
 							}
 						},
@@ -135,9 +137,9 @@
 							type: 'text',
 							text: '',
 							css: {
-								color: '#333',
+								color: '#ff0000',
 								left: '30rpx',
-								top: '710rpx',
+								top: '740rpx',
 								fontSize: '34rpx',
 								fontWeight: 'bold'
 							}
@@ -146,11 +148,11 @@
 							type: 'image',
 							src: '',
 							css: {
-								left: '210rpx',
-								top: '780rpx',
+								left: '200rpx',
+								top: '810rpx',
 								background: '#ffffff',
-								width: '100rpx',
-								height: '100rpx',
+								width: '120rpx',
+								height: '120rpx',
 							}
 						},
 						// {
@@ -206,6 +208,7 @@
 			} else {
 				this.vip_type = false
 			}
+			this.get_goods_qrcode()
 		},
 		methods: {
 			// 保存画布到相册
@@ -217,7 +220,7 @@
 						uni.showToast({
 							title: '已保存到相册',
 							icon: 'success',
-							duration: 2000
+							duration: 1500
 						})
 					}
 				})
@@ -239,6 +242,19 @@
 				// })
 				// this.datas.album[e].checked = e.value
 				// console.log(this.array)
+			},
+			// 生成商品详情二维码
+			get_goods_qrcode() {
+				let data = {
+					id: this.datas.id,
+					member_id: this.member.id
+				}
+				console.log(data)
+				this.$api.get('goods_qrcode', data).then(res => {
+					if (res.status == 1) {
+						this.goods_data = res.data
+					}
+				})
 			},
 			share(e) {
 				let that = this
@@ -296,7 +312,7 @@
 						title: this.datas.title,
 						summary: this.datas.remark,
 						// imageUrl: this.datas.avatar,
-						imageUrl: '/static/logos.jpg',
+						imageUrl: this.datas.image,
 						success: function(res) {
 							// console.log(res) 
 						},
@@ -320,8 +336,8 @@
 					this.base.views[3].text = this.datas.title
 					this.base.views[4].text = '款号：' + this.datas.model_no
 					this.base.views[5].text = '最小金重：' + this.datas.min_g
-					this.base.views[6].text = '￥' + this.datas.price + '起'
-					this.base.views[7].src = this.datas.comm_qrcode
+					this.base.views[6].text = '￥' + this.goods_data.price
+					this.base.views[7].src = this.goods_data.qrcode
 				}
 			}
 		}
@@ -406,7 +422,7 @@
 		width: 100%;
 
 		.canvas-box {
-			// width: 100%;
+			background-color: #FFFFFF;
 			display: flex;
 			align-items: center;
 			justify-content: center;

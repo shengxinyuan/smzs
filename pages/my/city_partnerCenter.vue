@@ -1,10 +1,12 @@
 <template>
 	<view>
 		<zs-hx-navbar :config="config" @clickBtn="onClickBtn"></zs-hx-navbar>
+		
 		<view class="header">
-			<!-- <view class="header_white" :style="{background:background }">
-				
-			</view> -->
+			<view class="" style="padding: 20rpx 0;color: #FFFFFF;font-size: 30rpx;">
+				<text>当前申请城市：</text>
+				<text>{{member_info.partner}}</text>
+			</view>
 			<!-- 数据统计 -->
 			<view class="data_statis">
 				<view class="data_top">
@@ -124,7 +126,8 @@
 				},
 				year: '', //年
 				month: '', // 月
-				stdata: ''
+				stdata: '',
+				member_info: [],
 
 			}
 		},
@@ -133,6 +136,7 @@
 			this.year = date.getFullYear()
 			this.month = date.getMonth() + 1
 			console.log(this.year, this.month)
+			this.get_member()
 			this.page_reader()
 		},
 		computed: {
@@ -156,6 +160,13 @@
 
 		},
 		methods: {
+			get_member(){
+				this.$api.get('member').then(res => {
+					if (res.status == 1) {
+						this.member_info = res.data
+					}
+				})
+			},
 			onClickBtn(data) {
 				//console.log(data);
 				// uni.showToast({

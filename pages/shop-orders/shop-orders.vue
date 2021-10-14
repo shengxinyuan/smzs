@@ -10,8 +10,8 @@
  		</view>
  		<view class="box" v-if="page_show">
 			<view v-if="list.length != 0">
-				<zs-order-list-two :list="list" @order_detail="order_detail" v-if="current_ind != 1" @del_order="del_order"></zs-order-list-two>
-				<zs-order-df-two :list="list" @order_detail="order_detail" v-else></zs-order-df-two>
+				<zs-order-list-two :list="list" @order_detail="order_detail" v-if="current_ind != 1" @del_order="del_order" @cancel_detail="cancel_detail"></zs-order-list-two>
+				<zs-order-df-two :list="list" @order_detail="order_detail" @cancel_detail="cancel_detail" v-else></zs-order-df-two>
 				<view style="width: 100%;height: 80rpx;">
 					<uni-load-more :status="status" :content-text="contentText"></uni-load-more>
 				</view>
@@ -110,6 +110,15 @@
 				this.com.navto('../vip-confirm-order/orderDetails?page_type='+e)
 				
 			},
+			cancel_detail(e,i){
+				console.log(e,i)
+				this.$api.put('orders',{id:e,type:2,is_h5:1}).then(res=>{
+					this.com.msg(res.message)
+					if(res.status == 1){
+						this.list.splice(i,1)
+					}
+				})
+			},
 			//页面滑动
 			page_swiper(e){
 				// console.log(e)
@@ -134,7 +143,7 @@
 			del_order(e){
 				let that = this
 				uni.showModal({
-					content:'您确定删除该订单吗？？',
+					content:'您确定删除该订单吗？',
 					success(a) {
 						if(a.confirm){
 							that.$api.del('orders',{id:e,is_h5:1}).then(res=>{
@@ -172,7 +181,7 @@
  			padding:0 2%;
  			background-color: #fff;color: #999999;
  			text-align: center;
-			position: fixed;left: 0;top: 0rpx;z-index: 20;
+			position: fixed;left: 0;top: 100rpx;z-index: 20;
 			.swiper-box{
 				
 				display: flex;white-space: nowrap;

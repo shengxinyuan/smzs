@@ -27,40 +27,49 @@
 		</view>
 		<!-- 列表 -->
 		<view class="recharg_it">
+			<view class="recharg_it_child" @click="skip">
+				<view class="" style="display: flex;align-items: center;">
+					<u-icon name="error-circle" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
+					<text>提现说明</text>
+				</view>
+				<view>
+					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
+				</view>
+			</view>
 			<view class="recharg_it_child" @click="go_pages('./particulars?type='+1)">
-				<view class="">
+				<view class="" style="display: flex;align-items: center;">
 					<u-icon name="order" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
 					提现明细
 				</view>
 				<view>
-					<u-icon name="arrow-right" size="38" color="#999" style="margin-right: 20rpx;"></u-icon>
+					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
 				</view>
 			</view>
 			<view class="recharg_it_child" @click="go_pages('./particulars?type='+2)">
-				<view class="">
+				<view class="" style="display: flex;align-items: center;">
 					<u-icon name="red-packet" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
 					返利明细
 				</view>
 				<view>
-					<u-icon name="arrow-right" size="38" color="#999" style="margin-right: 20rpx;"></u-icon>
+					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
 				</view>
 			</view>
 			<view class="recharg_it_child" @click="go_pages('./particulars?type='+3)">
-				<view class="">
+				<view class="" style="display: flex;align-items: center;">
 					<u-icon name="bag" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
 					消费明细
 				</view>
 				<view>
-					<u-icon name="arrow-right" size="38" color="#999" style="margin-right: 20rpx;"></u-icon>
+					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
 				</view>
 			</view>
 			<view class="recharg_it_child" @click="go_pages('./particulars?type='+4)">
-				<view class="">
+				<view class="" style="display: flex;align-items: center;">
 					<u-icon name="rmb-circle" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
 					充值明细
 				</view>
 				<view>
-					<u-icon name="arrow-right" size="38" color="#999" style="margin-right: 20rpx;"></u-icon>
+					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -107,6 +116,9 @@
 			},
 			go_pages(e){
 				this.com.navto(e) 
+			},
+			skip(){
+				this.com.navto("wallets_theory?cont="+this.stdata.data)
 			}
 		}
 	}

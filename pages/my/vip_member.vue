@@ -2,7 +2,7 @@
 	<view>
 		<view class="header">
 			<view class="header_l">
-				<image :src="pag_data.avatar" alt="">
+				<image :src="pag_data.avatar" alt="" mode="aspectFill">
 				<view class="header_l_child">
 					<view>{{pag_data.nickname}}</view>
 					<text style="font-size: 26upx;" v-if="huiy_show">{{list.vip_time}} 到期</text>
@@ -16,7 +16,7 @@
 			<zs-title :title="'专享特权'" ></zs-title>
 			<view class="nav_nine">
 				<view class="nav_items" v-for="(it,ind) in list.top" :key="ind" @click="go_to">	
-					<image :src="it.image" mode=""></image>
+					<image :src="it.image" mode="aspectFill"></image>
 					<view>
 						{{it.title}}
 					</view>
@@ -247,7 +247,8 @@
 					   uni.showToast({
 					   		title:'支付成功..',icon:'none'
 					   })
-					   this.show = false
+					   let _that = this
+					   _that.page_reader()
 					  // let aq = 2
 					  // this.time = setInterval(()=>{
 					  // 	aq -=1
@@ -282,7 +283,8 @@
 					   uni.showToast({
 							title:'支付成功..',icon:'none'
 					   })
-					   this.show = false
+					   let _that = this
+					   _that.page_reader()
 					   // let aq = 2
 					   // this.time = setInterval(()=>{
 					   // 	aq -=1
@@ -303,18 +305,18 @@
 			immediately_k(e){
 				//支付宝				
 				this.$api.post('vippay',{vip_id:this.buy_ind,type:this.pay_ind}).then(res=>{
-					console.log(res)
 					if(res.status == 1){
 						if(this.pay_ind == 0){ 
 							this.zfb_alipay(res.data)
 						}else if(this.pay_ind == 1){
 							this.weixin(res.data)
 						}else {
-							this.show = false
 							uni.showToast({
 								title:'支付成功..',icon:'none'
 							})
+							this.page_reader()
 						}
+						this.show = false
 					} else {
 						uni.showToast({
 							title:'支付失败..',icon:'none'

@@ -22,7 +22,8 @@
 						:placeholder="search_old" @click="search(search_old)">
 					<u-icon name="camera" size="40" color="#999999" @click="camear"></u-icon>
 				</view>
-				<view class="rig" :style="{'color': headcolor}" @click="go_pages('../information/information')">
+				<view class="rig" :style="{'color': headcolor}" 
+				@click="go_pages('../information/information')">
 					<u-icon name="chat" size="38" class="chat-icon"></u-icon>
 					<text>消息</text>
 				</view>

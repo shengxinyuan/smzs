@@ -211,10 +211,18 @@
 							</view>
 						</view>
 						<view class="jg_sty_b">
-							<view>
-								工费：￥{{((it.labor/1)/(it.weight/1)).toFixed(2)}}
-								<text>/g</text>
-							</view>
+							<template v-if="vip_type">
+								<view>
+									工费：￥{{((it.vip_labor/1)/(it.weight/1)).toFixed(2)}}
+									<text>/g</text>
+								</view>
+							</template>
+							<template v-else>
+								<view>
+									工费：￥{{((it.normal_labor/1)/(it.weight/1)).toFixed(2)}}
+									<text>/g</text>
+								</view>
+							</template>
 							<view class="">库存：{{it.stock}}</view>
 							<view class="jg_r" v-if="!vip_type">
 								￥<text>{{it.price_normal}}</text>
@@ -410,7 +418,8 @@
 				this.shop_num = e.value
 			},
 			page_render() {
-				this.$api.get('goods/' + this.shop_id + '&member_id=' + this.member.id).then(res => {
+				let mid = this.member.id || 0
+				this.$api.get('goods/' + this.shop_id + '&member_id=' + mid).then(res => {
 					// console.log(res)
 					if (res.status == 1) {
 						this.shop_det = res.data
@@ -432,10 +441,6 @@
 								name: '销量',
 								num: res.data.sale,
 							},
-							// {
-							// 	name: '克重',
-							// 	num: res.data.min_g + '-' + res.data.max_g
-							// }
 						]
 						// sku
 						this.sku()
@@ -507,6 +512,7 @@
 				} else {
 					this.toggleSpec() // 模态框
 					if (e == 1) {
+						this.skuShow = false
 						this.com.navto('../vip-confirm-order/vip-confirm-order?data=' + JSON.stringify(data))
 					} else {
 						this.$api.post('cart', {
@@ -725,11 +731,10 @@
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' +
-							JSON.stringify(data),
+						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share_shop_detail?shop_id='+this.shop_id,
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,
-						imageUrl: '/static/logos.jpg',
+						imageUrl: this.shop_det.image,
 						success: function(res) {
 							// console.log(res)
 
@@ -748,7 +753,7 @@
 							JSON.stringify(data),
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,
-						imageUrl: '/static/logos.jpg',
+						imageUrl: this.shop_det.image,
 						success: function(res) {
 							// console.log(res)
 

@@ -100,8 +100,6 @@
 			if(op.tit){
 				this.com.msg(op.tit)
 			}
-		
-			
 		},
 		onShow() {
 			this.page_reader()

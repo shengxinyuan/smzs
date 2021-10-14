@@ -404,7 +404,6 @@
 		// border-radius: 0 0 100% 100%;
 
 		.toubu {
-
 			padding: 0 16rpx;
 			line-height: 100rpx;
 			display: flex;

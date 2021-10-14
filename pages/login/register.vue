@@ -14,7 +14,7 @@
 				<input type="password" v-model="pass" placeholder="输入密码"/>
 			</view>
 			<view class="write">
-				<input type="text" v-model="invcode" placeholder="输入邀请码(选填)"/>
+				<input type="text" v-model="invcode" placeholder="输入邀请码"/>
 			</view>
 			<!-- <view class="write">
 				所在地区 <view class="choose" @click="show = true">{{regions}}<u-icon name="arrow-right" color="#999" size="28"></u-icon></view>
@@ -138,7 +138,7 @@
 				}else{
 					if(this.log_show){
 						this.$api.post('register',data).then(res=>{
-							console.log(res)
+							this.com.msg(res.message) 
 							if(res.status == 1){
 								this.log_show = false //防抖
 								let date = new Date().getTime()
@@ -153,14 +153,11 @@
 								uni.setStorageSync("member_info",res.data.member_info)
 								uni.setStorageSync('member_info_img',res.data.member_info.avatar)
 								uni.setStorageSync('coupon',1)
-								uni.showToast({
-									title:'请稍后...',icon:'loading',duration:2000
-								})
 								// let arr = 2
 								// this.time = setInterval(()=>{
 								// 	if(arr == 0){
 								// 		clearInterval(this.time)
-										this.com.rel('../index/index')
+										// this.com.rel('../index/index')
 								// 	}else{
 								// 		arr -= 1 
 								// 	}
