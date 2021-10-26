@@ -4,7 +4,7 @@
 		<zs-hx-navbar :config="config" @searchConfirm="go_search"></zs-hx-navbar>
 		<!-- 历史搜索 -->
 		<view v-if="shop_tuij == ''">
-			<view v-if="history.length !=0" style="width: 100%;">
+			<view v-if="history.length != 0" style="width: 100%;">
 				<view class="zl-history-box">
 					<view class="zl-history">
 						<text>历史搜索</text>
@@ -29,7 +29,10 @@
 					</view>
 				</view> -->
 		</view>
-		<zs-shopping-list :shop_list="shop_tuij" :lv="lv"></zs-shopping-list>
+		<zs-shoplist-type v-if="shop_tuij.length > 0" :shop_list="shop_tuij" :lists="list" :cate_fist_id="nav_ind" 
+		:shop_subject_id="''"
+			@shop_confim="shop_confim" :lv="lv"></zs-shoplist-type>
+		<!-- <zs-shopping-list :shop_list="shop_tuij" :lv="lv"></zs-shopping-list> -->
 		<view class=""
 		style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 		v-if="shop_tuij.length > 0">
@@ -76,6 +79,7 @@
 			this.get_data(this.key)
 		},
 		onLoad(e) {
+			this.get_screen()
 			//获取会员状态
 			let b = uni.getStorageSync('member_info')
 			this.lv = b.lv
@@ -100,11 +104,21 @@
 			// })
 		},
 		methods: {
+			get_screen(){
+				//筛选条件
+				this.$api.get('screen', {
+					cate_id: 0,
+				}).then(res => {
+					if (res.status == 1) {
+						this.list = res.data
+					}
+				})
+			},
 			g_search(key) {
 				this.get_data(key)
 			},
 			go_search(data) {
-				console.log(data)
+				// console.log(data)
 				console.log(data.value)
 				this.shop_tuij = []
 				let key = data.value
@@ -125,6 +139,18 @@
 					})
 				}
 			},
+			//   传值
+			shop_confim(e) {
+				this.current_page = 1
+				this.shop_tuij = []
+				this.filtrate = 1
+				let obj = {}
+				obj = e
+				obj.page = this.current_page
+				this.params = obj
+				this.get_data(this.key)
+			},
+			
 			// 删除搜索历史
 			deles() {
 				let that = this

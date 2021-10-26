@@ -1,5 +1,6 @@
 <template>
 	<view class="cont">
+		
 		<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
 			<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> 
 			<!-- 爆款推荐 -->
@@ -41,7 +42,6 @@
 	export default {
 		data() {
 			return {
-				
 			};
 		},
 		props:{
@@ -51,7 +51,8 @@
 		methods:{
 			go_shopdetail(e){
 				this.com.navto('../../pages/index/shop_detail?shop_id='+e)
-			}
+			},
+			
 		}
 	}
 </script>
@@ -59,9 +60,11 @@
 <style lang="scss" scoped>
 .cont{
 	width: 100%;
-	display: flex;flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
 	.cont_item{
-		width: 49%;margin-right: 2%;
+		width: 49%;
+		margin-right: 2%;
 		border-radius: 16rpx;background-color: white;
 		margin-top: 10rpx;overflow: hidden; 
 		position: relative;padding-bottom: 10rpx;

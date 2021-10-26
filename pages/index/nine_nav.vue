@@ -6,13 +6,14 @@
 				<view class="scroll_child" v-for="(it,ind) in nav" :key="ind" :class="{active:it.id == currend}"
 					@click="nav_cli(it.id)">
 					<view class="">
-						{{it.title}}
+						{{it.title}}  aa
 					</view>
 				</view>
 			</scroll-view>
 		</view>
 		<view class="contes">
-			<zs-shoplist-type :shop_list="shop_list" :lists="lists" :lv="lv" :page_login="page_login" :shaix_type="'3'" @shop_confim="shop_confim"></zs-shoplist-type>
+			<zs-shoplist-type :shop_list="shop_list" :lists="lists" :lv="lv" :page_login="page_login" :shaix_type="'3'"
+			 @shop_confim="shop_confim"></zs-shoplist-type>
 				<view class=""
 				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 				v-if="shop_list.length > 0">
@@ -97,7 +98,7 @@
 			},
 			//点击
 			nav_cli(e) {
-				console.log(e)
+				// console.log(e)
 				this.page_login = false
 				this.currend = e
 				this.current_page = 1
@@ -119,6 +120,7 @@
 				})
 			},
 			get_data(params){
+				console.log(params)
 				this.$api.post('goods', params).then(res => {
 					if (res.status == 1) {
 						var a = res.data.current_page
@@ -154,7 +156,6 @@
 		display: flex;
 		align-items: center;
 		background-color: #293C79;
-
 		.icon {
 			margin-right: 20upx;
 		}
@@ -181,6 +182,7 @@
 
 	.textrus {
 		width: 100%;
+		
 	}
 
 	.contes {
