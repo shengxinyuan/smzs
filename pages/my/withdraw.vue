@@ -25,9 +25,8 @@
 		},
 		methods:{
 			//提现成功
-			
 			but_cli(e,money,total){
-				console.log(e,money)
+				// console.log(e,money)
 				let that = this
 				let data = {
 					price:money,
@@ -36,7 +35,7 @@
 					total:total
 				}
 				this.$api.post('withdrawal',data).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.status == 1){
 						uni.showModal({
 							title:'提现申请提交成功',

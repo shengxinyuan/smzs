@@ -115,16 +115,24 @@
 				this.pay_type = e
 			}, 
 			ok_inp(e){
-				this.value = Math.floor(e.detail.value)
+					this.value = Math.floor(e.detail.value)
 			},
 			but_cli(){
 				// console.log(this.fuwu_money,this.value)
-				if(this.pageType != 1){
+				if(this.value < 50){
+					uni.showToast({
+					             title: "设置最低50元",
+								 icon: 'loading',
+					            })
+				}else{
+					if(this.pageType != 1 ){
 					let arr =this.value - this.fuwu_money
 					this.$emit('but_cli',this.pay_type,arr.toFixed(2),this.value)
 				}else{
 					this.$emit('but_cli',this.pay_type,this.value)
 				}
+				}
+				
 				
 			}
 			

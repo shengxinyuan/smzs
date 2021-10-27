@@ -313,6 +313,7 @@
 			return {
 				partner:true,
 				gold_nums:0,
+				commercial_count:0,
 				backgroundColor:"",//导航背景
 				huiy_show:false,//会员状态
 				show:false,//我的邀请人
@@ -428,6 +429,7 @@
 			page_info(){
 				this.$api.get('member').then(res=>{
 					console.log(res)
+					// console.log(res.data.commercial_count)
 					if(res.status == 1){
 						this.lv = res.data.lv
 						let date = new Date().getTime()

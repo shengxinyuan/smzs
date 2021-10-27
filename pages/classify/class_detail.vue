@@ -1,7 +1,8 @@
 <template>
 	<view>
 		<zs-hx-navbar :config="config" @searchClick="searchClick"></zs-hx-navbar>
-		<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="cate_id" @shop_confim="shop_confim"
+		<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="cate_id" 
+		@shop_confim="shop_confim"
 			:lv="lv">
 		</zs-shoplist-type>
 		<view class=""
@@ -86,6 +87,7 @@
 				}
 				this.get_data(params)
 			},
+			
 			get_data(params){
 				uni.showLoading()
 				this.$api.post('goods', params).then(res => {

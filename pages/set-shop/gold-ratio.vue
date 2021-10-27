@@ -57,6 +57,7 @@
 				})
 			},
 			skipShopGoldPrice(){
+				
 				let data = {
 					ratio_price:this.value,
 					id:this.gold_id,
@@ -66,7 +67,11 @@
 				this.$api.post('managegold',data).then(res=>{
 					console.log(res)
 					if(res.status == 1){
-						this.com.redto('./shop-gold-price?tit='+'修改成功')
+						// this.com.redto('./shop-gold-price?tit='+'修改成功')
+						uni.showToast({
+							title: '修改成功',
+							icon: 'none'
+						});
 					}
 				})
 			},

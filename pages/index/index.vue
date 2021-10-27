@@ -412,6 +412,7 @@
 			get_member(){
 				if (this.isLogin) {
 					this.$api.get('member').then(res=>{
+						console.log(res)
 						if(res.status == 1){
 							this.lv = res.data.lv
 							let date = new Date().getTime()

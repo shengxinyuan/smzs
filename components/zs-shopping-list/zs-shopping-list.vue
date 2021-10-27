@@ -1,6 +1,6 @@
 <template>
 	<view class="cont">
-		
+		<!-- <zs-shoplist-type ></zs-shoplist-type> -->
 		<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
 			<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> 
 			<!-- 爆款推荐 -->

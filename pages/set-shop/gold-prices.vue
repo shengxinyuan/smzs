@@ -159,9 +159,9 @@
 							title: '修改成功',
 							icon: 'none'
 						});
-						setTimeout(function() {
-							uni.navigateBack()
-						}, 1000);
+						// setTimeout(function() {
+						// 	uni.navigateBack()
+						// }, 1000);
 						// this.com.redto('./shop-gold-price?tit='+'修改成功')
 					}
 				})

@@ -9,7 +9,7 @@
 			<view style="display: flex;flex-wrap: wrap;">
 				<view class="orders_it" v-for="(it,ind) in store_admin" :key="ind" @click="goto_vip_set(ind)">
 					<view class="images">
-						<image :src="it.img" mode="widthFix"></image>
+						<image :src="it.img" mode="widthFix" ></image>
 					</view>
 					<view class="">
 						{{it.name}}
@@ -31,6 +31,7 @@
 					},
 					{
 						img:'../../static/my/store_order.png',
+						imgs:'../../static/my/store_order.active.png',
 						name:"店铺订单"
 					},
 					{
@@ -43,7 +44,7 @@
 					},
 					{
 						img:'../../static/my/king_priceshare.png',
-						name:"金价分享"
+						name:"金价分享",
 					},
 					{
 						img:'../../static/my/tuoke.png',
@@ -67,6 +68,7 @@
 			menber_json:{},
 			jinx:{}
 		},
+		
 		methods:{
 			goto_vip_set(ind){
 				let that = this
@@ -91,11 +93,11 @@
 					}
 				}else{
 					uni.showModal({
-						title:'您还不是会员，是否去开通？',
+						title:'您还没有登录，请登录？',
 						success(a) {
 							if(a.confirm){
 								uni.navigateTo({
-									url:'../../pages/my/vip_member'
+									url:'../../pages/login/login'
 								})
 							}
 						}

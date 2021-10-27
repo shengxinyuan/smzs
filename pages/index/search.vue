@@ -29,7 +29,7 @@
 					</view>
 				</view> -->
 		</view>
-		<zs-shoplist-type v-if="shop_tuij.length > 0" :shop_list="shop_tuij" :lists="list" :cate_fist_id="nav_ind" 
+		<zs-shoplist-type :shop_list="shop_tuij" :lists="list" :cate_fist_id="nav_ind" 
 		:shop_subject_id="''"
 			@shop_confim="shop_confim" :lv="lv"></zs-shoplist-type>
 		<!-- <zs-shopping-list :shop_list="shop_tuij" :lv="lv"></zs-shopping-list> -->
@@ -149,6 +149,7 @@
 				obj.page = this.current_page
 				this.params = obj
 				this.get_data(this.key)
+				console.log(this.key)
 			},
 			
 			// 删除搜索历史
@@ -194,7 +195,7 @@
 							this.last_page = res.data.last_page
 							this.current_page = res.data.current_page
 							this.shop_tuij = this.shop_tuij.concat(res.data.data) 
-							console.log(this.shop_tuij)
+							// console.log(this.shop_tuij)
 							if (a == b) {
 								this.loadingText = '没有更多了'
 							} else {

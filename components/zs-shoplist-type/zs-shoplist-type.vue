@@ -1,6 +1,6 @@
 <template>
 	<view class="cont">
-		<view class="head" :style="{position: fixed,left: 0,top: tops}">
+		<view class="head" :style="{position: fixed,left: 0,top: tops}" v-if="shop_list.length > 0">
 			<view class="head_left">
 				<view class="head_left_child" :class="{active:heat_ind == 1}" @click="shai_cli(1,sale)">
 					热销
@@ -191,7 +191,7 @@
 			cli_it(mid, find, index, it, cit) {
 				let arr = it
 				arr.data.forEach(a => {
-					a.state = false
+						a.state = false		
 				})
 				cit.state = true
 				this.$forceUpdate()
