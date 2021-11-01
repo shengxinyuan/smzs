@@ -26,7 +26,7 @@
 		methods:{
 			//提现成功
 			but_cli(e,money,total){
-				// console.log(e,money)
+				console.log(e,money)
 				let that = this
 				let data = {
 					price:money,

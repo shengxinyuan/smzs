@@ -31,31 +31,38 @@
 						<image src="/static/my/quyu.png" class="user_imgb" 
 						v-if="lv == 2" mode="widthFix"></image>
 					</view>
-					<view class="userinfo_text">
-						<view class="text_top">
-							<view class="user_name"> {{name_mobile}} </view>
-							<view class="user_qda" v-if="!menber.if_sign" @click="qiandao(1)"><u-icon name="order"></u-icon>立即签到</view>
-							<view class="user_qda" v-else @click="qiandao(2)"><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
-						</view>
-						<view class="user_phone" >
-							手机号：<text v-if="menber.mobile">{{test(menber.mobile)}}</text> 
-								  <text v-else>————</text> 
-						</view>
-						<view class="user_invite">
-							<view class="inviter" @click="qrcode_show = true">
-								<text>邀请码</text>
-								<u-icon name="arrow-right" color="#666"></u-icon>
+					<template v-if="islogin">
+						<view class="userinfo_text">
+							<view class="text_top">
+								<view class="user_name"> {{name_mobile}} </view>
+								<view class="user_qda" v-if="!menber.if_sign" @click="qiandao(1)"><u-icon name="order"></u-icon>立即签到</view>
+								<view class="user_qda" v-else @click="qiandao(2)"><u-icon name="checkmark-circle"></u-icon> 今日已签到</view>
 							</view>
-							<view class="inviter" @click="copy_yqm(menber.bn)">
-								<text>复制邀请码</text>
-								<u-icon name="arrow-right" color="#666"></u-icon>
+							<view class="user_phone" >
+								手机号：<text v-if="menber.mobile">{{test(menber.mobile)}}</text> 
+									  <text v-else>————</text> 
 							</view>
-							<view class="inviter" @click="my_yaoq">
-								<text>我的邀请人</text>
-								<u-icon name="arrow-right" color="#666"></u-icon>
+							<view class="user_invite">
+								<view class="inviter" @click="qrcode_show = true">
+									<text>邀请码</text>
+									<u-icon name="arrow-right" color="#666"></u-icon>
+								</view>
+								<view class="inviter" @click="copy_yqm(menber.bn)">
+									<text>复制邀请码</text>
+									<u-icon name="arrow-right" color="#666"></u-icon>
+								</view>
+								<view class="inviter" @click="my_yaoq">
+									<text>我的邀请人</text>
+									<u-icon name="arrow-right" color="#666"></u-icon>
+								</view>
 							</view>
 						</view>
-					</view>
+					</template>
+					<template v-else>
+						<view class="notlogin" @click="skiplogin">
+							<text>登录/注册</text>
+						</view>
+					</template>
 				</view>
 				<!-- 统计 -->
 				<view class="statistics">
@@ -200,7 +207,7 @@
 						<view style="display: flex;justify-content: space-around;">
 							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
 								<view class="it_num">
-									{{menber.team}}人
+									{{menber.team || 0}}人
 								</view>
 								<view class="u-font-12 u-m-t-10" style="color: #666;">
 									累计
@@ -208,7 +215,7 @@
 							</view>
 							<view class="orders_it">
 								<view class="it_num">
-									{{menber.today_team}}人
+									{{menber.today_team || 0}}人
 								</view>
 								<view class="u-font-12 u-m-t-10" style="color: #666;">
 									今日新增
@@ -227,7 +234,7 @@
 						<view class="order_childs_a" v-if="partner" @click="go_pages('./city_partnerCenter')">
 							<view class="orders_it" style="border-right: 1rpx solid #f6dc9c;">
 								<view class="it_num">
-									{{memberpar.partner_member}}人
+									{{memberpar.partner_member || 0}}人
 								</view>
 								<view class="u-font-12 u-m-t-10" style="color: #666;">
 									累计
@@ -235,7 +242,7 @@
 							</view>
 							<view class="orders_it">
 								<view class="it_num">
-									{{memberpar.commission}}
+									{{memberpar.commission || 0}}
 								</view>
 								<view class="u-font-12 u-m-t-10" style="color: #666;">
 									本月收益
@@ -264,7 +271,7 @@
 					</view>
 				</view>
 				<!-- 店铺管理 -->
-				<zs-store-admin :skip='huiy_show' :jinx="jinx"></zs-store-admin>
+				<zs-store-admin :skip='huiy_show' :jinx="jinx" :islogin="islogin" :store_admin="store_admin"></zs-store-admin>
 				<!-- 综合管理 -->
 				<zs-synth-admin @zh_guan='zh_guan'></zs-synth-admin>
 				
@@ -364,6 +371,49 @@
 				memberpar:'',//业绩
 				name_mobile:'',
 				lv: 0,
+				islogin: false,
+				store_admin:[
+					{
+						img:'../../static/my/my_store.png',
+						name:"我的店铺",
+						type: 1
+					},
+					{
+						img:'../../static/my/store_order.png',
+						name:"店铺订单",
+						type: 1
+					},
+					{
+						img:'../../static/my/store_shez.png',
+						name:"店铺设置",
+						type: 1
+					},
+					{
+						img:'../../static/my/pram_kingstore.png',
+						name:"推广店铺",
+						type: 1
+					},
+					{
+						img:'../../static/my/king_priceshare.png',
+						name:"金价分享",
+						type: 1
+					},
+					{
+						img:'../../static/my/tuoke.png',
+						name:"引流拓客",
+						type: 1
+					},
+					{
+						img:'../../static/my/shejiao.png',
+						name:"社交营销",
+						type: 1
+					},
+					{
+						img:'../../static/my/zhuanti.png',
+						name:"精选专题",
+						type: 1
+					}
+				],
 			}
 		},
 		//下拉刷新
@@ -383,13 +433,31 @@
 		onShow() {
 			let a = uni.getStorageSync('token')
 			if (a) {
+				this.islogin = true
 				this.page_info()
-				// this.jinx = uni.getStorageSync('jinx')
+				this.jinx = uni.getStorageSync('jinx')
 			}
 		},
 		methods: {
+			// 跳转登录
+			skiplogin(){
+				this.com.navto('/pages/login/login')
+			},
 			//综合管理
 			zh_guan(e){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				if(e==0){
 					uni.share({
 					    provider: "weixin",
@@ -431,6 +499,9 @@
 					console.log(res)
 					// console.log(res.data.commercial_count)
 					if(res.status == 1){
+						if (res.data.commercial_count) {
+							this.store_admin[1].type = 2
+						}
 						this.lv = res.data.lv
 						let date = new Date().getTime()
 						let end = res.data.vip_time * 1000
@@ -487,14 +558,53 @@
 			},
 			//订单详情
 			go_order(e,ind){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				this.com.navto('./order?state='+e+'&index='+ind)
 			},
 			//页面跳转
 			go_pages(e){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				this.com.navto(e)
 			},
 			go_pages_pros(e){
 				console.log(e)
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				if(e == 2 || e == 3){
 					this.com.navto('./goto_vip')
 				}else if(e == 0){
@@ -513,6 +623,19 @@
 			},
 			//签到
 			qiandao(e){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				if(e==1){
 					this.qd_show = true
 					this.$api.put('gold').then(res=>{
@@ -539,21 +662,73 @@
 				});
 			},
 			skipSetShop(){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				uni.navigateTo({
 					url:'../set-shop/set-shop'
 				})
 			},
 			skipShopGoldPrice(){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				uni.navigateTo({
 					url:'../set-shop/shop-gold-price'
 				})
 			},
 			skipTalk(){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				uni.navigateTo({
 					url:'../community/talk'
 				})
 			},
 			skipCommunity(){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				uni.navigateTo({
 					url:'../community/community'
 				})
@@ -585,6 +760,7 @@
 					display: flex;align-items: center;justify-content: center;
 					image{
 						width: 50rpx;
+						height: auto;
 					}
 				}
 				view{
@@ -596,7 +772,9 @@
 		.orders_b{
 			padding: 20rpx;background-color: white;margin-top: 16rpx;border-radius: 20rpx;
 			image{
-				width: 36rpx;margin-right: 10rpx;
+				width: 36rpx;
+				height: auto;
+				margin-right: 10rpx;
 			}
 			.orders_it{
 				width: 33%;text-align: center;
@@ -624,7 +802,9 @@
 			}
 			
 			image{
-				width: 36rpx;margin-right: 10rpx;
+				width: 36rpx;
+				height: auto;
+				margin-right: 10rpx;
 			}
 			.orders_it{
 				width: 50%;text-align: center;
@@ -657,7 +837,7 @@
 		margin: 0 30rpx;align-items: center;padding-bottom: 6rpx;
 		// position: relative;
 		.imageb{
-			width: 210rpx;margin-left: -60rpx;
+			width: 210rpx;margin-left: -60rpx;height: auto;
 		}
 		.posi_hy_it{
 			width: 33%;text-align: center;
@@ -666,6 +846,7 @@
 			}
 			.imagea{
 				width: 30rpx;
+				height: auto;
 			}
 			view:nth-child(1){
 				color: #fff0a6;
@@ -787,5 +968,10 @@
 			}
 		}
 	}
+}
+.notlogin{
+	display: flex;
+	align-items: center;
+	font-size: 32rpx;
 }
 </style>

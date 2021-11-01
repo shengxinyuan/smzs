@@ -84,6 +84,17 @@
 			</view>
 		</view>
 		<view class="box-there">
+			<view class="zl-heads" @click="">
+				<view class="heads">
+					<text>模板管理</text>
+				</view>
+				<picker mode="selector" :range="types" @change="change_type" class="nick-name">
+					<view class="">
+						<text>{{moban_text}}</text>
+						<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+					</view>
+				</picker>
+			</view>
 			<view class="zl-heads" @click="skipSetPayee">
 				<view class="heads">
 					<text>收款设置</text>
@@ -131,18 +142,31 @@
 				show: false,
 				text: 'uni.request',
 				avatar:'',
+				moban_text: '请选择模板',
+				types: [ '标准版','商务版','清新版' ],
 			}
 		},
 		onLoad(op) {
+			
 		},
 		onShow(){
-			this.$api.get("manage").then(res=>{
+			let a = uni.getStorageSync('member_info')
+			console.log(a)
+			this.$api.get("manage",{member_id: a.id}).then(res=>{
 				console.log(res)
 				this.data = res.data
 				this.shopPhoto=res.data.avatar
+				this.moban_text = this.types[res.data.muban-1]
 			})
 		},
 		methods: {
+			change_type(e){
+				let i = e.detail.value
+				this.moban_text = this.types[i]
+				this.$api.post('manage',{muban:i+1}).then(res=>{
+					
+				})
+			},
 			skip_up(){
 				uni.navigateTo({
 					url: './add_shop_image'

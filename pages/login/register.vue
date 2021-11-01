@@ -3,18 +3,18 @@
 		<view style="width: 100%;">
 			<view class="title">注册</view>
 			<view class="write">
-				<input type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
+				<input style="flex: 1;" type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
 			</view>
 			<view class="write">
-				<input type="text" v-model="code" placeholder="输入验证码"/>
+				<input style="flex: 1;" type="text" v-model="code" placeholder="输入验证码" maxlength="6" />
 				<text class="give" v-if="code_show" @click="acquireCode">{{code_tit}}</text>
 				<text style="margin-right: 20rpx;" v-else>{{ time }}s</text>
 			</view>
 			<view class="write">
-				<input type="password" v-model="pass" placeholder="输入密码"/>
+				<input style="flex: 1;" type="password" v-model="pass" placeholder="输入密码"/>
 			</view>
 			<view class="write">
-				<input type="text" v-model="invcode" placeholder="输入邀请码"/>
+				<input style="flex: 1;" type="text" v-model="invcode" placeholder="输入邀请码"/>
 			</view>
 			<!-- <view class="write">
 				所在地区 <view class="choose" @click="show = true">{{regions}}<u-icon name="arrow-right" color="#999" size="28"></u-icon></view>
@@ -66,12 +66,35 @@
 				this.cid = cid
 				console.log(cid)
 			}
-			let that = this
+			let _that = this
 			uni.getLocation({
 				geocode:true,
 				type:'wgs84',
-				success: (res) => {
-					console.log(res) 
+				success: (r) => {
+					console.log(r) 
+					let arr = r.longitude + ',' + r.latitude
+					uni.request({
+						url:'https://restapi.amap.com/v3/geocode/regeo',
+						method:'GET',
+						data:{
+							key:'f6033f47d41232a17b1661725b5a7b78',  //web的key
+							location:arr,
+						},
+						success(res) {
+							console.log(res)
+							let re = res.data.regeocode
+							_that.province = re.addressComponent.province
+							_that.area = re.addressComponent.district
+							if(re.addressComponent.city.length == 0){
+								_that.city = re.addressComponent.province
+							}else{
+								_that.city = re.addressComponent.city
+							}
+						},
+						fail(e) {
+							console.log(e)
+						}
+					})
 					// {
 					// 	"type": "WGS84",
 					// 	"altitude": 0,
@@ -91,10 +114,10 @@
 					// 	},
 					// 	"errMsg": "getLocation:ok"
 					// }
-					that.province = res.address.province
-					that.city = res.address.city
-					that.area = res.address.district
-					that.regions =  res.address.province+'-'+ res.address.city+'-'+ res.address.district
+					// that.province = res.address.province
+					// that.city = res.address.city
+					// that.area = res.address.district
+					// that.regions =  res.address.province+'-'+ res.address.city+'-'+ res.address.district
 				},fail(e) {
 					console.log(e)
 				}
@@ -167,7 +190,6 @@
 							}
 						})
 					}
-					
 				}
 			},
 			//协议

@@ -3,15 +3,15 @@
 	<view class="login">
 		<view class="box">
 			<view class="message">
-				<input type="text" value="" placeholder="手机号码" v-model="phone" maxlength="11"/>
+				<input style="flex: 1;" type="text" value="" placeholder="手机号码" v-model="phone" maxlength="11"/>
 			</view>
 			<view class="message">
-			    <input type="text" placeholder="验证码" v-model="codes"/>
+			    <input style="flex: 1;" type="text" placeholder="验证码" v-model="codes" maxlength="6" />
 				<view class="tack" v-if="yzm_show" @click="getcode">{{get_code_tit}}</view>
 				<view class="but" v-else>{{ time }}s</view>
 			</view>
 			<view class="message">
-				<view class="left_s">
+				<view class="left_s" style="flex: 1;">
 				    <input type="text" placeholder="请输入邀请码" v-model="bn"/>
 				</view>
 			</view>

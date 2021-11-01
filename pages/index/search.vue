@@ -3,19 +3,26 @@
 		<!-- 搜索框 -->
 		<zs-hx-navbar :config="config" @searchConfirm="go_search"></zs-hx-navbar>
 		<!-- 历史搜索 -->
-		<view v-if="shop_tuij == ''">
-			<view v-if="history.length != 0" style="width: 100%;">
-				<view class="zl-history-box">
-					<view class="zl-history">
-						<text>历史搜索</text>
+		<view>
+			<template v-if="history.length > 0">
+				<view style="width: 100%;">
+					<view class="zl-history-box">
+						<view class="zl-history">
+							<text>历史搜索</text>
+						</view>
+						<u-icon name="trash" @click="deles" size="40"></u-icon>
 					</view>
-					<u-icon name="trash" @click="deles" size="40"></u-icon>
+					<!-- 内容 -->
+					<view class="zl-search-history">
+						<text v-for="(item,index) in history" :key="index" @click="again(item)">{{item}}</text>
+					</view>
 				</view>
-				<!-- 内容 -->
-				<view class="zl-search-history">
-					<text v-for="(item,index) in history" :key="index" @click="again(item)">{{item}}</text>
+			</template>
+			<template v-else>
+				<view style="margin-top: 15%;">
+					<u-empty text="暂无历史记录" mode="history"></u-empty>
 				</view>
-			</view>
+			</template>
 
 			<!-- 热门搜索 -->
 			<!-- <view>
@@ -29,15 +36,15 @@
 					</view>
 				</view> -->
 		</view>
-		<zs-shoplist-type :shop_list="shop_tuij" :lists="list" :cate_fist_id="nav_ind" 
+		<!-- <zs-shoplist-type :shop_list="shop_tuij" :lists="list" :cate_fist_id="nav_ind" 
 		:shop_subject_id="''"
-			@shop_confim="shop_confim" :lv="lv"></zs-shoplist-type>
+			@shop_confim="shop_confim" :lv="lv"></zs-shoplist-type> -->
 		<!-- <zs-shopping-list :shop_list="shop_tuij" :lv="lv"></zs-shopping-list> -->
-		<view class=""
+		<!-- <view class=""
 		style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 		v-if="shop_tuij.length > 0">
 			{{ loadingText }}
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -64,6 +71,8 @@
 				current_page: 1,
 				last_page: 1,
 				loadingText: '上拉加载更多',
+				list: [],
+				label_list: {}
 			}
 		},
 		onReachBottom() {
@@ -104,6 +113,13 @@
 			// })
 		},
 		methods: {
+			get_label_list(){
+				this.$api.get('screen_label').then(res=>{
+					if(res.status == 1){
+						this.label_list = res.data
+					}
+				})
+			},
 			get_screen(){
 				//筛选条件
 				this.$api.get('screen', {
@@ -115,18 +131,19 @@
 				})
 			},
 			g_search(key) {
-				this.get_data(key)
+				// this.get_data(key)
+				this.com.navto('/pages/index/searchResult?key=' + key)
 			},
 			go_search(data) {
 				// console.log(data)
 				console.log(data.value)
 				this.shop_tuij = []
+				this.current_page = 1
 				let key = data.value
 				this.key = data.value
 				if (key == "") {
 					this.com.msg('搜索内容不能为空')
 				} else {
-					this.get_data(key)
 					if (this.history.indexOf(key) == -1) {
 						this.history.unshift(key) //unshift:跟push性质一样 区别就是将新添加的数据放在第一位
 					}
@@ -137,6 +154,7 @@
 						key: 'neirong',
 						data: JSON.stringify(this.history) //转换为字符串形式
 					})
+					this.com.navto('/pages/index/searchResult?key=' + this.key)
 				}
 			},
 			//   传值
@@ -202,8 +220,6 @@
 								this.loadingText = '上拉加载更多'
 							}
 						}
-						uni.hideLoading()
-					} else {
 						uni.hideLoading()
 					}
 				})

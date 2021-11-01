@@ -1,6 +1,6 @@
 <template>
 	<view class="cont">
-		<view class="head" :style="{position: fixed,left: 0,top: tops}" v-if="shop_list.length > 0">
+		<view class="head" :style="{position: fixed,left: 0,top: tops}">
 			<view class="head_left">
 				<view class="head_left_child" :class="{active:heat_ind == 1}" @click="shai_cli(1,sale)">
 					热销
@@ -28,6 +28,7 @@
 					</view>
 					<u-popup v-model="show" mode="right">
 						<view class="popups">
+							<!-- 单选标签 -->
 							<view class="item" v-for="(it,ind) in lists" :key="ind">
 								<!-- //标题 -->
 								<view class="item_tit">
@@ -40,7 +41,21 @@
 										:class="{active:cit.state == true}">
 										{{cit.title}}
 									</view>
-									<!-- {{index}} -->
+								</view>
+							</view>
+							<!-- 多选标签 -->
+							<view class="item">
+								<view class="item_tit">
+									{{screen_label_list.name}}
+								</view>
+								<view class="item_child">
+									<view class="child_v" 
+									v-for="(item,index) in screen_label_list.data" 
+									:key="index"
+									@click="cli_item(item,index)" 
+									:class="{active:item.status == 2}">
+										{{item.title}}
+									</view>
 								</view>
 							</view>
 							<view class="item">
@@ -162,6 +177,7 @@
 				sku_value: '', //筛选时sku的值
 				min_g: '', //最小重量
 				max_g: '', //最大重量
+				shop_good_label_id: '',
 			};
 		},
 		props: {
@@ -185,13 +201,14 @@
 			lv: {
 				default: false
 			},
+			screen_label_list: {},
 		},
 		methods: {
 			//点击选项
 			cli_it(mid, find, index, it, cit) {
 				let arr = it
 				arr.data.forEach(a => {
-						a.state = false		
+					a.state = false		
 				})
 				cit.state = true
 				this.$forceUpdate()
@@ -237,12 +254,23 @@
 					a.data.forEach(b => {
 						b.state = false
 					})
-					console.log(a.data)
+				})
+				this.screen_label_list.data.forEach(item=>{
+					item.status = 1
 				})
 				this.shop_confim()
 			},
 			//确定
 			shop_confim() {
+				let aid = ''
+				let arr = []
+				this.screen_label_list.data.forEach(item=>{
+					if (item.status == 2) {
+						arr.push(item.id)
+					}
+					aid = arr.join(',')
+					this.shop_good_label_id = aid
+				})
 				let data = {
 					sale: this.sale,
 					price: this.price_type,
@@ -255,6 +283,7 @@
 					shop_subject_id: this.shop_subject_id === undefined ? '' : this.shop_subject_id, //专题
 					min_g: this.min_g, //最小重量
 					max_g: this.max_g, //最大重量
+					shop_good_label_id: this.shop_good_label_id,
 					page: 1,
 				}
 				console.log(data)
@@ -276,12 +305,21 @@
 					shop_subject_id: this.shop_subject_id === undefined ? '' : this.shop_subject_id, //专题
 					min_g: this.min_g, //最小重量
 					max_g: this.max_g, //最大重量
+					shop_good_label_id: this.shop_good_label_id,
 					page: 1,
 				}
 				this.$emit('shop_confim', data)
 			},
 			shaix() {
 				this.show = true
+			},
+			// 点击多选标签
+			cli_item(v,i){
+				if (v.status == 1) {
+					v.status = 2
+				} else {
+					v.status = 1
+				}
 			},
 			go_shopdetail(e) {
 				this.com.navto('../../pages/index/shop_detail?shop_id=' + e)
@@ -335,9 +373,10 @@
 		position: relative;
 
 		.but {
-			position: fixed;
+			position: absolute;
 			left: 0;
-			bottom: 40rpx;
+			right: 0;
+			bottom: 20rpx;
 			width: 100%;
 			font-size: 26upx;
 			display: flex;

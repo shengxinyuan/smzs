@@ -10,7 +10,7 @@
 			<view class="choose_ka" v-show="Inv == 0">
 				<view class="write">
 					<input type="text" v-model="phone" placeholder="请输入手机号" 
-					maxlength="11" style="width: 100%;"/>
+					maxlength="11" style="width: 100%;" />
 				</view>
 				<view class="write">
 					<input type="text" v-model="note" 

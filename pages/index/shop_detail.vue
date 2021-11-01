@@ -3,7 +3,9 @@
 		<zs-hx-navbar ref="hxnb" :config="config" @clickBtn="onClickBtn">
 			<block slot="center" v-if="isShow">
 				<view class="center" style="">
-					<view class="center_it" :class="{active:head_ind == ind}" v-for="(it,ind) in headlist" :key="ind"
+					<view class="center_it" 
+					:class="{active:head_ind == ind}" 
+					v-for="(it,ind) in headlist" :key="ind"
 						@click="head_nav_cli(ind)">
 						{{it.name}}
 					</view>
@@ -12,27 +14,37 @@
 		</zs-hx-navbar>
 		<!-- banner轮播 -->
 		<view class="carousel">
-			<!-- <swiper :circular="true" :autoplay="true" :duration="400" :interval="3000" @change="swiperChange" :hidden="!autoplay">
+			<!-- 视频播放 -->
+			<template v-if="videoShow">
+				<swiper :duration="400" :interval="3000" @transition="transition">
 					<swiper-item class="swiper-item">
-						<view class="image-wrapper">
-							 <video id="myVideo"
-							   :src="shop_det.video"
-							   autoplay="false" loop muted show-play-btn controls objectFit="cover" @pause="ZhanTing"
-							   @ended="ZhanTing"></video>
+						<view class="video-wrapper">
+							 <video id="myVideo" 
+							 :src="shop_det.video" 
+							 :autoplay="true" 
+							 loop 
+							 :enable-progress-gesture="false" 
+							 @pause="stop_video" 
+							 @ended="end_video"></video>
+							 
 						</view>
 					</swiper-item> 
-				</swiper> -->
-			<swiper :hidden="autoplay" :circular="true" :autoplay="true" :duration="400" :interval="3000"
-				@change="swiperChange">
-				<swiper-item class="swiper-item" v-for="(item,index) in shop_det.album" :key="index"
-					@click="banner_cli(index)">
-					<view class="image-wrapper">
-						<image :src="item.img0" class="loaded" mode="aspectFill"></image>
-					</view>
-					<image v-if="shop_det.video && index == 0" class="bofang" src="../../static/bofang.png" mode="">
-					</image>
-				</swiper-item>
-			</swiper>
+				</swiper>
+			</template>
+			<template v-else>
+				<swiper :circular="true" :autoplay="sw_autoplay" :duration="400" :interval="3000"
+					@change="swiperChange">
+					<swiper-item class="swiper-item" v-for="(item,index) in shop_det.album" :key="index"
+						@click="banner_cli(index)">
+						<template v-if="!videoShow">
+							<view class="image-wrapper">
+								<image :src="item.img0" class="loaded" mode="aspectFill"></image>
+							</view>
+							<image v-if="shop_det.video && index == 0" class="bofang" src="/static/bofang.png" mode="" />
+						</template>
+					</swiper-item>
+				</swiper>
+			</template>
 			<view class="swiper-dots">
 				<text class="num">{{swiperCurrent+1}}</text>
 				<text class="sign">/</text>
@@ -255,12 +267,12 @@
 		<!-- 分享 -->
 		<zs-share ref="share" @shaer_app="shaer_app" :contentHeight="400"></zs-share>
 		<!-- 视频播放弹窗 -->
-		<view class="video-popup" v-if="videoShow" @click="zanting" @touchmove.prevent>
+		<!-- <view class="video-popup" v-if="videoShow" @click="zanting" @touchmove.prevent>
 			<view class="video">
 				<video id="myVideo" :src="shop_det.video" :autoplay="true" loop show-play-btn controls
 					objectFit="cover" @pause="ZhanTing" @ended="ZhanTing"></video>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -329,6 +341,7 @@
 				skuShow: false,
 				stocks: 1,
 				isLogin: false,
+				sw_autoplay: true,
 			};
 		},
 		onPageScroll(e) {
@@ -396,14 +409,13 @@
 				};
 			},
 			//    视频暂停
-			ZhanTing() {
-				if (this.autoplay == true) {
-					this.autoplay = false
-				}
-			},
-			zanting() {
-				// this.autoplay = false
+			stop_video() {
 				this.videoShow = false
+				this.sw_autoplay = true
+			},
+			end_video() {
+				this.videoShow = false
+				this.sw_autoplay = true
 			},
 			//一键比价
 			onc_bj(e) {
@@ -593,12 +605,18 @@
 			swiperChange(e) {
 				this.swiperCurrent = e.detail.current
 			},
+			transition(e){
+				// console.log(e.detail.dx)
+				this.videoShow = false
+				this.sw_autoplay = true
+			},
 			//点击轮播图放大
 			banner_cli(e) {
 				//判断有没有视频
 				if (this.shop_det.video) {
 					if (e == 0) { //点第一张
 						this.videoShow = true
+						this.sw_autoplay = false
 						// this.autoplay = true
 						// this.videoContext.play()
 						// if (this.autoplay == false) {
@@ -749,7 +767,7 @@
 						provider: "weixin",
 						scene: "WXSenceTimeline",
 						type: 0,
-						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' +
+						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share_shop_detail?data=' +
 							JSON.stringify(data),
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,
@@ -946,12 +964,20 @@
 	}
 
 	.carousel {
-		height: 722upx;
+		height: 720upx;
 		position: relative;
+		.video-wrapper{
+			width: 100%;
+			height: 100%;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
 		video {
-			width: 100%;
-			height: 724upx;
+			width: 750rpx;
+			height: 720rpx;
 		}
 
 		.swiper-dots {
@@ -973,6 +999,7 @@
 		.image-wrapper {
 			width: 100%;
 			height: 100%;
+			position: relative;
 		}
 
 		.swiper-item {

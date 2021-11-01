@@ -3,7 +3,7 @@
 		<zs-hx-navbar :config="config" @searchClick="searchClick"></zs-hx-navbar>
 		<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="cate_id" 
 		@shop_confim="shop_confim"
-			:lv="lv">
+			:lv="lv" :screen_label_list="label_list">
 		</zs-shoplist-type>
 		<view class=""
 		style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
@@ -36,6 +36,7 @@
 				current_page: 1,
 				last_page: 1,
 				loadingText: '上拉加载更多',
+				label_list: {},
 			}
 		},
 		onLoad(op) {
@@ -44,6 +45,7 @@
 			this.cate_id = op.classify_id
 			this.pid = op.pid
 			console.log(op)
+			this.get_label_list()
 			this.page_render()
 		},
 		onReachBottom() {
@@ -69,6 +71,13 @@
 			}
 		},
 		methods: {
+			get_label_list(){
+				this.$api.get('screen_label').then(res=>{
+					if(res.status == 1){
+						this.label_list = res.data
+					}
+				})
+			},
 			//页面渲染
 			page_render() {
 				//筛选条件

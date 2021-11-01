@@ -12,9 +12,8 @@
 			</scroll-view>
 		</view>
 		<view class="">
-			<!-- <zs-shoplist-type></zs-shoplist-type> -->
 			<zs-shoplist-type :shop_list="shop_list" :lists="lists" @shop_confim="shop_confim" :cate_fist_id="''"
-				:shop_subject_id="nav_idnex" :lv="lv"></zs-shoplist-type>
+				:shop_subject_id="nav_idnex" :lv="lv" :screen_label_list="label_list"></zs-shoplist-type>
 				<view class=""
 				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 				v-if="shop_list.length > 0">
@@ -37,6 +36,7 @@
 				last_page: 1,
 				loadingText: '上拉加载更多',
 				selected_image: '',
+				label_list: {},
 			};
 		},
 		onReachBottom() {
@@ -52,6 +52,7 @@
 			this.get_data(this.nav_idnex)
 		},
 		onLoad(op) {
+			this.get_label_list()
 			this.site_data()
 			//获取会员状态
 			let b = uni.getStorageSync('member_info')
@@ -65,6 +66,13 @@
 			// console.log(e)
 		},
 		methods: {
+			get_label_list(){
+				this.$api.get('screen_label').then(res=>{
+					if(res.status == 1){
+						this.label_list = res.data
+					}
+				})
+			},
 			shop_confim(e) {
 				this.$api.post('goods', e).then(res => {
 					console.log(res)

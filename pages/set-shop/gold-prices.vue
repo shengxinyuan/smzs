@@ -159,6 +159,7 @@
 							title: '修改成功',
 							icon: 'none'
 						});
+						this.page_reader()
 						// setTimeout(function() {
 						// 	uni.navigateBack()
 						// }, 1000);

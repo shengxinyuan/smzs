@@ -111,7 +111,7 @@
 					<view class="swipers_d">
 						<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" 
 						v-for="(it,ind) in gold_price.data"
-							:key="ind">
+							:key="ind" >
 							<view>{{it.title}}</view>
 							<view>{{it.new_price}}</view>
 							<view>{{it.buy_price}}</view>
@@ -240,7 +240,7 @@
 		</view>
 		<view class="classify">
 			<zs-shoplist-type :shop_list="shop_list1" :lists="list" :cate_fist_id="nav_ind" :shop_subject_id="''"
-				@shop_confim="shop_confim" :lv="huiy_show"></zs-shoplist-type>
+				@shop_confim="shop_confim" :lv="huiy_show" :screen_label_list="label_list"></zs-shoplist-type>
 				<view class=""
 				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 				v-if="shop_list1.length > 0">
@@ -309,6 +309,13 @@
 				current_page: 1,
 				last_page: 1,
 				loadingText: '上拉加载更多',
+				label_list: {},
+				
+				backgroundColor1: '#FEFAFA',
+				backgroundColor2: '#FEDBD8',
+				bg_tr: '#FEDBD8',
+				bg_td: '#FDEEEC',
+				muban: 2,
 			}
 		},
 		onPageScroll(e) {
@@ -354,6 +361,7 @@
 				cate_fist_id: this.nav_ind,
 				page: this.current_page
 			}
+			this.get_label_list()
 			this.page_render()
 		},
 		onShow() {
@@ -409,10 +417,16 @@
 			}
 		},
 		methods: {
+			get_label_list(){
+				this.$api.get('screen_label').then(res=>{
+					if(res.status == 1){
+						this.label_list = res.data
+					}
+				})
+			},
 			get_member(){
 				if (this.isLogin) {
 					this.$api.get('member').then(res=>{
-						console.log(res)
 						if(res.status == 1){
 							this.lv = res.data.lv
 							let date = new Date().getTime()
@@ -451,9 +465,10 @@
 			bann_nav(e, i) {
 				this.video_url = e.video
 				if (!this.video_url) {
-					if (e.url) {
-						plus.runtime.openURL(e.url);
-					}
+					this.com.navto('./activity_detail?id=' + e.id)
+					// if (e.url) {
+					// 	plus.runtime.openURL(e.url);
+					// }
 				} else {
 					this.videoShow = true
 				}
@@ -655,8 +670,6 @@
 								this.loadingText = '上拉加载更多'
 							}
 						}
-						uni.hideLoading()
-					} else {
 						uni.hideLoading()
 					}
 				})

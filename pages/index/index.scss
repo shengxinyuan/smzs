@@ -179,7 +179,7 @@
 		width: 100%;background-color: #f6f6f6;
 		padding: 16upx 20upx 0 20upx;
 		.king_pic{
-			background-color: white;
+			background-color: #FFFFFF;
 			border-radius: 10rpx;padding: 20rpx;
 			.king_pic_a{
 				display: flex;justify-content: space-between;align-items: center;
@@ -200,7 +200,8 @@
 				.tabs_tr{
 					display: flex;
 					view{
-						width: 20%;text-align: center;height: 58rpx;line-height: 58rpx;background-color: #fff0d7;
+						width: 20%;text-align: center;height: 58rpx;line-height: 58rpx;
+						background-color: #fff0d7;
 						margin: 2rpx;border-radius: 4rpx;
 						text-overflow: ellipsis;
 					}
@@ -208,7 +209,8 @@
 				.tabs_td{
 					display: flex;
 					view{
-						width: 20%;text-align: center;height: 58rpx;line-height: 60rpx;background-color: #fffcf7;
+						width: 20%;text-align: center;height: 58rpx;line-height: 60rpx;
+						background-color: #fffcf7;
 						margin: 2rpx;border-radius: 4rpx;
 						text-overflow: ellipsis;
 					}
@@ -217,7 +219,7 @@
 		}
 		.nine_g{
 			width: 100%;margin: 16rpx 0;border-radius: 10rpx;
-			background-color: white;
+			background-color: #FFFFFF;
 			padding: 8rpx 16rpx;
 			display: flex;flex-wrap: wrap;justify-content: space-between;
 			.nine_g_child{

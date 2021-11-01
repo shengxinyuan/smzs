@@ -10,7 +10,7 @@
 		</view>
 		<view style="padding: 0 3%;position: relative;padding-top: 80rpx;">
 			<!-- <zs-shopping-list></zs-shopping-list> -->
-			<zs-shoplist-type></zs-shoplist-type>
+			<!-- <zs-shoplist-type></zs-shoplist-type> -->
 		</view>
 	</view>
 </template>

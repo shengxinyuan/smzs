@@ -5,15 +5,15 @@
 				账号：{{mobile}}
 			</view>
 			<view class="write">
-				<input type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
+				<input style="flex: 1;" type="text" v-model="phone" placeholder="输入手机号" maxlength="11"/>
 			</view>
 			<view class="write">
-				<input type="text" v-model="note" placeholder="输入验证码"/>
+				<input style="flex: 1;" type="text" v-model="note" placeholder="输入验证码" maxlength="6" />
 				<text class="give" v-if="code_show" @click="acquireCode">{{code_tit}}</text>
 				<text style="margin-right: 20rpx;" v-else>{{ time }}s</text>
 			</view>
 			<view class="write" style="border: none;">
-				<input type="text" v-model="pass" placeholder="输入新密码"/>
+				<input style="flex: 1;" type="text" v-model="pass" placeholder="输入新密码"/>
 			</view>
 			<view class="login_s" @click="changepassword">确定</view>
 		</view>

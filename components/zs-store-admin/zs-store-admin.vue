@@ -10,6 +10,7 @@
 				<view class="orders_it" v-for="(it,ind) in store_admin" :key="ind" @click="goto_vip_set(ind)">
 					<view class="images">
 						<image :src="it.img" mode="widthFix" ></image>
+						<view v-if="it.type == 2" class="red-dot"></view>
 					</view>
 					<view class="">
 						{{it.name}}
@@ -24,41 +25,7 @@
 	export default {
 		data() {
 			return {
-				store_admin:[
-					{
-						img:'../../static/my/my_store.png',
-						name:"我的店铺"
-					},
-					{
-						img:'../../static/my/store_order.png',
-						imgs:'../../static/my/store_order.active.png',
-						name:"店铺订单"
-					},
-					{
-						img:'../../static/my/store_shez.png',
-						name:"店铺设置"
-					},
-					{
-						img:'../../static/my/pram_kingstore.png',
-						name:"推广店铺"
-					},
-					{
-						img:'../../static/my/king_priceshare.png',
-						name:"金价分享",
-					},
-					{
-						img:'../../static/my/tuoke.png',
-						name:"引流拓客"
-					},
-					{
-						img:'../../static/my/shejiao.png',
-						name:"社交营销"
-					},
-					{
-						img:'../../static/my/zhuanti.png',
-						name:"精选专题"
-					}
-				]
+				
 			};
 		},
 		props:{
@@ -66,11 +33,25 @@
 				type: Boolean,
 			},
 			menber_json:{},
-			jinx:{}
+			jinx:{},
+			islogin: false,
+			store_admin: Array,
 		},
-		
 		methods:{
 			goto_vip_set(ind){
+				if (!this.islogin) {
+					uni.showModal({
+						content:'您还未登录，是否登录？',
+						success(aq) {
+							if(aq.confirm){
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							}
+						}
+					})
+					return
+				}
 				let that = this
 				if(this.skip == true){
 					if(ind == 0){
@@ -93,11 +74,11 @@
 					}
 				}else{
 					uni.showModal({
-						title:'您还没有登录，请登录？',
+						title:'您还不是会员，是否去开通？',
 						success(a) {
 							if(a.confirm){
 								uni.navigateTo({
-									url:'../../pages/login/login'
+									url:'/pages/my/vip_member'
 								})
 							}
 						}
@@ -120,12 +101,23 @@
 		margin-bottom: 10rpx;
 		text-align: center;
 		.images{
+			position: relative;
 			height: 80rpx;
 			display: flex;align-items: center;justify-content: center;
 			image{
 				width: 50rpx;
+				height: auto;
 			}
 		}
 	}
+}
+.red-dot{
+	position: absolute;
+	right: 45rpx;
+	top: 5rpx;
+	width: 20rpx;
+	height: 20rpx;
+	border-radius: 50%;
+	background-color: red;
 }
 </style>

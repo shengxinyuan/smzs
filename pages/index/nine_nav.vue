@@ -6,14 +6,14 @@
 				<view class="scroll_child" v-for="(it,ind) in nav" :key="ind" :class="{active:it.id == currend}"
 					@click="nav_cli(it.id)">
 					<view class="">
-						{{it.title}}  aa
+						{{it.title}}
 					</view>
 				</view>
 			</scroll-view>
 		</view>
 		<view class="contes">
 			<zs-shoplist-type :shop_list="shop_list" :lists="lists" :lv="lv" :page_login="page_login" :shaix_type="'3'"
-			 @shop_confim="shop_confim"></zs-shoplist-type>
+			 @shop_confim="shop_confim" :screen_label_list="label_list"></zs-shoplist-type>
 				<view class=""
 				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 				v-if="shop_list.length > 0">
@@ -48,6 +48,7 @@
 				current_page: 1,
 				last_page: 1,
 				loadingText: '上拉加载更多',
+				label_list: {},
 			}
 		},
 		onReachBottom() {
@@ -78,9 +79,17 @@
 			// console.log(op)
 			this.nav = JSON.parse(op.data)
 			this.currend = op.id
+			this.get_label_list()
 			this.nav_cli(op.id)
 		},
 		methods: {
+			get_label_list(){
+				this.$api.get('screen_label').then(res=>{
+					if(res.status == 1){
+						this.label_list = res.data
+					}
+				})
+			},
 			searchClick() {
 				this.com.navto('./search')
 			},
