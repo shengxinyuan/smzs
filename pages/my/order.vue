@@ -61,7 +61,7 @@
 			page_cont(e){
 				
 				this.$api.get('orders',{page:e,status:this.current}).then(res=>{
-					// console.log(res.data.data)
+					console.log(res.data.data)
 					if(res.status == 1){
 						if(res.data.data){
 							res.data.data.forEach(i=>{

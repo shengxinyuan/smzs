@@ -79,7 +79,7 @@
 			if(uni.getStorageSync("type")){
 				this.page_show = false
 			}else{
-				this.page_show = true
+				this.page_show = false
 			}
 			this.$api.get('ios').then(res=>{
 				if(res.data.type == 0){

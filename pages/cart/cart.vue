@@ -202,12 +202,12 @@
 						let vip = uni.getStorageSync('viptype')
 						if(vip){
 							res.data.data.forEach(i=>{
-								i.xiaoj = JSON.parse(i.price_vip) + JSON.parse(i.labor)
+								i.xiaoj = JSON.parse(i.price_vip)
 							})
 							this.vip_type = true
 						}else{
 							res.data.data.forEach(i=>{
-								i.xiaoj = JSON.parse(i.price_normal) + JSON.parse(i.labor)
+								i.xiaoj = JSON.parse(i.price_normal)
 							})
 							this.vip_type = false
 						}

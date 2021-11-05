@@ -3,12 +3,13 @@
 		<view style="background-color: #fff;font-size: 36rpx;font-weight: bold;padding: 2% 0;">
 			待签收
 		</view>
-		<view style="margin: 20rpx 0;font-weight: bold;">
-			顺丰快递：{{numList.ship_bn}}
+		<view style="margin: 20rpx 0;font-weight: bold;" v-if="numList.ship_bn">
+			<text style="margin-right: 20rpx;">物流信息：{{numList.ship_bn}}</text>
+			<text style="color: #EE453F" @click="copy(numList.ship_bn)">复制</text>
 		</view>
 		<view class="p1">
 			<u-steps :list="numList.logistic_detail" 
-			:current="numList.logistic_detail.length" 
+			:current="wuliu.length" 
 			activeColor="#000" direction="column"></u-steps>
 		</view>
 		<!-- <view class="box">
@@ -30,7 +31,8 @@
 				page_cont:'',
 				wl_cont:'',
 				numList: [],
-				mailNo:''
+				mailNo:'',
+				wuliu: [],
 			}
 		},
 		onLoad(op) {
@@ -47,15 +49,24 @@
 				this.$api.post('logistics',{bn_id:this.page_cont}).then(res=>{
 					console.log(res.data)
 					this.numList = res.data
+					this.wuliu = res.data.logistic_detail
 				})
-			}
+			},
+			copy(e){
+				console.log(e)
+				uni.setClipboardData({
+				    data: e,
+				    success: function () {
+				        console.log('success');
+				    }
+				});
+			},
 		}
 	}
 </script>
 <style>
 	page{
 		background-color: #F6F6F6;
-		
 	}
 </style>
 <style lang="scss" scoped>

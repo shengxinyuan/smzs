@@ -22,8 +22,7 @@
 						:placeholder="search_old" @click="search(search_old)">
 					<u-icon name="camera" size="40" color="#999999" @click="camear"></u-icon>
 				</view>
-				<view class="rig" :style="{'color': headcolor}" 
-				@click="go_pages('../information/information')">
+				<view class="rig" :style="{'color': headcolor}" @click="go_pages('../information/information')">
 					<u-icon name="chat" size="38" class="chat-icon"></u-icon>
 					<text>消息</text>
 				</view>
@@ -43,8 +42,7 @@
 				</swiper-item>
 			</swiper> -->
 
-			<swiper class="swiper" @change="swiperChange" 
-			:autoplay="true" :circular="true" :interval="4000"
+			<swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000"
 				:duration="500">
 				<swiper-item class="swiper-item" v-for="(it,ind) in index_data.flash" :key="ind"
 					@click="bann_nav(it,ind)">
@@ -109,9 +107,8 @@
 						<view>最低</view>
 					</view>
 					<view class="swipers_d">
-						<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" 
-						v-for="(it,ind) in gold_price.data"
-							:key="ind" >
+						<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" v-for="(it,ind) in gold_price.data"
+							:key="ind">
 							<view>{{it.title}}</view>
 							<view>{{it.new_price}}</view>
 							<view>{{it.buy_price}}</view>
@@ -123,9 +120,7 @@
 			</view>
 			<!-- 九宫格 -->
 			<view class="nine_g">
-				<view class="nine_g_child" 
-				v-for="(it,ind) in index_data.label" 
-				:key="ind" v-if="ind <= 7"
+				<view class="nine_g_child" v-for="(it,ind) in index_data.label" :key="ind" v-if="ind <= 7"
 					@click="go_textrue(it.id)">
 					<view class="nine_g_child_tit">
 						{{it.title}}
@@ -213,9 +208,7 @@
 			<!-- 精选专题 -->
 			<view class="choiceness">
 				<view class="choiceness_child">
-					<view class="choiceness_item" 
-					v-for="(it,ind) in index_data.zhuanti" 
-					:key="ind"
+					<view class="choiceness_item" v-for="(it,ind) in index_data.zhuanti" :key="ind"
 						@click="special_cli(it.id,it.title)" v-if="ind <= 4">
 						<image :src="it.image" mode="aspectFill"></image>
 						<view class="item_tit">
@@ -229,8 +222,7 @@
 			</view>
 			<!-- 筛选 -->
 			<scroll-view class="scroll-view_H" scroll-x="true">
-				<view id="demo1" class="nav_swiper" :class="{active: it.id == nav_ind }" 
-				@click="nac_cla(it.id)"
+				<view id="demo1" class="nav_swiper" :class="{active: it.id == nav_ind }" @click="nac_cla(it.id)"
 					v-for="(it,ind) in index_data.cates" :key="ind">
 					{{it.title}}
 				</view>
@@ -241,11 +233,10 @@
 		<view class="classify">
 			<zs-shoplist-type :shop_list="shop_list1" :lists="list" :cate_fist_id="nav_ind" :shop_subject_id="''"
 				@shop_confim="shop_confim" :lv="huiy_show" :screen_label_list="label_list"></zs-shoplist-type>
-				<view class=""
-				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
+			<view class="" style="height: 100rpx;display: flex;align-items: center;justify-content: center;"
 				v-if="shop_list1.length > 0">
-					{{ loadingText }}
-				</view>
+				{{ loadingText }}
+			</view>
 
 		</view>
 		<drag-button :isDock="true" :existTabBar="true" @btnClick="go_pages('../service/service')" />
@@ -260,8 +251,8 @@
 		<!-- 视频播放弹窗 -->
 		<view class="video-popup" v-if="videoShow" @click="zanting" @touchmove.prevent>
 			<view class="video">
-				<video id="myVideo" :src="video_url" :autoplay="true" loop show-play-btn controls
-					objectFit="cover" @pause="zanting1" @ended="zanting1"></video>
+				<video id="myVideo" :src="video_url" :autoplay="true" loop show-play-btn controls objectFit="cover"
+					@pause="zanting1" @ended="zanting1"></video>
 			</view>
 		</view>
 	</view>
@@ -310,12 +301,13 @@
 				last_page: 1,
 				loadingText: '上拉加载更多',
 				label_list: {},
-				
+
 				backgroundColor1: '#FEFAFA',
 				backgroundColor2: '#FEDBD8',
 				bg_tr: '#FEDBD8',
 				bg_td: '#FDEEEC',
 				muban: 2,
+				banben: '',
 			}
 		},
 		onPageScroll(e) {
@@ -331,11 +323,11 @@
 			}
 		},
 		onReachBottom() {
-			if(this.current_page === this.last_page){
+			if (this.current_page === this.last_page) {
 				this.loadingText = '没有更多了'
 				return
 			}
-			if(this.loadingText === '正在加载中...'){
+			if (this.loadingText === '正在加载中...') {
 				return
 			}
 			this.loadingText = '正在加载中...'
@@ -384,11 +376,14 @@
 			} else {
 				this.huiy_show = false
 			}
-			this.puytcopup = uni.getStorageSync('coupon')
-			if (this.puytcopup == 0) {
-				this.coupon(this.puytcopup)
-			} else {
-				this.coupon(this.puytcopup)
+			this.get_site()
+			if (this.isLogin) {
+				this.puytcopup = uni.getStorageSync('coupon')
+				if (this.puytcopup == 0) {
+					this.coupon(this.puytcopup)
+				} else {
+					this.coupon(this.puytcopup)
+				}
 			}
 			if (uni.getStorageSync('neirong')) {
 				let arr = uni.getStorageSync("neirong")
@@ -417,28 +412,116 @@
 			}
 		},
 		methods: {
-			get_label_list(){
-				this.$api.get('screen_label').then(res=>{
-					if(res.status == 1){
+			// 检查是否更新版本
+			updateVersion(b) {
+				let that = this;
+			 // 热更新不会更新app的版本号
+				// 这里用一个常量定义（每次修改版本号将设置里面的版本号手动更新）
+				// let realVersion = '1012';
+				//plus.runtime.getProperty(),获取本机安装的版本，具体使用请参照如下链接
+				//https://www.html5plus.org/doc/zh_cn/runtime.html#plus.runtime.WidgetInfo
+
+				//#ifdef APP-PLUS
+				plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {
+					console.log(widgetInfo);
+					let newVersion = widgetInfo.version.split('.'); // 获取本机安装版本转化为数组
+
+					let system = b;
+					let currentVersion = b.split('.'); // 获取服务端版本转化为数组
+					let is_update = false; // 是否更新
+					console.log(is_update, '是否更新1', newVersion, currentVersion);
+
+					// 服务端版本是否大于本地版本
+					is_update = currentVersion.some((i, index) => {
+						console.log(i, newVersion[index])
+						return i > newVersion[index];
+
+					})
+					console.log(is_update, '是否更新2', newVersion, currentVersion);
+
+					let downloadUrl = 'http://zuanshi.dis.wanheweb.com/download/__UNI__.wgt';
+					if (is_update) {
+						console.log('触发更新');
+						uni.downloadFile({
+							url: downloadUrl, // 下载资源的 url
+							success: downloadResult => {
+								console.log(downloadResult, '下载中。。。');
+								if (downloadResult.statusCode === 200) {
+									/* 安装应用, 要安装的文件路径(downloadResult.tempFilePath) 
+									force 是否强制安装
+									true表示强制安装，不进行版本号的校验；false则需要版本号校验，
+									如果将要安装应用的版本号不高                
+									于现有应用的版本号则终止安装，并返回安装失败。 仅安装wgt和wgtu时生效，默认值 false。
+									*/
+									plus.runtime.install(
+										downloadResult.tempFilePath, {
+											force: true
+										},
+										function() {
+											// 应用热重启，重新启动进入首页。
+											// uni.showModal({
+											//   content: '部分资源已更新，重启后生效，是否立即重启？',
+											//   cancelText: '稍后重启',
+											//   confirmText: '立即重启',
+											//   success(res) {
+								 		//     console.log(res);
+											//     if (res.confirm) {
+								  	//       plus.runtime.restart();
+											//     }
+											//   }
+											// });
+											// uni.showModal({
+								 		//   content: '部分资源已更新，重启后生效!',
+											//   confirmText: '知道了',
+									  //   success(res) {
+											//     console.log(res);
+											//   }
+											// });
+											is_update = false;
+								 		console.log('安装成功', 'install success...');
+										},
+										function(e) {
+											console.error('安装失败', 'install fail...');
+										}
+									);
+								}
+							}
+						});
+					}
+				});
+				// #endif
+			},
+			get_site() {
+				this.$api.get('site').then(res => {
+					console.log(res)
+					if (res.status == 1) {
+						this.banben = res.message.banben
+						this.updateVersion(res.message.banben)
+					}
+				})
+			},
+			get_label_list() {
+				this.$api.get('screen_label').then(res => {
+					if (res.status == 1) {
 						this.label_list = res.data
 					}
 				})
 			},
-			get_member(){
+			get_member() {
 				if (this.isLogin) {
-					this.$api.get('member').then(res=>{
-						if(res.status == 1){
+					this.$api.get('member').then(res => {
+						if (res.status == 1) {
 							this.lv = res.data.lv
 							let date = new Date().getTime()
 							let end = res.data.vip_time * 1000
-							if(end  <= date){
+							if (end <= date) {
 								this.huiy_show = false
 								uni.setStorageSync("viptype", false)
-							}else{
+							} else {
 								this.huiy_show = true
 								uni.setStorageSync("viptype", true)
 							}
-							uni.setStorageSync("member_info",res.data)
+							uni.setStorageSync("member_info", res.data)
 						}
 					})
 				}
@@ -465,7 +548,9 @@
 			bann_nav(e, i) {
 				this.video_url = e.video
 				if (!this.video_url) {
-					this.com.navto('./activity_detail?id=' + e.id)
+					if (e.is_true == 1) {
+						this.com.navto('./activity_detail?id=' + e.id)
+					}
 					// if (e.url) {
 					// 	plus.runtime.openURL(e.url);
 					// }
@@ -654,9 +739,9 @@
 					}
 				})
 			},
-			get_data(params){
+			get_data(params) {
 				uni.showLoading()
-				this.$api.post('goods',params).then(res => {
+				this.$api.post('goods', params).then(res => {
 					if (res.status == 1) {
 						var a = res.data.current_page
 						var b = res.data.last_page
@@ -704,7 +789,7 @@
 				// console.log( d+"天"+h+":"+m+":"+s)
 				return d + ':' + h + ":" + m + ":" + s
 			},
-			skipAboutus(){
+			skipAboutus() {
 				this.com.navto('../my/aboutus')
 			}
 		},

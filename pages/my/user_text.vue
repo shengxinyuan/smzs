@@ -10,7 +10,7 @@
 			</view>
 			<view class="per_list" @click="nickname">用户名
 			    <view class="list_s">
-					<input type="text" v-model="names" placeholder="不二" maxlength="11"/>
+					<input type="text" v-model="names" placeholder="请输入用户名" maxlength="11"/>
 					<u-icon name="arrow-right" color="#706f6c" size="20"></u-icon>
 			    </view>
 			</view>
@@ -31,7 +31,7 @@
 			</view>
 			<view class="per_list" @click="go_enter">城市定位
 			    <view class="list_s" style="color: #999;">
-					苏州市
+					{{city}}
 					<!-- <u-icon name="arrow-right" color="#706f6c" size="20"></u-icon> -->
 			    </view>
 			</view>
@@ -79,6 +79,7 @@
 					day: true,
 				},
 				personality:false,
+				city: '',
 		    }
 		},
 		onLoad() {
@@ -94,6 +95,7 @@
 					if(res.status == 1){
 						this.images_ava = res.data.avatar
 						this.names = res.data.nickname
+						this.city = res.data.city
 						// this.nexs = res.data.sex == 0? '女':'男'
 						this.birthday = res.data.birthday == 0 ? "2000-01-01" : res.data.birthday
 					}
