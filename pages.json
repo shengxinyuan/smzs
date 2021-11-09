@@ -64,6 +64,13 @@
 				"navigationBarTitleText": "评价列表"
 			}
 		}, {
+			"path": "pages/index/threedesign",
+			"style": {
+				"navigationBarTitleText": "3d设计",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/index/customization",
 			"style": {
 				"navigationBarTitleText": "定制中心",
@@ -281,9 +288,17 @@
 		}, {
 			"path": "pages/my/order",
 			"style": {
-				"navigationBarTitleText": "我的订单"
+				"navigationBarTitleText": "我的订单",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "3D订单",
+							"fontSize": "34rpx",
+							"width": "85px"
+						}]
+					}
+				}
 			}
-
 		}, {
 			"path": "pages/my/my_footprint",
 			"style": {

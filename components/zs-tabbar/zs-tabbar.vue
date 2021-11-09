@@ -72,8 +72,8 @@
 					// this.com.tab("../../pages/classify/classify")
 				} else if (e == 3) {
 					// this.com.msg('敬请期待~')
-					uni.navigateTo({
-						url:'/pages/index/customization'
+					uni.reLaunch({
+						url:'/pages/index/threedesign'
 					})
 				} else if (e == 4) {
 					uni.reLaunch({

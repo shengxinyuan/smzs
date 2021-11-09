@@ -41,6 +41,11 @@
 				page_show:false,
  			}
  		},
+		onNavigationBarButtonTap() {
+			uni.navigateTo({
+				url:'/pages/index/threedesign?url=myOrderList'
+			})
+		},
  		onLoad(op) {
 			console.log(op)
 			this.current = op.state

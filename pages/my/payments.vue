@@ -119,7 +119,8 @@
 				image_det: '', //图片
 				pay_img: '',
 				lists: [],
-				pic: 0
+				pic: 0,
+				source: 'app', // 来源，默认为 'app'，3d订单为 '3d'，用以支付成功后跳转至3D订单页面
 			}
 		},
 		computed: {
@@ -139,7 +140,9 @@
 		onLoad(e) {
 			// console.log(JSON.parse(e.data))
 			// console.log(JSON.parse(e.shop))
-
+			if (e.source) {
+				this.source = e.source
+			}
 			this.order_return = e.data
 			this.shop_data = JSON.parse(e.shop)
 			this.page_reader()
@@ -264,9 +267,14 @@
 						let time = setInterval(() => {
 							aq -= 1
 							if (aq == 0) {
-								uni.redirectTo({
-									url: '../my/order?state=' + 20 + '&index=' + 2
-								})
+								// 支付成功后跳转地址区分3d和app
+								if (this.source === '3d') {
+									this.jumpThreeDesignOrderPage()
+								} else {
+									uni.redirectTo({
+										url: '../my/order?state=' + 20 + '&index=' + 2
+									})
+								}
 								clearInterval(time)
 							}
 						}, 1000)
@@ -302,9 +310,14 @@
 						let time = setInterval(() => {
 							aq -= 1
 							if (aq == 0) {
-								uni.redirectTo({
-									url: '../my/order?state=' + 20 + '&index=' + 2
-								})
+								// 支付成功后跳转地址区分3d和app
+								if (this.source === '3d') {
+									this.jumpThreeDesignOrderPage()
+								} else {
+									uni.redirectTo({
+										url: '../my/order?state=' + 20 + '&index=' + 2
+									})
+								}
 								clearInterval(time)
 							}
 						}, 1000)
@@ -357,9 +370,14 @@
 								let time = setInterval(() => {
 									aq -= 1
 									if (aq == 0) {
-										uni.redirectTo({
-											url: '../my/order?state=' + 10 + '&index=' + 1
-										})
+										// 支付成功后跳转地址区分3d和app
+										if (this.source === '3d') {
+											this.jumpThreeDesignOrderPage()
+										} else {
+											uni.redirectTo({
+												url: '../my/order?state=' + 10 + '&index=' + 1
+											})
+										}
 										clearInterval(time)
 									}
 								}, 1000)
@@ -372,9 +390,14 @@
 							let time = setInterval(() => {
 								aq -= 1
 								if (aq == 0) {
-									uni.redirectTo({
-										url: '../my/order?state=' + 20 + '&index=' + 2
-									})
+									// 支付成功后跳转地址区分3d和app
+									if (this.source === '3d') {
+										this.jumpThreeDesignOrderPage()
+									} else {
+										uni.redirectTo({
+											url: '../my/order?state=' + 20 + '&index=' + 2
+										})
+									}
 									clearInterval(time)
 								}
 							}, 1000)
@@ -385,6 +408,13 @@
 
 				})
 			},
+			
+			// 跳转至3D订单页面
+			jumpThreeDesignOrderPage() {
+				uni.navigateTo({
+					url:'/pages/index/threedesign?url=myOrderList'
+				})
+			}
 
 		}
 	}
