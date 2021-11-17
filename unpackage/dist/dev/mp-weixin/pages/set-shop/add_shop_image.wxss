@@ -1,0 +1,14 @@
+
+.save_btn{
+	padding: 30rpx;
+	margin-top: 20rpx;
+}
+.save_btn button {
+	font-size: 30rpx;
+	color: #FFFFFF;
+	background-image: linear-gradient(90deg,
+			#2b3f7d 0%,
+			#1b2c60 100%);
+	border-radius: 40rpx;
+}
+

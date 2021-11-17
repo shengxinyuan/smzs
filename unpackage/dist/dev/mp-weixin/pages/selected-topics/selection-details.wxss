@@ -26,8 +26,6 @@
 /* 文章场景相关 */
 .head-image {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .head-image image {

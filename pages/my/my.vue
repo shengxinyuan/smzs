@@ -2,8 +2,6 @@
 	<view>
 		<!-- 头部 -->
 		<view class="header" :style="{ 'background-color': backgroundColor }">
-			<view class="header_va">
-			</view>
 			<view class="rig" >
 				<view class="rig-t" style="margin-right: 40rpx;" @click="go_pages('./setting')">
 					<u-icon name="setting" size="40"></u-icon>
@@ -13,6 +11,8 @@
 					<u-icon name="chat" size="40"></u-icon>
 					<text>消息</text>
 				</view>
+			</view>
+			<view class="header_va">
 			</view>
 		</view>
 		<!-- 内容 -->

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "编辑店铺照片",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-upload": "/uview-ui/components/u-upload/u-upload"
+  }
+}

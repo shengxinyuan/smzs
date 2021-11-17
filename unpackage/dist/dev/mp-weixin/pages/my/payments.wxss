@@ -26,24 +26,12 @@
 /* 文章场景相关 */
 .header_bait.data-v-15ed2772 {
   width: 100%;
-  height: 280rpx;
-  padding-top: 60rpx;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 99;
-  background-image: url(/static/my/pay_bgomg.png);
-  background-size: 100% 100%;
 }
 .header_bait .toubu.data-v-15ed2772 {
   padding: 0 16rpx;
   line-height: 100rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   color: #fff;
 }
 .header_bait .toubu .header_left.data-v-15ed2772 {
@@ -78,9 +66,9 @@
 }
 .header_bait .price_num.data-v-15ed2772 {
   width: 100%;
+  padding: 50rpx 0;
   text-align: center;
-  color: #fff;
-  line-height: 80rpx;
+  color: #2d407a;
 }
 .header_bait .price_num text.data-v-15ed2772 {
   font-size: 40rpx;
@@ -88,44 +76,41 @@
 .payments.data-v-15ed2772 {
   width: 100%;
   padding: 0 4% 120rpx 4%;
-  margin-top: 300rpx;
 }
 .payments .payment_item.data-v-15ed2772 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   margin-top: 20rpx;
   border-bottom: 1rpx solid #eee;
   height: 100rpx;
 }
 .payments .payment_item .item_child.data-v-15ed2772 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .payments .payment_item .item_child .it_l.data-v-15ed2772 {
   width: 58rpx;
-  height: 56rpx;
+  height: 58rpx;
   margin-right: 20rpx;
   line-height: 100rpx;
 }
 .payments .payment_item .item_child .it_l image.data-v-15ed2772 {
-  width: 100%;
-  height: 100%;
+  width: 54rpx;
+  height: 54rpx;
 }
 .payments .payment_item .item_child .it_c.data-v-15ed2772 {
-  font-size: 32rpx;
+  font-size: 28rpx;
 }
 .payments .payment_item .item_child .it_c .it_c_child.data-v-15ed2772 {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #999;
 }
 .payments .payment_item .item_child_r.data-v-15ed2772 {
   line-height: 100rpx;
+}
+.payments .payment_item .item_child_r radio.data-v-15ed2772 {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
 }
 .payments .p1.data-v-15ed2772 {
   background-image: url(/static/yhka.png);
@@ -172,9 +157,18 @@
 }
 .but.data-v-15ed2772 {
   width: 100%;
+  height: 100rpx;
+  padding: 0 30rpx;
   position: fixed;
   left: 0;
-  bottom: 30rpx;
+  bottom: 0rpx;
   z-index: 22;
+  background-color: #fff;
+}
+.but button.data-v-15ed2772 {
+  font-size: 32rpx;
+  color: #fff;
+  background-color: #2d407a;
+  border-radius: 40rpx;
 }
 

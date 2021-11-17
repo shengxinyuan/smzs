@@ -1,5 +1,5 @@
 
-page{
+page {
 	background-color: #F6F6F6;
 }
 
@@ -30,74 +30,45 @@ page{
 /* 透明度 */
 /* 文章场景相关 */
 .header.data-v-7d283bec {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 145rpx;
   width: 100%;
-  padding-top: 55rpx;
-  padding-left: 30rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
+  padding: 0 20rpx;
   display: flex;
-  z-index: 22;
+  align-items: center;
   background-color: #293C79;
 }
-.header .header_l.data-v-7d283bec {
-  width: 12%;
-  line-height: 100rpx;
+.header .icon.data-v-7d283bec {
+  margin-right: 20rpx;
 }
 .header .input-view.data-v-7d283bec {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  width: 60%;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  flex: 1;
   height: 60rpx;
   border-radius: 15px;
   padding: 0 15px;
   margin: 7px 0;
   line-height: 60rpx;
   background-color: #eee;
-  margin-right: 4%;
-  z-index: 22;
 }
 .header .input-view input.data-v-7d283bec {
-  width: 86%;
   margin-top: 10rpx;
   font-size: 30rpx;
 }
 .textrus.data-v-7d283bec {
   width: 100%;
-  position: fixed;
-  left: 0;
-  top: 145rpx;
-  z-index: 22;
 }
 .contes.data-v-7d283bec {
   width: 100%;
+  margin-top: 10rpx;
   background-color: #F6F6F6;
-  margin-top: 80rpx;
-  padding-bottom: 60rpx;
 }
 .scroll.data-v-7d283bec {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   white-space: nowrap;
   background-color: #fff;
-  height: 88rpx;
-  line-height: 76rpx;
-  font-size: 32rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
 }
 .scroll .scroll_child.data-v-7d283bec {
   width: 18%;

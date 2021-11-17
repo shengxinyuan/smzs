@@ -1,5 +1,5 @@
 
-page{
+page {
 	background-color: #F6F6F6;
 }
 
@@ -44,8 +44,6 @@ page{
   z-index: 20;
 }
 .fixeds .swiper.data-v-026f07c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   white-space: nowrap;
 }

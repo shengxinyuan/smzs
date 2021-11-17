@@ -26,6 +26,9 @@
 					<u-icon name="chat" size="38" class="chat-icon"></u-icon>
 					<text>消息</text>
 				</view>
+				<!-- #ifdef MP-WEIXIN -->
+				<view class="wx_right"></view>
+				<!-- #endif -->
 			</view>
 		</view>
 		<!-- banner部分 -->

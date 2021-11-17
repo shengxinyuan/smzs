@@ -33,8 +33,6 @@ page{
   padding: 16rpx 3%;
   background-color: white;
   white-space: nowrap;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .nav_head .head_item.data-v-6332a36e {
@@ -64,12 +62,8 @@ page{
   width: 100%;
   padding: 0 3%;
   margin-top: 20rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .down_time .s-header_child.data-v-6332a36e {
   color: #333333;

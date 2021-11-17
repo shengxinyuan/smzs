@@ -33,8 +33,6 @@ page{
   margin: 26rpx 0;
   background-color: white;
   padding: 10rpx 20rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .shop_top image.data-v-299f73b3 {
@@ -55,11 +53,8 @@ page{
 .shop_top .shop_name .shop_name_but.data-v-299f73b3 {
   color: #999;
   font-size: 28rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .cont.data-v-299f73b3 {
   padding: 20rpx 30rpx;

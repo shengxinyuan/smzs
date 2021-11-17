@@ -52,7 +52,7 @@
   margin-right: 20rpx;
 }
 .cont .cont_child .cont_text .text_b.data-v-7b518504 {
-  font-size: 34rpx;
+  font-size: 26rpx;
 }
 .cont .no_but.data-v-7b518504 {
   width: 60rpx;

@@ -24,113 +24,73 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page,
-.content {
-  height: 100%;
-  background-color: #f8f8f8;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-}
-page .header,
-.content .header {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 145rpx;
+.header {
   width: 100%;
-  padding-top: 55rpx;
-  padding-left: 30rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
+  padding: 0 30rpx;
   display: flex;
-  z-index: 999;
+  justify-content: space-between;
+  align-items: center;
   background-color: white;
 }
-page .header .input-view,
-.content .header .input-view {
-  display: -webkit-box;
-  display: -webkit-flex;
+.header .input-view {
+  width: calc(84% - 90px);
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  width: 68%;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  height: 60rpx;
-  border-radius: 15px;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 15px;
-  margin: 7px 0;
-  line-height: 60rpx;
   background-color: #eee;
+  border-radius: 40px;
 }
-page .header .input-view input,
-.content .header .input-view input {
-  width: 86%;
-  margin-top: 10rpx;
-  font-size: 30rpx;
+.header .input-view input {
+  height: 60rpx;
+  font-size: 28rpx;
 }
-page .header .rig,
-.content .header .rig {
-  width: 20%;
-  line-height: 100rpx;
-  text-align: center;
-  font-size: 30rpx;
+.header .rig {
+  display: flex;
+  align-items: center;
+}
+.content {
+  background-color: #f8f8f8;
+  display: flex;
 }
 .left-aside {
-  -webkit-flex-shrink: 0;
-          flex-shrink: 0;
+  flex-shrink: 0;
   width: 200rpx;
   padding-bottom: 140rpx;
-  padding-top: 160rpx;
   background-color: #fff;
 }
 .f-item {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100rpx;
-  font-size: 28rpx;
   position: relative;
 }
 .f-item.active {
   font-weight: bold;
   background: #f8f8f8;
+  color: #2d407a;
 }
 .f-item.active:before {
   content: '';
   position: absolute;
-  left: 0;
+  left: 20rpx;
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  height: 36rpx;
-  width: 7rpx;
+  height: 30rpx;
+  width: 10rpx;
   background-color: #2d407a;
+  border-radius: 6rpx 0rpx 0rpx 6rpx;
   opacity: .8;
 }
 .right-aside {
   width: 520rpx;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  flex: 1;
   overflow: hidden;
   padding-left: 20rpx;
   padding-bottom: 140rpx;
-  padding-top: 160rpx;
 }
 .right-aside .swiper {
   width: 100%;
@@ -141,12 +101,8 @@ page .header .rig,
   height: 100%;
 }
 .s-item {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   height: 70rpx;
   padding-top: 8rpx;
   font-size: 28rpx;
@@ -157,38 +113,23 @@ page .header .rig,
   padding-left: 20rpx;
 }
 .t-list {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
   width: 100%;
   background: #fff;
   padding-top: 20rpx;
 }
 .t-list:after {
   content: '';
-  -webkit-box-flex: 99;
-  -webkit-flex: 99;
-          flex: 99;
+  flex: 99;
   height: 0;
 }
 .t-item {
-  -webkit-flex-shrink: 0;
-          flex-shrink: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
+  flex-shrink: 0;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 32%;
   margin-right: 2%;
   font-size: 26rpx;

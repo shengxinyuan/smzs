@@ -1,0 +1,1 @@
+<view class="data-v-01338824"><zs-wallets vue-id="3344f83c-1" money="{{money}}" feil="{{feil}}" bank="{{bank}}" pageType="{{2}}" data-event-opts="{{[['^but_cli',[['but_cli']]]]}}" bind:but_cli="__e" class="data-v-01338824" bind:__l="__l"></zs-wallets></view>

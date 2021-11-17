@@ -1,0 +1,1 @@
+.add-payee-code-image{width:100%;display:flex}.add-payee-code-image image{width:100%}.bottom-box{position:fixed;bottom:0;left:0}.bottom-box .notice{padding:16rpx 30rpx;background-color:#fde7e7;font-size:22rpx;color:#f9817d}.bottom-box .bottom-btn{padding:20rpx 30rpx}.bottom-box .bottom-btn .btn{font-size:30rpx;color:#2b3f7d;border:solid 2rpx #2b3f7d;border-radius:40rpx}

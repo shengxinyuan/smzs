@@ -35,12 +35,8 @@ page{
 .but_type.data-v-5d76ad37 {
   width: 100%;
   padding: 0 5%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   margin-bottom: 40rpx;
 }
 .but_type .but_type_child.data-v-5d76ad37 {

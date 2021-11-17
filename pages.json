@@ -1,4 +1,8 @@
 {
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue",
+		"zs-(.*)": "@/components/zs-$1/zs-$1.vue"
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		// {
 		//     "path" : "pages/login/heades",
@@ -6,15 +10,6 @@
 		// 		"navigationStyle":"custom"
 		// 	}
 		// },
-		{
-			"path": "pages/login/start_page",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom"
-			}
-
-		},
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -53,6 +48,21 @@
 				// }
 			}
 		}, {
+			"path": "pages/login/login",
+			"style": {
+				// "navigationBarTitleText": "uni-app"
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/login/start_page",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		},
+		{
 			"path": "pages/index/shop_detail",
 			"style": {
 				// "navigationBarTitleText": "uni-app"
@@ -94,12 +104,6 @@
 				"navigationBarTitleText": "超值拼团",
 				"navigationBarBackgroundColor": "#e8372f",
 				"navigationBarTextStyle": "white"
-			}
-		}, {
-			"path": "pages/login/login",
-			"style": {
-				// "navigationBarTitleText": "uni-app"
-				"navigationStyle": "custom"
 			}
 		}, {
 			"path": "pages/information/newList",
@@ -748,9 +752,6 @@
 		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	},
-	"easycom": {
-		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
-		"zs-(.*)": "@/components/zs-$1/zs-$1.vue"
 	}
+	
 }

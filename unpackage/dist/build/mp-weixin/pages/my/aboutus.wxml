@@ -1,0 +1,1 @@
+<view class="data-v-d1d785c8"><view class="text data-v-d1d785c8"><u-parse vue-id="9e307b36-1" html="{{content.about_us}}" class="data-v-d1d785c8" bind:__l="__l"></u-parse></view></view>

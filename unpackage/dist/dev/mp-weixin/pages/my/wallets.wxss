@@ -36,20 +36,14 @@ page{
 .recharg_it .recharg_it_child.data-v-8e016020 {
   background-color: #fff;
   padding: 30rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   margin-bottom: 5rpx;
 }
 .num_t.data-v-8e016020 {
   width: 100%;
   background-color: #21346b;
   height: 120rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   border-top: 1rpx solid #3a4b7e;
   color: #fff;
@@ -74,12 +68,8 @@ page{
   width: 100%;
   background-color: #21346b;
   height: 280rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   padding: 0 3%;
 }
 .wallet_rent .wallet_rent_l .rent_l_top.data-v-8e016020 {

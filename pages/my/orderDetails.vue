@@ -94,7 +94,7 @@
 					待付款
 				</view> -->
 			</view>
-			<view class="shop_list"  v-for="(its,ind) in shop_det.order_goods">
+			<view class="shop_list"  v-for="(its,ind) in shop_det.order_goods" :key="ind">
 				<image :src="its.image" mode="aspectFill"></image>
 				<view class="list_right">
 					<view>
@@ -120,7 +120,9 @@
 		<view class="st_data" style="margin-bottom: 60rpx;">
 			<view class="statis" v-if="shop_det.message">
 				<view class="" style="flex-shrink: 0;">备注：</view>
-				<textarea style="background-color: #EEEEEE;padding: 20rpx;border-radius: 10rpx;height: 100rpx;color: #999;" v-model="shop_det.message || '无'"
+				<textarea 
+				style="background-color: #EEEEEE;padding: 20rpx;border-radius: 10rpx;height: 100rpx;color: #999;" 
+				v-model="shop_det.message"
 				placeholder="备注" :disabled="true" />
 			</view>
 			<!-- 工费 -->
@@ -141,6 +143,7 @@
 				</view>
 			</view>
 		</view>
+		
 	</view>
 </template>
 

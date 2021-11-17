@@ -36,15 +36,9 @@
   font-size: 30rpx;
 }
 .service-tel-box .tel .u-upload-box.data-v-d18508ac {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 .service-tel-box .tel .u-upload-box image.data-v-d18508ac {
   background-color: #F1F1F1;
@@ -55,15 +49,9 @@
   margin-top: 30rpx;
 }
 .service-tel-box .show-switch-box .show-switch-up.data-v-d18508ac {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
   font-size: 28rpx;
 }
 .service-tel-box .show-switch-box .show-switch-down.data-v-d18508ac {
@@ -83,7 +71,6 @@
   line-height: 80rpx;
   font-size: 28rpx;
   color: #FFFFFF;
-  background-image: -webkit-linear-gradient(left, #2b3f7d 0%, #1b2c60 100%);
   background-image: linear-gradient(90deg, #2b3f7d 0%, #1b2c60 100%);
   border-radius: 40rpx;
 }

@@ -81,11 +81,8 @@
   left: 10%;
   bottom: 30%;
   overflow-y: scroll;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .cont .cont_child .child_item .item_i.data-v-eeadd2b8 {
   width: 48%;

@@ -26,8 +26,6 @@
 /* 文章场景相关 */
 .inp.data-v-40d11200 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   line-height: 70rpx;
 }

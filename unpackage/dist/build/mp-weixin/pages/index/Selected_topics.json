@@ -1,0 +1,7 @@
+{
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTitleText": "精选专题",
+  "usingComponents": {
+    "zs-shoplist-type": "/components/zs-shoplist-type/zs-shoplist-type"
+  }
+}

@@ -26,31 +26,21 @@
 /* 文章场景相关 */
 .account.data-v-3a45e2f0 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   padding: 20rpx 0;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .set_list.data-v-3a45e2f0 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
   background-color: #fff;
   padding: 0 25rpx;
 }
 .set_list .list.data-v-3a45e2f0 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   height: 120rpx;
   line-height: 120rpx;
   border-bottom: 1rpx solid #f6f6f6;

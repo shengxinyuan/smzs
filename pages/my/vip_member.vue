@@ -119,15 +119,15 @@
 				<view class="pupop_title">
 					选择支付方式
 				</view>
-				<view class="pupop_item" v-for="(pay,ind) in pay" :key="ind" @click="pay_type(ind)">
+				<view class="pupop_item" v-for="(pay,ind) in pay" :key="ind" @click="pay_type(pay.index)">
 					<view>
 						<label class="radio">
 							<view class="">
-								<radio :checked="ind == pay_ind" />
+								<radio :checked="pay.index == pay_ind" />
 								{{pay.name}}
 							</view>
-							<u-icon name="zhifubao-circle-fill" size="40rpx" color="#007AFF" v-if="ind == 0"></u-icon>
-							<u-icon name="weixin-circle-fill" size="40rpx" color="#18B566" v-else-if="ind == 1"></u-icon>
+							<u-icon name="zhifubao-circle-fill" size="40rpx" color="#007AFF" v-if="pay.index == 0"></u-icon>
+							<u-icon name="weixin-circle-fill" size="40rpx" color="#18B566" v-else-if="pay.index == 1"></u-icon>
 							<u-icon name="rmb-circle-fill" size="40rpx" color="#F0AD4E" v-else></u-icon> 
 						</label>
 					</view>
@@ -139,6 +139,7 @@
 </template>
 
 <script>
+	var that;
 	export default{
 		data(){
 			return{
@@ -149,13 +150,16 @@
 				show:false,
 				pay:[
 					{
-						name:'支付宝'
+						name:'支付宝',
+						index:0
 					},
 					{
-						name:'微信支付'
+						name:'微信支付',
+						index:1
 					},
 					{
-						name:'余额支付'
+						name:'余额支付',
+						index:2
 					}
 				],
 				pay_ind:0,
@@ -166,6 +170,20 @@
 			}
 		},
 		onLoad() {
+			that = this;
+			// #ifdef MP-WEIXIN
+			this.pay = [
+				{
+					name:'微信支付',
+					index:1
+				},
+				{
+					name:'余额支付',
+					index:2
+				}
+			]
+			this.pay_ind = 1;
+			// #endif
 			this.pag_data = uni.getStorageSync('menber_json')
 			
 			this.page_reader()
@@ -247,8 +265,7 @@
 					   uni.showToast({
 					   		title:'支付成功..',icon:'none'
 					   })
-					   let _that = this
-					   _that.page_reader()
+					   that.page_reader()
 					  // let aq = 2
 					  // this.time = setInterval(()=>{
 					  // 	aq -=1
@@ -267,6 +284,7 @@
 			},
 			//微信
 			weixin(arr){
+				// #ifdef APP
 				uni.requestPayment({
 					provider: 'wxpay',
 					orderInfo:{
@@ -283,8 +301,7 @@
 					   uni.showToast({
 							title:'支付成功..',icon:'none'
 					   })
-					   let _that = this
-					   _that.page_reader()
+					   that.page_reader()
 					   // let aq = 2
 					   // this.time = setInterval(()=>{
 					   // 	aq -=1
@@ -300,11 +317,43 @@
 						})
 					}
 				});
+				// #endif
+				// #ifdef MP-WEIXIN
+				var orderInfo = {
+					provider: 'wxpay',
+					timeStamp: arr.timeStamp.toString(),
+					nonceStr: arr.nonceStr,
+					package: arr.package,
+					signType: arr.signType,
+					paySign: arr.paySign,
+				}
+				console.log(orderInfo)
+				uni.requestPayment({
+					...orderInfo,
+					success: function(res) {
+						uni.showToast({
+							title:'支付成功..',icon:'none'
+						})
+						that.page_reader()
+					},
+					fail: function(err) {
+						console.log(err)
+						uni.showToast({
+							title: '支付失败',
+							icon: 'none'
+						})
+					}
+				});
+				// #endif
 			},
 			//支付
 			immediately_k(e){
-				//支付宝				
-				this.$api.post('vippay',{vip_id:this.buy_ind,type:this.pay_ind}).then(res=>{
+				//支付宝
+				var param = {vip_id:this.buy_ind,type:this.pay_ind}
+				// #ifdef MP-WEIXIN
+					param.wechat_applet = 2;
+				// #endif
+				this.$api.post('vippay',param).then(res=>{
 					if(res.status == 1){
 						if(this.pay_ind == 0){ 
 							this.zfb_alipay(res.data)

@@ -32,10 +32,7 @@
 }
 .user .user_item.data-v-f73b1926 {
   padding: 0 3%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  font-size: 30rpx;
 }
 .user .user_item .it_left.data-v-f73b1926 {
   width: 20%;
@@ -46,9 +43,9 @@
   padding-top: 20rpx;
 }
 .user .user_item .it_right input.data-v-f73b1926 {
+  font-size: 28rpx;
   width: 100%;
   display: inline-block;
-  font-size: 30rpx;
 }
 .content.data-v-f73b1926 {
   width: 100%;
@@ -58,15 +55,13 @@
 .content textarea.data-v-f73b1926 {
   width: 100%;
   height: 260rpx;
-  font-size: 30rpx;
+  font-size: 28rpx;
+  border-bottom: 1rpx solid #F6F6F6;
 }
 .content .vid_f.data-v-f73b1926 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .content .vid_f .vid_f_child.data-v-f73b1926 {
   margin: 10rpx;

@@ -9,6 +9,7 @@
  			</scroll-view>
  		</view>
  		<view class="box" v-if="page_show">
+			<view style="height: 85rpx;"></view>
 			 <swiper class="swiper" :current="current_ind" @change="page_swiper">
 			 	<swiper-item v-for="(item,index) in tabs" :key="index">
 			 		<scroll-view scroll-y :show-scrollbar="false" style="height: 100%;" @scrolltolower="swiper_but">

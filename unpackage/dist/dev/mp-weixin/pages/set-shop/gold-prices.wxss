@@ -26,8 +26,6 @@
 /* 文章场景相关 */
 .head {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   font-size: 32rpx;
   margin-top: 60rpx;
@@ -45,25 +43,17 @@
 }
 .gold-prices-box {
   margin-bottom: 30rpx;
-  margin-top: 30rpx;
 }
 .gold-prices-box .gold-prices-box-up {
   width: 100%;
   height: 80rpx;
-  padding: 0 60rpx;
-  background-image: -webkit-linear-gradient(top, #f3e9df 0%, #f6efe9 100%);
+  padding: 0 30rpx;
   background-image: linear-gradient(180deg, #f3e9df 0%, #f6efe9 100%);
   border-radius: 10rpx 10rpx 0 0;
   border-bottom: dashed 2rpx #cccccc;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .gold-prices-box .gold-prices-box-up .up-title {
   font-size: 26rpx;
@@ -83,25 +73,17 @@
   padding: 40rpx 0;
   background-color: #F6F6F6;
   border-radius: 0 0 10rpx 10rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  justify-content: center;
   position: relative;
 }
 .gold-prices-box .gold-prices-box-down .price-box {
   width: 74%;
 }
 .gold-prices-box .gold-prices-box-down .price-box .price-min-box {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  margin-bottom: 30rpx;
+  align-items: center;
+  margin-bottom: 25rpx;
 }
 .gold-prices-box .gold-prices-box-down .price-box .price-min-box .left {
   width: 28%;
@@ -118,15 +100,9 @@
 }
 .gold-prices-box .gold-prices-box-down .price-box .price-min-box .right {
   width: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
   font-weight: bold;
 }
 .gold-prices-box .gold-prices-box-down .price-box .price-min-box .right .right-symbol {
@@ -167,8 +143,6 @@
 .explain {
   font-size: 22rpx;
   color: #999999;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .explain .explain-title {
@@ -184,7 +158,6 @@
 .bottom-btn .btn {
   font-size: 30rpx;
   color: #FFFFFF;
-  background-image: -webkit-linear-gradient(left, #2b3f7d 0%, #1b2c60 100%);
   background-image: linear-gradient(90deg, #2b3f7d 0%, #1b2c60 100%);
   border-radius: 40rpx;
 }

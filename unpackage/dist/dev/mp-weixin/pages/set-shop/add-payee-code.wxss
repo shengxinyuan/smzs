@@ -26,8 +26,6 @@
 /* 文章场景相关 */
 .add-payee-code-image {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .add-payee-code-image image {

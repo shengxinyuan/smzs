@@ -37,12 +37,8 @@
   line-height: 100rpx;
 }
 .pupop .pupop_item .radio.data-v-c6450bd4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .pay_posi.data-v-c6450bd4 {
   position: fixed;
@@ -51,12 +47,8 @@
   z-index: 99;
   width: 100%;
   background-color: #F1F1F1;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   padding: 16rpx 4%;
 }
 .pay_posi .pay_posi_l view.data-v-c6450bd4 {
@@ -65,7 +57,6 @@
   font-weight: bold;
 }
 .pay_posi .pay_posi_l_r.data-v-c6450bd4 {
-  background-image: -webkit-linear-gradient(left, #f1dab0, #ffcb6b);
   background-image: linear-gradient(90deg, #f1dab0, #ffcb6b);
   padding: 0 20rpx;
   line-height: 60rpx;
@@ -105,8 +96,6 @@
   padding: 0 3%;
 }
 .cont .nav_nine.data-v-c6450bd4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   margin-top: 20rpx;
   padding: 20rpx;
@@ -131,8 +120,6 @@
   border-radius: 50rpx;
   line-height: 40rpx;
   color: #66615a;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   line-height: 58rpx;
   font-size: 26rpx;
@@ -147,12 +134,8 @@
 .cont .buy_vip.data-v-c6450bd4 {
   width: 100%;
   margin-top: 24rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .cont .buy_vip .vip_item.data-v-c6450bd4 {
   width: 30%;
@@ -162,7 +145,6 @@
   border-radius: 20rpx;
 }
 .cont .buy_vip .vip_item .it_top.data-v-c6450bd4 {
-  font-size: 30rpx;
   line-height: 66rpx;
   font-weight: bold;
   white-space: nowrap;
@@ -171,7 +153,7 @@
   color: #daa856;
 }
 .cont .buy_vip .vip_item .it_c text.data-v-c6450bd4 {
-  font-size: 38rpx;
+  font-size: 34rpx;
   font-weight: bold;
   line-height: 76rpx;
 }
@@ -187,12 +169,8 @@
 .cont .buy_vip_s.data-v-c6450bd4 {
   width: 100%;
   margin-top: 24rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .cont .buy_vip_s .vip_item.data-v-c6450bd4 {
   width: 30%;
@@ -211,7 +189,7 @@
   color: #daa856;
 }
 .cont .buy_vip_s .vip_item .it_c text.data-v-c6450bd4 {
-  font-size: 38rpx;
+  font-size: 34rpx;
   font-weight: bold;
   line-height: 76rpx;
 }
@@ -220,12 +198,8 @@
   line-height: 40rpx;
 }
 .cont .buy_vip_s .vip_item .it_but.data-v-c6450bd4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   line-height: 50rpx;
 }
 .cont .buy_vip_s .vip_item .it_but .it_but_share.data-v-c6450bd4 {
@@ -233,6 +207,7 @@
   margin-top: 10rpx;
   padding: 0 20rpx;
   border-radius: 40rpx;
+  font-size: 26rpx;
 }
 .cont .buy_vip_s .vip_item.data-v-c6450bd4:nth-child(1) {
   width: 66%;
@@ -243,12 +218,11 @@
 }
 .cont .op_but.data-v-c6450bd4 {
   width: 96%;
-  background-image: -webkit-linear-gradient(left, #f1dab0, #ffcb6b);
   background-image: linear-gradient(90deg, #f1dab0, #ffcb6b);
-  line-height: 90rpx;
+  line-height: 80rpx;
   text-align: center;
   color: #52300f;
-  font-size: 34rpx;
+  font-size: 30rpx;
   font-weight: bold;
   border-radius: 50rpx;
   margin: 40rpx 0 20rpx 2%;
@@ -258,18 +232,12 @@
   height: 300rpx;
   background-image: url(/static/my/vip_backimg.png);
   background-size: 100% 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .header .header_l.data-v-c6450bd4 {
   padding-left: 52rpx;
   padding-top: 100rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .header .header_l image.data-v-c6450bd4 {
@@ -279,7 +247,7 @@
   margin-right: 20rpx;
 }
 .header .header_l .header_l_child view.data-v-c6450bd4 {
-  font-size: 34rpx;
+  font-size: 32rpx;
   line-height: 60rpx;
   font-weight: bold;
 }

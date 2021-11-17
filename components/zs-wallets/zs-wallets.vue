@@ -8,6 +8,7 @@
 				充值方式
 			</view>
 			<view class="head_type_r">
+				<!-- #ifdef APP -->
 				<view class="type_r_child">
 					<label class="radio" @click="radio_cli(1)">
 						<text>
@@ -16,6 +17,7 @@
 					  <radio  :checked="pay_type == 1" />
 					</label>        
 				</view>
+				<!-- #endif -->
 				<view class="type_r_child" v-if="pageType == 1">
 					 <label class="radio" @click="radio_cli(2)">
 						 <text>
@@ -92,7 +94,11 @@
 			feil:{},// 支付宝费率
 			bank:{}, //银行卡费率
 		},
-		
+		mounted() {
+			// #ifdef MP-WEIXIN
+			this.pay_type = 2;
+			// #endif
+		},
 		computed:{
 			fuwu_money(){
 				let arr = 0
@@ -118,13 +124,25 @@
 					this.value = Math.floor(e.detail.value)
 			},
 			but_cli(){
-				if (this.value < 50) {
-					uni.showToast({
-						title: '满50元可提现！',
-						icon:'none'
-					});
-					return
+				console.log(this.buttitle)
+				if(this.buttitle=='充值'){
+					// if (this.value < 50) {
+					// 	uni.showToast({
+					// 		title: '满50元可充值！',
+					// 		icon:'none'
+					// 	});
+					// 	return
+					// }
+				}else{
+					if (this.value < 50) {
+						uni.showToast({
+							title: '满50元可提现！',
+							icon:'none'
+						});
+						return
+					}
 				}
+				
 				if(this.pageType != 1 ){
 					let arr =this.value - this.fuwu_money
 					this.$emit('but_cli',this.pay_type,arr.toFixed(2),this.value)

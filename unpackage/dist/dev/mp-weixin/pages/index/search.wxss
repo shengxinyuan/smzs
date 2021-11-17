@@ -1,6 +1,6 @@
 
-page{
-	background-color: #F1F1F1;
+page {
+	background-color: #F6F6F6;
 }
 
 @charset "UTF-8";
@@ -40,88 +40,41 @@ page{
 }
 .box.data-v-64d2b7fe {
   width: 100%;
-  padding-bottom: 30rpx;
-}
-.zl-box.data-v-64d2b7fe {
-  width: 90%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  border: 2rpx solid #df0000;
-  border-radius: 50rpx;
-}
-.zl-box input.data-v-64d2b7fe {
-  border-radius: 50rpx;
-  height: 60rpx;
-  padding-left: 30rpx;
-}
-.zl-search.data-v-64d2b7fe {
-  padding-left: 30rpx;
-  border-style: solid;
-  border-color: #df0000;
-  border-radius: 50rpx;
-  border-width: 4rpx;
-  margin: 15rpx 0 0 0;
-  height: 60rpx;
-}
-.zl-search-btn.data-v-64d2b7fe {
-  border-radius: 40rpx;
-  background-color: #cf0000;
-  color: #ffffff;
-  padding: 0 20rpx;
-  height: 60rpx;
-  line-height: 60rpx;
-  font-size: 28rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  width: 100%;
 }
 .zl-history-box.data-v-64d2b7fe {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   padding: 20rpx 30rpx;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .zl-history.data-v-64d2b7fe {
   height: 60rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: bold;
   line-height: 60rpx;
 }
-.zl-delete.data-v-64d2b7fe {
-  width: 40rpx;
-  height: 40rpx;
-}
 .zl-search-history.data-v-64d2b7fe {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
-  padding: 0 50rpx;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 30rpx;
 }
 .zl-search-history text.data-v-64d2b7fe {
   background-color: #fff;
-  margin: 15rpx;
-  padding: 0 25rpx;
+  padding: 0 20rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
   text-align: center;
   border-radius: 40rpx;
   max-width: 200rpx;
-  height: 60rpx;
-  line-height: 60rpx;
+  height: 50rpx;
+  line-height: 50rpx;
   display: inline-block;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 .zl-search-hot.data-v-64d2b7fe {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   padding: 20rpx 30rpx;
 }

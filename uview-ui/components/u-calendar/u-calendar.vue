@@ -1,5 +1,5 @@
 <template>
-	<u-popup closeable :maskCloseAble="maskCloseAble" mode="top" :popup="false" v-model="value" length="auto"
+	<u-popup closeable :maskCloseAble="maskCloseAble" mode="bottom" :popup="false" v-model="value" length="auto"
 	 :safeAreaInsetBottom="safeAreaInsetBottom" @close="close" :z-index="uZIndex" :border-radius="borderRadius" :closeable="closeable">
 		<view class="u-calendar">
 			<view class="u-calendar__header">
@@ -46,11 +46,11 @@
 				<view class="u-calendar__content__bg-month">{{month}}</view>
 			</view>
 			<view class="u-calendar__bottom">
-				<view class="u-calendar__bottom__choose"  v-show="false">
+				<view class="u-calendar__bottom__choose">
 					<text>{{mode == 'date' ? activeDate : startDate}}</text>
 					<text v-if="endDate">至{{endDate}}</text>
 				</view>
-				<view class="u-calendar__bottom__btn" >
+				<view class="u-calendar__bottom__btn">
 					<u-button :type="btnType" shape="circle" size="default" @click="btnFix(false)">确定</u-button>
 				</view>
 			</view>
@@ -68,8 +68,8 @@
 	 * @property {Boolean} change-year 是否显示顶部的切换年份方向的按钮(默认true)
 	 * @property {Boolean} change-month 是否显示顶部的切换月份方向的按钮(默认true)
 	 * @property {String Number} max-year 可切换的最大年份(默认2050)
-	 * @property {String Number} min-year 最小可选日期(默认1950)
-	 * @property {String Number} min-date 可切换的最小年份(默认1950-01-01)
+	 * @property {String Number} min-year 可切换的最小年份(默认1950)
+	 * @property {String Number} min-date 最小可选日期(默认1950-01-01)
 	 * @property {String Number} max-date 最大可选日期(默认当前日期)
 	 * @property {String Number} 弹窗顶部左右两边的圆角值，单位rpx(默认20)
 	 * @property {Boolean} mask-close-able 是否允许通过点击遮罩关闭日历(默认true)
@@ -223,7 +223,7 @@
 			// 顶部的提示文字
 			toolTip: {
 				type: String,
-				// default: '选择日期'
+				default: '选择日期'
 			}
 		},
 		data() {

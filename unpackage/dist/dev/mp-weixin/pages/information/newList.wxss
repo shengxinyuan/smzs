@@ -47,12 +47,8 @@ page{
   line-height: 44rpx;
 }
 .items .items_cont .items_cont_child.data-v-bd99bfdc {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   border-top: 1rpx solid #f1f1f1;
   margin-top: 22rpx;
   padding-top: 22rpx;

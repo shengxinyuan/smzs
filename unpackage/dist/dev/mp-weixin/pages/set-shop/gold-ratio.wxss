@@ -26,10 +26,8 @@
 /* 文章场景相关 */
 .zl-box {
   padding: 30rpx;
-  border-top: solid 2rpx #f6f6f6;
 }
 .zl-box .gold-ratio-box {
-  margin-top: 20rpx;
   margin-bottom: 30rpx;
 }
 .zl-box .gold-ratio-box .title {
@@ -49,8 +47,6 @@
 .explain {
   font-size: 22rpx;
   color: #999999;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .explain .explain-title {
@@ -65,7 +61,6 @@
   line-height: 78rpx;
   font-size: 30rpx;
   color: #FFFFFF;
-  background-image: -webkit-linear-gradient(left, #2b3f7d 0%, #1b2c60 100%);
   background-image: linear-gradient(90deg, #2b3f7d 0%, #1b2c60 100%);
   border-radius: 40rpx;
 }

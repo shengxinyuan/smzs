@@ -1,6 +1,6 @@
 
 page{
-	background-color: #F1F1F1;
+	background-color: #F6F6F6;
 }
 
 @charset "UTF-8";
@@ -31,7 +31,7 @@ page{
 /* 文章场景相关 */
 .cart_shopping.data-v-0f00adf4 {
   width: 100%;
-  padding: 150rpx 3% 260rpx 3%;
+  padding: 0rpx 3% 260rpx 3%;
 }
 .cart_shopping .cart_shop_item.data-v-0f00adf4 {
   background-color: white;
@@ -40,21 +40,15 @@ page{
   border-radius: 10rpx;
 }
 .cart_shopping .cart_shop_item .item_js.data-v-0f00adf4 {
-  padding-left: 36%;
+  padding-left: 34%;
   margin-top: 28rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .cart_shopping .cart_shop_item .item_js .rmb.data-v-0f00adf4 {
   font-size: 22rpx;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_child.data-v-0f00adf4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_l.data-v-0f00adf4 {
@@ -62,18 +56,14 @@ page{
   padding-top: 80rpx;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_c.data-v-0f00adf4 {
-  width: 160rpx;
-  height: 160rpx;
   overflow: hidden;
   border-radius: 10rpx;
-  border: solid 0.5rpx #f1f1f1;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_c image.data-v-0f00adf4 {
-  width: 100%;
-  height: 100%;
+  width: 160rpx;
+  height: 160rpx;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_r.data-v-0f00adf4 {
-  width: 59%;
   padding-left: 20rpx;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_r .it_title.data-v-0f00adf4 {
@@ -83,12 +73,8 @@ page{
   overflow: hidden;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_r .it_speac.data-v-0f00adf4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   line-height: 56rpx;
   color: #999;
   font-size: 22rpx;
@@ -102,15 +88,10 @@ page{
   padding-right: 30rpx;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_r .it_speac_bs.data-v-0f00adf4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   color: #999;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .cart_shopping .cart_shop_item .cart_shop_item_r .it_speac_bs view.data-v-0f00adf4 {
   font-size: 20rpx;
@@ -127,26 +108,14 @@ page{
   position: fixed;
   left: 0;
   bottom: 100rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .jis_but .jis_right.data-v-0f00adf4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .jis_but .jis_right view.data-v-0f00adf4 {
   font-size: 24rpx;
@@ -158,40 +127,27 @@ page{
   border-radius: 50rpx;
   height: 56rpx;
   line-height: 56rpx;
-  background-image: -webkit-linear-gradient(bottom, #eb4241 0%, #ef463f 100%);
   background-image: linear-gradient(0deg, #eb4241 0%, #ef463f 100%);
 }
 .header.data-v-0f00adf4 {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 140rpx;
   width: 100%;
-  padding-top: 40rpx;
-  padding-left: 30rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
+  height: 80rpx;
+  padding: 0 30rpx;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  z-index: 999;
-  background-color: #F1F1F1;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f6f6f6;
 }
-.header .header_va.data-v-0f00adf4 {
-  padding-right: 26rpx;
-  font-size: 34rpx;
+.header .guanli.data-v-0f00adf4 {
+  font-size: 24rpx;
+  color: #999;
 }
 .header .rig.data-v-0f00adf4 {
   width: 78%;
   color: #999;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  font-size: 22rpx;
+  align-items: center;
+  font-size: 24rpx;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

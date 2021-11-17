@@ -30,25 +30,22 @@ page{
 /* 透明度 */
 /* 文章场景相关 */
 .log_out.data-v-3f1c30b4 {
-  width: 90%;
   padding: 20rpx;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.log_out button.data-v-3f1c30b4 {
   border-radius: 50rpx;
   border: 1rpx solid #dd2626;
-  font-size: 30rpx;
+  font-size: 32rpx;
   color: #dd2626;
-  text-align: center;
-  position: fixed;
-  left: 5%;
-  bottom: 10%;
 }
 .items.data-v-3f1c30b4 {
   padding: 0 3%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   border-bottom: 1rpx solid #eee;
   line-height: 90rpx;
   font-size: 30rpx;

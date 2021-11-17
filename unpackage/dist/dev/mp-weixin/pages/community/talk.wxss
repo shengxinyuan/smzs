@@ -44,8 +44,6 @@
 .yltk-bars-list {
   padding: 20rpx;
   font-size: 28rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .yltk-bars-list .yltk-bars-box {
@@ -55,7 +53,6 @@
   padding-left: 30rpx;
 }
 .yltk-bars-list .yltk-bars-box.active {
-  background-image: -webkit-linear-gradient(left, #f8e1b5 0%, #ffffff 100%);
   background-image: linear-gradient(90deg, #f8e1b5 0%, #ffffff 100%);
 }
 .yltk-details-list {
@@ -63,8 +60,6 @@
 }
 .yltk-details-list .yltk-details-box {
   padding: 20rpx 2%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .yltk-details-list .yltk-details-box .details-box-left {
@@ -72,18 +67,13 @@
   padding-right: 20rpx;
 }
 .yltk-details-list .yltk-details-box .details-box-left .details-text {
-  font-size: 26rpx;
+  font-size: 30rpx;
+  font-weight: bold;
 }
 .yltk-details-list .yltk-details-box .details-box-left .bottom-show {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-          align-items: flex-end;
+  justify-content: space-between;
+  align-items: flex-end;
   font-size: 24rpx;
   color: #999999;
   margin-top: 80rpx;
@@ -91,8 +81,6 @@
 .yltk-details-list .yltk-details-box .details-box-right {
   width: 26%;
   height: 185rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .yltk-details-list .yltk-details-box .details-box-right image {

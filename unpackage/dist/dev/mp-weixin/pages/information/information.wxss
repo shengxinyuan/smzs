@@ -32,21 +32,15 @@ page{
 .news.data-v-293111e0 {
   padding: 20rpx 30rpx;
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .news .list.data-v-293111e0 {
   width: 100%;
   background-color: 10rpx;
   background-color: #fff;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .news .list .list_s.data-v-293111e0 {
   padding: 20rpx 24rpx;
@@ -54,24 +48,14 @@ page{
   border-bottom: 1rpx solid #f6f6f6;
   height: 140rpx;
   line-height: 140rpx;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -webkit-flex;
+  align-items: center;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .news .list .list_s .left_s.data-v-293111e0 {
   height: 120rpx;
   line-height: 120rpx;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -webkit-flex;
+  align-items: center;
   display: flex;
 }
 .news .list .list_s .left_s image.data-v-293111e0 {

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "zs-hx-navbar": "/components/zs-hx-navbar/zs-hx-navbar",
+    "zs-shoplist-type": "/components/zs-shoplist-type/zs-shoplist-type"
+  }
+}

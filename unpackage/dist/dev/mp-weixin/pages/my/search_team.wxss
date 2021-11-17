@@ -37,8 +37,6 @@ page{
 }
 .list .list_item.data-v-26a366ea {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .list .list_item image.data-v-26a366ea {

@@ -1,0 +1,1 @@
+<view class="zl-page zl-box"><block wx:for="{{list}}" wx:for-item="item" wx:for-index="index" wx:key="index"><block><view class="bg-image"><image src="{{item.bgImageUrl}}" mode="widthFix"></image><view class="user-box"><view><view class="user-name">{{item.userName}}</view><view class="user-telephone">{{item.userTelephone}}</view></view></view></view></block></block></view>

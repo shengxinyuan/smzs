@@ -25,23 +25,38 @@
 /* 透明度 */
 /* 文章场景相关 */
 .orders_d.data-v-efd92138 {
-  padding: 30rpx;
+  padding: 20rpx;
   background-color: white;
-  margin-top: 26rpx;
+  margin-top: 16rpx;
   border-radius: 20rpx;
   background-image: url(/static/my/dianbu_bgimage.png);
   background-size: 100% 100%;
 }
 .orders_d .orders_it.data-v-efd92138 {
   width: 25%;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
   text-align: center;
-  margin: 16rpx 0;
 }
-.orders_d .orders_it image.data-v-efd92138 {
-  width: 54rpx;
-  height: 58rpx;
+.orders_d .orders_it .images.data-v-efd92138 {
+  position: relative;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.orders_d .orders_it view.data-v-efd92138 {
-  margin-top: 16rpx;
+.orders_d .orders_it .images image.data-v-efd92138 {
+  width: 50rpx;
+  height: auto;
+}
+.red-dot.data-v-efd92138 {
+  position: absolute;
+  right: 45rpx;
+  top: 5rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background-color: red;
 }
 

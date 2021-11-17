@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import App from './App'
 
+//uview引入
+import uView from 'uview-ui';
+Vue.use(uView);
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'
-//uview引入
-import uView from 'uview-ui'
-Vue.use(uView)
+
 
 import com from 'utils/common.js'
 Vue.prototype.com = com

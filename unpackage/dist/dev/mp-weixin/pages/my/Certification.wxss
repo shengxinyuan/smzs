@@ -31,24 +31,36 @@ page{
 /* 文章场景相关 */
 .inputs.data-v-7406bb20 {
   background-color: #fff;
-  padding: 3%;
+  padding: 20rpx 30rpx;
   margin-bottom: 2rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .inputs input.data-v-7406bb20 {
   width: 70%;
+  color: #666;
+  font-size: 28rpx;
   text-align: right;
 }
 .sos_sty.data-v-7406bb20 {
+  font-size: 24rpx;
   width: 100%;
   padding: 2% 3%;
   background-color: #fffaf0;
   color: #f9dcc2;
   margin-bottom: 24rpx;
+}
+.bottom-box.data-v-7406bb20 {
+  padding: 0 30rpx;
+}
+.bottom-box .login_s.data-v-7406bb20 {
+  width: 100%;
+  height: 72rpx;
+  text-align: center;
+  line-height: 72rpx;
+  border-radius: 50rpx;
+  background-color: #1E3066;
+  color: #fff;
+  margin-top: 100rpx;
 }
 

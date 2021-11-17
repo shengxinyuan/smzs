@@ -37,7 +37,6 @@
   line-height: 80rpx;
   font-size: 28rpx;
   color: #FFFFFF;
-  background-image: -webkit-linear-gradient(left, #2b3f7d 0%, #1b2c60 100%);
   background-image: linear-gradient(90deg, #2b3f7d 0%, #1b2c60 100%);
   border-radius: 40rpx;
 }

@@ -14,6 +14,9 @@
 					 <u-icon name="chat" size="38"></u-icon>
 					 <text class="u-font-12 u-m-l-2">消息</text>
 				</view>
+				<!-- #ifdef MP-WEIXIN -->
+				<view class="wx_right"></view>
+				<!-- #endif -->
 			</view>
 		</view>
 		<view class="content">
@@ -156,7 +159,12 @@
 		display: flex;justify-content: space-between;align-items: center;
 		background-color: white;
 		.input-view {
+			/* #ifdef MP-WEIXIN */
+			width: calc(84% - 90px);
+			/* #endif */
+			/* #ifdef APP */
 			width: 84%;
+			/* #endif */
 			display: flex;
 			align-items: center;
 			// flex-direction: row;

@@ -31,8 +31,6 @@ page{
 /* 文章场景相关 */
 .qh_but.data-v-65c21266 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   margin-bottom: 30rpx;
   border: 1rpx solid #2b3e7b;
@@ -57,29 +55,29 @@ page{
 }
 .list .list_item.data-v-65c21266 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .list .list_item image.data-v-65c21266 {
   width: 86rpx;
   height: 86rpx;
   border-radius: 50%;
-  margin-right: 20rpx;
+  margin-right: 10rpx;
 }
 .list .list_item .list_item_name.data-v-65c21266 {
   line-height: 86rpx;
-  font-size: 34rpx;
+  font-size: 28rpx;
 }
 .list .list_item .list_item_vip.data-v-65c21266 {
-  padding: 2;
   padding: 0 24rpx;
   height: 40rpx;
-  margin-top: 25rpx;
   color: #fff;
   background-color: #ffd775;
   border-radius: 10rpx;
-  margin-left: 20rpx;
+  margin-left: 10rpx;
+  font-size: 24rpx;
+  line-height: 40rpx;
 }
 input.data-v-65c21266 {
   background-color: #fff;
@@ -93,12 +91,8 @@ input.data-v-65c21266 {
   width: 100%;
   height: 160rpx;
   margin: 30rpx 0;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .data_statis .statis_l.data-v-65c21266 {
   width: 49%;

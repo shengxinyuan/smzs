@@ -1,13 +1,15 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/login/login",
+    "pages/login/start_page",
     "pages/index/shop_detail",
     "pages/index/evaluate",
+    "pages/index/threedesign",
     "pages/index/customization",
     "pages/index/seckill",
     "pages/index/nine_nav",
     "pages/index/group_book",
-    "pages/login/login",
     "pages/information/newList",
     "pages/login/register",
     "pages/login/forget",
@@ -92,7 +94,11 @@
     "pages/service/my-dp-html",
     "pages/index/taobao",
     "pages/share/index",
-    "pages/index/mshare"
+    "pages/index/mshare",
+    "pages/set-shop/add_shop_image",
+    "pages/index/share_shop_detail",
+    "pages/index/searchResult",
+    "pages/index/activity_detail"
   ],
   "subPackages": [],
   "window": {
@@ -101,28 +107,6 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
-  "tabBar": {
-    "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
-    "borderStyle": "black",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "pagePath": "/pages/index/index"
-      },
-      {
-        "pagePath": "pages/my/my"
-      },
-      {
-        "pagePath": "/pages/cart/cart"
-      },
-      {
-        "pagePath": "/pages/classify/classify"
-      },
-      {
-        "pagePath": "/pages/selts/selts"
-      }
-    ]
-  },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap84.json"
 }

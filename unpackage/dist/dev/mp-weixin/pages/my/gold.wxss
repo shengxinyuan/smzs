@@ -51,7 +51,7 @@ page{background-color: #f6f6f6;}
   width: 100%;
   padding: 0 5%;
   margin-bottom: 20rpx;
-  font-size: 34rpx;
+  font-size: 32rpx;
 }
 .header .gold_statis.data-v-fc42460c {
   width: 90%;
@@ -61,7 +61,7 @@ page{background-color: #f6f6f6;}
   border-radius: 14rpx;
   box-shadow: 0 0 10rpx 2rpx #f7dead;
   background-color: #fff;
-  font-size: 34rpx;
+  font-size: 30rpx;
   position: relative;
 }
 .header .gold_statis image.data-v-fc42460c {
@@ -99,12 +99,8 @@ page{background-color: #f6f6f6;}
 .list .lsit_item.data-v-fc42460c {
   width: 100%;
   border-bottom: 2rpx solid #F6F6F6;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .list .lsit_item .it_l .it_l_top.data-v-fc42460c {
   line-height: 58rpx;

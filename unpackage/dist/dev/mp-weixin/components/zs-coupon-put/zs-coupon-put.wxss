@@ -86,8 +86,6 @@
   height: 170rpx;
   margin-bottom: 10rpx;
   background-size: 100% 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .cont .cont_child .child_item .its .its_left.data-v-39fef284 {

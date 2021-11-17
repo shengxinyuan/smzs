@@ -8,8 +8,10 @@
 		>
 			<view class="u-steps__item" 
 				:class="['u-steps__item--' + direction]" 
-				v-for="(item, index) in list" :key="index">
-				<view class="u-steps__item__num"
+				v-for="(item, index) in list" :key="index"
+			>
+				<view
+					class="u-steps__item__num"
 					v-if="mode == 'number'"
 					:style="{
 						backgroundColor: current < index ? 'transparent' : activeColor,
@@ -24,16 +26,13 @@
 					<u-icon v-else size="22" color="#ffffff" :name="icon"></u-icon>
 				</view>
 				<view class="u-steps__item__dot" v-if="mode == 'dot'" :style="{ 
-					backgroundColor: index <= current ? activeColor : unActiveColor }" > </view>
+					backgroundColor: index <= current ? activeColor : unActiveColor 
+				}"></view>
 				<text class="u-line-1" :style="{ 
 					color: index <= current ? activeColor : unActiveColor,
-				}" :class="['u-steps__item__text--' + direction]" style="width: 100%;white-space: normal;margin-top: 10rpx;text-align: left;">
-					{{ item.status }}
-					<view style="color: #999;">
-						{{item.time}}
-					</view>
+				}" :class="['u-steps__item__text--' + direction]">
+					{{ item.name }}
 				</text>
-				
 				<view class="u-steps__item__line" :class="['u-steps__item__line--' + mode]" v-if="index < list.length - 1">
 					<u-line :direction="direction" length="100%" :hair-line="false" :color="unActiveColor"></u-line>
 				</view>

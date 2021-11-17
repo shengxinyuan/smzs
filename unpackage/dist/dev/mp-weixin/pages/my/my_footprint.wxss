@@ -32,14 +32,10 @@ page{
 .foot_week.data-v-db88de74 {
   width: 100%;
   padding: 20rpx 1%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
+  justify-content: space-around;
   background-color: white;
   position: relative;
-  -webkit-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
 }
 .foot_week .down_pull.data-v-db88de74 {
@@ -86,11 +82,8 @@ page{
 }
 .shop_list .lsit_item .item_shop.data-v-db88de74 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .shop_list .lsit_item .item_shop .item_shop_it.data-v-db88de74 {
   width: 32%;

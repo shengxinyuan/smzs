@@ -5,6 +5,7 @@
 </template>
 
 <script>
+	var that;
 	export default{
 		data(){
 			return{
@@ -14,10 +15,17 @@
 		onNavigationBarButtonTap() {
 			this.com.navto('./particulars?type='+4)
 		},
+		onLoad() {
+			that = this;
+		},
 		methods:{
 			but_cli(num,val){
 				console.log(num,val)
-				this.$api.post('top_up',{total:val,type:num}).then(res=>{
+				var param = {total:val,type:num}
+				// #ifdef MP-WEIXIN
+					param.wechat_applet = 2;
+				// #endif
+				this.$api.post('top_up',param).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						if(num == 1){
@@ -50,6 +58,7 @@
 				});
 			},
 			weixin(arr){
+				// #ifdef APP-PLUS
 				uni.requestPayment({
 					provider: 'wxpay',
 					orderInfo:{
@@ -73,7 +82,36 @@
 						})
 					}
 				});
-			}	
+				// #endif
+				// #ifdef MP-WEIXIN
+				var orderInfo = {
+					provider: 'wxpay',
+					timeStamp: arr.timeStamp.toString(),
+					nonceStr: arr.nonceStr,
+					package: arr.package,
+					signType: arr.signType,
+					paySign: arr.paySign,
+				}
+				console.log(orderInfo)
+				uni.requestPayment({
+					...orderInfo,
+					success: function(res) {
+						console.log(res)
+						uni.showToast({
+							title:'充值成功..',icon:'none'
+						})
+					},
+					fail: function(err) {
+						console.log(err)
+						uni.showToast({
+							title: '支付失败',
+							icon: 'none'
+						})
+					}
+				});
+				// #endif
+				
+			}
 		}
 	}
 </script>

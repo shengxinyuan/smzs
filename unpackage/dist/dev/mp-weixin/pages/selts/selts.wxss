@@ -32,27 +32,16 @@
   width: 100%;
   padding-top: 55rpx;
   padding-left: 30rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   z-index: 999;
   background-color: white;
 }
 .header .input-view.data-v-49814dba {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
   width: 68%;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  flex: 1;
   height: 60rpx;
   border-radius: 15px;
   padding: 0 15px;

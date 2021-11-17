@@ -38,22 +38,15 @@ page{
   height: 90rpx;
   background-color: #fff;
   padding: 0 4%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   line-height: 90rpx;
 }
 .cont.data-v-56313d80 {
   width: 100%;
   padding: 0 3%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .cont .cont_item.data-v-56313d80 {
   width: 49%;
@@ -88,12 +81,8 @@ page{
   font-weight: bold;
   font-size: 30rpx;
   line-height: 60rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   color: #df3636;
 }
 .cont .cont_item.data-v-56313d80:nth-child(2n+2) {

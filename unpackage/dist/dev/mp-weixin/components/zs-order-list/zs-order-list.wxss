@@ -27,22 +27,16 @@
 .order_time.data-v-30bd72b0 {
   margin-bottom: 20rpx;
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
   background-color: #fff;
   border-radius: 10rpx;
 }
 .order_time .order_box.data-v-30bd72b0 {
   width: 100%;
   padding: 0 30rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .order_time .order_box .order_head.data-v-30bd72b0 {
   width: 100%;
@@ -51,8 +45,6 @@
   border-bottom: 1rpx solid #eee;
   font-size: 28rpx;
   color: #333333;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .order_time .order_box .order_head .time.data-v-30bd72b0 {
@@ -66,12 +58,8 @@
 .order_time .order_box .shop_list.data-v-30bd72b0 {
   width: 100%;
   height: 250rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .order_time .order_box .shop_list image.data-v-30bd72b0 {
   width: 200rpx;
@@ -107,19 +95,13 @@
   width: 100%;
   line-height: 70rpx;
   color: #ba1a30;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .order_time .order_box .shop_list .list_right .Specifications.data-v-30bd72b0 {
   width: 100%;
   color: #999;
   font-size: 26rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .order_time .order_box .shop_list .list_right .Specifications .num.data-v-30bd72b0 {
@@ -138,12 +120,8 @@
 .order_time .order_box .around.data-v-30bd72b0 {
   width: 100%;
   height: 80rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .order_time .order_box .around .money.data-v-30bd72b0 {
   color: #ba1a30;
@@ -159,17 +137,13 @@
 }
 .order_time .order_box .foot .foot_child.data-v-30bd72b0 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
+  justify-content: space-around;
 }
 .order_time .order_box .foot .go_buy.data-v-30bd72b0 {
   width: 88%;
   line-height: 80rpx;
   height: 80rpx;
-  background: -webkit-linear-gradient(#f82222, #b51616);
   background: linear-gradient(#f82222, #b51616);
   border-radius: 50rpx;
   background-repeat: no-repeat;
@@ -190,20 +164,13 @@
 .order_time .order_box .foot_s.data-v-30bd72b0 {
   width: 100%;
   padding: 2% 0;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .order_time .order_box .foot_s .foot_child.data-v-30bd72b0 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .order_time .order_box .foot_s .go_buy.data-v-30bd72b0 {
-  background: -webkit-linear-gradient(#f82222, #b51616);
   background: linear-gradient(#f82222, #b51616);
   border-radius: 50rpx;
   background-repeat: no-repeat;

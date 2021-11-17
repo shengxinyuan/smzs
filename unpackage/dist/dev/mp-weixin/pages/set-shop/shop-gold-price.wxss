@@ -28,21 +28,14 @@
   margin-top: 20rpx;
   width: 100%;
   background-color: #F6F6F6;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .shop_tab .tab_it {
   width: 48%;
   background-color: white;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   margin: 5rpx 1%;
   padding: 20rpx;
 }
@@ -50,8 +43,6 @@
   padding: 20rpx 30rpx;
 }
 .zl-box .head-box {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   padding: 20rpx 0;
   background-color: #fff6e5;
@@ -77,6 +68,10 @@
 }
 .zl-box .head-box .head-box-right {
   width: 50%;
+  padding: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .zl-box .head-box .head-box-right .title {
   font-size: 24rpx;
@@ -85,24 +80,14 @@
 }
 .uni-padding-wrap {
   margin-top: 20rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 .radio-box {
   margin-bottom: 20rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .radio {
   font-size: 26rpx;
@@ -120,24 +105,14 @@
   margin-bottom: 70rpx;
 }
 .popup-box-up .popup-set {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 .popup-box-up .popup-set .set-box {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   margin-bottom: 30rpx;
 }
 .popup-box-up .popup-set .set-box .set-title {
@@ -149,12 +124,8 @@
   width: 60%;
   font-size: 26rpx;
   color: #666666;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .popup-box-up .popup-set .set-box .set-text .text-one {
   width: 10%;
@@ -176,7 +147,6 @@
   line-height: 62rpx;
   font-size: 26rpx;
   color: #FFFFFF;
-  background-image: -webkit-linear-gradient(left, #2b3f7d 0%, #1b2c60 100%);
   background-image: linear-gradient(90deg, #2b3f7d 0%, #1b2c60 100%);
   border-radius: 30rpx;
 }

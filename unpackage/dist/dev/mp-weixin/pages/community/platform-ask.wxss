@@ -1,6 +1,6 @@
 
-page{
-	background-color: white;
+page {
+	background-color: #f6f6f6;
 }
 
 @charset "UTF-8";
@@ -29,43 +29,23 @@ page{
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.tabs-box {
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
+.header {
   display: flex;
-  border-bottom: solid 2rpx #f2f2f2;
-  padding-top: 60rpx;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background-color: white;
-  z-index: 20;
+  align-items: center;
+  justify-content: center;
 }
-.tabs-box .icon-box {
-  width: 15%;
-  text-align: center;
-  height: 100rpx;
-  line-height: 100rpx;
-}
-.tabs-box .icon-box .icon {
-  font-size: 40rpx;
-  color: #666666;
-}
-.tabs-box .zl_sty {
+.zl_sty {
   width: 60%;
-  margin-top: 20rpx;
-  text-align: center;
-  padding-left: 13%;
 }
 .yltk-details-list {
-  padding: 180rpx 20rpx 20rpx 20rpx;
+  padding: 0rpx 30rpx;
 }
 .yltk-details-list .yltk-details-box {
-  display: -webkit-box;
-  display: -webkit-flex;
+  background-color: #FFFFFF;
+  border-radius: 10rpx;
   display: flex;
-  padding: 20rpx 0;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
 }
 .yltk-details-list .yltk-details-box .details-box-left {
   width: 74%;
@@ -75,20 +55,14 @@ page{
   font-size: 26rpx;
 }
 .yltk-details-list .yltk-details-box .details-box-left .bottom-show {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-          align-items: flex-end;
+  align-items: flex-end;
   font-size: 24rpx;
   color: #999999;
   margin-top: 80rpx;
 }
 .yltk-details-list .yltk-details-box .details-box-right {
   width: 26%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .yltk-details-list .yltk-details-box .details-box-right image {

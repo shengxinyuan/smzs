@@ -24,7 +24,9 @@
 			}
 		},
 		props:{
-			titleRed:{},
+			titleRed:{
+				default:''
+			},
 			title:{},
 			page_show:{
 				default:false

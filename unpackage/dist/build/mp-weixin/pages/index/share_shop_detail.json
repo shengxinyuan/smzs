@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-parse": "/uview-ui/components/u-parse/u-parse",
+    "zs-shopping-list": "/components/zs-shopping-list/zs-shopping-list",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-number-box": "/uview-ui/components/u-number-box/u-number-box"
+  }
+}

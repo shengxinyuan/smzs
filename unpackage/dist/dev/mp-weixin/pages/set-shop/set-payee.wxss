@@ -35,29 +35,17 @@
   margin-bottom: 30rpx;
   background-color: #FFFFFF;
   border-radius: 10rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .weixin-payee-box .left {
   width: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .weixin-payee-box .left .weixin-logo {
   width: 13%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .weixin-payee-box .left .weixin-logo image {
@@ -68,12 +56,8 @@
   padding-left: 16rpx;
 }
 .weixin-payee-box .right {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .weixin-payee-box .right .right-title {
   font-size: 26rpx;
@@ -92,15 +76,9 @@
   height: 88rpx;
   padding: 0 30rpx;
   background-color: #F6F6F6;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .popup-box .popup-up-box .title {
   font-size: 30rpx;
@@ -119,8 +97,6 @@
 }
 .popup-box .popup-down-box .payee-code {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .popup-box .popup-down-box .payee-code image {

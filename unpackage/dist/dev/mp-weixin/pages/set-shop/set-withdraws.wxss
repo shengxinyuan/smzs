@@ -30,8 +30,6 @@
 .zl-box .bg-image {
   width: 100%;
   margin-bottom: 20rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   position: relative;
 }
@@ -46,12 +44,8 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .zl-box .bg-image .user-box .user-name {
   font-size: 32rpx;

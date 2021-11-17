@@ -29,17 +29,11 @@
   border-top: solid 2rpx #F8F8F8;
 }
 .visit-box .visit-title {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .visit-box .visit-title .visit-logo {
   width: 4%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   margin-right: 20rpx;
 }
@@ -65,29 +59,17 @@
 .statistics-title {
   padding: 30rpx;
   margin-bottom: 20rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .statistics-title .visit-title-left {
   width: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .statistics-title .visit-title-left .visit-logo {
   width: 8%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   margin-right: 20rpx;
 }
@@ -95,12 +77,8 @@
   width: 100%;
 }
 .statistics-title .statistics-title-right {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   font-size: 24rpx;
 }
 .statistics-title .statistics-title-right .month {

@@ -1,0 +1,1 @@
+<view class="data-v-1b5ce0ca"><zs-wallets vue-id="c48e6b36-1" pageType="{{1}}" buttitle="充值" data-event-opts="{{[['^but_cli',[['but_cli']]]]}}" bind:but_cli="__e" class="data-v-1b5ce0ca" bind:__l="__l"></zs-wallets></view>

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "超值拼团",
+  "navigationBarBackgroundColor": "#e8372f",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "zs-texture": "/components/zs-texture/zs-texture",
+    "zs-shoplist-seckill": "/components/zs-shoplist-seckill/zs-shoplist-seckill"
+  }
+}

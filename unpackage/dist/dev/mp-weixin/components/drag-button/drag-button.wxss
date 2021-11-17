@@ -36,7 +36,6 @@
   z-index: 999;
 }
 .drag.transition {
-  -webkit-transition: left .3s ease,top .3s ease;
   transition: left .3s ease,top .3s ease;
 }
 

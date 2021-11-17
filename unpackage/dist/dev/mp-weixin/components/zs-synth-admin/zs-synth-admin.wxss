@@ -27,19 +27,23 @@
 .orders_d.data-v-26e34604 {
   padding: 30rpx;
   background-color: white;
-  margin-top: 26rpx;
+  margin-top: 16rpx;
   border-radius: 20rpx;
 }
 .orders_d .orders_it.data-v-26e34604 {
   width: 25%;
   text-align: center;
-  margin: 16rpx 0;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
 }
-.orders_d .orders_it image.data-v-26e34604 {
-  width: 52rpx;
-  height: 50rpx;
+.orders_d .orders_it .images.data-v-26e34604 {
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.orders_d .orders_it view.data-v-26e34604 {
-  margin-top: 16rpx;
+.orders_d .orders_it .images image.data-v-26e34604 {
+  height: 48rpx;
 }
 

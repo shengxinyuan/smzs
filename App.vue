@@ -5,7 +5,7 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			// app锁定竖屏方向
-			// #ifdef APP-PLUS
+			// #ifdef APP-VUE
 			plus.screen.lockOrientation('portrait-primary');
 			plus.push.getClientInfoAsync((info) => {
 				var cid = info.clientid;
@@ -69,5 +69,113 @@
 			url('//at.alicdn.com/t/font_2039522_7vyftouomsp.woff') format('woff'),
 			url('//at.alicdn.com/t/font_2039522_7vyftouomsp.ttf') format('truetype'),
 			url('//at.alicdn.com/t/font_2039522_7vyftouomsp.svg#iconfont') format('svg');
+	}
+	
+	.wx_right{
+		width: 90px;;
+	}
+	
+	.co_blue {
+		color: #293C79;
+	}
+	
+	.pad_b{
+		padding: 0 30rpx;
+	}
+	
+	.flex {
+		display: flex;
+	}
+	
+	.f_wrap {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	
+	.f_re {
+		display: flex;
+		flex-direction: row-reverse;
+	}
+	
+	.fcc {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.fe {
+		display: flex;
+		justify-content: flex-end;
+	}
+	
+	.fec {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	
+	.fce {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+	}
+	
+	.fsbc {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.fsb {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.fsac {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+	}
+	
+	.f_c {
+		display: flex;
+		align-items: center;
+	}
+	
+	.f_e {
+		display: flex;
+		align-items: flex-end;
+	}
+	
+	.fd {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+	
+	.fd_c {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.fdcc {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.fdsbc {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.fdsb {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 </style>

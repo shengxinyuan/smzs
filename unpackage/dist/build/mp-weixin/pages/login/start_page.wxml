@@ -1,0 +1,1 @@
+<view class="vie data-v-0097316a"><image src="{{page_img}}" mode="aspectFill" class="data-v-0097316a"></image><view data-event-opts="{{[['tap',[['go_ind',[1]]]]]}}" class="time_n data-v-0097316a" bindtap="__e">{{''+arr+'s 立即跳过'}}</view></view>

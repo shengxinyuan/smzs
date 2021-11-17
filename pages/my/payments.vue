@@ -20,7 +20,7 @@
 					</view>
 				</view>
 				<view class="item_child_r">
-					<view @click="radion(it.name,ind)">
+					<view @click="radion(it,ind)">
 						<label class="radio">
 							<radio color="#2d407a" :checked="it.display" />
 						</label>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+	var that;
 	export default {
 		data() {
 			return {
@@ -73,45 +74,7 @@
 				token: {
 					token: uni.getStorageSync('token') //图片请求头 
 				},
-				list: [
-
-					{
-						img: '../../static/my/payment/zhifub.png',
-						name: '支付宝支付',
-						remake: '需扣除0.6%的手续费，方便快捷',
-						display: true
-					},
-					{
-						img: '../../static/my/payment/weixin.png',
-						name: '微信支付',
-						remake: '需扣除0.6%的手续费，方便快捷',
-						display: false
-					},
-					{
-						img: '../../static/my/payment/yhka.png',
-						name: '银行卡支付',
-						remake: '无需手续费，需人工确认',
-						display: false
-					},
-					{
-						img: '../../static/my/payment/yue.png',
-						name: '余额支付',
-						remake: '可以余额 0 ',
-						display: false
-					},
-					{
-						img: '../../static/my/payment/zhuanzhang.png',
-						name: '微信转账',
-						remake: '无需手续费，需人工确认',
-						display: false
-					},
-					{
-						img: '../../static/my/payment/zfb_zhuanz.png',
-						name: '支付宝转账',
-						remake: '无需手续费，需人工确认',
-						display: false
-					},
-				],
+				list: [],
 				title: '立即支付',
 				img_show: 0,
 				order_return: '',
@@ -138,6 +101,7 @@
 			}
 		},
 		onLoad(e) {
+			that = this;
 			// console.log(JSON.parse(e.data))
 			// console.log(JSON.parse(e.shop))
 			if (e.source) {
@@ -177,46 +141,92 @@
 						ass = this.pay_img.alipay_money / 100 * this.shop_data.shop_price
 						console.log(ass)
 						this.pic = this.shop_data.shop_price + ass
-
+						// #ifdef APP
 						this.list = [
-
 							{
 								img: '../../static/my/payment/zhifub.png',
 								name: '支付宝支付',
-								remake: '需扣除' + res.data.alipay_money + '%的手续费，方便快捷',
-								display: true
+								remake: '需扣除0.6%的手续费，方便快捷',
+								display: true,
+								index:0
 							},
 							{
 								img: '../../static/my/payment/weixin.png',
 								name: '微信支付',
-								remake: '需扣除' + res.data.wechat_money + '%的手续费，方便快捷',
-								display: false
+								remake: '需扣除0.6%的手续费，方便快捷',
+								display: false,
+								index:1
 							},
 							{
 								img: '../../static/my/payment/yhka.png',
 								name: '银行卡支付',
 								remake: '无需手续费，需人工确认',
-								display: false
+								display: false,
+								index:2
 							},
 							{
 								img: '../../static/my/payment/yue.png',
 								name: '余额支付',
-								remake: '可用余额' + this.shop_data.menber_price,
-								display: false
+								remake: '可以余额 0 ',
+								display: false,
+								index:3
 							},
 							{
 								img: '../../static/my/payment/zhuanzhang.png',
 								name: '微信转账',
 								remake: '无需手续费，需人工确认',
-								display: false
+								display: false,
+								index:4
 							},
 							{
 								img: '../../static/my/payment/zfb_zhuanz.png',
 								name: '支付宝转账',
 								remake: '无需手续费，需人工确认',
-								display: false
+								display: false,
+								index:5
 							},
 						]
+						// #endif
+						// #ifdef MP-WEIXIN
+						this.img_show = 1;
+						this.list = [
+							{
+								img: '../../static/my/payment/weixin.png',
+								name: '微信支付',
+								remake: '需扣除0.6%的手续费，方便快捷',
+								display: true,
+								index:1
+							},
+							{
+								img: '../../static/my/payment/yhka.png',
+								name: '银行卡支付',
+								remake: '无需手续费，需人工确认',
+								display: false,
+								index:2
+							},
+							{
+								img: '../../static/my/payment/yue.png',
+								name: '余额支付',
+								remake: '可以余额 0 ',
+								display: false,
+								index:3
+							},
+							{
+								img: '../../static/my/payment/zhuanzhang.png',
+								name: '微信转账',
+								remake: '无需手续费，需人工确认',
+								display: false,
+								index:4
+							},
+							{
+								img: '../../static/my/payment/zfb_zhuanz.png',
+								name: '支付宝转账',
+								remake: '无需手续费，需人工确认',
+								display: false,
+								index:5
+							},
+						]
+						// #endif
 					}
 				})
 			},
@@ -244,14 +254,15 @@
 			},
 			//单选
 			radion(e, ind) {
+				console.log(e)
 				this.list.forEach(i => {
-					if (e == i.name) {
+					if (e.name == i.name) {
 						i.display = true
 					} else {
 						i.display = false
 					}
 				})
-				this.img_show = ind
+				this.img_show = e.index
 			},
 			//支付宝
 			zfb_alipay(e) {
@@ -289,48 +300,79 @@
 			},
 			//微信
 			weixin(arr) {
+				// #ifdef APP
+				var orderInfo = {
+					"appid": arr.appid,
+					"noncestr": arr.noncestr,
+					"package": 'Sign=WXPay', // 固定值，以微信支付文档为主
+					"partnerid": arr.partnerid,
+					"prepayid": arr.prepayid,
+					"timestamp": arr.timestamp,
+					"sign": arr.sign // 根据签名算法生成签名
+				}
 				uni.requestPayment({
 					provider: 'wxpay',
-					orderInfo: {
-						"appid": arr.appid,
-						"noncestr": arr.noncestr,
-						"package": 'Sign=WXPay', // 固定值，以微信支付文档为主
-						"partnerid": arr.partnerid,
-						"prepayid": arr.prepayid,
-						"timestamp": arr.timestamp,
-						"sign": arr.sign // 根据签名算法生成签名
-					},
+					orderInfo: orderInfo,
 					success: function(res) {
 						console.log(res)
-						uni.showToast({
-							title: '支付成功，正在跳转到订单列表..',
-							icon: 'none'
-						})
-						let aq = 2
-						let time = setInterval(() => {
-							aq -= 1
-							if (aq == 0) {
-								// 支付成功后跳转地址区分3d和app
-								if (this.source === '3d') {
-									this.jumpThreeDesignOrderPage()
-								} else {
-									uni.redirectTo({
-										url: '../my/order?state=' + 20 + '&index=' + 2
-									})
-								}
-								clearInterval(time)
-							}
-						}, 1000)
+						that.wxNext(res)
 					},
 					fail: function(err) {
 						console.log(err)
-						
 						uni.showToast({
 							title: '支付失败',
 							icon: 'none'
 						})
 					}
 				});
+				// #endif
+				
+				// #ifdef MP-WEIXIN
+				var orderInfo = {
+					provider: 'wxpay',
+					timeStamp: arr.timeStamp.toString(),
+					nonceStr: arr.nonceStr,
+					package: arr.package,
+					signType: arr.signType,
+					paySign: arr.paySign,
+				}
+				console.log(orderInfo)
+				uni.requestPayment({
+					...orderInfo,
+					success: function(res) {
+						that.wxNext(res)
+					},
+					fail: function(err) {
+						console.log(err)
+						uni.showToast({
+							title: '支付失败',
+							icon: 'none'
+						})
+					}
+				});
+				// #endif
+				
+			},
+			wxNext(res){
+				uni.showToast({
+					title: '支付成功，正在跳转到订单列表..',
+					icon: 'none'
+				})
+				let aq = 2
+				let time = setInterval(() => {
+					aq -= 1
+					if (aq == 0) {
+						// 支付成功后跳转地址区分3d和app
+						if (this.source === '3d') {
+							this.jumpThreeDesignOrderPage()
+						} else {
+							uni.redirectTo({
+								url: '../my/order?state=' + 20 + '&index=' + 2
+							})
+						}
+						clearInterval(time)
+					}
+				}, 1000)
 			},
 			//支付
 			payment() {
@@ -347,6 +389,9 @@
 					type: this.img_show,
 					image: this.image_det
 				}
+				// #ifdef MP-WEIXIN
+					data.wechat_applet = 2;
+				// #endif
 				this.$api.post('pay', data).then(res => {
 					console.log(res)
 

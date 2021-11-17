@@ -1,0 +1,1 @@
+<view class="pages data-v-75c249d4"><view class="title data-v-75c249d4">{{''+list.content+''}}</view><view class="data-v-75c249d4">{{'下单时间：'+list.create_time+''}}</view></view>

@@ -25,15 +25,12 @@
 /* 透明度 */
 /* 文章场景相关 */
 .con.data-v-0fd832f8 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .con .jint.data-v-0fd832f8 {
   margin-top: 10rpx;
   width: 10rpx;
   height: 40rpx;
-  background-image: -webkit-linear-gradient(#d5b260, #fff2ce, #d5b260);
   background-image: linear-gradient(#d5b260, #fff2ce, #d5b260);
 }
 .con .title.data-v-0fd832f8 {
@@ -41,8 +38,6 @@
   line-height: 60rpx;
   padding-left: 20rpx;
   font-weight: bold;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
 }
 .con .title .title_red.data-v-0fd832f8 {

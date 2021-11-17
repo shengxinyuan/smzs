@@ -27,11 +27,8 @@
 .forget.data-v-7d2c8ecc {
   background-color: #f6f6f6;
   height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .forget .phone.data-v-7d2c8ecc {
   width: 100%;
@@ -41,17 +38,11 @@
 }
 .forget .write.data-v-7d2c8ecc {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   background-color: #fff;
   height: 120rpx;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   border-bottom: 1rpx solid #dedede;
   padding: 0 30rpx;
 }

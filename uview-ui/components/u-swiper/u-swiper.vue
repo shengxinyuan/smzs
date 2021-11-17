@@ -1,21 +1,23 @@
 <template>
-	<view class="u-swiper-wrap" :style="{borderRadius: `${borderRadius}rpx`}">
-		<swiper :current="elCurrent"  @change="change($event)"  @animationfinish="animationfinish" :interval="interval" :circular="circular" :duration="duration" :autoplay="autoplay"
+	<view class="u-swiper-wrap" :style="{
+		borderRadius: `${borderRadius}rpx`
+	}">
+		<swiper :current="elCurrent" @change="change" @animationfinish="animationfinish" :interval="interval" :circular="circular" :duration="duration" :autoplay="autoplay"
 		 :previous-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'" :next-margin="effect3d ? effect3dPreviousMargin + 'rpx' : '0'"
 		 :style="{
 				height: height + 'rpx',
 				backgroundColor: bgColor
 			}">
 			<swiper-item class="u-swiper-item" v-for="(item, index) in list" :key="index">
-				<view class="u-list-image-wrap" @tap.stop.prevent="listClick(item)" :class="[uCurrent != index ? 'u-list-scale' : '']" :style="{
+				<view class="u-list-image-wrap" @tap.stop.prevent="listClick(index)" :class="[uCurrent != index ? 'u-list-scale' : '']" :style="{
 						borderRadius: `${borderRadius}rpx`,
 						transform: effect3d && uCurrent != index ? 'scaleY(0.9)' : 'scaleY(1)',
-						margin: effect3d && uCurrent != index ? '0 40rpx' : 0,
-						'background-image':'url('+item.image+')',
+						margin: effect3d && uCurrent != index ? '0 20rpx' : 0,
 					}">
-					<image class="u-swiper-image" :src="item.member_id" :mode="imgMode"></image>
+					<image class="u-swiper-image" :src="item[name] || item" :mode="imgMode"></image>
 					<view v-if="title && item.title" class="u-swiper-title u-line-1" :style="[{
-							'padding-bottom': titlePaddingBottom}, titleStyle]">
+							'padding-bottom': titlePaddingBottom
+						}, titleStyle]">
 						{{ item.title }}
 					</view>
 				</view>
@@ -81,7 +83,7 @@
 			// 是否显示title标题
 			title: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			// 用户自定义的指示器的样式
 			indicator: {
@@ -238,10 +240,9 @@
 	}
 
 	.u-swiper-image {
-		position: absolute;left: 35%;bottom: 2%;
-		width: 160rpx;
+		width: 100%;
 		will-change: transform;
-		height: 160rpx;
+		height: 100%;
 		/* #ifndef APP-NVUE */
 		display: block;
 		/* #endif */
@@ -317,9 +318,9 @@
 		transition: all 0.5s;
 		overflow: hidden;
 		box-sizing: content-box;
-		background-size: 100% 100%;
 		position: relative;
 	}
+
 	.u-swiper-title {
 		position: absolute;
 		background-color: rgba(0, 0, 0, 0.3);

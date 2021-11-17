@@ -45,20 +45,13 @@ page{
   margin-bottom: 30rpx;
 }
 .toast_order .toast_but.data-v-f196e0a4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .toast_order .toast_but .toast_but_r.data-v-f196e0a4 {
   width: 60%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
+  justify-content: space-around;
 }
 .toast_order .toast_but .toast_but_r .toast_but_no.data-v-f196e0a4 {
   height: 60rpx;
@@ -79,12 +72,8 @@ page{
   padding: 0 20rpx;
 }
 .address.data-v-f196e0a4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   padding: 20rpx 3%;
   background-color: white;
   margin-top: 20rpx;
@@ -103,8 +92,6 @@ page{
   border-radius: 50rpx;
 }
 .address .address_r.data-v-f196e0a4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   color: #333;
 }
@@ -123,12 +110,9 @@ page{
 .st_data .statis.data-v-f196e0a4 {
   width: 100%;
   background-color: white;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
+  align-items: center;
   padding: 20rpx 3%;
   font-size: 30rpx;
 }
@@ -147,12 +131,8 @@ page{
 }
 .shop .shop_title.data-v-f196e0a4 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   padding-bottom: 20rpx;
   border-bottom: 1rpx solid #eee;
   line-height: 50rpx;
@@ -167,8 +147,6 @@ page{
 }
 .shop .shop_list.data-v-f196e0a4 {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   border-bottom: 1rpx solid #f6f6f6;
   padding-top: 20rpx;
@@ -197,18 +175,15 @@ page{
   z-index: 20;
 }
 .shop .shop_list .list_right .list_right_its.data-v-f196e0a4 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .shop .shop_list .list_right .list_right_its text.data-v-f196e0a4 {
   display: inline-block;
   padding: 2rpx 10rpx;
   background-color: #eee;
   font-size: 24rpx;
-  margin: 4rpx 10rpx;
+  margin: 4rpx 10rpx 4rpx 0;
   white-space: nowrap;
   border-radius: 6rpx;
   color: #999;
@@ -225,12 +200,8 @@ page{
   width: 100%;
   line-height: 70rpx;
   color: #ba1a30;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .shop .shop_list .list_right .price text.data-v-f196e0a4 {
   color: #999999;
@@ -239,12 +210,8 @@ page{
   width: 100%;
   color: #999;
   line-height: 60rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .shop .shop_list .list_right .Specifications .num.data-v-f196e0a4 {
   color: #999;
@@ -262,7 +229,7 @@ page{
   font-size: 28rpx;
 }
 .shop .heji .heji_r text.data-v-f196e0a4 {
-  color: #ee453f;
+  color: #ba1a30;
   font-size: 34rpx;
 }
 

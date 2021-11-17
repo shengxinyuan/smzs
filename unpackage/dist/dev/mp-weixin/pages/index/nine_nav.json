@@ -1,7 +1,7 @@
 {
   "navigationStyle": "custom",
   "usingComponents": {
-    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "zs-hx-navbar": "/components/zs-hx-navbar/zs-hx-navbar",
     "zs-shoplist-type": "/components/zs-shoplist-type/zs-shoplist-type"
   }
 }
