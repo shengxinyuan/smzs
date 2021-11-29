@@ -247,9 +247,9 @@
 					backgroundColor: [1, '#ffffff'],
 					// 背景图片（array则为滑动切换背景图，string为单一背景图）
 					// 普通背景
-					// ['/static/xj.jpg']
+					// ['https://zuanshi.semoh.cn/applet_static/xj.jpg']
 					// 切换功能参数说明：第一张图片，第二张图，第一张图透明度，第二张图透明度
-					// ['/static/xj.jpg','/static/xk.jpg',1,1]
+					// ['https://zuanshi.semoh.cn/applet_static/xj.jpg','https://zuanshi.semoh.cn/applet_static/xk.jpg',1,1]
 					backgroundImg: null,
 
 					// 线性渐变角度

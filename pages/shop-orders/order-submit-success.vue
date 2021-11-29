@@ -19,7 +19,7 @@
 		</view>
 		<view class="submit-success-box-there">
 			<view class="wxzf-image">
-				<image src="../../static/shop-orders/wxzf.png" mode="widthFix"></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/shop-orders/wxzf.png" mode="widthFix"></image>
 			</view>
 		</view>
 	</view>

@@ -519,30 +519,30 @@ var _default =
       backgroundColor: "", //导航背景
       huiy_show: false, //会员状态
       show: false, //我的邀请人
-      bgimage: '../../static/my/qiandao.png',
+      bgimage: 'https://zuanshi.semoh.cn/applet_static/my/qiandao.png',
       qd_show: false, //popup组件显示
       qiandao_if: false, //签到按钮状态
       qrcode_show: false, //二维码显示
       qrcode_image: '',
       order: [
       {
-        img: '../../static/my/daifu.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/daifu.png',
         name: '待付款', type: 10, ind: 1 },
 
       {
-        img: '../../static/my/daifa.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/daifa.png',
         name: '待发货', type: 20, ind: 2 },
 
       {
-        img: '../../static/my/daishou.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/daishou.png',
         name: '待收货', type: 30, ind: 3 },
 
       {
-        img: '../../static/my/daipinj.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/daipinj.png',
         name: '待评价', type: 40, ind: 4 },
 
       {
-        img: '../../static/my/shouhou.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/shouhou.png',
         name: '售后', type: 60, ind: 6 }],
 
 
@@ -569,42 +569,42 @@ var _default =
       islogin: false,
       store_admin: [
       {
-        img: '../../static/my/my_store.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/my_store.png',
         name: "我的店铺",
         type: 1 },
 
       {
-        img: '../../static/my/store_order.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/store_order.png',
         name: "店铺订单",
         type: 1 },
 
       {
-        img: '../../static/my/store_shez.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/store_shez.png',
         name: "店铺设置",
         type: 1 },
 
       {
-        img: '../../static/my/pram_kingstore.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/pram_kingstore.png',
         name: "推广店铺",
         type: 1 },
 
       {
-        img: '../../static/my/king_priceshare.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/king_priceshare.png',
         name: "金价分享",
         type: 1 },
 
       {
-        img: '../../static/my/tuoke.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/tuoke.png',
         name: "引流拓客",
         type: 1 },
 
       {
-        img: '../../static/my/shejiao.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/shejiao.png',
         name: "社交营销",
         type: 1 },
 
       {
-        img: '../../static/my/zhuanti.png',
+        img: 'https://zuanshi.semoh.cn/applet_static/my/zhuanti.png',
         name: "精选专题",
         type: 1 }] };
 
@@ -654,19 +654,24 @@ var _default =
         return;
       }
       if (e == 0) {
-        uni.share({
-          provider: "weixin",
-          scene: "WXSceneSession",
-          type: 0,
-          href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.menber.bn,
-          title: '奢美饰界',
-          summary: "我在奢美饰界发现好物，快来看看！",
-          imageUrl: '/static/logos.jpg',
-          success: function success(res) {
-            console.log(res);
-          }, fail: function fail(err) {
-            console.log(err);
-          } });
+
+        this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       } else if (e == 1) {
         this.com.navto('../community/platform-ask');

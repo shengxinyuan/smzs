@@ -2,15 +2,15 @@
 	<view class="tab">
 		<view class="tab_l">
 			<view class="tab_l_child" @click="cli_tab(1)">
-				<image src="../../static/tabbar/index-fill.png" v-if="tab_ind != 1" mode=""></image>
-				<image src="../../static/tabbar/index.png" v-else mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/index-fill.png" v-if="tab_ind != 1" mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/index.png" v-else mode=""></image>
 				<view :class="tab_ind == 1 ? 'act' : ''">
 					首页
 				</view>
 			</view>
 			<view class="tab_l_child" @click="cli_tab(2)">
-				<image src="../../static/tabbar/class.png" v-if="tab_ind !== 2" mode=""></image>
-				<image src="../../static/tabbar/calss-fill.png" v-else mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/class.png" v-if="tab_ind !== 2" mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/calss-fill.png" v-else mode=""></image>
 				<view :class="tab_ind === 2 ? 'act' : ''">
 					产品分类
 				</view>
@@ -18,23 +18,23 @@
 		</view>
 		<view class="tab_c" @click="cli_tab(3)">
 			<view class="tab_c_child">
-				<image src="../../static/tabbar/shopsale.png" mode=""></image>
-				<!-- <view :class="tab_ind == 3 ? 'act_s' : ''">
-					福利商城
-				</view> -->
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/shopsale.png" mode=""></image>
+				<view :class="tab_ind == 3 ? 'act_s' : ''">
+					3D定制
+				</view>
 			</view>
 		</view>
 		<view class="tab_l">
 			<view class="tab_l_child" @click="cli_tab(4)">
-				<image src="../../static/tabbar/cart.png" v-if="tab_ind != 4" mode=""></image>
-				<image src="../../static/tabbar/cart-fill.png" v-else mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/cart.png" v-if="tab_ind != 4" mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/cart-fill.png" v-else mode=""></image>
 				<view :class="tab_ind == 4 ? 'act' : ''">
 					购物车
 				</view>
 			</view>
 			<view class="tab_l_child" @click="cli_tab(5)">
-				<image src="../../static/tabbar/my.png" v-if="tab_ind != 5" mode=""></image>
-				<image src="../../static/tabbar/my-fill.png" v-else mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/my.png" v-if="tab_ind != 5" mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/my-fill.png" v-else mode=""></image>
 				<view :class="tab_ind == 5 ? 'act' : ''">
 					我的
 				</view>
@@ -101,7 +101,7 @@
 		left: 0;
 		bottom: 0;
 		z-index: 999;
-		background: url(../../static/tabbar/backimg.png);
+		background: url(https://zuanshi.semoh.cn/applet_static/tabbar/backimg.png);
 		background-size: 100% 100%;
 		display: flex;
 

@@ -3,7 +3,7 @@
 		<view class="weixin-payee-box">
 			<view class="left">
 				<view class="weixin-logo">
-					<image src="../../static/set-shop/weixin.png" mode="widthFix"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/set-shop/weixin.png" mode="widthFix"></image>
 				</view>
 				<view class="weixin-title">微信收款码</view>
 			</view>
@@ -19,7 +19,7 @@
 		<view class="weixin-payee-box">
 			<view class="left">
 				<view class="weixin-logo">
-					<image src="../../static/set-shop/zhifubao.png" mode="widthFix"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/set-shop/zhifubao.png" mode="widthFix"></image>
 				</view>
 				<view class="weixin-title">支付宝收款码</view>
 			</view>

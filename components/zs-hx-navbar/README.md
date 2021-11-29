@@ -71,7 +71,7 @@ export default {
 | backgroundColor             | Array          | #ffffff          | 背景颜色;参数一：透明度;参数二：背景颜色（array则为```线性渐变[1,['#24bdab','#80c54c']]```） |
 | slideBackgroundColor        | Array          | null          | 滑动后背景颜色,参数一：透明度;参数二：背景颜色,长度必须和上一个一样长（array则为```线性渐变[1,['#24bdab','#80c54c']]```） |
 | backgroundColorLinearDeg    | String         | 45             | 导航背景线性渐变角度                                       |
-| backgroundImg   			  | String         | null             | 背景图片,单一背景图`['/static/xj.jpg']`, 滑动切`['/static/xj.jpg','/static/xk.jpg',1,1]` 参数说明：第一张图片，第二张图，第一张图透明度，第二张图透明度 |
+| backgroundImg   			  | String         | null             | 背景图片,单一背景图`['https://zuanshi.semoh.cn/applet_static/xj.jpg']`, 滑动切`['https://zuanshi.semoh.cn/applet_static/xj.jpg','https://zuanshi.semoh.cn/applet_static/xk.jpg',1,1]` 参数说明：第一张图片，第二张图，第一张图透明度，第二张图透明度 |
 | leftButton   			      | Obj            | null             | 左侧按钮，详细查看下方 ```leftButton```|
 | rightButton   			  | Obj            | null             | 右侧按钮，详细查看下方 ```rightButton```|
 | search   			          | Obj            | null             | 搜索栏，详细查看下方 ```search```|
@@ -331,8 +331,8 @@ export default {
 				title: '这里是新疆',
 				color: '#ffffff',
 				// 背景图片（array则为滑动切换背景图，string为单一背景图）
-				// backgroundImg: ['/static/xj.jpg','/static/logo.png'],
-				backgroundImg: '/static/xj.jpg',
+				// backgroundImg: ['https://zuanshi.semoh.cn/applet_static/xj.jpg','https://zuanshi.semoh.cn/applet_static/logo.png'],
+				backgroundImg: 'https://zuanshi.semoh.cn/applet_static/xj.jpg',
 			},
 		}
 	}
@@ -352,7 +352,7 @@ export default {
 				title: '这里是新疆',
 				color: '#ffffff',
 				// 背景图片（array则为滑动切换背景图，string为单一背景图）
-				backgroundImg: ['/static/xj.jpg','/static/xk.jpg',1,0.4],
+				backgroundImg: ['https://zuanshi.semoh.cn/applet_static/xj.jpg','https://zuanshi.semoh.cn/applet_static/xk.jpg',1,0.4],
 			},
 		}
 	},

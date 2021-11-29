@@ -3,14 +3,14 @@
 		<view class="head">
 			<image :src="selected_image" mode=""></image>
 		</view>
-		<view class="fixeds" id="evaluate">
+		<!-- <view class="fixeds" id="evaluate">
 			<scroll-view class="swiper" scroll-x>
 				<view class="swiper_item" v-if="it.title != '定制专区'" v-for="(it,ind) in nav" :key="ind"
 					@click="nav_cli(it.id)" :class="{active:nav_idnex == it.id}">
 					{{it.title}}
 				</view>
 			</scroll-view>
-		</view>
+		</view> -->
 		<view class="">
 			<zs-shoplist-type :shop_list="shop_list" :lists="lists" @shop_confim="shop_confim" :cate_fist_id="''"
 				:shop_subject_id="nav_idnex" :lv="lv" :screen_label_list="label_list"></zs-shoplist-type>
@@ -113,7 +113,6 @@
 			},
 			site_data(){
 				this.$api.get('site').then(res=>{
-					console.log(res)
 					if(res.status == 1){
 						this.selected_image = res.message.selected_image
 					}

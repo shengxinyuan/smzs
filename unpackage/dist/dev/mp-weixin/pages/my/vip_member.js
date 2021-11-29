@@ -384,21 +384,26 @@ var that;var _default =
     },
     //分享
     app_share: function app_share() {
-      uni.share({
-        provider: "weixin",
-        scene: "WXSceneSession",
-        type: 0,
-        href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.pag_data.bn,
-        title: '奢美饰界',
-        summary: "我在奢美饰界发现好物，快来看看！",
-        imageUrl: '../../static/logos.jpg',
-        success: function success(res) {
-          console.log(res);
-          this.page_reader();
-        }, fail: function fail(err) {
-          console.log(err);
-          // that.com.msg('失败')
-        } });
+
+      this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     },
     //领取vip

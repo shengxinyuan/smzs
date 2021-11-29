@@ -1,4 +1,4 @@
-const commoneUrl  = "http://zuanshi.dis.wanheweb.com/api/"; //公共路径 
+const commoneUrl  = "https://zuanshi.semoh.cn/api/"; //公共路径 
 var that = this
 //post请求封装
 function postRequest(url,data){
@@ -15,6 +15,14 @@ function postRequest(url,data){
 			header:{	// uni.getStorageSync('token')
 				'content-type': 'application/x-www-form-urlencoded','token':uni.getStorageSync('token')},
 			success:function(res){
+				
+				var time = new Date();
+				console.log('****************' + commoneUrl + url + '****************' + time);
+				console.log('----------------data----------------');
+				console.log(data);
+				// console.log('----------------res----------------');
+				// console.log(res);
+				
 				resolve(res.data);
 				uni.hideToast()
 				if(res.data.message == 'token error'){

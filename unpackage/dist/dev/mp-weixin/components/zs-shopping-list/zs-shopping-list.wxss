@@ -50,7 +50,7 @@
 .cont .cont_item .images.data-v-2be3a8e4 {
   width: 350rpx;
   height: 350rpx;
-  background: url(/static/loading.gif) no-repeat center;
+  background: url(https://zuanshi.semoh.cn/applet_static/loading.gif) no-repeat center;
   background-size: 100% 84%;
 }
 .cont .cont_item .it_tit.data-v-2be3a8e4 {

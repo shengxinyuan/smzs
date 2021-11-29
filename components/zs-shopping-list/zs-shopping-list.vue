@@ -2,7 +2,7 @@
 	<view class="cont">
 		<!-- <zs-shoplist-type ></zs-shoplist-type> -->
 		<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)" >
-			<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill"></image> 
+			<image class="imagea" v-if="it.is_recommend == 1" src="https://zuanshi.semoh.cn/applet_static/zhek.png" mode="aspectFill"></image> 
 			<!-- 爆款推荐 -->
 			<image class="images" :src="it.image" mode="aspectFill"></image>
 			<view class="it_tit">
@@ -16,7 +16,7 @@
 				<view style="display: flex;align-items: center;justify-content: space-between;">
 					<view class="it_selt_l">
 						<text style="color: #ea5b72;">￥{{it.price_vip}}</text>
-						<image class="u-m-l-16" src="../../static/pifa.png" mode=""></image>
+						<image class="u-m-l-16" src="https://zuanshi.semoh.cn/applet_static/pifa.png" mode=""></image>
 					</view>
 					<view class="it_selt_r">
 						已售{{ it.sale }}件
@@ -76,7 +76,7 @@
 		.images{
 			width: 350rpx;
 			height: 350rpx;
-			background: url(../../static/loading.gif) no-repeat center;
+			background: url(https://zuanshi.semoh.cn/applet_static/loading.gif) no-repeat center;
 			background-size: 100% 84%;
 		}
 		.it_tit{

@@ -951,41 +951,51 @@ var _default =
       };
       // console.log(JSON.stringify(data),JSON.stringify(data).length)
       if (e == 1) {// 微信好友
-        uni.share({
-          provider: "weixin",
-          scene: "WXSceneSession",
-          type: 0,
-          href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share_shop_detail?shop_id=' + this.shop_id,
-          title: this.shop_det.title,
-          summary: this.shop_det.remark,
-          imageUrl: this.shop_det.image,
-          success: function success(res) {
-            // console.log(res)
 
-          },
-          fail: function fail(err) {
-            // console.log(err)
-            // that.com.msg('失败')
-          } });
+        this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       } else {//朋友圈
-        uni.share({
-          provider: "weixin",
-          scene: "WXSenceTimeline",
-          type: 0,
-          href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share_shop_detail?data=' +
-          JSON.stringify(data),
-          title: this.shop_det.title,
-          summary: this.shop_det.remark,
-          imageUrl: this.shop_det.image,
-          success: function success(res) {
-            // console.log(res)
 
-          },
-          fail: function fail(err) {
-            // console.log(err)
-            // that.com.msg('失败')
-          } });
+        this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       }
     },

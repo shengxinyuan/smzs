@@ -2062,7 +2062,7 @@ uni$1;exports.default = _default;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(uni) {var commoneUrl = "http://zuanshi.dis.wanheweb.com/api/"; //公共路径 
+/* WEBPACK VAR INJECTION */(function(uni) {var commoneUrl = "https://zuanshi.semoh.cn/api/"; //公共路径 
 var that = this;
 //post请求封装
 function postRequest(url, data) {

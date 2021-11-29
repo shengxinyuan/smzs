@@ -20,3 +20,14 @@ const app = new Vue({
     ...App
 })
 app.$mount()
+
+Vue.prototype.wxShare = function() {
+	uni.showModal({
+	    title: '提示',
+	    content: '微信小程序暂不支持此功能，请前往下载APP。',
+		showCancel:false,
+	    success: function (res) {
+	       
+	    }
+	});
+}

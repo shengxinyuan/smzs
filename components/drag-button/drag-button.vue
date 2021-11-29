@@ -125,7 +125,7 @@
 		// display: flex;
 		// justify-content: center;
 		// align-items: center;
-		background-image: url(../../static/kefu.png);
+		background-image: url(https://zuanshi.semoh.cn/applet_static/kefu.png);
 		background-size: 100% 100%;
 		// box-shadow: 0 0 6upx rgba(0, 0, 0, 0.4);
 		color: $uni-text-color-inverse;

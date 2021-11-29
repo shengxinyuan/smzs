@@ -125,15 +125,15 @@
 			}
 		}
 		.p2{
-			background: url(../../static/my/discount_coupon.png);
+			background: url(https://zuanshi.semoh.cn/applet_static/my/discount_coupon.png);
 			
 		}
 		.p4{
-			background: url(../../static/my/discount2.png);
+			background: url(https://zuanshi.semoh.cn/applet_static/my/discount2.png);
 			background-size: 100% 100%;
 		}
 		.p5{
-			background: url(../../static/my/dos.png);
+			background: url(https://zuanshi.semoh.cn/applet_static/my/dos.png);
 			background-size: 100% 100%;
 		}
 		.common{

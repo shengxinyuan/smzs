@@ -73,41 +73,58 @@
 					this.com.msg('验证码错误')
 				}else{
 					if(this.but_show){
-						this.$api.post('bindingphone',{mobile:this.phone,note:this.codes,openid:uni.getStorageSync('openid'),bn:arr}).then(res=>{
+						var param = {mobile:this.phone,note:this.codes,openid:uni.getStorageSync('openid'),bn:arr}
+						console.log(param)
+						// #ifdef APP
+						this.$api.post('bindingphone',param).then(res=>{
 							console.log(res)
 							if(res.status == 1){
-								this.but_show = false // 防抖
-								let date = new Date().getTime()
-								let end = res.data.member_info.vip_time * 1000
-								if(end  <= date){
-									uni.setStorageSync("viptype", false)
-								}else{
-									uni.setStorageSync("viptype", true)
-								}
-								
-								uni.setStorageSync("token",res.data.token)
-								uni.setStorageSync("member_info",res.data.member_info)
-								uni.setStorageSync('member_info_img',res.data.member_info.avatar)
-								uni.setStorageSync('coupon',0)
-								uni.showToast({
-									title:'请稍后...',icon:'loading',duration:2000
-								})
-								let arr = 2
-								let time = setInterval(()=>{
-									if(arr == 0){
-										clearInterval(time)
-										this.com.rel('../index/index')
-									}else{
-										arr -= 1 
-									}
-								},1000)
+								this.next(res);
 							}else{
 								this.com.msg(res.message)
 							}
 						})
+						// #endif
+						// #ifdef MP-WEIXIN
+						this.$api.post('bindingphone_applet',param).then(res=>{
+							console.log(res)
+							if(res.status == 1){
+								this.next(res);
+							}else{
+								this.com.msg(res.message)
+							}
+						})
+						// #endif
 					}
 					
 				}
+			},
+			next(res){
+				this.but_show = false // 防抖
+				let date = new Date().getTime()
+				let end = res.data.member_info.vip_time * 1000
+				if(end  <= date){
+					uni.setStorageSync("viptype", false)
+				}else{
+					uni.setStorageSync("viptype", true)
+				}
+				
+				uni.setStorageSync("token",res.data.token)
+				uni.setStorageSync("member_info",res.data.member_info)
+				uni.setStorageSync('member_info_img',res.data.member_info.avatar)
+				uni.setStorageSync('coupon',0)
+				uni.showToast({
+					title:'请稍后...',icon:'loading',duration:2000
+				})
+				let arr = 2
+				let time = setInterval(()=>{
+					if(arr == 0){
+						clearInterval(time)
+						this.com.rel('../index/index')
+					}else{
+						arr -= 1 
+					}
+				},1000)
 			}
 		}
 	}

@@ -247,7 +247,7 @@
 	.header {
 		width: 100%;
 		padding: 20rpx 4%;
-		background-image: url(../../static/my/city_parenter.png);
+		background-image: url(https://zuanshi.semoh.cn/applet_static/my/city_parenter.png);
 		background-size: 100% 100%;
 
 		//自定义头部

@@ -13,7 +13,7 @@
 				</view>
 				<view class="log-box hang-sign">
 					<view class="log">
-						<image src="../../static/vip-order/guaqian_01.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/guaqian_01.png" mode="widthFix"></image>
 					</view>
 					<view class="log-title">{{hangSignTitle}}</view>
 				</view>
@@ -27,7 +27,7 @@
 				</view>
 				<view class="log-box zhengshu">
 					<view class="log">
-						<image src="../../static/vip-order/zhengshu.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/zhengshu.png" mode="widthFix"></image>
 					</view>
 					<view class="log-title">{{zhengshuTitle}}</view>
 				</view>

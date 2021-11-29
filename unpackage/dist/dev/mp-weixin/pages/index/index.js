@@ -473,7 +473,7 @@ var _default = {
       ptcoupon: false, //普通优惠券状态
       xrcoupon: false, //新人优惠券状态
       second: '',
-      dft_photo: '../../static/tabbar/shopsale.png',
+      dft_photo: 'https://zuanshi.semoh.cn/applet_static/tabbar/shopsale.png',
       isLogin: false,
       search_old: '商品搜索', //搜索历史
       videoShow: false,

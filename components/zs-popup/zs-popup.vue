@@ -7,7 +7,7 @@
 				</view>
 			</view>
 			<view class="no_but" @click="no_pop">
-				<image src="../../static/my/no_but.png" mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/my/no_but.png" mode=""></image>
 			</view>
 		</view>
 	</view>

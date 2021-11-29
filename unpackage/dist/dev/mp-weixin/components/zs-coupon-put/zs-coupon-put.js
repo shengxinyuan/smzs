@@ -153,8 +153,8 @@ var _default =
 {
   data: function data() {
     return {
-      bgimage: 'url(../../static/coupon_back.png)',
-      bachild: 'url(../../static/coups.png)' };
+      bgimage: 'url(https://zuanshi.semoh.cn/applet_static/coupon_back.png)',
+      bachild: 'url(https://zuanshi.semoh.cn/applet_static/coups.png)' };
 
   },
   props: {

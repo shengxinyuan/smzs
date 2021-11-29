@@ -24,11 +24,11 @@
 						<!-- <image :src="menber.avatar" class="user_imga" mode=""></image> -->
 						<image  :src="menber.avatar" class="user_imga" 
 						mode="aspectFill"></image>
-						<image src="/static/userimg.png" class="user_imgb" 
+						<image src="https://zuanshi.semoh.cn/applet_static/userimg.png" class="user_imgb" 
 						v-if="lv == 1" mode="widthFix"></image>
-						<image src="/static/my/chengshi.png" class="user_imgb" 
+						<image src="https://zuanshi.semoh.cn/applet_static/my/chengshi.png" class="user_imgb" 
 						v-if="lv == 3" mode="widthFix"></image>
-						<image src="/static/my/quyu.png" class="user_imgb" 
+						<image src="https://zuanshi.semoh.cn/applet_static/my/quyu.png" class="user_imgb" 
 						v-if="lv == 2" mode="widthFix"></image>
 					</view>
 					<template v-if="islogin">
@@ -87,7 +87,7 @@
 				<view class="posi_hy" v-if="huiy_show">
 					<view class="posi_hy_it" @click="go_pages('./vip_member')">
 						<view class="min-box">
-							<image class="imageb" src="../../static/my/hiuy.png" mode="widthFix" ></image>
+							<image class="imageb" src="https://zuanshi.semoh.cn/applet_static/my/hiuy.png" mode="widthFix" ></image>
 						</view>
 						<view class="">
 							<text class="u-m-r-6 u-font-13">我的会员</text>
@@ -96,7 +96,7 @@
 					</view>
 					<view class="posi_hy_it">
 						<view class="min-box" @click="skipSetShop">
-							<image class="imagea" src="../../static/my/dianpu.png" mode="widthFix"></image>
+							<image class="imagea" src="https://zuanshi.semoh.cn/applet_static/my/dianpu.png" mode="widthFix"></image>
 							<text class="u-font-13 u-m-l-10">店铺管理</text>
 						</view>
 						<view class="" @click="skipShopGoldPrice">
@@ -106,7 +106,7 @@
 					</view>
 					<view class="posi_hy_it">
 						<view class="min-box" @click="skipTalk">
-							<image class="imagea" src="../../static/my/dianpu.png" mode="widthFix"></image>
+							<image class="imagea" src="https://zuanshi.semoh.cn/applet_static/my/dianpu.png" mode="widthFix"></image>
 							<text class="u-font-13 u-m-l-10">引流拓客</text>
 						</view>
 						<view class="" @click="skipCommunity">
@@ -119,7 +119,7 @@
 				<view class="posi_hy" v-if="!huiy_show">
 					<view class="posi_hy_it" @click="go_pages('./vip_member')">
 						<view class="min-box">
-							<image class="imageb" src="../../static/my/kaitunhy.png" mode="widthFix" ></image>
+							<image class="imageb" src="https://zuanshi.semoh.cn/applet_static/my/kaitunhy.png" mode="widthFix" ></image>
 						</view>
 						<view class="">
 							<text class="u-m-r-6 u-font-13">自购省分享赚</text>
@@ -128,7 +128,7 @@
 					</view>
 					<view class="posi_hy_it">
 						<view class="min-box">
-							<image class="imagea" src="../../static/my/dianpu.png" mode="widthFix"></image>
+							<image class="imagea" src="https://zuanshi.semoh.cn/applet_static/my/dianpu.png" mode="widthFix"></image>
 							<text class="u-font-13 u-m-l-10">独立店铺</text>
 						</view>
 						<view class="">
@@ -138,7 +138,7 @@
 					</view>
 					<view class="posi_hy_it">
 						<view class="min-box">
-							<image class="imagea" src="../../static/my/dianpu.png" mode="widthFix"></image>
+							<image class="imagea" src="https://zuanshi.semoh.cn/applet_static/my/dianpu.png" mode="widthFix"></image>
 							<text class="u-font-13 u-m-l-10">订单回流</text>
 						</view>
 						<view class="">
@@ -176,7 +176,7 @@
 				<view class="orders_b" @click="go_pages('./wallets')">
 					<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
 						<view style="display: flex;align-items: center;">
-							<image src="../../static/my/wellet.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/my/wellet.png" mode="widthFix"></image>
 							<text>我的钱包</text>
 						</view>
 						<view style="color: #999;display: flex;align-items: center;">
@@ -200,7 +200,7 @@
 					<view class="orders_c_child" @click="go_pages('./my_team')"> 
 						<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
 							<view style="display: flex;align-items: center;">
-								<image src="../../static/my/tuandui.png" mode="widthFix"></image>
+								<image src="https://zuanshi.semoh.cn/applet_static/my/tuandui.png" mode="widthFix"></image>
 								<text>我的团队</text>
 							</view>
 						</view>
@@ -227,7 +227,7 @@
 					<view class="orders_c_child">
 						<view style="display: flex;justify-content: space-between;margin-bottom: 20rpx;">
 							<view style="display: flex;align-items: center;">
-								<image src="../../static/my/city.png" mode="widthFix"></image>
+								<image src="https://zuanshi.semoh.cn/applet_static/my/city.png" mode="widthFix"></image>
 								<text>城市合伙人中心</text>
 							</view>
 						</view>
@@ -277,7 +277,7 @@
 				
 			</view>
 			<!-- 为您推荐 -->
-			<image class="tuij" src="../../static/my/tuijain_bgimg.png" mode=""></image>
+			<image class="tuij" src="https://zuanshi.semoh.cn/applet_static/my/tuijain_bgimg.png" mode=""></image>
 			<!-- 商品列表 -->
 			<view style="position: relative;padding: 0 2%;">
 				<zs-shopping-list :shop_list="shop_tuij" :lv="lv"></zs-shopping-list>
@@ -324,30 +324,30 @@
 				backgroundColor:"",//导航背景
 				huiy_show:false,//会员状态
 				show:false,//我的邀请人
-				bgimage:'../../static/my/qiandao.png',
+				bgimage:'https://zuanshi.semoh.cn/applet_static/my/qiandao.png',
 				qd_show:false,//popup组件显示
 				qiandao_if:false,//签到按钮状态
 				qrcode_show:false,//二维码显示
 				qrcode_image:'',
 				order:[
 					{
-						img:'../../static/my/daifu.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/daifu.png',
 						name:'待付款',type:10,ind:1
 					},
 					{
-						img:'../../static/my/daifa.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/daifa.png',
 						name:'待发货',type:20,ind:2
 					},
 					{
-						img:'../../static/my/daishou.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/daishou.png',
 						name:'待收货',type:30,ind:3
 					},
 					{
-						img:'../../static/my/daipinj.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/daipinj.png',
 						name:'待评价',type:40,ind:4
 					},
 					{
-						img:'../../static/my/shouhou.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/shouhou.png',
 						name:'售后',type:60,ind:6
 					},
 				],
@@ -374,42 +374,42 @@
 				islogin: false,
 				store_admin:[
 					{
-						img:'../../static/my/my_store.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/my_store.png',
 						name:"我的店铺",
 						type: 1
 					},
 					{
-						img:'../../static/my/store_order.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/store_order.png',
 						name:"店铺订单",
 						type: 1
 					},
 					{
-						img:'../../static/my/store_shez.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/store_shez.png',
 						name:"店铺设置",
 						type: 1
 					},
 					{
-						img:'../../static/my/pram_kingstore.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/pram_kingstore.png',
 						name:"推广店铺",
 						type: 1
 					},
 					{
-						img:'../../static/my/king_priceshare.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/king_priceshare.png',
 						name:"金价分享",
 						type: 1
 					},
 					{
-						img:'../../static/my/tuoke.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/tuoke.png',
 						name:"引流拓客",
 						type: 1
 					},
 					{
-						img:'../../static/my/shejiao.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/shejiao.png',
 						name:"社交营销",
 						type: 1
 					},
 					{
-						img:'../../static/my/zhuanti.png',
+						img:'https://zuanshi.semoh.cn/applet_static/my/zhuanti.png',
 						name:"精选专题",
 						type: 1
 					}
@@ -459,20 +459,25 @@
 					return
 				}
 				if(e==0){
+					// #ifdef MP-WEIXIN
+					this.wxShare();
+					// #endif
+					// #ifdef APP
 					uni.share({
 					    provider: "weixin",
 					    scene: "WXSceneSession",
 					    type: 0,
-					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.menber.bn,
+					    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share?invcode=' + this.menber.bn,
 					    title: '奢美饰界',
 					    summary: "我在奢美饰界发现好物，快来看看！",
-					    imageUrl: '/static/logos.jpg',
+					    imageUrl: 'https://zuanshi.semoh.cn/applet_static/logos.jpg',
 					    success: function (res) {
 							console.log(res)
 					    },fail: function (err) {
 							console.log(err)
 					    }
-					});      
+					}); 
+					// #endif
 				}else if(e==1){
 					this.com.navto('../community/platform-ask')
 				}else if(e==2){
@@ -815,7 +820,7 @@
 		}
 		.orders_d{
 			padding: 30rpx;background-color: white;margin-top: 26rpx;border-radius: 20rpx;
-			background-image: url(../../static/my/dianbu_bgimage.png);
+			background-image: url(https://zuanshi.semoh.cn/applet_static/my/dianbu_bgimage.png);
 			background-size: 100% 100%;
 			.orders_it{
 				width: 20%;text-align: center;
@@ -899,7 +904,7 @@
 		width: 100%;padding-bottom: 136rpx;
 		.userinfo{
 			padding-top: 150rpx;width: 100%;height: 500rpx;
-			background-image: url(../../static/my/backimg.png);
+			background-image: url(https://zuanshi.semoh.cn/applet_static/my/backimg.png);
 			background-size: 100% 100%;
 			.userinfo_ch{
 				display: flex;

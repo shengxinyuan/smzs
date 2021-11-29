@@ -17,10 +17,10 @@
 					<u-icon name="volume-fill" size="30"></u-icon>
 					100金币=1元，可用金币抵扣指定商品类型订单金额。
 				</view>
-				<!-- <image src="../../static/go.png" mode="" @click="go_page('../selts/selts')"></image> -->
+				<!-- <image src="https://zuanshi.semoh.cn/applet_static/go.png" mode="" @click="go_page('../selts/selts')"></image> -->
 			</view>
 		</view>
-		<image class="gold_statimg" src="../../static/my/gold_statis.png" mode=""></image>
+		<image class="gold_statimg" src="https://zuanshi.semoh.cn/applet_static/my/gold_statis.png" mode=""></image>
 		<view class="list">
 			<view class="lsit_item" v-for="(it,ind) in golds.data" :key="ind">
 				<view class="it_l">
@@ -97,7 +97,7 @@
 </style>
 <style scoped lang="scss">
 	.header{
-		width: 100%;height: 360rpx;background-image: url(../../static/my/glod.png);
+		width: 100%;height: 360rpx;background-image: url(https://zuanshi.semoh.cn/applet_static/my/glod.png);
 		background-size: 100% 100%;padding-top: 150rpx;margin-bottom: 120rpx;
 		.header_white{
 			width: 100%;height: 140rpx;position: fixed;left: 0;top: 0;padding-top: 68rpx;z-index: 20;

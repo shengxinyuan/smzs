@@ -298,51 +298,65 @@ __webpack_require__.r(__webpack_exports__);
     //分享
     shares: function shares(e) {
       // pages/community/my-gold-prices
-      var arr = 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title + '&gold_price=' + JSON.stringify(this.gold_price) + '&tiptext=' + '扫码进店';
+      var arr = 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title + '&gold_price=' + JSON.stringify(this.gold_price) + '&tiptext=' + '扫码进店';
+
       if (e == 0) {
-        uni.share({
-          provider: "weixin",
-          scene: "WXSceneSession",
-          type: 0,
-          href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title + '&gold_price=' + JSON.stringify(this.gold_price) + '&tiptext=' + '扫码进店',
-          title: '今日金价',
-          summary: "以上金价仅供参考，结算以实时金价为准！",
-          imageUrl: this.goldname.avatar,
-          success: function success(res) {
-            console.log(res);
-          }, fail: function fail(err) {
-            console.log(err);
-          } });
+
+        this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       } else if (e == 1) {
-        uni.share({
-          provider: "weixin",
-          scene: "WXSenceTimeline",
-          type: 0,
-          href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title + '&gold_price=' + JSON.stringify(this.gold_price) + '&tiptext=' + '扫码进店',
-          title: '今日金价',
-          summary: "以上金价仅供参考，结算以实时金价为准！",
-          imageUrl: this.goldname.avatar,
-          success: function success(res) {
-            console.log(res);
-          }, fail: function fail(err) {
-            console.log(err);
-          } });
+
+        this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       } else if (e == 2) {
         uni.setClipboardData({
           data: arr,
           success: function success() {
-            uni.hideToast();
-            uni.showModal({
-              content: '已复制链接，是否打开微信？',
-              confirmText: '打开微信',
-              cancelText: '取消',
-              success: function success(a) {
-                if (a.confirm) {
-                  plus.runtime.openURL("weixin://");
-                }
-              } });
+
+
+
+
+
+
+
+
+
+
+
+
 
           } });
 

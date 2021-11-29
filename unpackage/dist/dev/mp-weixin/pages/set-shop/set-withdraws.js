@@ -152,12 +152,12 @@ var _default =
     return {
       list: [
       {
-        bgImageUrl: '../../static/set-shop/zfb_01.png',
+        bgImageUrl: 'https://zuanshi.semoh.cn/applet_static/set-shop/zfb_01.png',
         userName: '陈大力',
         userTelephone: '15912344567' },
 
       {
-        bgImageUrl: '../../static/set-shop/yhk_01.png',
+        bgImageUrl: 'https://zuanshi.semoh.cn/applet_static/set-shop/yhk_01.png',
         userName: '王大力',
         userTelephone: '622***********4210' }] };
 

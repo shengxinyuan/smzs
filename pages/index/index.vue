@@ -8,9 +8,9 @@
 			<view class="header" :style="{'height':height + 'px' }">
 				<view class="city" @click="page_my">
 					<image :src="avatar || dft_photo" mode="aspectFill" class="city_a"></image>
-					<image src="../../static/userimg.png" mode="widthFix" v-if="lv == 1" class="city_b"></image>
-					<image src="../../static/my/chengshi.png" mode="widthFix" v-if="lv == 3" class="city_b"></image>
-					<image src="../../static/my/quyu.png" mode="widthFix" v-if="lv == 2" class="city_b"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/userimg.png" mode="widthFix" v-if="lv == 1" class="city_b"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/my/chengshi.png" mode="widthFix" v-if="lv == 3" class="city_b"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/my/quyu.png" mode="widthFix" v-if="lv == 2" class="city_b"></image>
 					<view class="notlogin" v-show="!isLogin">未登录</view>
 				</view>
 				<view class="input-view" :style="{'backgroundColor' : indexbackcolor}">
@@ -40,17 +40,17 @@
 					<view class="image-wrapper">
 						<image :src="item.img0" class="loaded" mode="aspectFill"></image>
 					</view>
-					<image v-if="shop_det.video && index == 0" class="bofang" src="../../static/bofang.png" mode="">
+					<image v-if="shop_det.video && index == 0" class="bofang" src="https://zuanshi.semoh.cn/applet_static/bofang.png" mode="">
 					</image>
 				</swiper-item>
 			</swiper> -->
 
-			<swiper class="swiper" @change="swiperChange" :autoplay="true" :circular="true" :interval="4000"
+			<swiper class="swiper" @change="swiperChange" :autoplay="!videoShow" :circular="true" :interval="4000"
 				:duration="500">
 				<swiper-item class="swiper-item" v-for="(it,ind) in index_data.flash" :key="ind"
 					@click="bann_nav(it,ind)">
 					<image :src="it.image" mode="aspectFill"></image>
-					<image v-if="it.video" class="bofang" src="../../static/bofang.png" mode="">
+					<image v-if="it.video" class="bofang" src="https://zuanshi.semoh.cn/applet_static/bofang.png" mode="">
 					</image>
 				</swiper-item>
 			</swiper>
@@ -66,7 +66,7 @@
 		<!-- <view class="trumpet">
 			<view class="trumpettt">
 				<view class="logo-box">
-					<image src="../../static/index/logo11.png" mode="widthFix"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/index/logo11.png" mode="widthFix"></image>
 					<view class="txt">
 						<text>{{index_data.title}}</text>
 					</view>
@@ -140,7 +140,7 @@
 				<view v-if="index_data.type_seconds_kill ==1">
 					<view class="s-header" @click="go_pages('./seckill')">
 						<view class="s-header_a">
-							<image class="s-img" src="/static/xians_seckill.png" mode="widthFix"></image>
+							<image class="s-img" src="https://zuanshi.semoh.cn/applet_static/xians_seckill.png" mode="widthFix"></image>
 							<view class="s-header_child">
 								<text class="hour timer">{{end_seckill}}</text>
 							</view>
@@ -164,7 +164,7 @@
 				<view v-if="index_data.type_group ==1">
 					<view class="s-header" @click="go_pages('./group_book')">
 						<view class="s-header_a">
-							<image class="s-img" src="/static/roll.png" mode="widthFix"></image>
+							<image class="s-img" src="https://zuanshi.semoh.cn/applet_static/roll.png" mode="widthFix"></image>
 							<view class="s-header_child">
 								<text class="hour timer">物有所值</text>
 							</view>
@@ -292,7 +292,7 @@
 				ptcoupon: false, //普通优惠券状态
 				xrcoupon: false, //新人优惠券状态
 				second: '',
-				dft_photo: '../../static/tabbar/shopsale.png',
+				dft_photo: 'https://zuanshi.semoh.cn/applet_static/tabbar/shopsale.png',
 				isLogin: false,
 				search_old: '商品搜索', //搜索历史
 				videoShow: false,
@@ -442,7 +442,7 @@
 					})
 					console.log(is_update, '是否更新2', newVersion, currentVersion);
 
-					let downloadUrl = 'http://zuanshi.dis.wanheweb.com/download/__UNI__.wgt';
+					let downloadUrl = 'https://zuanshi.semoh.cn/download/__UNI__.wgt';
 					if (is_update) {
 						console.log('触发更新');
 						uni.downloadFile({
@@ -496,7 +496,6 @@
 			},
 			get_site() {
 				this.$api.get('site').then(res => {
-					console.log(res)
 					if (res.status == 1) {
 						this.banben = res.message.banben
 						this.updateVersion(res.message.banben)
@@ -568,6 +567,7 @@
 			// 视频暂停
 			zanting1() {
 				this.autoplay = !this.autoplay
+				this.videoShow = false;
 			},
 			//弹框隐藏
 			nopop() {
@@ -852,24 +852,20 @@
 	}
 
 	.video-popup {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
-		right: 0;
-		bottom: 0;
-		background: rgba(0, 0, 0, .6);
+		width: 100%;
+		height: 700rpx;
+		// background: rgba(0, 0, 0, .6);
 		z-index: 999;
 
 		.video {
 			width: 100%;
-			height: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
+			height: 700rpx;
 			video {
 				width: 100%;
-				height: 500rpx;
+				height: 700rpx;
 			}
 		}
 	}

@@ -131,7 +131,7 @@
 		background-color: #FFFFFF;
 		border-radius: 10upx;
 		margin-bottom: 20upx;
-		background-image: url(../../static/set-shop/zfb_01.png);background-size: 100% 100%;
+		background-image: url(https://zuanshi.semoh.cn/applet_static/set-shop/zfb_01.png);background-size: 100% 100%;
 		padding: 40rpx 38rpx;color: #fff;
 		.boss_top{
 			font-size: 42rpx;line-height: 66rpx;
@@ -143,7 +143,7 @@
 		background-color: #FFFFFF;
 		border-radius: 10upx;
 		margin-bottom: 20upx;
-		background-image: url(../../static/set-shop/yhk_01.png);background-size: 100% 100%;
+		background-image: url(https://zuanshi.semoh.cn/applet_static/set-shop/yhk_01.png);background-size: 100% 100%;
 		padding: 40rpx 38rpx;color: #fff;
 		.boss_top{
 			font-size: 42rpx;line-height: 66rpx;

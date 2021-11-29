@@ -42,13 +42,13 @@
 					<view class="share-logo-box">
 						<view class="left" @click="share(0)">
 							<view class="share-logo">
-								<image src="../../static/community/haoyou.png" mode="widthFix"></image>
+								<image src="https://zuanshi.semoh.cn/applet_static/community/haoyou.png" mode="widthFix"></image>
 								<view class="share-title">微信好友</view>
 							</view>
 						</view>
 						<view class="right"  @click="share(1)">
 							<view class="share-logo">
-								<image src="../../static/community/pyq.png" mode="widthFix"></image>
+								<image src="https://zuanshi.semoh.cn/applet_static/community/pyq.png" mode="widthFix"></image>
 								<view class="share-title">朋友圈</view>
 							</view>
 						</view>
@@ -148,6 +148,10 @@
 							canvasId:'my_codes',
 							success(re) {
 								console.log(re)
+								// #ifdef MP-WEIXIN
+								this.wxShare();
+								// #endif
+								// #ifdef APP
 								uni.share({
 								    provider: "weixin",
 								    scene: "WXSceneSession",
@@ -160,6 +164,7 @@
 								        console.log("fail:" + JSON.stringify(err));
 								    }
 								});
+								// #endif
 							},fail(err){
 								console.log(err)
 							},complete(es){
@@ -171,6 +176,10 @@
 							canvasId:'my_codes',
 							success(re) {
 								console.log(re)
+								// #ifdef MP-WEIXIN
+								this.wxShare();
+								// #endif
+								// #ifdef APP
 								uni.share({
 								    provider: "weixin",
 								    scene: "WXSenceTimeline",
@@ -183,6 +192,7 @@
 								        console.log("fail:" + JSON.stringify(err));
 								    }
 								});
+								// #endif
 							},fail(err){
 								console.log(err)
 							},complete(es){
@@ -192,6 +202,10 @@
 					}
 				}else{ // 简单二维码
 					if(e == 0){
+						// #ifdef MP-WEIXIN
+						this.wxShare();
+						// #endif
+						// #ifdef APP
 						uni.share({
 						    provider: "weixin",
 						    scene: "WXSceneSession",
@@ -204,7 +218,12 @@
 						        console.log("fail:" + JSON.stringify(err));
 						    }
 						});
+						// #endif
 					}else{
+						// #ifdef MP-WEIXIN
+						this.wxShare();
+						// #endif
+						// #ifdef APP
 						uni.share({
 						    provider: "weixin",
 						    scene: "WXSenceTimeline",
@@ -217,6 +236,7 @@
 						        console.log("fail:" + JSON.stringify(err));
 						    }
 						});
+						// #endif
 					}
 				}
 			}

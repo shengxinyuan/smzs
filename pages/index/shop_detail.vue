@@ -40,7 +40,7 @@
 							<view class="image-wrapper">
 								<image :src="item.img0" class="loaded" mode="aspectFill"></image>
 							</view>
-							<image v-if="shop_det.video && index == 0" class="bofang" src="/static/bofang.png" mode="" />
+							<image v-if="shop_det.video && index == 0" class="bofang" src="https://zuanshi.semoh.cn/applet_static/bofang.png" mode="" />
 						</template>
 					</swiper-item>
 				</swiper>
@@ -62,7 +62,7 @@
 					<text class="price">{{shop_det.price}}</text>
 					<text class="m-price-tip">¥</text>
 					<text class="m-price">{{shop_det.price_vip}}</text>
-					<image src="../../static/index/pf.png" mode="aspectFill"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/index/pf.png" mode="aspectFill"></image>
 				</view>
 				<view class="price-box_l" style="color: #e95069;" v-else>
 					<text class="price-tip">¥</text>
@@ -80,7 +80,7 @@
 						</view>
 					</view>
 					<!-- <view class="min-box" @click="onc_bj(shop_det.title)">
-							<image src="../../static/index/search_icon.png" mode=""></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/index/search_icon.png" mode=""></image>
 							<view>一键比价</view>
 						</view> -->
 
@@ -118,7 +118,7 @@
 			<text>{{shop_det.remark}}</text>
 		</view>
 		<view class="Rapid_delivery">
-			<image src="../../static/index/ji.png" mode="aspectFill"></image>
+			<image src="https://zuanshi.semoh.cn/applet_static/index/ji.png" mode="aspectFill"></image>
 			<text style="margin-right: 16upx;">{{shop_det.letter}}</text>
 		</view>
 		<!-- 规格 -->
@@ -170,7 +170,7 @@
 		</view>
 		<!-- //推荐 -->
 		<view id="tuijian" class="tuijian">
-			<image style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="../../static/my/tuijain_bgimg.png" mode="">
+			<image style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="https://zuanshi.semoh.cn/applet_static/my/tuijain_bgimg.png" mode="">
 			</image>
 			<view style="margin-bottom: 120rpx;">
 				<zs-shopping-list :shop_list="shop_list" :lv="member.lv"></zs-shopping-list>
@@ -180,15 +180,15 @@
 		<view class="add_bottom">
 			<view class="add_con">
 				<view class="three_icons" @click="skipIndex">
-					<image src="../../static/index/index.png" mode="widthFix"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/index/index.png" mode="widthFix"></image>
 					<view>首页</view>
 				</view>
 				<view class="three_icons" @click="goto_page('../service/service')">
-					<image src="../../static/index/kf.png" mode="widthFix"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/index/kf.png" mode="widthFix"></image>
 					<view>客服</view>
 				</view>
 				<view class="three_icons" @click="goto_cart">
-					<image src="../../static/index/cart.png" mode="widthFix"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/index/cart.png" mode="widthFix"></image>
 					<view>购物车</view>
 				</view>
 				<view class="anniu">
@@ -745,42 +745,53 @@
 				}
 				// console.log(JSON.stringify(data),JSON.stringify(data).length)
 				if (e == 1) { // 微信好友
+					// #ifdef MP-WEIXIN
+					this.wxShare();
+					// #endif
+					console.log('https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share_shop_detail?shop_id='+this.shop_id)
+					// #ifdef APP
 					uni.share({
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share_shop_detail?shop_id='+this.shop_id,
+						href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share_shop_detail?shop_id='+this.shop_id,
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,
 						imageUrl: this.shop_det.image,
 						success: function(res) {
 							// console.log(res)
-
+					
 						},
 						fail: function(err) {
 							// console.log(err)
 							// that.com.msg('失败')
 						}
 					});
+					// #endif
 				} else { //朋友圈
+					// #ifdef MP-WEIXIN
+					this.wxShare();
+					// #endif
+					// #ifdef APP
 					uni.share({
 						provider: "weixin",
 						scene: "WXSenceTimeline",
 						type: 0,
-						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share_shop_detail?data=' +
+						href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share_shop_detail?data=' +
 							JSON.stringify(data),
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,
 						imageUrl: this.shop_det.image,
 						success: function(res) {
 							// console.log(res)
-
+					
 						},
 						fail: function(err) {
 							// console.log(err)
 							// that.com.msg('失败')
 						}
 					});
+					// #endif
 				}
 			},
 			//收藏
@@ -1020,7 +1031,7 @@
 			.loaded {
 				width: 100%;
 				height: 100%;
-				// background: url(../../static/loading.gif) no-repeat center;
+				// background: url(https://zuanshi.semoh.cn/applet_static/loading.gif) no-repeat center;
 			}
 
 		}

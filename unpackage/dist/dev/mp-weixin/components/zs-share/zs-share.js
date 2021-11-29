@@ -144,12 +144,12 @@ var _default =
       config: {},
       shareList: [{
         type: 1,
-        icon: '/static/index/share_wechat.png',
+        icon: 'https://zuanshi.semoh.cn/applet_static/index/share_wechat.png',
         text: '微信好友' },
 
       {
         type: 2,
-        icon: '/static/index/share_moment.png',
+        icon: 'https://zuanshi.semoh.cn/applet_static/index/share_moment.png',
         text: '朋友圈' }] };
 
 

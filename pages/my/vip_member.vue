@@ -24,7 +24,7 @@
 			</view> 
 			<!-- 小喇叭 -->
 			<view class="trumpet">
-				<image src="../../static/my/trumpet.png" mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/my/trumpet.png" mode=""></image>
 				<text>{{list.title}}</text> 
 			</view>
 			<!-- //购买 -->
@@ -217,14 +217,18 @@
 			},
 			//分享
 			app_share(){
+				// #ifdef MP-WEIXIN
+				this.wxShare();
+				// #endif
+				// #ifdef APP
 				uni.share({
 				    provider: "weixin",
 				    scene: "WXSceneSession",
 				    type: 0,
-				    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.pag_data.bn,
+				    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share?invcode=' + this.pag_data.bn,
 				    title: '奢美饰界',
 				    summary: "我在奢美饰界发现好物，快来看看！",
-				    imageUrl: '../../static/logos.jpg',
+				    imageUrl: 'https://zuanshi.semoh.cn/applet_static/logos.jpg',
 				    success: function (res) {
 						console.log(res)
 						this.page_reader()
@@ -232,7 +236,8 @@
 						console.log(err)
 				        // that.com.msg('失败')
 				    }
-				});      
+				});  
+				// #endif
 			},
 			//领取vip
 			go_getvip(){
@@ -517,7 +522,7 @@
 	}
 	.header{
 		width: 100%;height: 300rpx;
-		background-image: url(../../static/my/vip_backimg.png);
+		background-image: url(https://zuanshi.semoh.cn/applet_static/my/vip_backimg.png);
 		background-size: 100% 100%;
 		display: flex;justify-content: space-between;
 		.header_l{

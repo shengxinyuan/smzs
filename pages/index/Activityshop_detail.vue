@@ -25,7 +25,7 @@
 		</view> -->
 		<!-- <view class="header">
 			<view class="header_left" @click="goto_top">
-				<image src="../../static/index/back1.png" mode="aspectFill"></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/index/back1.png" mode="aspectFill"></image>
 			</view>
 		</view> -->
 		<!-- banner轮播 -->
@@ -47,7 +47,7 @@
 					<view class="image-wrapper">
 						<image :src="item.img0" class="loaded" mode="aspectFill"></image>
 					</view>
-					<image v-if="shop_det.video && index == 0" class="bofang" src="../../static/bofang.png" mode="">
+					<image v-if="shop_det.video && index == 0" class="bofang" src="https://zuanshi.semoh.cn/applet_static/bofang.png" mode="">
 					</image>
 				</swiper-item>
 			</swiper>
@@ -100,7 +100,7 @@
 			</view>
 		</view> -->
 		<view class="Rapid_delivery">
-			<image src="../../static/index/ji.png" mode="aspectFill"></image>
+			<image src="https://zuanshi.semoh.cn/applet_static/index/ji.png" mode="aspectFill"></image>
 			<text style="margin-right: 16upx;">急速出货</text>
 			<text>16:30前下单当日货品可发货，定制产品除外。</text>
 		</view>
@@ -163,7 +163,7 @@
 		</view>
 		<!-- //推荐 -->
 		<view id="tuijina">
-			<image style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="../../static/my/tuijain_bgimg.png" mode="">
+			<image style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="https://zuanshi.semoh.cn/applet_static/my/tuijain_bgimg.png" mode="">
 			</image>
 			<view style="padding: 0 3%;margin-bottom: 120rpx;">
 				<zs-shopping-list :shop_list="shop_list" :lv="member.lv"></zs-shopping-list>
@@ -175,15 +175,15 @@
 				
 				<view style="display: flex;align-items: center;flex: 1;">
 					<view class="three_icons" @click="like_collect">
-						<image src="../../static/index/index.png" mode="aspectFill"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/index/index.png" mode="aspectFill"></image>
 						<view>首页</view>
 					</view>
 					<view class="three_icons" @click="goto_page('../service/service')">
-						<image src="../../static/index/kf.png" mode="aspectFill"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/index/kf.png" mode="aspectFill"></image>
 						<view>客服</view>
 					</view>
 					<view class="three_icons" @click="goto_cart">
-						<image src="../../static/index/cart.png" mode="aspectFill"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/index/cart.png" mode="aspectFill"></image>
 						<view>购物车</view>
 					</view>
 				</view>

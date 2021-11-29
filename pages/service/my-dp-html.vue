@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<web-view :src="'http://zuanshi.dis.wanheweb.com/smsj/?token='+tok+'&name='+name"></web-view>
+		<web-view :src="'https://zuanshi.semoh.cn/smsj/?token='+tok+'&name='+name"></web-view>
 	</view>
 </template>
 

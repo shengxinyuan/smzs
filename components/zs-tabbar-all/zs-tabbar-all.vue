@@ -28,26 +28,26 @@
 				containerHeight: 400,
 				tabbar: [{
 						"pagePath": "/pages/index/index",
-						"iconPath": "/static/tabbar/index.png",
-						"selectedIconPath": "/static/tabbar/index-fill.png",
+						"iconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/index.png",
+						"selectedIconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/index-fill.png",
 						"text": "首页",
 					},
 					{
 						"pagePath": "/pages/classify/classify",
-						"iconPath": "/static/tabbar/class.png",
-						"selectedIconPath": "/static/tabbar/calss-fill.png",
+						"iconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/class.png",
+						"selectedIconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/calss-fill.png",
 						"text": "产品分类",
 					},
 					{
 						"pagePath": "/pages/cart/cart",
-						"iconPath": "/static/tabbar/cart.png",
-						"selectedIconPath": "/static/tabbar/cart-fill.png",
+						"iconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/cart.png",
+						"selectedIconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/cart-fill.png",
 						"text": "购物车",
 					},
 					{
 						"pagePath": "/pages/my/my",
-						"iconPath": "/static/tabbar/my.png",
-						"selectedIconPath": "/static/tabbar/my-fill.png",
+						"iconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/my.png",
+						"selectedIconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/my-fill.png",
 						"text": "我的",
 						// "fontIcon": "icon-wode"
 					}
@@ -59,8 +59,8 @@
 			// if (true) {
 			// 	this.tabbar.splice(2, 0, {
 			// 		"pagePath": "/pages/cart/cart",
-			// 		"iconPath": "/static/tabbar/cart.png",
-			// 		"selectedIconPath": "/static/tabbar/cart-fill.png",
+			// 		"iconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/cart.png",
+			// 		"selectedIconPath": "https://zuanshi.semoh.cn/applet_static/tabbar/cart-fill.png",
 			// 		"text": "购物车",
 			// 		"fontIcon": "icon-guanli"
 			// 	})
@@ -101,7 +101,7 @@
 		padding: 16upx 0;
 		box-sizing: border-box;
 		// border-top: solid 1upx #ccc;
-		background: url(../../static/tabbar/backimg.png);
+		background: url(https://zuanshi.semoh.cn/applet_static/tabbar/backimg.png);
 		background-size: 100% 100%;
 		// box-shadow: 0px 0px 17upx 1upx rgba(206, 206, 206, 0.32);
 

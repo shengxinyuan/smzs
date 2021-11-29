@@ -27,7 +27,7 @@
 				<image :src="list.coupon_image_two" mode="" class="child_img"></image>
 			</view>
 			<view class="no_but" @click="no_pop">
-				<image src="../../static/my/no_but.png" mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/my/no_but.png" mode=""></image>
 			</view>
 		</view>
 	</view>
@@ -37,8 +37,8 @@
 	export default {
 		data() {
 			return {
-				bgimage:'url(../../static/coupon_back.png)',
-				bachild:'url(../../static/coups.png)'
+				bgimage:'url(https://zuanshi.semoh.cn/applet_static/coupon_back.png)',
+				bachild:'url(https://zuanshi.semoh.cn/applet_static/coups.png)'
 			}
 		},
 		props:{

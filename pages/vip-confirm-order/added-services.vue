@@ -7,7 +7,7 @@
 			<view class="zzfw-box-one">
 				<view class="zzfw-title">
 					<view class="zzfw-title-log">
-						<image src="../../static/vip-order/dabao.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/dabao.png" mode="widthFix"></image>
 					</view>
 					<view class="title">包装服务</view>
 				</view>
@@ -27,7 +27,7 @@
 			<view class="zzfw-box-two">
 				<view class="pjtx-box">
 					<view class="pjtx-log">
-						<image src="../../static/vip-order/peijian.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/peijian.png" mode="widthFix"></image>
 					</view>
 					<view class="title">
 						<text>配件挑选</text>

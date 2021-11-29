@@ -60,7 +60,7 @@
 				name:'',
 				phone:'',
 				discride:'',
-				action: 'http://zuanshi.dis.wanheweb.com/api/uploads',
+				action: 'https://zuanshi.semoh.cn/api/uploads',
 				lists:[],
 				ship_list:[],
 				token:{
@@ -90,7 +90,7 @@
 							that.com.msg("正在上传")
 							// return
 							uni.uploadFile({
-								url: 'http://zuanshi.dis.wanheweb.com/api/uploadVideo', //仅为示例，非真实的接口地址
+								url: 'https://zuanshi.semoh.cn/api/uploadVideo', //仅为示例，非真实的接口地址
 								filePath: src,
 								name: 'file',
 								

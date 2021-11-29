@@ -113,7 +113,7 @@
           transform: scale(0.8);
 }
 .payments .p1.data-v-15ed2772 {
-  background-image: url(/static/yhka.png);
+  background-image: url(https://zuanshi.semoh.cn/applet_static/yhka.png);
   background-size: 100% 320rpx;
 }
 .payments .payment_img.data-v-15ed2772 {

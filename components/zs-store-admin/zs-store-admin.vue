@@ -92,7 +92,7 @@
 <style lang="scss" scoped>
 .orders_d{
 	padding: 20rpx;background-color: white;margin-top: 16rpx;border-radius: 20rpx;
-	background-image: url(../../static/my/dianbu_bgimage.png);
+	background-image: url(https://zuanshi.semoh.cn/applet_static/my/dianbu_bgimage.png);
 	background-size: 100% 100%;
 	.orders_it{
 		width: 25%;

@@ -299,22 +299,22 @@ var _default =
   data: function data() {
     return {
       headList: [{
-        communityImage: '../../static/community/head_01.png',
+        communityImage: 'https://zuanshi.semoh.cn/applet_static/community/head_01.png',
         title: '营销海报',
         id: 11 },
 
       {
-        communityImage: '../../static/community/head_02.png',
+        communityImage: 'https://zuanshi.semoh.cn/applet_static/community/head_02.png',
         title: '营销视频',
         id: 12 },
 
       {
-        communityImage: '../../static/community/head_03.png',
+        communityImage: 'https://zuanshi.semoh.cn/applet_static/community/head_03.png',
         title: '营销文案',
         id: 13 },
 
       {
-        communityImage: '../../static/community/head_04.png',
+        communityImage: 'https://zuanshi.semoh.cn/applet_static/community/head_04.png',
         title: '早安问候',
         id: 14 }],
 

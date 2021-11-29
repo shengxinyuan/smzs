@@ -210,7 +210,7 @@
 				.go_buy_abs{
 					position: absolute;
 					right: 10rpx;bottom: 6rpx;
-					// background-image: url('/static/course/add_03.png') ;
+					// background-image: url('https://zuanshi.semoh.cn/applet_static/course/add_03.png') ;
 					background-repeat: no-repeat;
 					background-size: cover;
 					width: 146rpx;

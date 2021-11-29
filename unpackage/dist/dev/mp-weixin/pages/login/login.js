@@ -249,7 +249,7 @@ var that;var _default =
       cid: '',
       info: {
         nickName: '微信用户',
-        avatarUrl: '/static/avatar.png' } };
+        avatarUrl: 'https://zuanshi.semoh.cn/applet_static/avatar.png' } };
 
 
   },
@@ -295,6 +295,12 @@ var that;var _default =
                 console.log(res);
                 that.cli_type = false; //防抖
                 if (res.status == 1) {
+                  console.log("openid", res.data.openid);
+                  uni.setStorageSync("openid", res.data.openid);
+                  if (res.data.member_info.mobile == 0) {
+                    that.com.navto("./bangding");
+                    return;
+                  }
                   var date = new Date().getTime();
                   var end = res.data.member_info.vip_time * 1000;
                   if (end <= date) {

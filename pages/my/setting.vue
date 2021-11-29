@@ -89,21 +89,26 @@
 				}else if(e == 1){
 					this.com.navto('./user_text')
 				}else if(e == 2){
+					// #ifdef MP-WEIXIN
+					this.wxShare();
+					// #endif
+					// #ifdef APP
 					uni.share({
 					    provider: "weixin",
 					    scene: "WXSceneSession",
 					    type: 0,
-					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share?invcode='+ this.pag_data.bn,
+					    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share?invcode='+ this.pag_data.bn,
 					    title: '奢美饰界',
 					    summary: "我在奢美饰界发现好物，快来看看！",
-					    imageUrl: '../../static/logos.jpg',
+					    imageUrl: 'https://zuanshi.semoh.cn/applet_static/logos.jpg',
 					    success: function (res) {
 							console.log(res)
 					    },fail: function (err) {
 							console.log(err)
 					        // that.com.msg('失败')
 					    }
-					});      
+					}); 
+					// #endif
 				}else if(e == 3){//新手教程
 					this.com.navto('./olie_course')
 				}else if(e == 4){ 

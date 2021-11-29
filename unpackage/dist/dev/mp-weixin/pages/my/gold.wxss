@@ -30,7 +30,7 @@ page{background-color: #f6f6f6;}
 .header.data-v-fc42460c {
   width: 100%;
   height: 360rpx;
-  background-image: url(/static/my/glod.png);
+  background-image: url(https://zuanshi.semoh.cn/applet_static/my/glod.png);
   background-size: 100% 100%;
   padding-top: 150rpx;
   margin-bottom: 120rpx;

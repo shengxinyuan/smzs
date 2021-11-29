@@ -62,7 +62,7 @@
 				<view class="share-box">
 					<view class="share-min-box" @click="shares(0)">
 						<view class="share-logo">
-							<image src="../../static/community/haoyou.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/community/haoyou.png" mode="widthFix"></image>
 						</view>
 						<view class="share-title">微信好友</view>
 					</view>
@@ -70,7 +70,7 @@
 				<view class="share-box">
 					<view class="share-min-box" @click="shares(1)">
 						<view class="share-logo">
-							<image src="../../static/community/pyq.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/community/pyq.png" mode="widthFix"></image>
 						</view>
 						<view class="share-title">朋友圈</view>
 					</view>
@@ -78,7 +78,7 @@
 				<view class="share-box">
 					<view class="share-min-box" @click="shares(2)"> 
 						<view class="share-logo">
-							<image src="../../static/community/lianjie.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/community/lianjie.png" mode="widthFix"></image>
 						</view>
 						<view class="share-title">分享链接</view>
 					</view>
@@ -143,13 +143,18 @@
 			//分享
 			shares(e){
 				// pages/community/my-gold-prices
-				let arr = 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店'
+				let arr = 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店'
+				
 				if(e == 0){
+					// #ifdef MP-WEIXIN
+					this.wxShare();
+					// #endif
+					// #ifdef APP
 					uni.share({
 					    provider: "weixin",
 					    scene: "WXSceneSession", 
 					    type: 0, 
-					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
+					    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
 					    title: '今日金价',
 					    summary: "以上金价仅供参考，结算以实时金价为准！",
 					    imageUrl: this.goldname.avatar,
@@ -158,13 +163,19 @@
 					    },fail: function (err) {
 							console.log(err)
 					    }
-					});      
+					});   
+					// #endif
+					   
 				}else if(e == 1){
+					// #ifdef MP-WEIXIN
+					this.wxShare();
+					// #endif
+					// #ifdef APP
 					uni.share({
 					    provider: "weixin",
 					    scene: "WXSenceTimeline",
 					    type: 0,
-					    href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
+					    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
 					    title: '今日金价',
 					    summary: "以上金价仅供参考，结算以实时金价为准！",
 					    imageUrl: this.goldname.avatar,
@@ -174,10 +185,12 @@
 							console.log(err)
 						}
 					});
+					// #endif
 				}else if(e == 2){
 					uni.setClipboardData({
 					    data: arr,
 					    success: function () {
+							// #ifdef APP
 							uni.hideToast()
 							uni.showModal({
 								content:'已复制链接，是否打开微信？',
@@ -189,6 +202,7 @@
 									}
 								}
 							})
+							// #endif
 					    }
 					});
 				}

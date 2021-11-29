@@ -24,7 +24,7 @@
 				<view class="">
 					<view class="shai" @click="shaix">
 						<text>筛选</text>
-						<image src="../../static/loudou.png" mode=""></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/loudou.png" mode=""></image>
 					</view>
 					<u-popup v-model="show" mode="right">
 						<view class="popups">
@@ -92,7 +92,7 @@
 			</view>
 			<view class="cont_list" v-if="type==1" :style="{'padding-top':paddingTop}">
 				<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)">
-					<image class="imagea" v-if="it.is_recommend == 1" src="../../static/zhek.png" mode="aspectFill">
+					<image class="imagea" v-if="it.is_recommend == 1" src="https://zuanshi.semoh.cn/applet_static/zhek.png" mode="aspectFill">
 					</image> <!-- 爆款推荐 -->
 					<image class="images" :src="it.image" mode="aspectFill"></image>
 					<view class="it_tit">
@@ -112,7 +112,7 @@
 					<view class="it_selt" v-if="!lv">
 						<view class="it_selt_l">
 							<text>￥{{it.price_vip}}</text>
-							<image class="u-m-l-16" src="../../static/pifa.png" mode=""></image>
+							<image class="u-m-l-16" src="https://zuanshi.semoh.cn/applet_static/pifa.png" mode=""></image>
 						</view>
 						<view class="it_selt_r">
 							已售{{it.sale}}件
@@ -124,7 +124,7 @@
 			<view class="cont_list_two" v-else :style="{'padding-top':paddingTop}">
 				<view class="cont_item" v-for="(it,ind) in shop_list" :key="ind" @click="go_shopdetail(it.id)">
 					<view class="item_img">
-						<!-- <image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> -->
+						<!-- <image class="imagea" src="https://zuanshi.semoh.cn/applet_static/zhek.png" mode="aspectFill"></image> -->
 						<image class="images" :src="it.image" mode="aspectFill"></image>
 					</view>
 					<view class="it_text">
@@ -141,7 +141,7 @@
 							</view>
 							<view class="it_selt_l" v-if="!lv">
 								<text><text style="">￥</text>{{it.price_vip}}</text>
-								<image class="u-m-l-16" src="../../static/pifa.png" mode=""></image>
+								<image class="u-m-l-16" src="https://zuanshi.semoh.cn/applet_static/pifa.png" mode=""></image>
 							</view>
 							<!-- 会员用户展示价格 -->
 							<view class="it_selt_l" v-if="lv">
@@ -537,7 +537,7 @@
 					width: 240rpx;
 					border-radius: 10rpx;
 					height: 240rpx;
-					// background: url(../../static/loading.gif) no-repeat center;
+					// background: url(https://zuanshi.semoh.cn/applet_static/loading.gif) no-repeat center;
 					// background-size: 100% 84%;
 				}
 			}
@@ -628,7 +628,7 @@
 			.images {
 				width: 350rpx;
 				height: 350rpx;
-				// background: url(../../static/loading.gif) no-repeat center;
+				// background: url(https://zuanshi.semoh.cn/applet_static/loading.gif) no-repeat center;
 				// background-size: 100% 84%;
 			}
 

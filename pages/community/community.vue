@@ -33,7 +33,7 @@
 							<image :src="item.image" mode="widthFix"></image>
 						</view>
 						<view class="erweima" @click="canvas_hb(item)">
-							<image src="../../static/community/erweima.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/community/erweima.png" mode="widthFix"></image>
 							<view>生成商城二维码海报</view>
 						</view>
 					</view>
@@ -65,7 +65,7 @@
 						<view class="list-details-video" @click="vid_creat(item)" v-if="item.vid_show">
 							<image :src="item.image" mode="aspectFill"></image>
 							<view class="play-btn">
-								<image src="../../static/community/play.png" mode="widthFix"></image>
+								<image src="https://zuanshi.semoh.cn/applet_static/community/play.png" mode="widthFix"></image>
 							</view>
 						</view>
 						<video :src="item.video" :id="'video'+item.id" @ended="end_vid(index)" :autoplay="true" controls
@@ -128,22 +128,22 @@
 		data() {
 			return {
 				headList: [{
-						communityImage: '../../static/community/head_01.png',
+						communityImage: 'https://zuanshi.semoh.cn/applet_static/community/head_01.png',
 						title: '营销海报',
 						id: 11
 					},
 					{
-						communityImage: '../../static/community/head_02.png',
+						communityImage: 'https://zuanshi.semoh.cn/applet_static/community/head_02.png',
 						title: '营销视频',
 						id: 12
 					},
 					{
-						communityImage: '../../static/community/head_03.png',
+						communityImage: 'https://zuanshi.semoh.cn/applet_static/community/head_03.png',
 						title: '营销文案',
 						id: 13
 					},
 					{
-						communityImage: '../../static/community/head_04.png',
+						communityImage: 'https://zuanshi.semoh.cn/applet_static/community/head_04.png',
 						title: '早安问候',
 						id: 14
 					}

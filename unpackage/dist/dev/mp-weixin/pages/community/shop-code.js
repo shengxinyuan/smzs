@@ -314,17 +314,22 @@ var _default =
             canvasId: 'my_codes',
             success: function success(re) {
               console.log(re);
-              uni.share({
-                provider: "weixin",
-                scene: "WXSceneSession",
-                type: 2,
-                imageUrl: re.tempFilePath,
-                success: function success(res) {
-                  console.log("success:" + JSON.stringify(res));
-                },
-                fail: function fail(err) {
-                  console.log("fail:" + JSON.stringify(err));
-                } });
+
+              this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             }, fail: function fail(err) {
               console.log(err);
@@ -337,17 +342,22 @@ var _default =
             canvasId: 'my_codes',
             success: function success(re) {
               console.log(re);
-              uni.share({
-                provider: "weixin",
-                scene: "WXSenceTimeline",
-                type: 2,
-                imageUrl: re.tempFilePath,
-                success: function success(res) {
-                  console.log("success:" + JSON.stringify(res));
-                },
-                fail: function fail(err) {
-                  console.log("fail:" + JSON.stringify(err));
-                } });
+
+              this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             }, fail: function fail(err) {
               console.log(err);
@@ -358,30 +368,40 @@ var _default =
         }
       } else {// 简单二维码
         if (e == 0) {
-          uni.share({
-            provider: "weixin",
-            scene: "WXSceneSession",
-            type: 2,
-            imageUrl: that.swiperList[0].member_id,
-            success: function success(res) {
-              console.log("success:" + JSON.stringify(res));
-            },
-            fail: function fail(err) {
-              console.log("fail:" + JSON.stringify(err));
-            } });
+
+          this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         } else {
-          uni.share({
-            provider: "weixin",
-            scene: "WXSenceTimeline",
-            type: 2,
-            imageUrl: that.swiperList[0].member_id,
-            success: function success(res) {
-              console.log("success:" + JSON.stringify(res));
-            },
-            fail: function fail(err) {
-              console.log("fail:" + JSON.stringify(err));
-            } });
+
+          this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         }
       }

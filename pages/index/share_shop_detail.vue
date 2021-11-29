@@ -10,7 +10,7 @@
 						<view class="image-wrapper">
 							<image :src="item.img0" class="loaded" mode="aspectFill"></image>
 						</view>
-						<image v-if="shop_det.video && index == 0" class="bofang" src="/static/bofang.png" mode="">
+						<image v-if="shop_det.video && index == 0" class="bofang" src="https://zuanshi.semoh.cn/applet_static/bofang.png" mode="">
 						</image>
 					</swiper-item>
 				</swiper>
@@ -41,7 +41,7 @@
 				<text>{{shop_det.remark}}</text>
 			</view>
 			<view class="Rapid_delivery">
-				<image src="../../static/index/ji.png" mode="aspectFill"></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/index/ji.png" mode="aspectFill"></image>
 				<text style="margin-right: 16upx;">{{shop_det.letter}}</text>
 			</view>
 			<!-- 规格 -->
@@ -93,7 +93,7 @@
 			</view>
 			<!-- //推荐 -->
 			<view id="tuijina">
-				<image style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="../../static/my/tuijain_bgimg.png" mode=""></image>
+				<image style="width: 100%;height: 80rpx;margin-top: 20rpx;" src="https://zuanshi.semoh.cn/applet_static/my/tuijain_bgimg.png" mode=""></image>
 				<view style="margin-bottom: 120rpx;">
 					<zs-shopping-list :shop_list="shop_list"></zs-shopping-list>
 				</view>
@@ -102,15 +102,15 @@
 			<view class="add_bottom">
 				<view class="add_con">
 					<!-- <view class="three_icons" @click="skipIndex">
-						<image src="/static/index/index.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/index/index.png" mode="widthFix"></image>
 						<view>首页</view>
 					</view>
 					<view class="three_icons" @click="goto_page('../service/service')">
-						<image src="/static/index/kf.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/index/kf.png" mode="widthFix"></image>
 						<view>客服</view>
 					</view>
 					<view class="three_icons" @click="goto_cart">
-						<image src="/static/index/cart.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/index/cart.png" mode="widthFix"></image>
 						<view>购物车</view>
 					</view> -->
 					<view class="anniu">

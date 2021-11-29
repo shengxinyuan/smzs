@@ -56,7 +56,7 @@
 			<view style="height: 110rpx;"></view>
 			<view class="top_tip">欢迎加入奢美饰界</view>
 			<view class="fcc" style="padding: 100rpx 0;">
-				<image style="width: 300rpx;height: 300rpx;" mode="aspectFit" src="../../static/logos.jpg"></image>
+				<image style="width: 300rpx;height: 300rpx;" mode="aspectFit" src="https://zuanshi.semoh.cn/applet_static/logos.jpg"></image>
 			</view>
 			<view style="height: 40rpx;"></view>
 			<button class="wx_btn login_btn fcc" @click="getInfo">
@@ -115,7 +115,7 @@
 				cid: '',
 				info:{
 					nickName: '微信用户',
-					avatarUrl: '/static/avatar.png',
+					avatarUrl: 'https://zuanshi.semoh.cn/applet_static/avatar.png',
 				}
 			}
 		},
@@ -161,6 +161,12 @@
 									console.log(res)
 									that.cli_type = false //防抖
 									if (res.status == 1) {
+										console.log("openid", res.data.openid)
+										uni.setStorageSync("openid", res.data.openid)
+										if (res.data.member_info.mobile == 0) {
+											that.com.navto("./bangding")
+											return
+										}
 										let date = new Date().getTime()
 										let end = res.data.member_info.vip_time * 1000
 										if (end <= date) {

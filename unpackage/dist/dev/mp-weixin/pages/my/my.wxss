@@ -134,7 +134,7 @@ page{
   background-color: white;
   margin-top: 26rpx;
   border-radius: 20rpx;
-  background-image: url(/static/my/dianbu_bgimage.png);
+  background-image: url(https://zuanshi.semoh.cn/applet_static/my/dianbu_bgimage.png);
   background-size: 100% 100%;
 }
 .padding_cont .orders_d .orders_it.data-v-0be17cc6 {
@@ -238,7 +238,7 @@ page{
   padding-top: 150rpx;
   width: 100%;
   height: 500rpx;
-  background-image: url(/static/my/backimg.png);
+  background-image: url(https://zuanshi.semoh.cn/applet_static/my/backimg.png);
   background-size: 100% 100%;
 }
 .my_cont .userinfo .userinfo_ch.data-v-0be17cc6 {

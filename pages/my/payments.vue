@@ -70,7 +70,7 @@
 					backgroundColor: [1,'#2d407a'],
 				},
 
-				action: 'http://zuanshi.dis.wanheweb.com/api/uploads',
+				action: 'https://zuanshi.semoh.cn/api/uploads',
 				token: {
 					token: uni.getStorageSync('token') //图片请求头 
 				},
@@ -144,42 +144,42 @@
 						// #ifdef APP
 						this.list = [
 							{
-								img: '../../static/my/payment/zhifub.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/zhifub.png',
 								name: '支付宝支付',
 								remake: '需扣除0.6%的手续费，方便快捷',
 								display: true,
 								index:0
 							},
 							{
-								img: '../../static/my/payment/weixin.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/weixin.png',
 								name: '微信支付',
 								remake: '需扣除0.6%的手续费，方便快捷',
 								display: false,
 								index:1
 							},
 							{
-								img: '../../static/my/payment/yhka.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/yhka.png',
 								name: '银行卡支付',
 								remake: '无需手续费，需人工确认',
 								display: false,
 								index:2
 							},
 							{
-								img: '../../static/my/payment/yue.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/yue.png',
 								name: '余额支付',
 								remake: '可以余额 0 ',
 								display: false,
 								index:3
 							},
 							{
-								img: '../../static/my/payment/zhuanzhang.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/zhuanzhang.png',
 								name: '微信转账',
 								remake: '无需手续费，需人工确认',
 								display: false,
 								index:4
 							},
 							{
-								img: '../../static/my/payment/zfb_zhuanz.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/zfb_zhuanz.png',
 								name: '支付宝转账',
 								remake: '无需手续费，需人工确认',
 								display: false,
@@ -191,35 +191,35 @@
 						this.img_show = 1;
 						this.list = [
 							{
-								img: '../../static/my/payment/weixin.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/weixin.png',
 								name: '微信支付',
 								remake: '需扣除0.6%的手续费，方便快捷',
 								display: true,
 								index:1
 							},
 							{
-								img: '../../static/my/payment/yhka.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/yhka.png',
 								name: '银行卡支付',
 								remake: '无需手续费，需人工确认',
 								display: false,
 								index:2
 							},
 							{
-								img: '../../static/my/payment/yue.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/yue.png',
 								name: '余额支付',
 								remake: '可以余额 0 ',
 								display: false,
 								index:3
 							},
 							{
-								img: '../../static/my/payment/zhuanzhang.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/zhuanzhang.png',
 								name: '微信转账',
 								remake: '无需手续费，需人工确认',
 								display: false,
 								index:4
 							},
 							{
-								img: '../../static/my/payment/zfb_zhuanz.png',
+								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/zfb_zhuanz.png',
 								name: '支付宝转账',
 								remake: '无需手续费，需人工确认',
 								display: false,
@@ -473,7 +473,7 @@
 		// left: 0;
 		// top: 0;
 		// z-index: 99;
-		// background-image: url(../../static/my/pay_bgomg.png);
+		// background-image: url(https://zuanshi.semoh.cn/applet_static/my/pay_bgomg.png);
 		// background-size: 100% 100%;
 		// background-color: #2d407a;
 		// border-radius: 0 0 100% 100%;
@@ -580,7 +580,7 @@
 		}
 
 		.p1 {
-			background-image: url(../../static/yhka.png);
+			background-image: url(https://zuanshi.semoh.cn/applet_static/yhka.png);
 			background-size: 100% 320rpx;
 		}
 

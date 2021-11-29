@@ -25,31 +25,31 @@
 		data() {
 			return {
 				store_admin: [{
-						img: '../../static/my/app_share.png',
+						img: 'https://zuanshi.semoh.cn/applet_static/my/app_share.png',
 						name: "app分享"
 					},
 					{
-						img: '../../static/my/Platform.png',
+						img: 'https://zuanshi.semoh.cn/applet_static/my/Platform.png',
 						name: "平台咨讯"
 					},
 					{
-						img: '../../static/my/xinshou.png',
+						img: 'https://zuanshi.semoh.cn/applet_static/my/xinshou.png',
 						name: "新手教程"
 					},
 					{
-						img: '../../static/my/fankui.png',
+						img: 'https://zuanshi.semoh.cn/applet_static/my/fankui.png',
 						name: "意见反馈"
 					},
 					{
-						img: '../../static/my/guany_me.png',
+						img: 'https://zuanshi.semoh.cn/applet_static/my/guany_me.png',
 						name: "关于我们"
 					},
 					{
-						img: '../../static/my/lianxi_kf.png',
+						img: 'https://zuanshi.semoh.cn/applet_static/my/lianxi_kf.png',
 						name: "联系客服"
 					},
 					{
-						img: '../../static/my/pint_kingpic.png',
+						img: 'https://zuanshi.semoh.cn/applet_static/my/pint_kingpic.png',
 						name: "平台金价"
 					}
 				]

@@ -232,7 +232,7 @@
 		width: 100%;height: 160rpx;
 		margin: 30rpx 0;display: flex;justify-content: space-between;
 		.statis_l{
-			width: 	49%;height: 100%;background-image: url(../../static/my/team_z.png);
+			width: 	49%;height: 100%;background-image: url(https://zuanshi.semoh.cn/applet_static/my/team_z.png);
 			background-size: 100% 100%;border-radius: 22rpx;padding-left: 18rpx;
 			.statis_l_t{
 				line-height: 60rpx;
@@ -242,7 +242,7 @@
 			}
 		}
 		.statis_r{
-			width: 	49%;height: 100%;background-image: url(../../static/my/team_vip_nums.png);
+			width: 	49%;height: 100%;background-image: url(https://zuanshi.semoh.cn/applet_static/my/team_vip_nums.png);
 			background-size: 100% 100%;border-radius: 22rpx;padding-left: 18rpx;
 			.statis_l_t{
 				line-height: 60rpx;

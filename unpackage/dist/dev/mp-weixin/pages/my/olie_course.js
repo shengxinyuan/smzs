@@ -209,14 +209,14 @@ var _default =
       {
         src: 'http://www.miaorongdun.com/uploads/20210108/a5c3cf573eea857b3f5414cd41ca2aba.mp4',
         tit: '如何开通体验超级会员?',
-        bgimg: 'url(../../static/my/vip_video.png)',
+        bgimg: 'url(https://zuanshi.semoh.cn/applet_static/my/vip_video.png)',
         vid_show: true,
         id: 2 },
 
       {
         src: 'http://www.miaorongdun.com/uploads/20210108/a5c3cf573eea857b3f5414cd41ca2aba.mp4',
         tit: '下单后如何付款?',
-        bgimg: 'url(../../static/my/vip_order.png)',
+        bgimg: 'url(https://zuanshi.semoh.cn/applet_static/my/vip_order.png)',
         vid_show: true,
         id: 5 }],
 

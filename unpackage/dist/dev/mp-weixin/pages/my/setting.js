@@ -246,20 +246,25 @@ var _default =
       } else if (e == 1) {
         this.com.navto('./user_text');
       } else if (e == 2) {
-        uni.share({
-          provider: "weixin",
-          scene: "WXSceneSession",
-          type: 0,
-          href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/share?invcode=' + this.pag_data.bn,
-          title: '奢美饰界',
-          summary: "我在奢美饰界发现好物，快来看看！",
-          imageUrl: '../../static/logos.jpg',
-          success: function success(res) {
-            console.log(res);
-          }, fail: function fail(err) {
-            console.log(err);
-            // that.com.msg('失败')
-          } });
+
+        this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       } else if (e == 3) {//新手教程
         this.com.navto('./olie_course');

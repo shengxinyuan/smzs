@@ -13,7 +13,7 @@
 			<view v-if="vid != ''">
 				<view class="video_list" v-for="(it,ind) in vid" :key="ind" >
 					<view class="images" v-if="it.vid_show" @click="vid_creat(it.id)" :style="{'background-image': 'url('+it.image+')'}">
-						<view><image style="width: 60rpx; height: 60rpx;" src="../../static/bofang.png" mode=""></image></view>
+						<view><image style="width: 60rpx; height: 60rpx;" src="https://zuanshi.semoh.cn/applet_static/bofang.png" mode=""></image></view>
 						<text>{{it.title}}</text>
 					</view>
 					<video :src="it.video" @play="play(it)" :id="'video'+it.id" @ended="end_vid(it)" v-else :autoplay="true" controls @pause="end_vid(it)"></video>
@@ -46,14 +46,14 @@
 					{
 						src:'http://www.miaorongdun.com/uploads/20210108/a5c3cf573eea857b3f5414cd41ca2aba.mp4',
 						tit:'如何开通体验超级会员?',
-						bgimg:'url(../../static/my/vip_video.png)',
+						bgimg:'url(https://zuanshi.semoh.cn/applet_static/my/vip_video.png)',
 						vid_show:true,
 						id:2
 					},
 					{
 						src:'http://www.miaorongdun.com/uploads/20210108/a5c3cf573eea857b3f5414cd41ca2aba.mp4',
 						tit:'下单后如何付款?',
-						bgimg:'url(../../static/my/vip_order.png)',
+						bgimg:'url(https://zuanshi.semoh.cn/applet_static/my/vip_order.png)',
 						vid_show:true,
 						id:5
 					}

@@ -3,7 +3,7 @@
 		<view class="visit-box">
 			<view class="visit-title">
 				<view class="visit-logo">
-					<image src="../../static/set-shop/fangwen.png" mode="widthFix"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/set-shop/fangwen.png" mode="widthFix"></image>
 				</view>
 				<view class="title">今日访问</view>
 			</view>
@@ -17,7 +17,7 @@
 				<view class="statistics-title">
 					<view class="visit-title-left">
 						<view class="visit-logo">
-							<image src="../../static/set-shop/tongji.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/set-shop/tongji.png" mode="widthFix"></image>
 						</view>
 						<view class="title">访问统计</view>
 					</view>

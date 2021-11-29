@@ -14,7 +14,7 @@
 	export default {
 		data() {
 			return {
-				upload_url: 'http://zuanshi.dis.wanheweb.com/api/uploads',
+				upload_url: 'https://zuanshi.semoh.cn/api/uploads',
 				image_plan: '',
 				header: {
 					'token': uni.getStorageSync('token')

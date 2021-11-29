@@ -233,7 +233,7 @@ var _default =
           var tempFilePaths = chooseImageRes.tempFilePaths[0];
           console.log(chooseImageRes.tempFilePaths[0]);
           uni.uploadFile({
-            url: 'http://zuanshi.dis.wanheweb.com/api/uploads',
+            url: 'https://zuanshi.semoh.cn/api/uploads',
             filePath: tempFilePaths,
             name: 'file',
             formData: {

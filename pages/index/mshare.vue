@@ -23,19 +23,19 @@
 		</view>
 		<view class="bottom-box">
 			<view class="min-box" @click="share(0)">
-				<image src="../../static/index/haoyou.png" mode="aspectFill"></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/index/haoyou.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">微信好友</view>
 			</view>
 			<view class="min-box" @click="share(1)">
-				<image src="../../static/index/pyq.png" mode="aspectFill"></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/index/pyq.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">朋友圈</view>
 			</view>
 			<view class="min-box" @click="share(2)">
-				<image src="/static/index/lianjie.png" mode="aspectFill"></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/index/lianjie.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">分享链接</view>
 			</view>
 			<view class="min-box" @click="share(3)">
-				<image src="/static/index/save.png" mode="aspectFill"></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/index/save.png" mode="aspectFill"></image>
 				<view style="margin-top: 6upx;">生成海报</view>
 			</view>
 		</view>
@@ -304,11 +304,15 @@
 						name: this.member.id
 					}
 					console.log(data)
+					// #ifdef MP-WEIXIN
+					this.wxShare();
+					// #endif
+					// #ifdef APP
 					uni.share({
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' + JSON.stringify(data),
+						href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/index?data=' + JSON.stringify(data),
 						title: this.datas.title,
 						summary: this.datas.remark,
 						// imageUrl: this.datas.avatar,
@@ -321,6 +325,7 @@
 							// that.com.msg('失败')
 						}
 					});
+					// #endif
 				}
 				if (e == 3) {
 					let price = ''

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="bgimage">
-			<image src="../../static/share/bg.png" mode="widthFix"></image>
+			<image src="https://zuanshi.semoh.cn/applet_static/share/bg.png" mode="widthFix"></image>
 		</view>
 		<view class="zl-box">
 			<view class="min-box">

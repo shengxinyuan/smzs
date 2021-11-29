@@ -182,7 +182,7 @@ __webpack_require__.r(__webpack_exports__);
 var _default = {
   data: function data() {
     return {
-      action: 'http://zuanshi.dis.wanheweb.com/api/uploads', //上传图片
+      action: 'https://zuanshi.semoh.cn/api/uploads', //上传图片
       lists: [],
       imgLists: '',
       desc: '',

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="add-payee-code-image">
-			<image src="../../static/set-shop/add_code.png" mode="widthFix"></image>
+			<image src="https://zuanshi.semoh.cn/applet_static/set-shop/add_code.png" mode="widthFix"></image>
 		</view>
 		<view class="bottom-box">
 			<view class="notice">
@@ -43,7 +43,7 @@
 							const tempFilePaths = chooseImageRes.tempFilePaths[0]
 							console.log(chooseImageRes.tempFilePaths[0])
 							uni.uploadFile({
-								url: 'http://zuanshi.dis.wanheweb.com/api/uploads',
+								url: 'https://zuanshi.semoh.cn/api/uploads',
 								filePath: tempFilePaths,
 								name: 'file',
 								formData: {
@@ -77,7 +77,7 @@
 							const tempFilePaths = chooseImageRes.tempFilePaths[0]
 							console.log(chooseImageRes.tempFilePaths[0])
 							uni.uploadFile({
-								url: 'http://zuanshi.dis.wanheweb.com/api/uploads',
+								url: 'https://zuanshi.semoh.cn/api/uploads',
 								filePath: tempFilePaths,
 								name: 'file',
 								formData: {

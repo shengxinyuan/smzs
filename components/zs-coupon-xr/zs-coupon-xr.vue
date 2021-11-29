@@ -18,7 +18,7 @@
 				<view class="but_tit" @click="no_pop">立即收下</view>
 			</view>
 			<view class="no_but" @click="no_pop">
-				<image src="../../static/my/no_but.png" mode=""></image>
+				<image src="https://zuanshi.semoh.cn/applet_static/my/no_but.png" mode=""></image>
 			</view>
 		</view>
 	</view>
@@ -28,8 +28,8 @@
 	export default {
 		data() {
 			return {
-				bgimage:'url(../../static/coupon.png)',
-				bachild:'url(../../static/coups.png)'
+				bgimage:'url(https://zuanshi.semoh.cn/applet_static/coupon.png)',
+				bachild:'url(https://zuanshi.semoh.cn/applet_static/coups.png)'
 			}
 		},
 		props:{
@@ -76,7 +76,7 @@
 			overflow-y: scroll;
 			display: flex;flex-wrap: wrap;
 			.item_i{
-				width: 48%;height: 120rpx; background-image: url(../../static/coupom_item.png);background-size: 100% 100%;
+				width: 48%;height: 120rpx; background-image: url(https://zuanshi.semoh.cn/applet_static/coupom_item.png);background-size: 100% 100%;
 				margin: 1% 1%;
 				color: #fff;padding-left: 15%;
 				.it_top{

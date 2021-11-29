@@ -205,41 +205,58 @@ var _default =
         this.com.msg('验证码错误');
       } else {
         if (this.but_show) {
-          this.$api.post('bindingphone', { mobile: this.phone, note: this.codes, openid: uni.getStorageSync('openid'), bn: arr }).then(function (res) {
+          var param = { mobile: this.phone, note: this.codes, openid: uni.getStorageSync('openid'), bn: arr };
+          console.log(param);
+
+
+
+
+
+
+
+
+
+
+
+          this.$api.post('bindingphone_applet', param).then(function (res) {
             console.log(res);
             if (res.status == 1) {
-              _this2.but_show = false; // 防抖
-              var date = new Date().getTime();
-              var end = res.data.member_info.vip_time * 1000;
-              if (end <= date) {
-                uni.setStorageSync("viptype", false);
-              } else {
-                uni.setStorageSync("viptype", true);
-              }
-
-              uni.setStorageSync("token", res.data.token);
-              uni.setStorageSync("member_info", res.data.member_info);
-              uni.setStorageSync('member_info_img', res.data.member_info.avatar);
-              uni.setStorageSync('coupon', 0);
-              uni.showToast({
-                title: '请稍后...', icon: 'loading', duration: 2000 });
-
-              var _arr = 2;
-              var time = setInterval(function () {
-                if (_arr == 0) {
-                  clearInterval(time);
-                  _this2.com.rel('../index/index');
-                } else {
-                  _arr -= 1;
-                }
-              }, 1000);
+              _this2.next(res);
             } else {
               _this2.com.msg(res.message);
             }
           });
+
         }
 
       }
+    },
+    next: function next(res) {var _this3 = this;
+      this.but_show = false; // 防抖
+      var date = new Date().getTime();
+      var end = res.data.member_info.vip_time * 1000;
+      if (end <= date) {
+        uni.setStorageSync("viptype", false);
+      } else {
+        uni.setStorageSync("viptype", true);
+      }
+
+      uni.setStorageSync("token", res.data.token);
+      uni.setStorageSync("member_info", res.data.member_info);
+      uni.setStorageSync('member_info_img', res.data.member_info.avatar);
+      uni.setStorageSync('coupon', 0);
+      uni.showToast({
+        title: '请稍后...', icon: 'loading', duration: 2000 });
+
+      var arr = 2;
+      var time = setInterval(function () {
+        if (arr == 0) {
+          clearInterval(time);
+          _this3.com.rel('../index/index');
+        } else {
+          arr -= 1;
+        }
+      }, 1000);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

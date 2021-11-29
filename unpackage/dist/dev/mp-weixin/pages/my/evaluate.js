@@ -192,7 +192,7 @@ var _default =
       datas: '',
       list: [],
       textvalue: '',
-      action: 'http://zuanshi.dis.wanheweb.com/api/uploads',
+      action: 'https://zuanshi.semoh.cn/api/uploads',
       token: {
         token: uni.getStorageSync('token') },
 

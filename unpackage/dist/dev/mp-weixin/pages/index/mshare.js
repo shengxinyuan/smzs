@@ -475,22 +475,27 @@ var _default =
           name: this.member.id };
 
         console.log(_data);
-        uni.share({
-          provider: "weixin",
-          scene: "WXSceneSession",
-          type: 0,
-          href: 'http://zuanshi.dis.wanheweb.com/smsj/index.html#/pages/index/index?data=' + JSON.stringify(_data),
-          title: this.datas.title,
-          summary: this.datas.remark,
-          // imageUrl: this.datas.avatar,
-          imageUrl: this.datas.image,
-          success: function success(res) {
-            // console.log(res) 
-          },
-          fail: function fail(err) {
-            // console.log(err)
-            // that.com.msg('失败')
-          } });
+
+        this.wxShare();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       }
       if (e == 3) {

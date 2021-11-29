@@ -2,7 +2,7 @@
 	<!-- 精选专题详情 -->
 	<view class="zl-page">
 		<view class="head-image">
-			<image src="../../static/selection/hunjia_02.png" mode="widthFix"></image>
+			<image src="https://zuanshi.semoh.cn/applet_static/selection/hunjia_02.png" mode="widthFix"></image>
 		</view>
 		<view class="selection-tabs">
 			<u-tabs :list="list" :is-scroll="true" :current="current" @change="changeTabs" :height="height" :font-size="28"

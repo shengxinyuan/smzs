@@ -144,8 +144,8 @@ var _default =
 {
   data: function data() {
     return {
-      bgimage: 'url(../../static/coupon.png)',
-      bachild: 'url(../../static/coups.png)' };
+      bgimage: 'url(https://zuanshi.semoh.cn/applet_static/coupon.png)',
+      bachild: 'url(https://zuanshi.semoh.cn/applet_static/coups.png)' };
 
   },
   props: {

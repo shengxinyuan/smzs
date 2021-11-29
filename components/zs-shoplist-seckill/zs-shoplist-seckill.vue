@@ -3,7 +3,7 @@
 		<view class="cont_list_two" >
 			<view class="cont_item" v-for="(it,ind) in lists" :key="ind" @click="go_shopdetail(it.id)" >
 				<view class="item_img">
-					<!-- <image class="imagea" src="../../static/zhek.png" mode="aspectFill"></image> -->
+					<!-- <image class="imagea" src="https://zuanshi.semoh.cn/applet_static/zhek.png" mode="aspectFill"></image> -->
 					<image class="images" :src="it.image" mode="aspectFill"></image>
 				</view>
 				<view class="it_text">

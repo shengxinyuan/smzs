@@ -44,7 +44,7 @@
 					</view>
 					
 					<view>
-						<image src="../../static/vip-order/vip_01.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image>
 					</view>
 				</view>
 				<!-- 代发 -->
@@ -54,7 +54,7 @@
 						<view @click="go_pages('../my/receiving?is_mine=1' +'&type=0' + '&isShow=1' + '&current='+ current)">
 							<view>
 								<view class="send-image">
-									<image src="../../static/vip-order/ji.png" mode="widthFix"></image>
+									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/ji.png" mode="widthFix"></image>
 								</view>
 								<view class="mail-box" v-if="address_send">
 									<view class="user-box">
@@ -74,14 +74,14 @@
 							</view>
 						</view>
 						<view>
-							<image src="../../static/vip-order/vip_01.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image>
 						</view>
 					</view>
 					<view class="second-box-one" @click="go_pages('../my/receiving?is_mine=0' +'&type=0' + '&isShow=2' + '&current='+ current)">
 						<view>
 							<view>
 								<view class="send-image">
-									<image src="../../static/vip-order/shou.png" mode="widthFix"></image>
+									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/shou.png" mode="widthFix"></image>
 								</view>
 								<view class="mail-box" v-if="address_bier">
 									<view class="user-box">
@@ -101,7 +101,7 @@
 							</view>
 						</view>
 						<view>
-							<image src="../../static/vip-order/vip_01.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image>
 						</view>
 					</view>
 				</view>
@@ -118,7 +118,7 @@
 						</view>
 					</view>
 					<view>
-						<image src="../../static/vip-order/vip_01.png" mode="widthFix"></image> 
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image> 
 					</view>
 				</view>
 				<!-- 送货上门 -->
@@ -141,7 +141,7 @@
 						</view>
 					</view>
 					<view>
-						<image src="../../static/vip-order/vip_01.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image>
 					</view>
 				</view> -->
 				<view v-if="viptype">
@@ -151,7 +151,7 @@
 							<view v-show="current == 0">
 								<view class="express-left">
 									<view class="express-sf">
-										<image src="/static/vip-order/sf_01.png" 
+										<image src="https://zuanshi.semoh.cn/applet_static/vip-order/sf_01.png" 
 										mode="aspectFill"></image>
 									</view>
 									<view class="sf">顺丰速运</view>
@@ -164,7 +164,7 @@
 							<view>
 								<view class="" style="display: flex;align-items: center;">
 									<image style="width: 35rpx;height: 35rpx;flex-shrink: 0;" 
-									src="/static/vip-order/bao_01.png"
+									src="https://zuanshi.semoh.cn/applet_static/vip-order/bao_01.png"
 									mode="aspectFill"></image>
 									<view class="baojia" style="margin: 0 10rpx;">保价</view>
 								</view>
@@ -206,7 +206,7 @@
 							</view>
 							<view class="log-box hang-sign">
 								<view class="log">
-									<image src="../../static/vip-order/guaqian_01.png" mode="widthFix"></image>
+									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/guaqian_01.png" mode="widthFix"></image>
 								</view>
 								<view class="log-title">{{hangSignTitle}}</view>
 							</view>
@@ -221,7 +221,7 @@
 							</view>
 							<view class="log-box zhengshu">
 								<view class="log">
-									<image src="../../static/vip-order/zhengshu.png" mode="widthFix"></image>
+									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/zhengshu.png" mode="widthFix"></image>
 								</view>
 								<view class="log-title">{{zhengshuTitle}}</view>
 							</view>
@@ -373,11 +373,11 @@
 					<text v-else>{{noticeTexts02}}</text>
 				</view>
 				<view class="open-super-members-bgimg" v-if="datas.type != 1 && zhanshi.viptype !== true">
-					<image src="../../static/bgimage.png" mode="widthFix"></image>
+					<image src="https://zuanshi.semoh.cn/applet_static/bgimage.png" mode="widthFix"></image>
 					<view class="open-super-members-box">
 						<view>
 							<view class="open-super-members-log">
-								<image src="/static/vip-order/vip_02.png" mode="widthFix"></image>
+								<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_02.png" mode="widthFix"></image>
 							</view>
 							<view class="open-super-members-title">
 								<text>开通超级会员360/年，本单预计可省</text>
@@ -1220,7 +1220,7 @@
 			}
 		}
 		.backimg{
-			background-image: url(../../static/index/back.png);background-size: 100% 100%;
+			background-image: url(https://zuanshi.semoh.cn/applet_static/index/back.png);background-size: 100% 100%;
 		}
 		.parcel-tpy {
 			width: 46%;
