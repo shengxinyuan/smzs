@@ -177,12 +177,17 @@
 								<view class="parcel-sf" :class="{backimg:imgind == 0}" @click="baojia_cli(0)">
 									<text class="sf-title">顺丰保价</text>
 									<text class="sf-cost" 
-									style="display: block;">（保费{{ zhanshi.sf_valuation /100}}%）</text>
+									style="display: block;">（保费{{ zhanshi.sf_valuation /10}}%）</text>
 								</view>
-								<view class="parcel-tpy" :class="{backimg:imgind == 1}" @click="baojia_cli(1)">
+								<!-- <view class="parcel-tpy" :class="{backimg:imgind == 1}" @click="baojia_cli(1)">
 									<text class="tpy-title">太平洋保价</text>
 									<text class="tpy-cost" 
-									style="display: block;">（保费 {{zhanshi.ocean_valuation  /1000}}%）</text>
+									style="display: block;">（保费 {{zhanshi.ocean_valuation  /100}}%）</text>
+								</view> -->
+								<view class="parcel-tpy" :class="{backimg:imgind == 1}">
+									<!-- <text class="tpy-title">太平洋保价</text>
+									<text class="tpy-cost" 
+									style="display: block;">（保费 {{zhanshi.ocean_valuation  /100}}%）</text> -->
 								</view>
 							</view>
 							<view>
@@ -767,7 +772,8 @@
 			baojia_cli(e){
 				this.imgind = e
 				if(e == 0){ //0顺丰
-					let ar = Math.floor(this.shop_price) / 1000
+					// let ar = Math.floor(this.shop_price) / 1000
+					let ar = this.shop_price / 1000
 					// console.log(Math.floor(ar))
 					if(ar <=1 && this.zhanshi){
 						this.nums_bj = this.zhanshi.sf_valuation
@@ -776,7 +782,8 @@
 						this.nums_bj = 2 * this.zhanshi.sf_valuation
 						// console.log(this.nums_bj)
 					}else{
-						this.nums_bj = (Math.floor(ar) + 1) * this.zhanshi.sf_valuation
+						// this.nums_bj = (Math.floor(ar) + 1) * this.zhanshi.sf_valuation
+						this.nums_bj = Math.floor(ar* this.zhanshi.sf_valuation)
 					}
 				}else{
 					let ar = Math.floor(this.shop_price) / 10000

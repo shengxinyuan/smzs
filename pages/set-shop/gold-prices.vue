@@ -36,7 +36,7 @@
 						@click="checked(index)">
 							<view class="left">
 								<view class="left-title">{{it.title || '工费'}}</view>
-								<view class="left-price">￥{{it.wage}}/g</view>
+								<view class="left-price">￥{{it.total_wage}}/g</view>
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
@@ -137,7 +137,7 @@
 						console.log(this.la)
 						this.lb =  JSON.parse(res.data.new_price)
 						res.data.other.forEach(item=>{
-							item.sumPrice = item.wage/1 + item.commerical_wage/1
+							item.sumPrice = item.total_wage/1 + item.commerical_wage/1
 						})
 						this.list = res.data.other
 					}
