@@ -22,7 +22,7 @@
 							<view class="title">{{item.goods.title}}</view>
 							<view class="Specifications">金重：{{item.goods.weight}}g<text class="num"> 条码：{{item.goods.bar_code}}</text></view>
 							<view class="shop_list_label">
-								<text>金价：￥{{item.gold_price}}</text><text>工费：￥{{((item.labor_price/1)/(item.goods.weight/1)).toFixed(2)}}/g </text>
+								<text>金价：￥{{((item.gold_price/1)/(item.goods.weight/1)).toFixed(2)}}</text><text>工费：￥{{(((item.labor_price/1)+(item.labor_price_add/1))/(item.goods.weight/1)).toFixed(2)}}/g </text>
 							</view>
 							<view class="price"><text>￥{{item.total}}</text>
 							 <text style="color: #999;"> *{{item.count}}</text></view>

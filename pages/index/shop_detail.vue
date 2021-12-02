@@ -24,6 +24,7 @@
 							 :autoplay="true" 
 							 loop 
 							 :enable-progress-gesture="false" 
+							 :show-fullscreen-btn="false"
 							 @pause="stop_video" 
 							 @ended="end_video"></video>
 							 

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- #ifdef APP-PLUS -->
+		<!-- #ifdef APP-PLUS || H5 -->
 		<view class="register">
 			<view style="width: 100%;">
 				<view class="u-font-16 u-m-t-50" style="text-align: right;color: #293C79;" @click="go">逛一逛</view>

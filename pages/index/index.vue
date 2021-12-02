@@ -254,8 +254,8 @@
 		<!-- 视频播放弹窗 -->
 		<view class="video-popup" v-if="videoShow" @click="zanting" @touchmove.prevent>
 			<view class="video">
-				<video id="myVideo" :src="video_url" :autoplay="true" loop show-play-btn controls objectFit="cover"
-					@pause="zanting1" @ended="zanting1"></video>
+				<video id="myVideo" :src="video_url" :autoplay="true" loop show-play-btn controls objectFit="fill"
+					@pause="zanting1" @ended="zanting1" :show-fullscreen-btn="false"></video>
 			</view>
 		</view>
 	</view>
