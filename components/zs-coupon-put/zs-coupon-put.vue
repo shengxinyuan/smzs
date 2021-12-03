@@ -47,6 +47,9 @@
 			king_nam:{},
 			list:{}//数据
 		},
+		mounted() {
+			console.log(this.list);
+		},
 		methods: {
 			no_pop(){
 				this.$emit('nopop')

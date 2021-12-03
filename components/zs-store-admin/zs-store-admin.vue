@@ -31,11 +31,24 @@
 		props:{
 			skip:{
 				type: Boolean,
+				// default: true
 			},
 			menber_json:{},
 			jinx:{},
 			islogin: false,
-			store_admin: Array,
+			// store_admin: Array,
+			store_admin: {
+				type: Array,
+				default: function(){
+					return []
+				}
+			}
+		},
+		created() {
+			console.log(this.skip);
+		},
+		mounted(){
+			console.log(this.store_admin);
 		},
 		methods:{
 			goto_vip_set(ind){

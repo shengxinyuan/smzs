@@ -15,6 +15,7 @@
 		},
 		props:{
 			buttitle:{
+				type: String,
 				default:"保存"
 			}
 		},

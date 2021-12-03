@@ -13,9 +13,11 @@
 		},
 		props:{
 			page_del:{
+				type:Boolean,
 				default:false
 			},
 			type_check:{ //选中状态
+				type:Boolean,
 				default:false
 			},
 			shop_list:{}

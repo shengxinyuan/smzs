@@ -60,7 +60,15 @@
 			}
 		},
 		props:{
-			list:{}
+			list:{
+				type:Array,
+				// default:function(){
+				// 	return []
+				// }
+			}
+		},
+		mounted() {
+			console.log(this.list);
 		},
 		methods:{
 			//取消订单

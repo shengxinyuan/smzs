@@ -21,6 +21,12 @@
 				activeIndex:0,//默认索引
 			}
 		},
+		mounted() {
+			// we identified one or issues width a recent delivery for your app,
+			// "奢美饰界"1.1.5(1105).please correct the following issues,then upload again
+			// https://developer.apple.com/library/ios/#qa/qa1623/_index.html
+			console.log(this.modelData,this.initIndex);
+		},
 		computed:{
 			getModelData(){
 				return this.modelData||this.defaultInfo.data
