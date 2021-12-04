@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta content="telephone=no" name="format-detection">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+		<style type="text/css">
+			[v-cloak] {
+				display:none !important;
+			}
+			.main{
+				padding: 4vw;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id='wrap' v-cloak>
+			<div class="main">
+				<div v-html="content"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./jquery.min.js"></script>
+	<script type="text/javascript">
+		var that;
+		var vm = new Vue({
+			el: "#wrap",
+			data: {
+				type: '',
+				content:''
+			},
+			mounted: function() {
+				that = this;
+				let type = that.GetRequest().type;
+				let from = that.GetRequest().from;
+				that.type = type;
+				that.from = from;
+				if(type==1){
+					document.title = '服务协议';
+				}
+				if(type==2){
+					document.title = '隐私政策';
+				}
+				that.initData();
+			},
+			methods: {
+				initData(){
+					
+					if(!this.type){
+						return
+					}
+					let url;
+					if(this.type==1){
+						url = 'https://zuanshi.semoh.cn/api/site';
+					}
+					if(this.type==2){ 
+						url = 'https://zuanshi.semoh.cn/api/site';
+					}
+					$.ajax({
+					    type: 'GET',
+					    url: url,
+					    data: {
+							id:1
+						},
+					    success: function (res) {
+							console.log(res)
+							if(that.type == 1){
+								that.content = res.message.registration_protocol;
+							}
+							if(that.type == 2){
+								that.content = res.message.privacy_policy;
+							}
+					    },
+					    error: function (err) {
+					        alert('系统异常,请联系管理员。');
+					    },
+					    dataType: 'json'
+					});
+				},
+				GetRequest() {
+				    var url = location.search; //获取url中"?"符后的字串
+				    var theRequest = new Object();
+				    if (url.indexOf("?") != -1) {
+				        var str = url.substr(1);
+				        strs = str.split("&");
+				        for (var i = 0; i < strs.length; i++) {
+				            theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+				        }
+				    }
+					console.log(theRequest);
+				    return theRequest;
+				}
+			}
+		});
+	</script>
+
+</html>
