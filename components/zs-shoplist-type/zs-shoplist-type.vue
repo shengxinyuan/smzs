@@ -1,6 +1,93 @@
 <template>
 	<view class="cont">
-		<view class="head" :style="{position: fixed,left: 0,top: tops}">
+		<!-- <view class="head" :style="{position: 'fixed',left: 0,top: tops}"> -->
+		<view class="head" id="scrollView" v-if="isFoll" :style="{'position': position,'left': left,'top': top}">
+			<view class="head_left">
+				<view class="head_left_child" :class="{active:heat_ind == 1}" @click="shai_cli(1,sale)">
+					热销
+					<u-icon name="arrow-down" v-if="sale == 1"></u-icon>
+					<u-icon name="arrow-up" v-if="sale == 2"></u-icon>
+				</view>
+				<view class="head_left_child" :class="{active:heat_ind == 2}" @click="shai_cli(2,price_type)">
+					价格
+					<u-icon name="arrow-down" v-if="price_type == 1"></u-icon>
+					<u-icon name="arrow-up" v-if="price_type == 2"></u-icon>
+				</view>
+		
+			</view>
+			<view class="head_right">
+				<view class="head_right_c" v-if="type==1" @click="cli_type(1)">
+					<u-icon name="grid" size="40"></u-icon>
+				</view>
+				<view class="head_right_c" v-else @click="cli_type(2)">
+					<u-icon name="list-dot" size="44"></u-icon>
+				</view>
+				<view class="">
+					<view class="shai" @click="shaix">
+						<text>筛选</text>
+						<image src="https://zuanshi.semoh.cn/applet_static/loudou.png" mode=""></image>
+					</view>
+					<u-popup v-model="show" mode="right">
+						<view class="popups">
+							<!-- 单选标签 -->
+							<view class="item" v-for="(it,ind) in lists" :key="ind">
+								<!-- //标题 -->
+								<view class="item_tit">
+									{{it.name}}
+								</view>
+								<!-- 内容 -->
+								<view class="item_child">
+									<view class="child_v" v-for="(cit,index) in it.data"
+										@click="cli_it(cit.id,ind,index,it,cit)" 
+										:class="{active:cit.state == true}">
+										{{cit.title}}
+									</view>
+								</view>
+							</view>
+							<!-- 多选标签 -->
+							<view class="item">
+								<view class="item_tit">
+									{{screen_label_list.name}}
+								</view>
+								<view class="item_child">
+									<view class="child_v" 
+									v-for="(item,index) in screen_label_list.data" 
+									:key="index"
+									@click="cli_item(item,index)" 
+									:class="{active:item.status == 2}">
+										{{item.title}}
+									</view>
+								</view>
+							</view>
+							<view class="item">
+								<view class="item_tit">
+									金重
+								</view>
+								<view class="item_child">
+									<view class="child_v">
+										<input type="text" placeholder="最低" v-model="min_g" name="" id="">
+									</view>
+									<view class="u-m-l-10 u-m-r-10" style="color: #999999;">一</view>
+									<view class="child_v">
+										<input type="text" placeholder="最高" v-model="max_g">
+									</view>
+									<!-- {{index}} -->
+								</view>
+							</view>
+		
+							<view class="but">
+								<view @click="reset">
+									重置
+								</view>
+								<view @click="shop_confim">确定</view>
+							</view>
+						</view>
+					</u-popup>
+				</view>
+			</view>
+		</view>
+		<view class="head" id="scrollView" v-else :class="isTop == 1 ? 'postionTop' : ''">
+			<!-- :style="isTop == 1 ? 'position:fixed;background:#ffffff;top:190rpx;z-index:50;left:0;' : ''"> -->
 			<view class="head_left">
 				<view class="head_left_child" :class="{active:heat_ind == 1}" @click="shai_cli(1,sale)">
 					热销
@@ -178,9 +265,20 @@
 				min_g: '', //最小重量
 				max_g: '', //最大重量
 				shop_good_label_id: '',
+				position:'fixed',
+				left:0,
+				top:'var(--status-bar-height) + 88rpx'
 			};
 		},
 		props: {
+			isFoll:{
+				type:String,
+				default:''
+			},
+			isTop:{
+				type:Number,
+				default:0
+			},
 			tops: {
 				default: 0
 			}, //定位
@@ -203,6 +301,27 @@
 			},
 			screen_label_list: {},
 		},
+		// mounted() {
+		// 	console.log('mounted 组件挂载完毕状态===============》');
+		// 	const query = uni.createSelectorQuery().in(this);
+		// 	query.select('#scrollView').boundingClientRect(data => {
+		// 	console.log("得到布局位置信息" + JSON.stringify(data));
+		// 	console.log("节点离页面顶部的距离为" + data.top);
+		// 	this.myScroll = data.top
+		// 	console.log(this.myScroll);
+		// 	}).exec();
+		// },
+		// onPageScroll(e) {
+		// 	// 重点，用到滑动切换必须加上
+		// 	// this.$refs.hxnb.pageScroll(e);
+		// 	// console.log(e)
+		// 	if(e.scrollTop > this.myScroll){
+		// 	this.isTop = 1
+		// 	console.log(111);
+		// 	}else{
+		// 	this.isTop = 0
+		// 	}
+		// },
 		methods: {
 			//点击选项
 			cli_it(mid, find, index, it, cit) {
@@ -367,6 +486,13 @@
 	}
 </style>
 <style lang="scss" scoped>
+	.postionTop{
+		position:fixed;
+		background:#ffffff;
+		top:calc(var(--status-bar-height) + 190rpx);
+		z-index:50;
+		left:0;
+	}
 	.popups {
 		padding: 80rpx 30rpx 130rpx 30rpx;
 		width: 640rpx;

@@ -13,7 +13,7 @@
 		</view>
 		<view class="contes">
 			<zs-shoplist-type :shop_list="shop_list" :lists="lists" :lv="lv" :page_login="page_login" :shaix_type="'3'"
-			 @shop_confim="shop_confim" :screen_label_list="label_list"></zs-shoplist-type>
+			 @shop_confim="shop_confim" :screen_label_list="label_list" :isTop="isTop" :styleCss="styleCss"></zs-shoplist-type>
 				<view class=""
 				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 				v-if="shop_list.length > 0">
@@ -49,7 +49,36 @@
 				last_page: 1,
 				loadingText: '上拉加载更多',
 				label_list: {},
+				isTop:0,
+				myScroll:0,
+				styleCss:{
+					position:'fixed',
+					background:'#ffffff',
+					top:'190rpx',
+					left:'0',
+				},
+				
 			}
+		},
+		mounted() {
+			console.log('mounted 组件挂载完毕状态===============》');
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#scrollView').boundingClientRect(data => {
+			console.log("得到布局位置信息" + JSON.stringify(data));
+			console.log("节点离页面顶部的距离为" + data.top);
+			this.myScroll = data.top
+			}).exec();
+		},
+		onPageScroll(e) {
+			// 重点，用到滑动切换必须加上
+			// this.$refs.hxnb.pageScroll(e);
+			// console.log(e)
+			if(e.scrollTop > this.myScroll){
+			this.isTop = 1
+			}else{
+			this.isTop = 0
+			}
+			
 		},
 		onReachBottom() {
 			if (this.current_page === this.last_page) {
@@ -191,12 +220,17 @@
 
 	.textrus {
 		width: 100%;
-		
+		height: 110rpx;
+		position:fixed;
+		background:#ffffff;
+		top:calc(var(--status-bar-height) + 82rpx);
+		z-index:50;
+		left:0;
 	}
 
 	.contes {
 		width: 100%;
-		margin-top: 10upx;
+		margin-top: 90upx;
 		background-color: #F6F6F6;
 	}
 

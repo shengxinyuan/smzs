@@ -2,7 +2,7 @@
 	<view>
 		<zs-hx-navbar :config="config" @searchClick="searchClick"></zs-hx-navbar>
 		<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="cate_id" 
-		@shop_confim="shop_confim"
+		@shop_confim="shop_confim" :isFoll="isFoll"
 			:lv="lv" :screen_label_list="label_list">
 		</zs-shoplist-type>
 		<view class=""
@@ -37,7 +37,30 @@
 				last_page: 1,
 				loadingText: '上拉加载更多',
 				label_list: {},
+				isTop:0,
+				myScroll:0,
+				isFoll:'detail'
 			}
+		},
+		mounted() {
+			console.log('mounted 组件挂载完毕状态===============》');
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#scrollView').boundingClientRect(data => {
+			console.log("得到布局位置信息" + JSON.stringify(data));
+			console.log("节点离页面顶部的距离为" + data.top);
+			this.myScroll = data.top
+			}).exec();
+		},
+		onPageScroll(e) {
+			// 重点，用到滑动切换必须加上
+			// this.$refs.hxnb.pageScroll(e);
+			// console.log(e)
+			if(e.scrollTop > this.myScroll){
+			this.isTop = 1
+			}else{
+			this.isTop = 0
+			}
+			
 		},
 		onLoad(op) {
 			let b = uni.getStorageSync('member_info')

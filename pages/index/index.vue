@@ -224,7 +224,9 @@
 				</view>
 			</view>
 			<!-- 筛选 -->
-			<scroll-view class="scroll-view_H" scroll-x="true">
+			<scroll-view class="scroll-view_H" scroll-x="true" id="scrollView"
+				:class="isTop == 1 ? 'postionTop' : ''">
+				<!-- :style="isTop == 1 ? 'position:fixed;background:#ffffff;top:100rpx;z-index:50;left:0;' : ''"> -->
 				<view id="demo1" class="nav_swiper" :class="{active: it.id == nav_ind }" @click="nac_cla(it.id)"
 					v-for="(it,ind) in index_data.cates" :key="ind">
 					{{it.title}}
@@ -235,7 +237,7 @@
 		</view>
 		<view class="classify">
 			<zs-shoplist-type :shop_list="shop_list1" :lists="list" :cate_fist_id="nav_ind" :shop_subject_id="''"
-				@shop_confim="shop_confim" :lv="huiy_show" :screen_label_list="label_list"></zs-shoplist-type>
+				@shop_confim="shop_confim" :lv="huiy_show" :screen_label_list="label_list" :tops="tops" :isTop="isTop"></zs-shoplist-type>
 			<view class="" style="height: 100rpx;display: flex;align-items: center;justify-content: center;"
 				v-if="shop_list1.length > 0">
 				{{ loadingText }}
@@ -269,7 +271,7 @@
 			return {
 				height: '50',
 				puytcopup: 0, //普通优惠券
-				tops: 0,
+				tops: '190rpx',
 				swiperCurrent: 0,
 				swiperCurrent_b: 0,
 				backgroundColor: '', //标题栏背景色
@@ -311,12 +313,28 @@
 				bg_td: '#FDEEEC',
 				muban: 2,
 				banben: '',
+				isTop:0,
+				myScroll:0
 			}
+		},
+		mounted() {
+			console.log('mounted 组件挂载完毕状态===============》');
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#scrollView').boundingClientRect(data => {
+			console.log("得到布局位置信息" + JSON.stringify(data));
+			console.log("节点离页面顶部的距离为" + data.top);
+			this.myScroll = data.top
+			}).exec();
 		},
 		onPageScroll(e) {
 			// 重点，用到滑动切换必须加上
 			// this.$refs.hxnb.pageScroll(e);
 			// console.log(e)
+			if(e.scrollTop > this.myScroll){
+				this.isTop = 1
+			}else{
+				this.isTop = 0
+			}
 			this.backgroundColor = 'rgba(255,255,255,' + e.scrollTop / 180 + ')'
 			this.headcolor = 'rgba(0,0,0,' + e.scrollTop / 180 + ')'
 			this.indexbackcolor = 'rgba(248,248,248,' + e.scrollTop / 180 + ')' //导航栏搜索框背景色
@@ -805,6 +823,14 @@
 </style>
 
 <style lang="scss" scoped>
+	.postionTop{
+		position:fixed;
+		background:#ffffff;
+		top:calc(var(--status-bar-height) + 90rpx);
+		z-index:50;
+		left:0;
+		// height: 112rpx;
+	}
 	.content {
 		padding-bottom: 10upx;
 	}
@@ -813,7 +839,7 @@
 		display: flex;
 		white-space: nowrap;
 		line-height: 90rpx;
-		height: 90rpx;
+		height: 100rpx;
 		border-bottom: 1rpx solid #eee;
 
 		.nav_swiper {
