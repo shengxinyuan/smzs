@@ -2,7 +2,7 @@
 	<view>
 		<zs-hx-navbar :config="config" @searchClick="searchClick"></zs-hx-navbar>
 		<zs-shoplist-type :shop_list="shop_list" :lists="list" :cate_fist_id="cate_id" 
-		@shop_confim="shop_confim" :isFoll="isFoll"
+		@shop_confim="shop_confim" :isFoll="isFoll" :paddingTop="paddingTop"
 			:lv="lv" :screen_label_list="label_list">
 		</zs-shoplist-type>
 		<view class=""
@@ -39,7 +39,8 @@
 				label_list: {},
 				isTop:0,
 				myScroll:0,
-				isFoll:'detail'
+				isFoll:'detail',
+				paddingTop:'100rpx'
 			}
 		},
 		mounted() {

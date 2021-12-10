@@ -13,7 +13,7 @@
 		</view> -->
 		<view class="contes">
 			<zs-shoplist-type :shop_list="shop_list" :lists="lists" :lv="lv" :page_login="page_login" :shaix_type="'3'"
-			 @shop_confim="shop_confim" :screen_label_list="label_list"></zs-shoplist-type>
+			 @shop_confim="shop_confim" :screen_label_list="label_list" :isFoll="isFoll" :paddingTop="paddingTop"></zs-shoplist-type>
 				<view class=""
 				style="height: 100rpx;display: flex;align-items: center;justify-content: center;" 
 				v-if="shop_list.length > 0">
@@ -50,6 +50,8 @@
 				loadingText: '上拉加载更多',
 				key: '',
 				label_list: {},
+				isFoll:'detail',
+				paddingTop:'100rpx'
 			}
 		},
 		onReachBottom() {
@@ -201,7 +203,7 @@
 
 	.contes {
 		width: 100%;
-		margin-top: 10upx;
+		// margin-top: 10upx;
 		background-color: #F6F6F6;
 	}
 

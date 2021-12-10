@@ -267,7 +267,7 @@
 				shop_good_label_id: '',
 				position:'fixed',
 				left:0,
-				top:'var(--status-bar-height) + 88rpx'
+				top:'var(--status-bar-height) + 88rpx',
 			};
 		},
 		props: {
@@ -492,6 +492,7 @@
 		top:calc(var(--status-bar-height) + 190rpx);
 		z-index:50;
 		left:0;
+		
 	}
 	.popups {
 		padding: 80rpx 30rpx 130rpx 30rpx;
