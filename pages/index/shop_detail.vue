@@ -202,17 +202,30 @@
 		<u-popup v-model="skuShow" mode="bottom">
 			<scroll-view scroll-y="true">
 				<view class="attr-content" @click.stop="stopPrevent" style="height: 900rpx;position: relative;">
-					<view v-for="(item,index) in shopsku.title" class="attr-list">
-						<text style="font-weight: bold;">{{item.title.title}}</text>
-						<view class="item-list">
-							<text v-for="(childItem, childIndex) in item.data"
-								v-if="childItem.pid === item.id && childItem.pid !=3" :key="childIndex" class="tit"
-								:class="{selected: childItem.selected}"
-								@click="selectSpec(index,childIndex, childItem.pid)">
-								{{childItem.title}}
-							</text>
+					<view class="" style="display: flex;justify-content: space-between;align-items: center;">
+						<view v-for="(item,index) in shopsku.title" class="attr-list">
+							<text style="font-weight: bold;">{{item.title.title}}</text>
+							<view class="item-list">
+								<text v-for="(childItem, childIndex) in item.data"
+									v-if="childItem.pid === item.id && childItem.pid !=3" :key="childIndex" class="tit"
+									:class="{selected: childItem.selected}"
+									@click="selectSpec(index,childIndex, childItem.pid)">
+									{{childItem.title}}
+								</text>
+								<!-- <text>asjdfh</text>
+								<text>asjdfh</text>
+								<text>asjdfh</text>
+								<text>asjdfh</text>
+								<text>asjdfh</text> -->
+							</view>
+						</view>
+						<view class="" v-if="previewImage!=''">
+							<image style="width: 160rpx;height: 160rpx;" 
+								:src="previewImage" mode=""
+								@click="perview"></image>
 						</view>
 					</view>
+					
 					<view v-for="(it, ind) in details" :key="ind" :class="{jactive:jg_ind == it.id}" class="jg_sty"
 						@click="zhifu(it)">
 						<view class="jg_sty_t">
@@ -343,6 +356,7 @@
 				stocks: 1,
 				isLogin: false,
 				sw_autoplay: true,
+				previewImage:''
 			};
 		},
 		onPageScroll(e) {
@@ -455,6 +469,7 @@
 								num: res.data.sale,
 							},
 						]
+						// console.log(...this.stynumber);
 						// sku
 						this.sku()
 						// this.scrolls()
@@ -542,6 +557,8 @@
 			},
 			//结果
 			zhifu(e) {
+				console.log(e);
+				this.previewImage = e.image 
 				this.value = 1
 				this.jg_ind = e.id
 				this.stock = e.stock
@@ -646,6 +663,19 @@
 					});
 				}
 
+			},
+			// 图片预览
+			perview(){
+				let arr = []
+				this.details.forEach((item,index) =>{
+					arr.push(item.image)
+					// arr.push('https://cdn.uviewui.com/uview/swiper/swiper3.png')
+				})
+				uni.previewImage({
+					current:this.previewImage,
+					urls: arr,
+					loop: true
+				});
 			},
 			//加购物车/购买
 			payment_yes(e) {

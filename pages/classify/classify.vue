@@ -74,9 +74,16 @@
 		},
 		onLoad(){
 			this.loadData();
+			this.$api.get('cate',{}).then(res=>{
+				console.log(res)
+				// this.tlist = res.data.cate
+			})
 		},
 		onReady() {
 			uni.hideTabBar()
+		},
+		onPageScroll(e){
+			console.log(e);
 		},
 		computed: {
 			//获取系统状态栏高度

@@ -31,3 +31,27 @@ Vue.prototype.wxShare = function() {
 	    }
 	});
 }
+
+Vue.prototype.debounce = function(fn,delay) {
+	let timer
+	return function (...args) {
+	    if (timer) {
+	      clearTimeout(timer)
+	    }
+	    timer = setTimeout(() => {
+	      fn.apply(this, args)
+	    }, delay)
+	}
+}
+
+Vue.prototype.throttle = function(fn,delay){
+	console.log(fn);
+	let last = 0 // 上次触发时间
+	return (...args) => {
+	    const now = Date.now()
+	    if (now - last > delay) {
+	      last = now
+	      fn.apply(this, args)
+	    }
+	}
+}

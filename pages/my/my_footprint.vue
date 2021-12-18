@@ -347,7 +347,7 @@
 			line-height: 80rpx;padding-left: 3%;font-size: 28rpx;color: #999;
 		}
 		.item_shop{
-			width: 100%;display: flex;flex-wrap: wrap;
+			width: 100%;display: flex;flex-wrap: wrap;padding: 0 3%;
 			.item_shop_it{
 				width: 32%;margin-right: 2%;margin-top: 10rpx;background-color: white;
 				overflow-y: scroll;

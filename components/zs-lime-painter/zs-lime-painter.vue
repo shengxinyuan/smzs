@@ -104,6 +104,7 @@ export default {
 		const { SDKVersion, version, platform, environment } = wx.getSystemInfoSync();
 		// ios wx7.0.20 createImage bug
 		this.use2dCanvas = this.type === '2d' && compareVersion(SDKVersion, '2.9.2') >= 0 && !((/ios/i.test(platform) && /7.0.20/.test(version)) || /wxwork/i.test(environment));
+		console.log(this.use2dCanvas);
 	},
 	// #endif
 	mounted() {
@@ -180,9 +181,11 @@ export default {
 				await sleep(afterDelay);
 			}
 			this.$emit('done');
+			console.log(this.pathType);
 			if (this.isRenderImage && !single && this.isDrawIng) {
 				this.canvasToTempFilePath()
 					.then(async res => {
+						console.log(res);
 						if(this.pathType == 'base64') {
 							if(/^data:image\/(\w+);base64/.test(res.tempFilePath)) {
 								this.$emit('success', res.tempFilePath);

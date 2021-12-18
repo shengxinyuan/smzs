@@ -1,1 +1,1 @@
-<view class="data-v-1a24015d"><view data-event-opts="{{[['tap',[['but_cli',['$event']]]]]}}" class="go_buts data-v-1a24015d" bindtap="__e">{{''+buttitle+''}}</view></view>
+<view class="data-v-63322dc3"><view data-event-opts="{{[['tap',[['but_cli',['$event']]]]]}}" class="go_buts data-v-63322dc3" bindtap="__e">{{''+buttitle+''}}</view></view>

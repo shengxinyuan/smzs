@@ -66,7 +66,7 @@
 				</view>
 				<!-- 统计 -->
 				<view class="statistics">
-					<view class="statistics_it" @click="go_pages('./collect')">
+					<!-- <view class="statistics_it" @click="go_pages('./collect')">
 						<view class="it_num">{{menber.collect}}</view>
 						<view class="it_name u-font-13">我的收藏</view>
 					</view>
@@ -81,6 +81,13 @@
 					<view class="statistics_it" @click="go_pages('./gold')">
 						<view class="it_num">{{menber.gold}}</view>
 						<view class="it_name u-font-13">我的金币</view>
+					</view> -->
+					<view class="statistics_it" @click="go_pages(item.url)" v-for="(item,stat) in myInfoList" :key="stat">
+						<view class="it_num" v-if="stat==0">{{menber.collect}}</view>
+						<view class="it_num" v-if="stat==1">{{menber.history}}</view>
+						<view class="it_num" v-if="stat==2">{{menber.coupon}}</view>
+						<view class="it_num" v-if="stat==3">{{menber.gold}}</view>
+						<view class="it_name u-font-13">{{item.name}}</view>
 					</view>
 				</view>
 				<!-- 会员 -->
@@ -329,6 +336,12 @@
 				qiandao_if:false,//签到按钮状态
 				qrcode_show:false,//二维码显示
 				qrcode_image:'',
+				myInfoList:[
+					{id:0,name:'我的收藏',url:'./collect'},
+					{id:0,name:'我的足迹',url:'./my_footprint'},
+					{id:0,name:'优惠券',url:'./discontcoupon'},
+					{id:0,name:'我的金币',url:'./gold'},
+				],
 				order:[
 					{
 						img:'https://zuanshi.semoh.cn/applet_static/my/daifu.png',

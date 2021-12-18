@@ -103,11 +103,14 @@
 				<!-- 表格 -->
 				<view class="tabs">
 					<view class="tabs_tr">
-						<view>品种</view>
+						<!-- <view>品种</view>
 						<view>销售</view>
 						<view>回购</view>
 						<view>最高</view>
-						<view>最低</view>
+						<view>最低</view> -->
+						<view class="" v-for="(item,s) in gold_sort" :key="s">
+							<text>{{item.name}}</text>
+						</view>
 					</view>
 					<view class="swipers_d">
 						<view :class="ind % 2 != 0 ? 'tabs_tr' :'tabs_td'" v-for="(it,ind) in gold_price.data"
@@ -289,6 +292,13 @@
 				lv: 0,
 				member: '',
 				avatar: '',
+				gold_sort:[
+					{name:'品种'},
+					{name:'销售'},
+					{name:'回购'},
+					{name:'最高'},
+					{name:'最低'},
+				],
 				gold_price: [],
 				coupon_data: '',
 				ptcoupon: false, //普通优惠券状态

@@ -88,7 +88,8 @@
 							css: {
 								color: '#666',
 								left: '110rpx',
-								top: '42rpx',
+								// top: '42rpx',
+								top: '50rpx',
 								fontSize: '30rpx',
 							}
 						},
@@ -96,11 +97,14 @@
 							type: 'image',
 							src: '',
 							css: {
-								left: '0rpx',
+								left: '100rpx',
+								// left: '0rpx',
 								top: '130rpx',
 								background: '#ccc',
-								width: 'auto',
-								height: 'auto',
+								// width: 'auto',
+								// height: 'auto',
+								width:'300rpx',
+								height: '300rpx',
 							}
 						},
 						{
@@ -109,7 +113,8 @@
 							css: {
 								color: '#666',
 								left: '30rpx',
-								top: '600rpx',
+								// top: '600rpx',
+								top: '560rpx',
 								fontSize: '30rpx',
 							}
 						},
@@ -119,7 +124,8 @@
 							css: {
 								color: '#666',
 								left: '30rpx',
-								top: '650rpx',
+								// top: '650rpx',
+								top: '600rpx',
 								fontSize: '28rpx',
 							}
 						},
@@ -129,7 +135,8 @@
 							css: {
 								color: '#666',
 								left: '30rpx',
-								top: '700rpx',
+								// top: '700rpx',
+								top: '640rpx',
 								fontSize: '28rpx',
 							}
 						},
@@ -139,7 +146,8 @@
 							css: {
 								color: '#ff0000',
 								left: '30rpx',
-								top: '740rpx',
+								// top: '740rpx',
+								top: '680rpx',
 								fontSize: '34rpx',
 								fontWeight: 'bold'
 							}
@@ -149,10 +157,11 @@
 							src: '',
 							css: {
 								left: '200rpx',
-								top: '810rpx',
+								// top: '810rpx',
+								top: '750rpx',
 								background: '#ffffff',
-								width: '120rpx',
-								height: '120rpx',
+								width: '140rpx',
+								height: '140rpx',
 							}
 						},
 						// {
@@ -209,6 +218,13 @@
 				this.vip_type = false
 			}
 			this.get_goods_qrcode()
+			const condition = false;
+			const person = {
+			  id: 1,
+			  name: "dby",
+			  ...(condition && { age: 12 }),
+			};
+			console.log(condition,person);
 		},
 		methods: {
 			// 保存画布到相册
@@ -328,6 +344,7 @@
 					// #endif
 				}
 				if (e == 3) {
+					console.log(this.datas.comm_avatar,this.datas.image);
 					let price = ''
 					if (this.vip_type == true) {
 						price = this.datas.price_vip

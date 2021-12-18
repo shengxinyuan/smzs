@@ -39,7 +39,7 @@
 			<view class="recharg_it_child" @click="go_pages('./particulars?type='+1)">
 				<view class="" style="display: flex;align-items: center;">
 					<u-icon name="order" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
-					提现明细
+					<text>提现明细</text>
 				</view>
 				<view>
 					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
@@ -48,7 +48,7 @@
 			<view class="recharg_it_child" @click="go_pages('./particulars?type='+2)">
 				<view class="" style="display: flex;align-items: center;">
 					<u-icon name="red-packet" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
-					返利明细
+					<text>返利明细</text>
 				</view>
 				<view>
 					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
@@ -57,7 +57,7 @@
 			<view class="recharg_it_child" @click="go_pages('./particulars?type='+3)">
 				<view class="" style="display: flex;align-items: center;">
 					<u-icon name="bag" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
-					消费明细
+					<text>消费明细</text>
 				</view>
 				<view>
 					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
@@ -66,7 +66,7 @@
 			<view class="recharg_it_child" @click="go_pages('./particulars?type='+4)">
 				<view class="" style="display: flex;align-items: center;">
 					<u-icon name="rmb-circle" size="44" color="#999" style="margin-right: 20rpx;"></u-icon>
-					充值明细
+					<text>充值明细</text>
 				</view>
 				<view>
 					<u-icon name="arrow-right" size="38" color="#999"></u-icon>
@@ -111,6 +111,15 @@
 								price:res.data.have_withdrawal
 							}
 						]
+						// this.list.map((item,index,key) =>{
+						// 	// console.log(item,index,key);
+						// 	item['num'] = index * 2
+						// })
+						// this.list.forEach((item,index,key) =>{
+						// 	// console.log(item,index,key);
+						// 	item['num'] = index * 2
+						// })
+						// console.log(this.list);
 					}
 				})
 			},
