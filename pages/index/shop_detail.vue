@@ -84,11 +84,12 @@
 							<image src="https://zuanshi.semoh.cn/applet_static/index/search_icon.png" mode=""></image>
 							<view>一键比价</view>
 						</view> -->
-
+					<!-- #ifdef APP-PLUS || H5-->
 					<view class="min-box-tt" @click="skipShare" v-show="vip_type">
 						<u-icon name="share" size="42"></u-icon>
 						<view>分享</view>
 					</view>
+					<!-- #endif -->
 				</view>
 			</view>
 		</view>
@@ -257,9 +258,13 @@
 								￥<text>{{it.price_vip}}</text>
 							</view>
 						</view>
-						<view style="line-height: 40rpx;">
-							备注：{{it.remark || '无'}}
+						<view class="jg_sty_t" style="line-height: 40rpx;">
+							<text style="width: 50%;">备注：{{it.remark || '无'}}</text>
+							<text style="width: 50%;">尺寸：{{it.ring_arm_size || '无'}}</text>
 						</view>
+						<!-- <view style="line-height: 40rpx;">
+							尺寸：{{it.ring_arm_size || '无'}}
+						</view> -->
 					</view>
 					<view style="height: 180rpx;"></view>
 					<view style="position: fixed;bottom: 0;left: 0;right: 0;padding: 0 20rpx;background-color: #FFFFFF;">

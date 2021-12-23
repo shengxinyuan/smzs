@@ -301,6 +301,9 @@
 			},
 			screen_label_list: {},
 		},
+		mounted(){
+			console.log(this.lv);
+		},
 		// mounted() {
 		// 	console.log('mounted 组件挂载完毕状态===============》');
 		// 	const query = uni.createSelectorQuery().in(this);
