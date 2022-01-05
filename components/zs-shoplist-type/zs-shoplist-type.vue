@@ -29,6 +29,7 @@
 					</view>
 					<u-popup v-model="show" mode="right">
 						<view class="popups">
+							<view class="" style="height: 100rpx;"></view>
 							<!-- 单选标签 -->
 							<view class="item" v-for="(it,ind) in lists" :key="ind">
 								<!-- //标题 -->
@@ -81,6 +82,7 @@
 								</view>
 								<view @click="shop_confim">确定</view>
 							</view>
+							<view class="" style="height: 100rpx;"></view>
 						</view>
 					</u-popup>
 				</view>
@@ -115,6 +117,7 @@
 					</view>
 					<u-popup v-model="show" mode="right">
 						<view class="popups">
+							<view class="" style="height: 100rpx;"></view>
 							<!-- 单选标签 -->
 							<view class="item" v-for="(it,ind) in lists" :key="ind">
 								<!-- //标题 -->
@@ -167,6 +170,7 @@
 								</view>
 								<view @click="shop_confim">确定</view>
 							</view>
+							<view class="" style="height: 100rpx;"></view>
 						</view>
 					</u-popup>
 				</view>
@@ -498,15 +502,16 @@
 		
 	}
 	.popups {
-		padding: 80rpx 30rpx 130rpx 30rpx;
+		padding: calc(var(--status-bar-height) + 80rpx) 30rpx calc(var(--window-bottom) + 130rpx) 30rpx;
 		width: 640rpx;
 		position: relative;
 
 		.but {
-			position: absolute;
+			// position: absolute;
+			margin-top: 50rpx;
 			left: 0;
 			right: 0;
-			bottom: 20rpx;
+			bottom: calc(var(--window-bottom) + 20rpx);
 			width: 100%;
 			font-size: 26upx;
 			display: flex;

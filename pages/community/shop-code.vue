@@ -124,6 +124,20 @@
 					console.log(res)
 					if(res.status == 1){
 						//循环生成画布
+						// if(res.data[0].is_qrcode==0){
+						// 	uni.showModal({
+						// 		title:'提示',
+						// 		content:'您的二维码已失效,请重新生成',
+						// 		showCancel:false,
+						// 		success: function (res) {
+						// 		        if (res.confirm) {
+						// 		            console.log('用户点击确定');
+						// 		        } else if (res.cancel) {
+						// 		            console.log('用户点击取消');
+						// 		        }
+						// 		    }
+						// 	})
+						// }
 						this.swiperList = res.data
 						this.changeimg(0)
 					}

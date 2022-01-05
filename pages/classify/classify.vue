@@ -29,7 +29,7 @@
 			<!-- 右侧 -->
 			<scroll-view scroll-with-animation scroll-y class="right-aside" :scroll-top="tabScrollTop">
 				<!-- 轮播 -->
-				<view class="" style="width: 98%;height: 230rpx;background-color: orange;">
+				<view class="" style="width: 98%;height: 230rpx;">
 					<swiper class="swiper" :indicator-dots="true" :autoplay="true" :circular="true" :interval="4000" :duration="500">
 						<swiper-item v-for="(it,ind) in banners" :key="ind" @click="bann_nav(it)">
 							<image :src="it.image" mode="aspectFill"></image>
@@ -58,6 +58,35 @@
 </template>
 
 <script>
+	// const server = http.createServer()
+	
+	// server.on('request', (request, response) => {
+	//   response.statusCode = 200
+	//   response.end('hello world')
+	// })
+	// const http = require('http')
+	// const options = {
+	//   hostname: 'nodejs.cn',
+	//   port: 80,
+	//   path: '/learn',
+	//   method: 'GET'
+	// }
+	
+	// const req = http.request(options, res => {
+	// 	console.log(res);
+	//   console.log(`状态码: ${res.statusCode}`)
+	//   res.on('data', d => {
+	// 	  console.log(d);
+	//     // process.stdout.write(d)
+	//   })
+	//   res.on('end', () => {})
+	// })
+	
+	// req.on('error', error => {
+	//   console.error(error)
+	// })
+	
+	// req.end()
 	import Json from '../../Json.js' //测试用数据
 	export default {
 		data() {

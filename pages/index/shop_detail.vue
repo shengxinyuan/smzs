@@ -259,8 +259,8 @@
 							</view>
 						</view>
 						<view class="jg_sty_t" style="line-height: 40rpx;">
-							<text style="width: 50%;">备注：{{it.remark || '无'}}</text>
 							<text style="width: 50%;">尺寸：{{it.ring_arm_size || '无'}}</text>
+							<text style="width: 50%;">备注：{{it.remark || '无'}}</text>
 						</view>
 						<!-- <view style="line-height: 40rpx;">
 							尺寸：{{it.ring_arm_size || '无'}}

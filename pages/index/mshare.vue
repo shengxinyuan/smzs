@@ -101,10 +101,11 @@
 								// left: '0rpx',
 								top: '130rpx',
 								background: '#ccc',
+								// background: '#333',
 								// width: 'auto',
 								// height: 'auto',
-								width:'300rpx',
-								height: '300rpx',
+								width:'280rpx',
+								height: '280rpx',
 							}
 						},
 						{
@@ -114,8 +115,8 @@
 								color: '#666',
 								left: '30rpx',
 								// top: '600rpx',
-								top: '560rpx',
-								fontSize: '30rpx',
+								top: '500rpx',
+								fontSize: '26rpx',
 							}
 						},
 						{
@@ -125,8 +126,8 @@
 								color: '#666',
 								left: '30rpx',
 								// top: '650rpx',
-								top: '600rpx',
-								fontSize: '28rpx',
+								top: '540rpx',
+								fontSize: '26rpx',
 							}
 						},
 						{
@@ -136,8 +137,8 @@
 								color: '#666',
 								left: '30rpx',
 								// top: '700rpx',
-								top: '640rpx',
-								fontSize: '28rpx',
+								top: '580rpx',
+								fontSize: '26rpx',
 							}
 						},
 						{
@@ -147,7 +148,7 @@
 								color: '#ff0000',
 								left: '30rpx',
 								// top: '740rpx',
-								top: '680rpx',
+								top: '620rpx',
 								fontSize: '34rpx',
 								fontWeight: 'bold'
 							}
@@ -156,12 +157,12 @@
 							type: 'image',
 							src: '',
 							css: {
-								left: '200rpx',
+								left: '180rpx',
 								// top: '810rpx',
-								top: '750rpx',
+								top: '660rpx',
 								background: '#ffffff',
-								width: '140rpx',
-								height: '140rpx',
+								width: '160rpx',
+								height: '160rpx',
 							}
 						},
 						// {
