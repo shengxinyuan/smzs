@@ -127,10 +127,6 @@
 						<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 					</view>
 				</view>
-				<view style="margin-top: 30rpx;" v-if="data.image">
-					<image style="width: 100%;height: 360rpx;border-radius: 10rpx;" 
-					:src="data.image" mode="aspectFill"></image>
-				</view>
 			</view>
 		</view>
 		
@@ -221,7 +217,7 @@
 			},
 			skip_up(){
 				uni.navigateTo({
-					url: './add_shop_image'
+					url: `./add_shop_image?img=${encodeURIComponent(this.data.image || '')}`
 				})
 			},
 			//图片预览

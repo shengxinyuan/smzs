@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view style="padding: 30rpx;display: flex;align-items: center;justify-content: center;">
-			<u-upload max-count="1" :action="upload_url" :name="'file'" width="690" height="360" :auto-upload="true"
+			<u-upload max-count="1" :file-list="previewList" :action="upload_url" :name="'file'" width="690" height="360" :auto-upload="true"
 				v-on:on-success="result_plan" v-on:on-remove="remove" :header="header"></u-upload>
 		</view>
 		<view class="save_btn" @click="save">
@@ -14,11 +14,20 @@
 	export default {
 		data() {
 			return {
+				previewList: [],
 				upload_url: 'https://zuanshi.semoh.cn/api/uploads',
 				image_plan: '',
 				header: {
 					'token': uni.getStorageSync('token')
 				}
+			}
+		},
+		onLoad(e){
+			console.log(e)
+			const img = decodeURIComponent(e.img || '');
+			if (img) {
+				this.image_plan = img
+				this.previewList = [{ url: img }]
 			}
 		},
 		methods: {
@@ -49,9 +58,7 @@
 							title: '修改成功',
 							icon: 'none'
 						});
-						setTimeout(function() {
-							uni.navigateBack()
-						}, 1500);
+						uni.navigateBack()
 					}
 				})
 			}

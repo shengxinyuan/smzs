@@ -1,6 +1,19 @@
 <template>
 	<view>
-		banner设置
+		<view style="padding: 30rpx;display: flex;align-items: center;justify-content: center;">
+			<u-upload
+				ref="uUpload"
+				max-count="9"
+				:file-list="previewList"
+				:action="upload_url"
+				:name="'file'"
+				:auto-upload="true"
+				:header="header"
+			></u-upload>
+		</view>
+		<view class="save_btn" @click="save">
+			<button>保存</button>
+		</view>
 	</view>
 </template>
 
@@ -8,44 +21,45 @@
 	export default {
 		data() {
 			return {
+				previewList: [],
 				upload_url: 'https://zuanshi.semoh.cn/api/uploads',
-				image_plan: '',
 				header: {
 					'token': uni.getStorageSync('token')
 				}
 			}
 		},
-		methods: {
-			// 上传店铺照片
-			result_plan(e) {
-				console.log(e)
-				if (e.status == 1) {
-					this.image_plan = e.data
-				} else {
-					console.log(e.message)
+		onLoad(e){
+			uni.showLoading({ mask: true })
+			this.$api.get('/shop/banner/query_picture').then((res) => {
+				console.log(res);
+				uni.hideLoading()
+				if (res.status == 1) {
+					this.previewList = res.data.map(url => ({ url }))
 				}
-			},
-			// 上传照片删除
-			remove(i) {
-				this.image_plan = ''
-			},
+			}).catch(() => {
+				uni.hideLoading()
+			})
+		},
+		methods: {
 			save(){
-				if (this.image_plan == '') {
+				const files = this.$refs.uUpload.lists.filter(val => {
+					return val.progress == 100;
+				}).map((val) => val.response ? val.response.data : val.url)
+				console.log(files)
+				if (files.length === 0) {
 					uni.showToast({
-						title: '照片不能为空!',
+						title: 'banner不能为空!',
 						icon: 'none'
 					});
 					return
 				}
-				this.$api.post('manage',{image:this.image_plan}).then(res=>{
+				this.$api.post('/shop/banner/set_picture',{img_url:files}).then(res=>{
 					if (res.status == 1) {
 						uni.showToast({
 							title: '修改成功',
 							icon: 'none'
 						});
-						setTimeout(function() {
-							uni.navigateBack()
-						}, 1500);
+						uni.navigateBack()
 					}
 				})
 			}
