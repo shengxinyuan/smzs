@@ -551,16 +551,56 @@
 				"enablePullDownRefresh": false,
 				"navigationBarBackgroundColor": "#FFFFFF"
 			}
-
-		}, {
+		}, 
+		{
 			"path": "pages/set-shop/set-withdraws",
 			"style": {
 				"navigationBarTitleText": "提现设置",
 				"enablePullDownRefresh": false,
 				"navigationBarBackgroundColor": "#FFFFFF"
 			}
-
-		}, {
+		}, 
+		{
+			"path": "pages/set-shop/goods-index",
+			"style": {
+				"navigationBarTitleText": "商品顺序管理",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF"
+			}
+		}, 
+		{
+			"path": "pages/set-shop/category",
+			"style": {
+				"navigationBarTitleText": "目录管理",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF"
+			}
+		}, 
+		{
+			"path": "pages/set-shop/goods-list",
+			"style": {
+				"navigationBarTitleText": "自定义商品列表",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF"
+			}
+		}, 
+		{
+			"path": "pages/set-shop/goods-upload",
+			"style": {
+				"navigationBarTitleText": "自定义商品上传",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF"
+			}
+		}, 
+		{
+			"path": "pages/set-shop/banner",
+			"style": {
+				"navigationBarTitleText": "店铺banner",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF"
+			}
+		}, 
+		{
 			"path": "pages/community/shop-code",
 			"style": {
 				"navigationBarTitleText": "店铺二维码",

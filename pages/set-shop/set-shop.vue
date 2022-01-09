@@ -111,6 +111,14 @@
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
+			<view class="zl-heads" @click="skipSetWithdraw">
+				<view class="heads">
+					<text>提现设置</text>
+				</view>
+				<view class="nick-name">
+					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+				</view>
+			</view>
 			<view style="padding: 30rpx;">
 				<view style="display: flex;align-items: center;justify-content: space-between;">
 					<text>店铺照片</text>
@@ -124,6 +132,50 @@
 					:src="data.image" mode="aspectFill"></image>
 				</view>
 			</view>
+		</view>
+		
+		<view class="box-there">
+			<view class="zl-heads" @click="goBanner">
+				<view class="heads">
+					<text>店铺banner</text>
+				</view>
+				<view class="nick-name">
+					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+				</view>
+			</view>
+			<view class="zl-heads" @click="goCategory">
+				<view class="heads">
+					<text>目录管理</text>
+				</view>
+				<view class="nick-name">
+					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+				</view>
+			</view>
+			<view class="zl-heads" @click="goGoodsUpload">
+				<view class="heads">
+					<text>自定义商品上传</text>
+				</view>
+				<view class="nick-name">
+					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+				</view>
+			</view>
+			<view class="zl-heads" @click="goGoods">
+				<view class="heads">
+					<text>自定义商品列表</text>
+				</view>
+				<view class="nick-name">
+					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+				</view>
+			</view>
+			<view class="zl-heads" @click="goGoodsIndex">
+				<view class="heads">
+					<text>商品顺序修改</text>
+				</view>
+				<view class="nick-name">
+					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+				</view>
+			</view>
+			
 		</view>
 	</view>
 </template>
@@ -267,6 +319,36 @@
 			skipSetWithdraw() {
 				this.com.navto('../set-shop/set-withdraw')
 			},
+			// 目录设置
+			goCategory() {
+				uni.navigateTo({
+					url: 'category'
+				})
+			},
+			// 商品列表
+			goGoods() {
+				uni.navigateTo({
+					url: 'goods-list'
+				})
+			},
+			// 商品顺序
+			goGoodsIndex() {
+				uni.navigateTo({
+					url: 'goods-index'
+				})
+			},
+			// 商品上传
+			goGoodsUpload() {
+				uni.navigateTo({
+					url: 'goods-upload'
+				})
+			},
+			// 商品上传
+			goBanner() {
+				uni.navigateTo({
+					url: 'banner'
+				})
+			}
 		}
 	}
 </script>
