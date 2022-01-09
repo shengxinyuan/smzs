@@ -72,7 +72,7 @@
 					// this.com.tab("../../pages/classify/classify")
 				} else if (e == 3) {
 					// this.com.msg('敬请期待~')
-					uni.reLaunch({
+					uni.navigateTo({
 						url:'/pages/index/threedesign'
 					})
 				} else if (e == 4) {
