@@ -141,7 +141,7 @@
 						ass = this.pay_img.alipay_money / 100 * this.shop_data.shop_price
 						console.log(ass)
 						this.pic = this.shop_data.shop_price + ass
-						// #ifdef APP
+						// #ifdef APP || H5
 						this.list = [
 							{
 								img: 'https://zuanshi.semoh.cn/applet_static/my/payment/zhifub.png',

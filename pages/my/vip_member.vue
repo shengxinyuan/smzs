@@ -166,11 +166,28 @@
 				title_val:'',
 				ppid_number: 0,
 				people_invited: 0,
-				
+				isLogin:false
 			}
 		},
 		onLoad() {
 			that = this;
+			let a = uni.getStorageSync("token")
+			// console.log(a)
+			if (!a) {
+				// this.isLogin = false
+				uni.showModal({
+					content:'您还未登录，是否登录？',
+					success(aq) {
+						if(aq.confirm){
+							uni.navigateTo({
+								url:'/pages/login/login'
+							})
+						}
+					}
+				})
+			} else {
+				this.isLogin = true
+			}
 			// #ifdef MP-WEIXIN
 			this.pay = [
 				{
