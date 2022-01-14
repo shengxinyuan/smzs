@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 
 App.mpType = 'app'
 
-// 13260880929
+// 13260880929    18920417395
 import com from 'utils/common.js'
 Vue.prototype.com = com
 

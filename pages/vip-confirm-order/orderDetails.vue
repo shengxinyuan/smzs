@@ -48,7 +48,7 @@
 							<text >金料:￥{{its.gold_price}} </text>	
 							<text >工费:￥{{its.labor_price}}/g </text>
 						</view>
-						<view class="price">￥{{its.total}} <text>*{{its.count}}</text></view>
+						<!-- <view class="price">￥{{its.total}} <text>*{{its.count}}</text></view> -->
 					</view>
 				</view>
 			</view>

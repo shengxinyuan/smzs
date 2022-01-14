@@ -16,8 +16,8 @@
 								<view class="shop_list_label">
 									<text>金价：￥{{((its.gold_price/1)/(its.goods.weight/1)).toFixed(2)}}</text><text>工费：￥{{(((its.labor_price/1)+(its.labor_price_add/1))/(its.goods.weight/1)).toFixed(2)}}/g </text>
 								</view>
-								<view class="price"><text>￥{{its.total}}</text>
-								 <text style="color: #999;"> *{{its.count}}</text></view>
+								<!-- <view class="price"><text>￥{{its.total}}</text>
+								 <text style="color: #999;"> *{{its.count}}</text></view> -->
 							</view>
 								
 						</view>
