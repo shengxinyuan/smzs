@@ -118,6 +118,9 @@
 			},
 			editIndex(id, subId) {
 				this.getNewIndex().then((index) => {
+					uni.showLoading({
+						mask: true
+					})
 					this.$api.get('/category/edit', { id, subId, index }).then((res) => {
 						uni.hideLoading()
 						if (res.status == 1) {
@@ -139,6 +142,9 @@
 			},
 			addSecond(id) {
 				this.getNewText().then((text) => {
+					uni.showLoading({
+						mask: true
+					})
 					this.$api.get('/category/addFirstCategory', { id, text }).then((res) => {
 						uni.hideLoading()
 						if (res.status == 1) {
@@ -165,6 +171,9 @@
 					showCancel: true,
 					success: (res) => {
 						if (res.confirm) {
+							uni.showLoading({
+								mask: true
+							})
 							this.$api.get('/category/delete', { id, subId }).then((res) => {
 								uni.hideLoading()
 								if (res.status == 1) {
