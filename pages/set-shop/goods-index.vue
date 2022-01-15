@@ -177,8 +177,7 @@
 		width: 100%;
 		border-top: 1px solid #eee;
 		.cont_item {
-			width: 100%;
-			border-radius: 16rpx;
+			margin: 0 32rpx;
 			background-color: white;
 			overflow: hidden;
 			display: flex;
@@ -189,6 +188,7 @@
 				border-radius: 10rpx;
 				height: 180rpx;
 				display: block;
+				margin-right: 16rpx;
 			}
 			
 			.base-cont {
@@ -202,65 +202,12 @@
 			.index-cont {
 				width: 200rpx;
 				font-size: 24rpx;
+				text-align: center;
 				.index-btn {
 					margin-top: 10px;
 					color: #2979ff;
 				}
 			}
-	
-			.it_text {
-				width: 100%;
-				.it_tit {
-					font-size: 28rpx;
-					width: 96%;
-					overflow: hidden;
-				}
-	
-				.it_text_cen {
-					
-	
-					.it_price {
-						font-size: 30rpx;
-					}
-	
-					.it_selt_l {
-						display: flex;
-	
-						text {
-							color: #ea5b72;
-							font-size: 30rpx;
-						}
-	
-						image {
-							width: 60rpx;
-							height: 24rpx;
-							margin-top: 10rpx;
-						}
-					}
-				}
-	
-				.it_label {
-					width: 100%;
-					display: flex;
-					margin-top: 10rpx;
-					margin-bottom: 20rpx;
-	
-					view {
-						font-size: 22rpx;
-						padding: 0 8rpx;
-						border: 2rpx solid #DD524D;
-						color: #DD524D;
-						border-radius: 6rpx;
-					}
-				}
-	
-				.it_selt_r {
-					color: #998;
-					margin-top: 6rpx;
-					font-size: 24rpx;
-				}
-			}
-	
 		}
 	}
 

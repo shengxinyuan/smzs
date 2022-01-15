@@ -12,48 +12,57 @@
 						{{item.title}}
 					</view>
 					<view class="it_selt_l">
-						<text><text style="">￥</text>{{item.price}}</text>
+						<text><text style="">售价：￥</text>{{item.price}}</text>
+					</view>
+					<view class="it_selt_l">
+						<text><text style="">库存：</text>{{item.price}}</text>
+					</view>
+					<view class="it_selt_l">
+						<text><text style="">目录：</text>一级目录 二级目录</text>
 					</view>
 				</view>
 				<view class="index-cont">
 					<view v-if="first === 0">
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="edit(item)">
 							编辑
 						</view>
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="offShelf(item)">
 							下架
 						</view>
 					</view>
 					
 					<view v-if="first === 1">
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="onShelf(item)">
+							发布
+						</view>
+						<view class="index-btn" @click="edit(item)">
 							编辑
 						</view>
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="deleteGood(item)">
 							删除
 						</view>
 					</view>
 					
 					<view v-if="first === 2">
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="onShelf(item)">
 							上架
 						</view>
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="edit(item)">
 							编辑
 						</view>
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="deleteGood(item)">
 							删除
 						</view>
 					</view>
 					
 					<view v-if="first === 3">
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="withdraw(item)">
 							撤回
 						</view>
 					</view>
 					
 					<view v-if="first === 4">
-						<view class="index-btn" @click="editIndex(item)">
+						<view class="index-btn" @click="edit(item)">
 							编辑
 						</view>
 					</view>
@@ -157,34 +166,27 @@
 			];
 		},
 		methods: {
-			// 上传店铺照片
-			editIndex(item) {
-				this.editShow = true;
+			// 编辑
+			edit(item) {
+				
 			},
-			// 上传照片删除
-			remove(i) {
-				this.image_plan = ''
+			// 上架
+			onShelf(item) {
+				
 			},
-			save(){
-				if (this.image_plan == '') {
-					uni.showToast({
-						title: '照片不能为空!',
-						icon: 'none'
-					});
-					return
-				}
-				this.$api.post('manage',{image:this.image_plan}).then(res=>{
-					if (res.status == 1) {
-						uni.showToast({
-							title: '修改成功',
-							icon: 'none'
-						});
-						setTimeout(function() {
-							uni.navigateBack()
-						}, 1500);
-					}
-				})
+			// 下架
+			offShelf(item){
+				
 			},
+			// 撤回
+			withdraw (item) {
+				
+			},
+			// 删除
+			deleteGood (item) {
+				
+			},
+			// 删除
 			changeFirst (index) {
 				this.first = index;
 			},
@@ -197,8 +199,7 @@
 		width: 100%;
 		border-top: 1px solid #eee;
 		.cont_item {
-			width: 100%;
-			border-radius: 16rpx;
+			margin: 0 32rpx;
 			background-color: white;
 			overflow: hidden;
 			display: flex;
@@ -209,6 +210,7 @@
 				border-radius: 10rpx;
 				height: 180rpx;
 				display: block;
+				margin-right: 16rpx;
 			}
 			
 			.base-cont {
@@ -223,64 +225,11 @@
 				width: 100rpx;
 				font-size: 24rpx;
 				.index-btn {
+					text-align: center;
 					margin-top: 10px;
 					color: #2979ff;
 				}
 			}
-	
-			.it_text {
-				width: 100%;
-				.it_tit {
-					font-size: 28rpx;
-					width: 96%;
-					overflow: hidden;
-				}
-	
-				.it_text_cen {
-					
-	
-					.it_price {
-						font-size: 30rpx;
-					}
-	
-					.it_selt_l {
-						display: flex;
-	
-						text {
-							color: #ea5b72;
-							font-size: 30rpx;
-						}
-	
-						image {
-							width: 60rpx;
-							height: 24rpx;
-							margin-top: 10rpx;
-						}
-					}
-				}
-	
-				.it_label {
-					width: 100%;
-					display: flex;
-					margin-top: 10rpx;
-					margin-bottom: 20rpx;
-	
-					view {
-						font-size: 22rpx;
-						padding: 0 8rpx;
-						border: 2rpx solid #DD524D;
-						color: #DD524D;
-						border-radius: 6rpx;
-					}
-				}
-	
-				.it_selt_r {
-					color: #998;
-					margin-top: 6rpx;
-					font-size: 24rpx;
-				}
-			}
-	
 		}
 	}
 	
