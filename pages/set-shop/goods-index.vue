@@ -183,6 +183,7 @@
 			display: flex;
 			align-items: center;
 			border-bottom: 1px solid #eee;
+			color: rgb(96, 98, 102);
 			.images {
 				width: 180rpx;
 				border-radius: 10rpx;
@@ -195,8 +196,9 @@
 				flex: 1;
 				font-size: 24rpx;
 				.title {
-					font-size: 36rpx;
+					font-size: 32rpx;
 					margin-bottom: 8rpx;
+					color: #414141;
 				}
 			}
 			.index-cont {

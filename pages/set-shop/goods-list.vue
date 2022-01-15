@@ -1,11 +1,11 @@
 <template>
 	<view>
-		<u-tabs ref="tabs" :is-scroll="true" :list="firstList" active-color="#2979ff" inactive-color="#606266" font-size="30" :current="first" @change="changeFirst"></u-tabs>
+		<u-tabs ref="tabs" :is-scroll="false" :list="tabList" active-color="#2979ff" inactive-color="#606266" font-size="24" :current="currentTab" @change="changecurrentTab"></u-tabs>
 		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>
-		<scroll-view scroll-y="true" class="cont_list_two">
-			<view class="cont_item" v-for="(item,i) in shop_list" :key="i">
+		<scroll-view v-else scroll-y="true" class="cont_list_two" @scrolltolower="loadMore">
+			<view class="cont_item" v-for="(item, index) in shop_list" :key="item.id">
 				<image class="images" :src="item.image" mode="aspectFill"></image>
 				<view class="base-cont">
 					<view class="title">
@@ -18,58 +18,20 @@
 						<text><text style="">库存：</text>{{item.price}}</text>
 					</view>
 					<view class="it_selt_l">
-						<text><text style="">目录：</text>一级目录 二级目录</text>
+						<text v-if="item.status === 40" class="txt-red">拒绝原因：{{item.remark}}</text>
+						<text v-else><text style="">目录：</text>一级目录 二级目录</text>
 					</view>
 				</view>
 				<view class="index-cont">
-					<view v-if="first === 0">
-						<view class="index-btn" @click="edit(item)">
-							编辑
-						</view>
-						<view class="index-btn" @click="offShelf(item)">
-							下架
-						</view>
+					<view class="index-btn" v-for="(v, i) in tabList[currentTab].btns" :key="i" @click="btnCilck(item, v.type, v.tips)">
+						{{ v.name }}
 					</view>
-					
-					<view v-if="first === 1">
-						<view class="index-btn" @click="onShelf(item)">
-							发布
-						</view>
-						<view class="index-btn" @click="edit(item)">
-							编辑
-						</view>
-						<view class="index-btn" @click="deleteGood(item)">
-							删除
-						</view>
-					</view>
-					
-					<view v-if="first === 2">
-						<view class="index-btn" @click="onShelf(item)">
-							上架
-						</view>
-						<view class="index-btn" @click="edit(item)">
-							编辑
-						</view>
-						<view class="index-btn" @click="deleteGood(item)">
-							删除
-						</view>
-					</view>
-					
-					<view v-if="first === 3">
-						<view class="index-btn" @click="withdraw(item)">
-							撤回
-						</view>
-					</view>
-					
-					<view v-if="first === 4">
-						<view class="index-btn" @click="edit(item)">
-							编辑
-						</view>
-					</view>
-					
 				</view>
 			</view>
 		</scroll-view>
+		
+		<u-modal v-model="modalShow" :title="modalTitle" :content="modalContent" :show-cancel-button="true" @confirm="btnCilck(modalInfo.item, modalInfo.type)"></u-modal>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -78,118 +40,225 @@
 		data() {
 			return {
 				shop_list: [],
-				firstList: [
-					{name: '在售'},
-					{name: '草稿箱'},
-					{name: '已下架'},
-					{name: '审核中'},
-					{name: '审核拒绝'},
+				queryParams: {
+					page: 1,
+					limit: 10,
+					status: '30',
+					last_page: false
+				},
+				tabList: [
+					{ 
+						name: '在售',
+						status: '30',
+						btns: [
+							{
+								name: '编辑',
+								type: 'edit',
+								tips: ''
+							},
+							{
+								name: '下架',
+								type: 'offShelf',
+								tips: '当前操作会将该商品的状态从上架变为下架，是否继续'
+							}
+						]
+					},
+					{
+						name: '草稿箱',
+						status: '10',
+						btns: [
+							{
+								name: '编辑',
+								type: 'edit',
+								tips: ''
+							},
+							{
+								name: '删除',
+								type: 'delete',
+								tips: '请注意！当前操作会将该商品删除，是否继续'
+							}
+						]
+					},
+					{
+						name: '已下架',
+						status: '35',
+						btns: [
+							{
+								name: '上架',
+								type: 'onShelf',
+								tips: '确认上架该商品？'
+							},
+							{
+								name: '编辑',
+								type: 'edit',
+								tips: ''
+							},
+							{
+								name: '删除',
+								type: 'delete',
+								tips: '请注意！当前操作会将该商品删除，是否继续'
+							}
+						]
+					},
+					{
+						name: '审核中',
+						status: '20',
+						btns: [
+							{
+								name: '撤回',
+								type: 'withdraw',
+								tips: '请注意！当前操将该商品撤回并终止审核流程，是否继续'
+							}
+						]
+					},
+					{	
+						name: '审核拒绝',
+						status: '40',
+						btns: [
+							{
+								name: '编辑',
+								type: 'edit',
+								tips: ''
+							}
+						]
+					},
 				],
-				secondList: [],
-				first: 0,
-				second: 0,
-				editShow: false
+				currentTab: 0,
+				modalShow: false,
+				modalContent: '',
+				modalTitle: '',
+				modalInfo: {
+					type: '',
+					item: ''
+				},
 			}
 		},
 		onLoad () {
-			this.shop_list = [
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					title: '商品1',
-					sale: 10,
-					price: 1000,
-					index: 1,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-			];
+			this.queryList();
+			
 		},
 		methods: {
-			// 编辑
-			edit(item) {
-				
+			// 拉商品数据
+			queryList () {
+				this.$api.get('custom/queryGoods', {
+					page: this.queryParams.page,
+					limit: this.queryParams.limit,
+					status: this.queryParams.status,
+				}).then(res => {
+					if (res.status && res.data) {
+						this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, res.data.data];
+						this.queryParams.last_page = res.data.last_page;
+					}
+				})
 			},
-			// 上架
-			onShelf(item) {
-				
+			loadMore () {
+				if (this.queryParams.last_page) return;
+				this.queryParams.page += 1;
+				this.queryList();
 			},
-			// 下架
-			offShelf(item){
-				
+			reload () {
+				this.queryParams.page = 1;
+				this.queryList();
 			},
-			// 撤回
-			withdraw (item) {
-				
+			
+			// 切换tab
+			changecurrentTab (index) {
+				this.currentTab = index;
+				this.queryParams.status = this.tabList[index].status;
+				this.queryParams.page = 1;
+				this.queryList();
 			},
-			// 删除
-			deleteGood (item) {
-				
+			
+			btnCilck (item, type, tips) {
+				if (tips) {
+					this.modalShow = true;
+					this.modalTitle = `操作商品：${item.title}`;
+					this.modalContent = tips;
+					this.modalInfo.type = type;
+					this.modalInfo.item = item;
+					return
+				}
+				if (type === 'edit') {
+					
+					// 编辑
+					uni.navigateTo({
+						url: `goods-upload?id=${item.id}&status=${item.status}`
+					})
+					
+				} else if (type === 'onShelf') {
+					
+					// 上架
+					this.$api.post('custom/onSell', { id: item.id }).then(res => {
+						if (res.status) {
+							this.$refs.uToast.show({
+								title: '上架成功',
+								type: 'success',
+							})
+							this.reload();
+						} else {
+							this.$refs.uToast.show({
+								title: `上架失败，原因：${res.message}`,
+								type: 'error',
+							})
+						}
+					})
+				} else if (type === 'offShelf') {
+					
+					// 下架
+					this.$api.post('custom/notSell', { id: item.id }).then(res => {
+						if (res.status) {
+							this.$refs.uToast.show({
+								title: '下架成功',
+								type: 'success',
+							})
+							this.reload();
+						} else {
+							this.$refs.uToast.show({
+								title: `下架失败，原因：${res.message}`,
+								type: 'error',
+							})
+						}
+					})
+					
+				} else if (type === 'delete') {
+					
+					// 删除
+					this.$api.post('custom/delete', { id: item.id }).then(res => {
+						if (res.status) {
+							this.$refs.uToast.show({
+								title: '删除成功',
+								type: 'success',
+							})
+							this.reload();
+						} else {
+							this.$refs.uToast.show({
+								title: `删除失败，原因：${res.message}`,
+								type: 'error',
+							})
+						}
+					})
+					
+				} else if (type === 'withdraw') {
+					
+					// 撤回
+					this.$api.post('custom/withdraw', { id: item.id }).then(res => {
+						if (res.status) {
+							this.$refs.uToast.show({
+								title: '撤回成功',
+								type: 'success',
+							})
+							this.reload();
+						} else {
+							this.$refs.uToast.show({
+								title: `撤回失败，原因：${res.message}`,
+								type: 'error',
+							})
+						}
+					})
+					
+				}
 			},
-			// 删除
-			changeFirst (index) {
-				this.first = index;
-			},
+
 		}
 	}
 </script>
@@ -205,6 +274,7 @@
 			display: flex;
 			align-items: center;
 			border-bottom: 1px solid #eee;
+			color: rgb(96, 98, 102);
 			.images {
 				width: 180rpx;
 				border-radius: 10rpx;
@@ -217,8 +287,12 @@
 				flex: 1;
 				font-size: 24rpx;
 				.title {
-					font-size: 36rpx;
+					font-size: 32rpx;
 					margin-bottom: 8rpx;
+					color: #414141;
+				}
+				.txt-red {
+					color: red;
 				}
 			}
 			.index-cont {
