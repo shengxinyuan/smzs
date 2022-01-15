@@ -1,12 +1,12 @@
 <template>
-	<view>
+	<view class="goods-index">
 		<u-tabs ref="tabs" :is-scroll="true" :list="firstList" active-color="#2979ff" inactive-color="#606266" font-size="30" :current="first" @change="changeFirst"></u-tabs>
 		<u-tabs ref="tabs" :is-scroll="true" :list="secondList" active-color="#2979ff" inactive-color="#606266" font-size="24" :current="second" @change="changeSecond"></u-tabs>
 		
 		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>
-		<view class="cont_list_two" :style="{'padding-top': '20px'}">
+		<scroll-view scroll-y="true" class="cont_list_two">
 			<view class="cont_item" v-for="(item,i) in shop_list" :key="i">
 				<image class="images" :src="item.image" mode="aspectFill"></image>
 				<view class="base-cont">
@@ -22,14 +22,16 @@
 				</view>
 				<view class="index-cont">
 					<view class="">
-						推荐等级{{item.index}}
+						排序序号：{{item.index}}
 					</view>
-					<view class="">
-						修改序号
+					<view class="index-btn" @click="editIndex(item)">
+						修改排序
 					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
+		
+		<u-picker v-model="editShow" mode="selector" :default-selector="[10]" :range="[1,2,3,4,5,6,7,8,9,10]"></u-picker>
 	</view>
 </template>
 
@@ -51,27 +53,88 @@
 				secondList: [],
 				first: 0,
 				second: 0,
+				editShow: false
 			}
 		},
 		onLoad () {
 			this.secondList = this.firstList[this.first].children;
-			this.shop_list = [{
-				title: '商品1',
-				sale: 10,
-				price: 1000,
-				index: 1,
-				image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-			}];
+			this.shop_list = [
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+				{
+					title: '商品1',
+					sale: 10,
+					price: 1000,
+					index: 1,
+					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
+				},
+			];
 		},
 		methods: {
 			// 上传店铺照片
-			result_plan(e) {
-				console.log(e)
-				if (e.status == 1) {
-					this.image_plan = e.data
-				} else {
-					console.log(e.message)
-				}
+			editIndex(item) {
+				this.editShow = true;
 			},
 			// 上传照片删除
 			remove(i) {
@@ -112,18 +175,14 @@
 <style lang="scss" scoped>
 	.cont_list_two {
 		width: 100%;
-		padding: 0 3%;
 		border-top: 1px solid #eee;
 		.cont_item {
 			width: 100%;
-			margin-right: 2%;
 			border-radius: 16rpx;
 			background-color: white;
-			margin-top: 10rpx;
 			overflow: hidden;
 			display: flex;
 			align-items: center;
-			padding: 20rpx 0 14rpx 14rpx;
 			border-bottom: 1px solid #eee;
 			.images {
 				width: 180rpx;
@@ -134,12 +193,19 @@
 			
 			.base-cont {
 				flex: 1;
+				font-size: 24rpx;
 				.title {
 					font-size: 36rpx;
+					margin-bottom: 8rpx;
 				}
 			}
 			.index-cont {
 				width: 200rpx;
+				font-size: 24rpx;
+				.index-btn {
+					margin-top: 10px;
+					color: #2979ff;
+				}
 			}
 	
 			.it_text {
@@ -197,5 +263,5 @@
 	
 		}
 	}
-	
+
 </style>
