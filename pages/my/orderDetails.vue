@@ -63,7 +63,7 @@
 					商品汇总
 				</view>
 				<view class="statis_r">
-					共 {{shop_det.count}} 件 ￥{{all_goods_price.toFixed(2)}}
+					共 {{shop_det.order_goods[0].count}} 件 ￥{{all_goods_price.toFixed(2)}}
 				</view>
 			</view>
 			<!-- 工费 -->
@@ -80,7 +80,7 @@
 					合计
 				</view>
 				<view class="statis_r" style="color: #ee453f;">
-					￥{{shop_det.total}}
+					￥{{shop_det.order_goods[0].total}}
 				</view>
 			</view>
 		</view>
@@ -139,7 +139,7 @@
 					创建时间
 				</view>
 				<view class="statis_r"  >
-					{{shop_det.create_time}}
+					{{shop_det.order_goods[0].create_time}}
 				</view>
 			</view>
 		</view>
@@ -177,7 +177,7 @@
 		},
 		methods:{
 			page_reader(){
-				this.$api.get('order_goods',{id:this.order_id}).then(res=>{
+				this.$api.get('order_goods',{id:this.order_id,is_h5:0}).then(res=>{
 					console.log(res)
 					if(res.status == 1){
 						this.shop_det = res.data
