@@ -2,20 +2,20 @@
 	<view>
 		<view class="item" v-for="item in list">
 			<view class="first">
-				<view>{{item.text}}</view>
+				<view>{{item.title}}</view>
 				<view class="handle">
-					排序序号：{{item.index}}
+					排序序号：{{item.sort}}
 					<u-button class="custom-btn" size="mini" @click="editFirst(item)">编辑</u-button>
 				</view>
 			</view>
 			
-			<view v-if="item.subCategory && item.subCategory.length" class="second">
-				<view class="item" v-for="sub in item.subCategory">
+			<view v-if="item.children && item.children.length" class="second">
+				<view class="item" v-for="sub in item.children">
 					<view class="first">
-						<view>{{sub.text}}</view>
+						<view>{{sub.title}}</view>
 						<view class="handle">
-							二级排序序号：{{sub.index}}
-							<u-button class="custom-btn" size="mini" @click="editSecond(item, sub)">编辑</u-button>
+							二级排序序号：{{sub.sort}}
+							<u-button class="custom-btn" size="mini" @click="editSecond(sub)">编辑</u-button>
 						</view>
 					</view>
 				</view>
@@ -39,29 +39,12 @@
 				uni.showLoading({
 					mask: true
 				})
-				this.$api.get('/category/getAllCategory').then((res) => {
+				this.$api.get('category/getAllCategory').then((res) => {
 					console.log(res);
 					uni.hideLoading()
 					if (res.status == 1) {
 						this.list = res.data;
 					}
-
-					// TODO
-					this.list = Array.from({
-						length: 20
-					}).map((_, i) => ({
-						id: i,
-						text: `index - ${i + 1}`,
-						isCustom: Math.random()  > 0.5,
-						index: i + 1,
-						subCategory: i > 10 ? Array.from({
-							length: 3
-						}).map((_, j) => ({
-							id: j,
-							text: `subsubsubsubsubsubsubsubsubsub - ${j + 1}`,
-							index: j + 1
-						})) : []
-					}));
 				}).catch(() => {
 					uni.hideLoading()
 				})
@@ -116,28 +99,36 @@
 					})
 				})
 			},
-			editIndex(id, subId) {
-				this.getNewIndex().then((index) => {
-					uni.showLoading({
-						mask: true
-					})
-					this.$api.get('/category/edit', { id, subId, index }).then((res) => {
-						uni.hideLoading()
-						if (res.status == 1) {
-							this.getAllCategory();
-						} else {
-							uni.showToast({
-								icon: 'none',
-								title: res.message || '保存失败，请重试'
-							})
-						}
-					}).catch(() => {
-						uni.hideLoading()
+			edit(data) {
+				uni.showLoading({
+					mask: true
+				})
+				this.$api.post('category/edit', data).then((res) => {
+					uni.hideLoading()
+					if (res.status == 1) {
+						this.getAllCategory();
+					} else {
 						uni.showToast({
 							icon: 'none',
-							title: '保存失败，请重试'
+							title: res.message || '保存失败，请重试'
 						})
+					}
+				}).catch(() => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: '保存失败，请重试'
 					})
+				})
+			},
+			editIndex({ id, parent_id, title }) {
+				this.getNewIndex().then((sort) => {
+					this.edit({ id, parent_id, title, sort })
+				})
+			},
+			editTitle({ id, parent_id, sort }) {
+				this.getNewText().then((title) => {
+					this.edit({ id, parent_id, title, sort })
 				})
 			},
 			addSecond(id) {
@@ -145,7 +136,7 @@
 					uni.showLoading({
 						mask: true
 					})
-					this.$api.get('/category/addFirstCategory', { id, text }).then((res) => {
+					this.$api.post('category/addFirstCategory', { id, text }).then((res) => {
 						uni.hideLoading()
 						if (res.status == 1) {
 							this.getAllCategory();
@@ -164,7 +155,7 @@
 					})
 				})
 			},
-			deleteItem(id, subId) {
+			deleteItem({ id }) {
 				uni.showModal({
 					title: '确认删除吗？',
 					content: '删除后不可恢复',
@@ -174,7 +165,7 @@
 							uni.showLoading({
 								mask: true
 							})
-							this.$api.get('/category/delete', { id, subId }).then((res) => {
+							this.$api.post('category/delete', { id }).then((res) => {
 								uni.hideLoading()
 								if (res.status == 1) {
 									this.getAllCategory();
@@ -197,34 +188,40 @@
 			},
 			
 			editFirst(item) {
-				const list = item.isCustom ? ['修改序号', '新建二级目录', '删除'] : ['修改序号']
+				const list = item.member_id > 0 ? ['修改序号', '修改名称', '新建二级目录', '删除'] : ['修改序号']
 				uni.showActionSheet({
 				    itemList: list,
 				    success: (res) => {
 				        switch (res.tapIndex) {
 							case 0:
-								this.editIndex(item.id);
+								this.editIndex(item);
 								break;
 							case 1:
-								this.addSecond(item.id);
+								this.editTitle(item);
 								break;
 							case 2:
-								this.deleteItem(item.id);
+								this.addSecond(item);
+								break;
+							case 3:
+								this.deleteItem(item);
 								break;
 						}
 				    },
 				});
 			},
-			editSecond(item, sub) {
+			editSecond(sub) {
 				uni.showActionSheet({
-				    itemList: ['修改序号', '删除'],
+				    itemList: ['修改序号', '修改名称', '删除'],
 				    success: (res) => {
 				        switch (res.tapIndex) {
 							case 0:
-								this.editIndex(item.id, sub.id);
+								this.editIndex(sub);
 								break;
 							case 1:
-								this.deleteItem(item.id, sub.id);
+								this.editTitle(sub);
+								break;
+							case 2:
+								this.deleteItem(sub);
 								break;
 						}
 				    },

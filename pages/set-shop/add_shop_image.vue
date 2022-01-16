@@ -11,11 +11,13 @@
 </template>
 
 <script>
+	import { commonUrl } from '../../api.js'
 	export default {
 		data() {
 			return {
 				previewList: [],
-				upload_url: 'https://zuanshi.semoh.cn/api/uploads',
+				// upload_url: 'https://zuanshi.semoh.cn/api/uploads',
+				upload_url: `${commonUrl}common/upload_alioss`,
 				image_plan: '',
 				header: {
 					'token': uni.getStorageSync('token')
@@ -35,7 +37,8 @@
 			result_plan(e) {
 				console.log(e)
 				if (e.status == 1) {
-					this.image_plan = e.data
+					// this.image_plan = e.data
+					this.image_plan = e.data.url
 				} else {
 					console.log(e.message)
 				}

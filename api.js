@@ -1,7 +1,7 @@
-// const commoneUrl  = "https://zuanshi.semoh.cn/api/"; // 新路径
+// const commonUrl  = "https://zuanshi.semoh.cn/api/"; // 新路径
 
-// const commoneUrl  = "http://zuanshi.dis.wanheweb.com/api/"; // 公共路径
-const commoneUrl  = "http://zuanshi.nxm.wanheweb.com/api/"; // 公共路径
+// const commonUrl  = "http://zuanshi.dis.wanheweb.com/api/"; // 公共路径
+const commonUrl  = "http://zuanshi.nxm.wanheweb.com/api/"; // 公共路径
 
 var that = this
 //post请求封装
@@ -9,7 +9,7 @@ function postRequest(url, data, config){
 	var promise = new Promise((resolve,reject) => {
 		var postData = data;
 		uni.request({
-			url:commoneUrl + url,
+			url:commonUrl + url,
 			data:postData,
 			method:'POST',
 			// dataType:"jsonp",
@@ -21,7 +21,7 @@ function postRequest(url, data, config){
 			success:function(res){
 				
 				var time = new Date();
-				console.log('****************' + commoneUrl + url + '****************' + time);
+				console.log('****************' + commonUrl + url + '****************' + time);
 				console.log('----------------data----------------');
 				console.log(data);
 				// console.log('----------------res----------------');
@@ -56,7 +56,7 @@ function getRequest(url,data){
 	var promise = new Promise((resolve,reject) => {
 			var postData = data;
 			uni.request({
-				url:commoneUrl + url,
+				url:commonUrl + url,
 				data:postData,
 				method:"GET",
 				dataType:'json',
@@ -91,7 +91,7 @@ function putRequest(url,data,heads){
 	var promise = new Promise((resolve,reject) => {
 			var postData = data;
 			uni.request({
-				url:commoneUrl + url,
+				url:commonUrl + url,
 				data:postData,
 				method:"PUT",
 				dataType:'json',
@@ -124,7 +124,7 @@ function delRequest(url,data){
 	var promise = new Promise((resolve,reject) => {
 			var postData = data;
 			uni.request({
-				url:commoneUrl + url,
+				url:commonUrl + url,
 				data:postData,
 				method:"DELETE",
 				dataType:'json',
@@ -153,6 +153,7 @@ function delRequest(url,data){
 	return promise;
 }
 module.exports = {
+	commonUrl,
     post: postRequest,
     get: getRequest,
 	put: putRequest,

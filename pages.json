@@ -385,7 +385,12 @@
 			"style": {
 				"navigationBarTitleText": "确认订单"
 			}
-
+		},
+		{
+			"path": "pages/vip-confirm-order/custom-confirm-order",
+			"style": {
+				"navigationBarTitleText": "确认订单"
+			}
 		}, {
 			"path": "pages/vip-confirm-order/added-services",
 			"style": {

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="right-line">
-			<u-button class="custom-btn-mr" size="mini" @click="saveDraft">存草稿</u-button>
+			<u-button class="custom-btn-mr" size="mini" @click="saveDraft" v-if="canDraft">存草稿</u-button>
 			<u-button class="custom-btn" type="primary" size="mini" @click="publish">发布</u-button>
 		</view>
 		<view class="form-wrap">
@@ -10,15 +10,8 @@
 					<u-input v-model="form.title" placeholder="最多50字" />
 				</u-form-item>
 				<u-form-item label="商品图片" prop="image" label-position="top">
-					<u-upload
-						ref="uUpload"
-						max-count="9"
-						:file-list="previewList"
-						:action="upload_url"
-						:name="'file'"
-						:auto-upload="true"
-						:header="header"
-					></u-upload>
+					<u-upload ref="uUploadImage" max-count="9" :file-list="previewList" :action="upload_url" :name="'file'"
+						:auto-upload="true" :header="header"></u-upload>
 				</u-form-item>
 				<u-form-item label="价格" prop="price">
 					<u-input v-model="form.price" type="number" placeholder="请输入含运费价格" />
@@ -32,28 +25,36 @@
 				<u-form-item label="类目" prop="cate">
 					<u-input v-model="form.cate" type="select" @click="cateSelectShow = true" />
 				</u-form-item>
+				<u-form-item label="详情介绍" prop="content" label-position="top">
+					<u-input v-model="form.content" type="textarea" placeholder="请输入详情介绍" />
+				</u-form-item>
+				<u-form-item label="详情介绍图片" prop="album" label-position="top">
+					<u-upload ref="uUploadAlbum" max-count="9" :file-list="previewListAlbum" :action="upload_url" :name="'file'"
+						:auto-upload="true" :header="header"></u-upload>
+				</u-form-item>
 			</u-form>
-			
-			<u-select
-				v-model="cateSelectShow"
-				mode="mutil-column-auto"
-				:list="list"
-				@confirm="confirmCate"
-			></u-select>
+
+			<u-select v-model="cateSelectShow" mode="mutil-column-auto" :list="list" @confirm="confirmCate"></u-select>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		commonUrl
+	} from '../../api.js';
 	export default {
 		data() {
 			return {
 				previewList: [],
-				upload_url: 'https://zuanshi.semoh.cn/api/uploads',
+				previewListAlbum: [],
+				// upload_url: 'https://zuanshi.semoh.cn/api/uploads',
+				upload_url: `${commonUrl}common/upload_alioss`,
 				header: {
 					'token': uni.getStorageSync('token')
 				},
 				cateSelectShow: false,
+				canDraft: true,
 
 				form: {
 					title: '',
@@ -61,6 +62,7 @@
 					stock: null,
 					sale: null,
 					cate: '',
+					content: '',
 					cate_id: null,
 					cate_second_id: null,
 				},
@@ -69,62 +71,30 @@
 						{
 							required: true,
 							message: '请输入商品名称',
-							trigger: 'blur,change'
 						},
 						{
 							max: 50,
 							message: '最多输入50个字',
-							trigger: 'blur,change'
 						}
 					],
-					price: [
-						{
-							required: true,
-							message: '请输入价格',
-							trigger: 'blur,change'
-						},
-					],
-					stock: [
-						{
-							required: true,
-							message: '请输入库存',
-							trigger: 'blur,change'
-						},
-					],
-					cate: [
-						{
-							required: true,
-							message: '请选择类目',
-							trigger: 'blur,change'
-						},
-					],
+					price: [{
+						required: true,
+						message: '请输入价格',
+					}],
+					stock: [{
+						required: true,
+						message: '请输入库存',
+					}],
+					cate: [{
+						required: true,
+						message: '请选择类目',
+					}],
+					sale: [{
+						required: true,
+						message: '请输入初始销量',
+					}],
 				},
-				list: [
-					{
-						value: 1,
-						label: '中国',
-						children: [
-							{
-								value: 2,
-								label: '广东'
-							},
-							{
-								value: 5,
-								label: '广西'
-							}
-						]
-					},
-					{
-						value: 8,
-						label: '美国',
-						children: [
-							{
-								value: 9,
-								label: '纽约'
-							}
-						]
-					}
-				],
+				list: [],
 			}
 		},
 		methods: {
@@ -134,13 +104,32 @@
 				this.form.cate_second_id = e[1].value
 			},
 			queryData(id) {
-				uni.showLoading({ mask: true })
-				this.$api.get('/custom/queryGoods', { id }).then((res) => {
+				uni.showLoading({
+					mask: true
+				})
+				this.$api.get('custom/queryGoodsDetail', {
+					id
+				}).then((res) => {
 					uni.hideLoading()
 					if (res.status == 1) {
-						this.previewList = res.data.image.split(',').map(url => ({ url }))
-						this.form = { ...this.form, ...res.data }
-						this.form.cate = `${res.data.cate_id}-${res.data.cate_second_id}`
+						this.previewList = res.data.image.split(',').map(url => ({
+							url
+						}))
+						this.previewListAlbum = res.data.album.split(',').map(url => ({
+							url
+						}))
+						this.form = {
+							...this.form,
+							...res.data
+						}
+						this.canDraft = res.data.status != '20' && res.data.status != '30';
+						const first = this.list.find((l) => l.value == res.data.cate_id);
+						const second = first && first.children.find((l) => l.value == res.data.cate_second_id);
+						this.form.cate = `${
+							first ? first.label : res.data.cate_id
+						}-${
+							second ? second.label : res.data.cate_second_id
+						}`
 					}
 				}).catch(() => {
 					uni.hideLoading()
@@ -149,12 +138,13 @@
 			checkAndGet() {
 				return new Promise((resolve, reject) => {
 					this.$refs.uForm.validate((pass) => {
+						console.log(this.form)
 						if (!pass) {
 							reject()
 						}
-						const images = this.$refs.uUpload.lists.filter(val => {
+						const images = this.$refs.uUploadImage.lists.filter(val => {
 							return val.progress == 100;
-						}).map((val) => val.response ? val.response.data : val.url)
+						}).map((val) => val.response ? val.response.data.url : val.url)
 						if (!images || !images.length) {
 							uni.showToast({
 								icon: 'none',
@@ -162,27 +152,14 @@
 							})
 							reject()
 						}
-						resolve({ ...this.form, image: images.join(',') })
-					})
-				})
-			},
-			checkAndGet() {
-				return new Promise((resolve, reject) => {
-					this.$refs.uForm.validate((pass) => {
-						if (!pass) {
-							reject()
-						}
-						const images = this.$refs.uUpload.lists.filter(val => {
+						const album = this.$refs.uUploadAlbum.lists.filter(val => {
 							return val.progress == 100;
-						}).map((val) => val.response ? val.response.data : val.url)
-						if (!images || !images.length) {
-							uni.showToast({
-								icon: 'none',
-								title: '请上传商品图片'
-							})
-							reject()
-						}
-						resolve({ ...this.form, image: images.join(',') })
+						}).map((val) => val.response ? val.response.data.url : val.url)
+						resolve({
+							...this.form,
+							album: album.join(','),
+							image: images.join(',')
+						})
 					})
 				})
 			},
@@ -190,10 +167,10 @@
 				uni.showLoading({
 					mask: true
 				})
-				this.$api.post('/custom/save_draft', data).then((res) => {
+				this.$api.post('custom/save_draft', data).then((res) => {
 					uni.hideLoading()
 					if (res.status == 1) {
-						// TODO jump
+						uni.navigateBack()
 					} else {
 						uni.showToast({
 							icon: 'none',
@@ -210,37 +187,40 @@
 			},
 			saveDraft() {
 				this.checkAndGet().then((res) => {
-					this.save({ ...res, type: 1 })
+					this.save({
+						...res,
+						type: 1
+					})
 				})
 			},
 			publish() {
 				this.checkAndGet().then((res) => {
-					this.save({ ...res, type: 2 })
+					this.save({
+						...res,
+						type: 2
+					})
 				})
 			},
 			getAllCategory() {
 				uni.showLoading({
 					mask: true
 				})
-				this.$api.get('/category/getAllCategory').then((res) => {
+				return this.$api.get('category/getAllCategory', {
+					custom_only: 1
+				}).then((res) => {
 					uni.hideLoading()
 					if (res.status == 1) {
-						this.list = res.data;
+						const fn = (item) => ({
+							value: item.id,
+							label: item.title,
+							children: item.children && item.children.length
+								? item.children.map(fn)
+								: undefined
+						})
+						this.list = res.data
+							.filter(item => item.children && item.children.length)
+							.map(fn);
 					}
-			
-					// TODO
-					this.list = Array.from({
-						length: 5
-					}).map((_, i) => ({
-						value: i,
-						label: `index - ${i + 1}`,
-						children: Array.from({
-							length: 3
-						}).map((_, j) => ({
-							value: j,
-							label: `subsubsubsubsubsubsubsubsubsub - ${j + 1}`,
-						}))
-					}));
 				}).catch(() => {
 					uni.hideLoading()
 				})
@@ -248,12 +228,13 @@
 		},
 		onReady() {
 			this.$refs.uForm.setRules(this.rules);
-			this.getAllCategory()
 		},
 		onLoad(e) {
-			if (e.id) {
-				this.queryData(id);
-			}
+			this.getAllCategory().then(() => {
+				if (e.id) {
+					this.queryData(e.id);
+				}
+			})
 		},
 	}
 </script>
@@ -265,13 +246,16 @@
 		justify-content: flex-end;
 		padding: 12rpx 24rpx;
 	}
+
 	.custom-btn {
 		margin: 0;
 	}
+
 	.custom-btn-mr {
 		margin: 0;
 		margin-right: 24rpx;
 	}
+
 	.form-wrap {
 		padding: 12rpx 24rpx;
 	}

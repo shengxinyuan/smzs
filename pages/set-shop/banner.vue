@@ -18,11 +18,13 @@
 </template>
 
 <script>
+	import { commonUrl } from '../../api.js'
 	export default {
 		data() {
 			return {
 				previewList: [],
-				upload_url: 'https://zuanshi.semoh.cn/api/uploads',
+				// upload_url: 'https://zuanshi.semoh.cn/api/uploads',
+				upload_url: `${commonUrl}common/upload_alioss`,
 				header: {
 					'token': uni.getStorageSync('token')
 				}
@@ -30,7 +32,7 @@
 		},
 		onLoad(e){
 			uni.showLoading({ mask: true })
-			this.$api.get('/shop/banner/query_picture').then((res) => {
+			this.$api.get('shop/banner/query_picture').then((res) => {
 				console.log(res);
 				uni.hideLoading()
 				if (res.status == 1) {
@@ -44,7 +46,8 @@
 			save(){
 				const files = this.$refs.uUpload.lists.filter(val => {
 					return val.progress == 100;
-				}).map((val) => val.response ? val.response.data : val.url)
+				// }).map((val) => val.response ? val.response.data : val.url)
+				}).map((val) => val.response ? val.response.data.url : val.url)
 				console.log(files)
 				if (files.length === 0) {
 					uni.showToast({
@@ -53,7 +56,7 @@
 					});
 					return
 				}
-				this.$api.post('/shop/banner/set_picture',{img_url:files}).then(res=>{
+				this.$api.post('shop/banner/set_picture',{img_url:files}).then(res=>{
 					if (res.status == 1) {
 						uni.showToast({
 							title: '修改成功',
