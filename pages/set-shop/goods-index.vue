@@ -1,8 +1,8 @@
 <template>
 	<view class="goods-index">
 		<view v-show="!isOrder">
-			<u-tabs ref="tabs" :is-scroll="true" :list="firstList" active-color="#ff5810" inactive-color="#606266" font-size="30" :current="first" @change="changeFirst"></u-tabs>
-			<u-tabs ref="tabs" :is-scroll="true" :list="secondList" active-color="#ff5810" inactive-color="#606266" font-size="24" :current="second" @change="changeSecond"></u-tabs>
+			<u-tabs ref="tabs" :is-scroll="true" name="title" :list="firstList" active-color="#ff5810" inactive-color="#606266" font-size="30" :current="first" @change="changeFirst"></u-tabs>
+			<u-tabs ref="tabs" :is-scroll="true" name="title" :list="secondList" active-color="#ff5810" inactive-color="#606266" font-size="24" :current="second" @change="changeSecond"></u-tabs>
 		</view>
 		
 		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
@@ -24,7 +24,7 @@
 				</view>
 				<view class="index-cont">
 					<view class="">
-						排序序号：{{item.index}}
+						排序权重：{{item.index}}
 					</view>
 					<view v-if="isOrder" class="index-btn" @click="editIndex(item)">
 						修改
@@ -37,10 +37,10 @@
 				提示：
 			</view>
 			<view class="txt">
-				<view>1.按序号从小到大排序，序号可以重复</view>
-				<view>2.可以切换目录来修改其中商品的顺序</view>
+				<view>1.按权重从大到小排序，权重可以重复</view>
+				<view>2.可以切换目录来修改其中商品的权重</view>
 			</view>
-			<view class="btn" v-if="!isOrder" @click="startOrder">调整排序</view>
+			<view class="btn" v-if="!isOrder" @click="startOrder">调整排序权重</view>
 			<view class="btn" v-else @click="saveOrder">保存排序</view>
 		</view>
 		
@@ -64,16 +64,20 @@
 					{name: '目录8', children: [{name: '目录8-1'}, {name: '目录8-2'}, {name: '目录8-3'}]},
 				],
 				secondList: [],
+				list: [],
 				first: 0,
 				second: 0,
 				editShow: false,
 				isOrder: false,
 				sort_list: [],
 				current: {},
+				member_info: {},
 			}
 		},
 		onLoad () {
-			this.secondList = this.firstList[this.first].children;
+			this.member_info = uni.getStorageSync('member_info');
+			console.log(this.member_info);
+			this.getAllCategory();
 			this.shop_list = [
 				{
 					id: 930,
@@ -110,8 +114,37 @@
 			];
 		},
 		methods: {
+			getAllCategory() {
+				uni.showLoading({
+					mask: true
+				})
+				this.$api.get('category/getAllCategory').then((res) => {
+					uni.hideLoading()
+					if (res.status == 1) {
+						this.firstList = res.data;
+						this.secondList = this.firstList[this.first].children;
+						this.queryList();
+					}
+				}).catch(() => {
+					uni.hideLoading()
+				})
+			},
 			queryList () {
-				
+				this.$api.get('shop/getAllGood', {
+					cate_id: this.firstList[this.first].id,
+					cate_second_id: this.secondList[this.second].id,
+					member_info: this.member_info.id,
+				}).then((res) => {
+					console.log(res);
+					uni.hideLoading()
+					if (res.status == 1) {
+						this.firstList = res.data;
+						this.secondList = this.firstList[this.first].children;
+						this.queryList();
+					}
+				}).catch(() => {
+					uni.hideLoading()
+				})
 			},
 			// 编辑当前item
 			editIndex (item) {

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<u-tabs ref="tabs" :is-scroll="false" :list="tabList" active-color="#ff5810" inactive-color="#606266" font-size="24" :current="currentTab" @change="changecurrentTab"></u-tabs>
-		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
+		<view style="padding-top: 200rpx;" v-if="!shop_list|| shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>
 		<scroll-view v-else scroll-y="true" class="cont_list_two" @scrolltolower="loadMore">
@@ -15,7 +15,7 @@
 						<text><text style="">售价：￥</text>{{item.price}}</text>
 					</view>
 					<view class="it_selt_l">
-						<text><text style="">库存：</text>{{item.price}}</text>
+						<text><text style="">库存：</text>{{item.stock}}</text>
 					</view>
 					<view class="it_selt_l">
 						<text v-if="item.status === 40" class="txt-red">拒绝原因：{{item.remark}}</text>
