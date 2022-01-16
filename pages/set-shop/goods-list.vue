@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-tabs ref="tabs" :is-scroll="false" :list="tabList" active-color="#2979ff" inactive-color="#606266" font-size="24" :current="currentTab" @change="changecurrentTab"></u-tabs>
+		<u-tabs ref="tabs" :is-scroll="false" :list="tabList" active-color="#ff5810" inactive-color="#606266" font-size="24" :current="currentTab" @change="changecurrentTab"></u-tabs>
 		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>

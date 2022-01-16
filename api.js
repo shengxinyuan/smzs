@@ -5,7 +5,7 @@ const commoneUrl  = "http://zuanshi.nxm.wanheweb.com/api/"; // 公共路径
 
 var that = this
 //post请求封装
-function postRequest(url,data){
+function postRequest(url, data, config){
 	var promise = new Promise((resolve,reject) => {
 		var postData = data;
 		uni.request({
@@ -17,7 +17,7 @@ function postRequest(url,data){
 			// jsonpCallback:"success_jsonpCallback",
 
 			header:{	// uni.getStorageSync('token')
-				'content-type': 'application/x-www-form-urlencoded','token':uni.getStorageSync('token')},
+				'content-type': config && config.json ? 'application/json' :'application/x-www-form-urlencoded','token':uni.getStorageSync('token')},
 			success:function(res){
 				
 				var time = new Date();
