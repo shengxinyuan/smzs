@@ -3,46 +3,21 @@
 		<view>
 			<view>
 				<!-- 商品详情列表 -->
-				<view class="first-box-five">
+				<view class="order">
 					<view class="goods-box">
 						<view class="good-photo">
-							<image :src="firstItem.image" mode="aspectFill"></image>
+							<image :src="order.image" mode="aspectFill"></image>
 						</view>
 						<view class="goods-details">
-							<view class="goods-title">{{firstItem.title}}</view>
-							<view class="goods-text-one">
-								<text>金重：{{firstItem.wage}}g</text>
-								<text>条码：{{firstItem.bar_code}}</text>
-							</view>
-							<view class="goods-text-two">
-								<view class="goods-text-two-min-box" v-if="firstItem.is_height == 1">
-									<text v-if="!viptype">金价：￥{{(firstItem.gold_g_normal/1).toFixed(2)}}/g</text>
-									<text v-else>金价：￥{{(firstItem.gold_g_vip/1).toFixed(2)}}/g</text>
-								</view>
-								<view class="goods-text-two-min-box" v-if="firstItem.is_height == 2">
-									<text v-if="!viptype">金价：￥0.00/g</text>
-									<text v-else>金价：￥0.00/g</text>
-								</view>
-								<view class="goods-text-two-min-box" v-if="firstItem.is_height == 1">
-									<template v-if="viptype">
-										<text>工费：￥{{((firstItem.labor_money/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
-									</template>
-									<template v-else>
-										<text>工费：￥{{((firstItem.labor_money/1)/(firstItem.wage/1)).toFixed(2)}}/g</text>
-									</template>
-								</view>
-								<view class="goods-text-two-min-box" v-if="firstItem.is_height == 2">
-									<text>工费：￥0.00/g</text>
-								</view>
-							</view>
+							<view class="goods-title">{{order.title}} sadas</view>
 							<view class="money-box" style="display: flex;justify-content: space-between;">
 								<view class="">
 									<text class="rmb">￥</text>
-									<text class="integer" v-if="!viptype">{{firstItem.goods_money_normal}}</text>
-									<text class="integer" v-else>{{firstItem.goods_money_vip}}</text>
+									<text class="integer" v-if="!viptype">{{order.goods_money_normal}}</text>
+									<text class="integer" v-else>{{order.goods_money_vip}}</text>
 								</view>
 								<view style="color: #999;">
-									*{{firstItem.order_count}}
+									*{{order.order_count}}
 								</view>
 							</view>
 						</view>
@@ -89,23 +64,13 @@
 			return {
 				input_val:'',
 				input_show:false,//输入框
-				firstItem: {},
-				
+				order: {},
 			}
 		},
 		onUnload() {
 			clearInterval(this.time)
 		},
 		onLoad(op) {
-			
-		},
-		watch:{
-			
-		},
-		computed:{
-			
-		},
-		onShow() {
 			
 		},
 		methods: {
@@ -134,7 +99,7 @@
 		color: #666666;
 	}
 
-	.first-box-five,
+	.order,
 	.second-box-there {
 		padding: 20upx;
 		margin: 20upx 0;
@@ -158,43 +123,18 @@
 
 		.goods-details {
 			margin-left: 20upx;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 20rpx 0;
 
 			.goods-title {
 				font-size: 28upx;
-			}
-
-			.goods-text-one {
-				margin-top: 20upx;
-				margin-bottom: 10upx;
-				font-size: 26upx;
-				color: #666666;
-
-				text {
-					margin-right: 30upx;
-				}
-			}
-
-			.goods-text-two {
-				display: flex;
-				font-size: 26upx;
-				color: #777777;
-
-				.goods-text-two-min-box {
-					margin: 6rpx 0;
-					padding: 4upx 14upx;
-					background-color: #f6f6f6;
-					margin-right: 20upx;
-					border-radius: 6upx;
-					text{
-						white-space: nowrap;
-					}
-				}
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.money-box {
-				margin-top: 50upx;
-				padding-bottom: 30upx;
-
 				.rmb {
 					font-size: 22upx;
 				}
@@ -208,23 +148,6 @@
 					font-size: 22upx;
 				}
 			}
-		}
-	}
-
-	.money-box {
-		color: #ea3a4a;
-
-		.rmb {
-			font-size: 22upx;
-		}
-
-		.integer {
-			font-size: 30upx;
-			font-weight: bold;
-		}
-
-		.fractional-part {
-			font-size: 22upx;
 		}
 	}
 
@@ -285,34 +208,6 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
-
-		.notice-text {
-			padding: 20upx 30upx;
-			font-size: 22upx;
-			color: #ec9f67;
-			background-color: #fffaf0;
-		}
-
-		.open-super-members-bgimg {
-			width: 100%;
-			display: flex;
-			position: relative;
-
-			image {
-				width: 100%;
-			}
-
-			.open-super-members-box {
-				width: 100%;
-				padding: 0 30upx;
-				position: absolute;
-				top: 0;
-				left: 0;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-		}
 	}
 
 	.bottom-v {
