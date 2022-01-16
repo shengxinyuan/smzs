@@ -1,5 +1,8 @@
 <template>
 	<view>
+		<view class="right-line">
+			<u-button class="custom-btn" type="primary" size="mini" @click="addFirst">增加类目</u-button>
+		</view>
 		<view class="item" v-for="item in list">
 			<view class="first">
 				<view>{{item.title}}</view>
@@ -131,28 +134,36 @@
 					this.edit({ id, parent_id, title, sort })
 				})
 			},
-			addSecond(id) {
-				this.getNewText().then((text) => {
-					uni.showLoading({
-						mask: true
-					})
-					this.$api.post('category/addFirstCategory', { id, text }).then((res) => {
-						uni.hideLoading()
-						if (res.status == 1) {
-							this.getAllCategory();
-						} else {
-							uni.showToast({
-								icon: 'none',
-								title: res.message || '保存失败，请重试'
-							})
-						}
-					}).catch(() => {
-						uni.hideLoading()
+			add(data) {
+				uni.showLoading({
+					mask: true
+				})
+				this.$api.post('category/addFirstCategory', data).then((res) => {
+					uni.hideLoading()
+					if (res.status == 1) {
+						this.getAllCategory();
+					} else {
 						uni.showToast({
 							icon: 'none',
-							title: '保存失败，请重试'
+							title: res.message || '保存失败，请重试'
 						})
+					}
+				}).catch(() => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: '保存失败，请重试'
 					})
+				})
+			},
+			addFirst() {
+				this.getNewText().then((title) => {
+					this.add({ parent_id: 0, title })
+				})
+			},
+			addSecond({ id }) {
+				this.getNewText().then((title) => {
+					this.add({ parent_id: id, title })
 				})
 			},
 			deleteItem({ id }) {
@@ -188,7 +199,7 @@
 			},
 			
 			editFirst(item) {
-				const list = item.member_id > 0 ? ['修改序号', '修改名称', '新建二级目录', '删除'] : ['修改序号']
+				const list = item.member_id > 0 ? ['修改序号', '修改名称', '新建二级类目', '删除'] : ['修改序号']
 				uni.showActionSheet({
 				    itemList: list,
 				    success: (res) => {
@@ -232,6 +243,12 @@
 </script>
 
 <style scoped>
+	.right-line {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		padding: 12rpx 24rpx;
+	}
 	.item {
 		padding: 30rpx;
 		border-top: 1rpx solid #eee;
