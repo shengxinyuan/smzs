@@ -67,9 +67,6 @@
 				order: {},
 			}
 		},
-		onUnload() {
-			clearInterval(this.time)
-		},
 		onLoad(op) {
 			
 		},

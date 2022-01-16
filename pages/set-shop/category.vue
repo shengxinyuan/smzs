@@ -1,13 +1,17 @@
 <template>
 	<view>
-		<view class="right-line">
+		<view class="sep-line">
+			<view class="des-text">
+				<image src="https://zuanshi.semoh.cn/applet_static/my/guany_me.png" mode="widthFix"></image>
+				权重越大排序越靠前
+			</view>
 			<u-button class="custom-btn" type="primary" size="mini" @click="addFirst">增加类目</u-button>
 		</view>
 		<view class="item" v-for="item in list">
 			<view class="first">
 				<view>{{item.title}}</view>
 				<view class="handle">
-					排序序号：{{item.sort}}
+					排序权重：{{item.sort}}
 					<u-button class="custom-btn" size="mini" @click="editFirst(item)">编辑</u-button>
 				</view>
 			</view>
@@ -17,7 +21,7 @@
 					<view class="first">
 						<view>{{sub.title}}</view>
 						<view class="handle">
-							二级排序序号：{{sub.sort}}
+							二级排序权重：{{sub.sort}}
 							<u-button class="custom-btn" size="mini" @click="editSecond(sub)">编辑</u-button>
 						</view>
 					</view>
@@ -55,7 +59,7 @@
 			getNewIndex() {
 				return new Promise((resolve, reject) => {
 					uni.showModal({
-						title: '输入新的序号',
+						title: '输入新的权重',
 						editable: true,
 						showCancel: true,
 						success: (res) => {
@@ -199,7 +203,7 @@
 			},
 			
 			editFirst(item) {
-				const list = item.member_id > 0 ? ['修改序号', '修改名称', '新建二级类目', '删除'] : ['修改序号']
+				const list = item.member_id > 0 ? ['修改权重', '修改名称', '新建二级类目', '删除'] : ['修改权重']
 				uni.showActionSheet({
 				    itemList: list,
 				    success: (res) => {
@@ -222,7 +226,7 @@
 			},
 			editSecond(sub) {
 				uni.showActionSheet({
-				    itemList: ['修改序号', '修改名称', '删除'],
+				    itemList: ['修改权重', '修改名称', '删除'],
 				    success: (res) => {
 				        switch (res.tapIndex) {
 							case 0:
@@ -242,12 +246,24 @@
 	}
 </script>
 
-<style scoped>
-	.right-line {
+<style lang="scss" scoped>
+	.sep-line {
 		display: flex;
 		align-items: center;
-		justify-content: flex-end;
+		justify-content: space-between;
 		padding: 12rpx 24rpx;
+	}
+	.des-text {
+		font-size: 24rpx;
+		color: #8F939C;
+		display: flex;
+		align-items: center;
+		
+		image {
+			height: 24rpx;
+			width: 24rpx;
+			margin-right: 6rpx;
+		}
 	}
 	.item {
 		padding: 30rpx;
@@ -282,9 +298,13 @@
 	.second {
 		padding: 30rpx;
 		padding-bottom: 0;
+		padding-right: 0;
 		flex: 0;
-		width: 100%;
 		margin-left: 40rpx;
+		
+		.item {
+			padding-right: 0;
+		}
 	}
 	.second .item:last-child {
 		padding-bottom: 0;
