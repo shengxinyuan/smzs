@@ -8,7 +8,7 @@
 		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>
-		<scroll-view scroll-y="true" class="goods-list">
+		<scroll-view v-else scroll-y="true" class="goods-list">
 			<view class="cont_item" v-for="(item,i) in shop_list" :key="i">
 				<image class="images" :src="item.image" mode="aspectFill"></image>
 				<view class="base-cont">
@@ -71,47 +71,19 @@
 				isOrder: false,
 				sort_list: [],
 				current: {},
-				member_info: {},
+				member_id: '',
+				isCustom: false,
+				queryParams: {
+					page: 1,
+					limit: 10,
+					status: '30',
+					last_page: false
+				},
 			}
 		},
 		onLoad () {
-			this.member_info = uni.getStorageSync('member_info');
-			console.log(this.member_info);
+			this.member_id = uni.getStorageSync('member_info').id;
 			this.getAllCategory();
-			this.shop_list = [
-				{
-					id: 930,
-					title: '商品930',
-					sale: 10,
-					price: 1000,
-					index: 3,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					id: 931,
-					title: '商品931',
-					sale: 10,
-					price: 1000,
-					index: 3,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					id: 932,
-					title: '商品932',
-					sale: 10,
-					price: 1000,
-					index: 3,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				},
-				{
-					id: 933,
-					title: '商品933',
-					sale: 10,
-					price: 1000,
-					index: 3,
-					image: 'http://zuanshi.semoh.cn/uploads/20210825/80552891ab2b03b711f359a2580e02f3.jpg',
-				}
-			];
 		},
 		methods: {
 			getAllCategory() {
@@ -130,21 +102,46 @@
 				})
 			},
 			queryList () {
-				this.$api.get('shop/getAllGood', {
-					cate_id: this.firstList[this.first].id,
-					cate_second_id: this.secondList[this.second].id,
-					member_info: this.member_info.id,
-				}).then((res) => {
-					console.log(res);
-					uni.hideLoading()
-					if (res.status == 1) {
-						this.firstList = res.data;
-						this.secondList = this.firstList[this.first].children;
-						this.queryList();
-					}
-				}).catch(() => {
-					uni.hideLoading()
-				})
+				if (this.isCustom) {
+					this.$api.get('shop/getAllGood', {
+						cate_id: this.firstList[this.first].id,
+						cate_second_id: this.secondList && this.secondList[this.second] && this.secondList[this.second].id,
+						member_id: this.member_id,
+						sale: 1,
+						price: 1,
+						page: this.queryParams.page,
+						limit: this.queryParams.limit,
+					}).then((res) => {
+						uni.hideLoading()
+						if (res.status == 1) {
+							this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, res.data.data];
+							this.queryParams.last_page = res.data.last_page;
+						}
+					}).catch(() => {
+						uni.hideLoading()
+					})
+				} else {
+					this.$api.get('shop/getSurmerGood', {
+						cate_id: this.firstList[this.first].id,
+						member_id: this.member_id,
+						page: this.queryParams.page,
+						limit: this.queryParams.limit,
+					}).then((res) => {
+						current_page: 1
+						data: []
+						last_page: 0
+						per_page: 10
+						total: 0
+						uni.hideLoading()
+						if (res.status == 1) {
+							this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, res.data.data];
+							this.queryParams.last_page = res.data.last_page;
+						}
+					}).catch(() => {
+						uni.hideLoading()
+					})
+				}
+				
 			},
 			// 编辑当前item
 			editIndex (item) {
@@ -154,12 +151,15 @@
 			// 一级目录切换
 			changeFirst (index) {
 				this.first = index;
+				this.isCustom = this.firstList[index] && this.firstList[index].member_id > 0;
 				this.second = 0;
 				this.secondList = this.firstList[index].children;
+				this.queryList();
 			},
 			// 二级目录切换
 			changeSecond (index) {
 				this.second = index;
+				this.queryList();
 			},
 			// 确认修改
 			confirmItemOrder (i) {
