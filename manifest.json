@@ -188,7 +188,8 @@
         "template" : "",
         "domain" : "https://zuanshi.semoh.cn/smsj/",
         "router" : {
-            "mode" : "history"
+            "mode" : "history",
+            "base" : "/smzs-test/"
         },
         "devServer" : {
             "https" : false
