@@ -269,6 +269,8 @@
 <script>
 	// import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 	// import dragButton from "@/components/drag-button/drag-button.vue";
+	import workerjs from '../../worker.js';
+	
 	export default {
 		data() {
 			return {
@@ -324,7 +326,8 @@
 				muban: 2,
 				banben: '',
 				isTop:0,
-				myScroll:0
+				myScroll:0.,
+				worker:null
 			}
 		},
 		mounted() {
@@ -335,6 +338,12 @@
 			console.log("节点离页面顶部的距离为" + data.top);
 			this.myScroll = data.top
 			}).exec();
+			
+			// this.worker = this.$worker.run(n => n +10,[2]).then(res =>{
+			// 	console.log(res);
+			// }).catch(err =>{
+			// 	console.log(err);
+			// })
 		},
 		onPageScroll(e) {
 			// 重点，用到滑动切换必须加上
@@ -386,6 +395,7 @@
 			}
 			this.get_label_list()
 			this.page_render()
+			
 		},
 		onShow() {
 			let a = uni.getStorageSync("token")
@@ -780,6 +790,36 @@
 							this.last_page = res.data.last_page
 							this.current_page = res.data.current_page
 							this.shop_list1 = this.shop_list1.concat(res.data.data)
+							console.log(this.shop_list1,'111111')
+							// for(let i=0;i<this.shop_list1.length;i++){
+							// 	for(let j=1;j<this.shop_list1.length;j++){
+							// 		if(this.shop_list1[i].price * 1 < this.shop_list1[j].price * 1){
+							// 			let max = this.shop_list1[j];
+							// 			this.shop_list1[j] = this.shop_list1[i];
+							// 			this.shop_list1[j+1] = max;
+							// 		}
+							// 	}
+							// }
+							// this.shop_list1.map(item =>{
+							// 	item.price = item.price * 1
+							// })
+							// this.worker = this.$worker.run(this.bubbleSort(this.shop_list1),[...this.shop_list1]).then(res =>{
+							// 	console.log(res);
+							// }).catch(err =>{
+							// 	console.log(err);
+							// })
+							// this.shop_list1.sort(this.compare('price'))
+							// let worker = new Worker(workerjs);
+							// worker.postMessage(this.shop_list1);
+							// worker.onmessage=function(event){
+							// 	console.log(event);
+							//     var data=event.data;
+							//     console.log(data)
+							// };
+							// worker.onerror=function(event){
+							//     console.log(event.fileName,event.lineo,event.message);
+							// };
+							// console.log(this.shop_list1,'222222');
 							if (a == b) {
 								this.loadingText = '没有更多了'
 							} else {

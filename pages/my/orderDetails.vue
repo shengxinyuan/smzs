@@ -130,7 +130,7 @@
 				<view class="statis_l">
 					订单编号
 				</view>
-				<view class="statis_r">
+				<view class="statis_r" v-if="shop_det.bn != ''">
 					<text @click="make(shop_det.bn)">复制</text>{{shop_det.bn}}
 				</view>
 			</view>
@@ -138,8 +138,8 @@
 				<view class="statis_l">
 					创建时间
 				</view>
-				<view class="statis_r"  >
-					{{shop_det.order_goods[0].create_time}}
+				<view class="statis_r" v-if="shop_det.create_time != ''">
+					{{shop_det.create_time}}
 				</view>
 			</view>
 		</view>

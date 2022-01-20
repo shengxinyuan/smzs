@@ -924,7 +924,7 @@
 			},
 			//提交订单
 			submit_order(){
-				if(this.address.id === undefined){
+				if(this.address.id === undefined && this.current != 2){
 					this.com.msg('请添加收货地址')
 					return false
 				}

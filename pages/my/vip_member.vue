@@ -182,6 +182,11 @@
 							uni.navigateTo({
 								url:'/pages/login/login'
 							})
+						} else if (aq.cancel) {
+							console.log('用户点击取消');
+							uni.navigateBack({
+								delta:1
+							})
 						}
 					}
 				})
