@@ -24,7 +24,7 @@
 				</view>
 				<view class="index-cont">
 					<view class="">
-						排序权重：{{item.sort}}
+						排序权重：{{item.isCustom ? item.sort : item.set_sort}}
 					</view>
 					<view v-if="isOrder" class="index-btn" @click="editIndex(item)">
 						修改
