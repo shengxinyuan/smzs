@@ -146,7 +146,7 @@
 					status: this.queryParams.status,
 				}).then(res => {
 					if (res.status && res.data) {
-						this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, res.data.data];
+						this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, ...res.data.data];
 						this.queryParams.last_page = res.data.last_page;
 					}
 				})
