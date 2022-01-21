@@ -8,7 +8,7 @@
 		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>
-		<scroll-view v-else scroll-y="true" class="goods-list" @scrolltolower="loadMore" lower-threshold="200">
+		<scroll-view v-else scroll-y="true" class="goods-list">
 			<view class="cont_item" v-for="(item,i) in shop_list" :key="i">
 				<image class="images" :src="item.image" mode="aspectFill"></image>
 				<view class="base-cont">
@@ -21,18 +21,22 @@
 					<view class="it_selt_r">
 						已售{{item.sale}}件
 					</view>
+					<view class="it_selt_r">
+						库存{{item.stock}}件
+					</view>
 				</view>
 				<view class="index-cont">
 					<view class="">
-						排序权重：{{item.isCustom ? item.sort : item.set_sort}}
+						排序权重：{{isCustom ? item.sort : item.set_sort}}
 					</view>
 					<view v-if="isOrder" class="index-btn" @click="editIndex(item)">
 						修改
 					</view>
 				</view>
 			</view>
+			<u-loadmore :status="moreStatus" margin-bottom="120" margin-top="20"/>
 		</scroll-view>
-		<u-loadmore :status="moreStatus" margin-bottom="120" margin-top="20"/>
+		
 		
 		<view class="status-btn-cont">
 			<view class="">
@@ -90,10 +94,10 @@
 		},
 		onReachBottom() {
 			if (this.queryParams.last_page === this.queryParams.page) {
-				this.moreStatus = 'nomore';
+				
 				return;
 			} else {
-				this.moreStatus = 'loadmore';
+				
 				this.queryParams.page += 1;
 				this.queryList();
 			}
@@ -130,6 +134,7 @@
 						if (res.status == 1) {
 							this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, ...res.data.data];
 							this.queryParams.last_page = res.data.last_page;
+							this.moreStatus = res.data.last_page === res.data.current_page ? 'nomore' : 'loadmore';
 						}
 					}).catch(() => {
 						uni.hideLoading()
@@ -146,6 +151,7 @@
 						if (res.status == 1) {
 							this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, ...res.data.data];
 							this.queryParams.last_page = res.data.last_page;
+							this.moreStatus = res.data.last_page === res.data.current_page ? 'nomore' : 'loadmore';
 						}
 					}).catch(() => {
 						uni.hideLoading()
@@ -164,12 +170,18 @@
 				this.isCustom = this.firstList[index] && this.firstList[index].member_id > 0 ? 1 : 0;
 				this.second = 0;
 				this.secondList = this.firstList[index].children;
-				this.queryList();
+				this.queryParams.page = 1;
+				setTimeout(() => {
+					this.queryList();
+				}, 0)
 			},
 			// 二级目录切换
 			changeSecond (index) {
 				this.second = index;
-				this.queryList();
+				this.queryParams.page = 1;
+				setTimeout(() => {
+					this.queryList();
+				}, 0)
 			},
 			// 确认修改
 			confirmItemOrder (i) {
@@ -185,7 +197,8 @@
 				}
 				this.shop_list.forEach((item) => {
 					if (item.id === this.current.id) {
-						item.index = index;
+						item.sort = index;
+						item.set_sort = index;
 					}
 				})
 			},
