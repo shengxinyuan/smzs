@@ -4,7 +4,7 @@
 		<view style="padding-top: 200rpx;" v-if="!shop_list|| shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>
-		<scroll-view v-else scroll-y="true" class="cont_list_two" @scrolltolower="loadMore">
+		<scroll-view v-else scroll-y="true" class="cont_list_two">
 			<view class="cont_item" v-for="(item, index) in shop_list" :key="item.id">
 				<image class="images" :src="item.image" mode="aspectFill"></image>
 				<view class="base-cont">
@@ -28,6 +28,7 @@
 					</view>
 				</view>
 			</view>
+			<u-loadmore :status="moreStatus" margin-bottom="20" margin-top="20"/>
 		</scroll-view>
 		
 		<u-modal v-model="modalShow" :title="modalTitle" :content="modalContent" :show-cancel-button="true" @confirm="btnCilck(modalInfo.item, modalInfo.type)"></u-modal>
@@ -131,11 +132,19 @@
 					type: '',
 					item: ''
 				},
+				moreStatus: 'loadmore',
 			}
 		},
 		onLoad () {
 			this.queryList();
-			
+		},
+		onReachBottom() {
+			if (this.queryParams.last_page === this.queryParams.page) {
+				return;
+			} else {
+				this.queryParams.page += 1;
+				this.queryList();
+			}
 		},
 		methods: {
 			// 拉商品数据
@@ -148,13 +157,9 @@
 					if (res.status && res.data) {
 						this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, ...res.data.data];
 						this.queryParams.last_page = res.data.last_page;
+						this.moreStatus = res.data.last_page === res.data.current_page ? 'nomore' : 'loadmore';
 					}
 				})
-			},
-			loadMore () {
-				if (this.queryParams.last_page) return;
-				this.queryParams.page += 1;
-				this.queryList();
 			},
 			reload () {
 				this.queryParams.page = 1;
@@ -276,6 +281,7 @@
 			border-bottom: 1px solid #eee;
 			color: rgb(96, 98, 102);
 			.images {
+				margin: 20rpx 0;
 				width: 180rpx;
 				border-radius: 10rpx;
 				height: 180rpx;
