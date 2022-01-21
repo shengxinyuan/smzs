@@ -8,7 +8,7 @@
 		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>
-		<scroll-view v-else scroll-y="true" class="goods-list">
+		<scroll-view v-else scroll-y="true" class="goods-list" @scrolltolower="loadMore" lower-threshold="200">
 			<view class="cont_item" v-for="(item,i) in shop_list" :key="i">
 				<image class="images" :src="item.image" mode="aspectFill"></image>
 				<view class="base-cont">
@@ -24,7 +24,7 @@
 				</view>
 				<view class="index-cont">
 					<view class="">
-						排序权重：{{item.index}}
+						排序权重：{{item.isCustom ? item.sort : item.set_sort}}
 					</view>
 					<view v-if="isOrder" class="index-btn" @click="editIndex(item)">
 						修改
@@ -32,6 +32,8 @@
 				</view>
 			</view>
 		</scroll-view>
+		<u-loadmore :status="moreStatus" margin-bottom="120" margin-top="20"/>
+		
 		<view class="status-btn-cont">
 			<view class="">
 				提示：
@@ -44,7 +46,7 @@
 			<view class="btn" v-else @click="saveOrder">保存排序</view>
 		</view>
 		
-		<u-picker v-model="editShow" mode="selector" :default-selector="[current.index - 1]" :range="[1,2,3,4,5,6,7,8,9,10]" @confirm="confirmItemOrder"></u-picker>
+		<u-picker v-model="editShow" mode="selector" :selector="selector" :range="[0,1,2,3,4,5,6,7,8,9,10]" @confirm="confirmItemOrder"></u-picker>
 	</view>
 </template>
 
@@ -72,18 +74,29 @@
 				sort_list: [],
 				current: {},
 				member_id: '',
-				isCustom: false,
+				isCustom: 0,
 				queryParams: {
 					page: 1,
-					limit: 10,
-					status: '30',
-					last_page: false
+					limit: 20,
+					last_page: 1
 				},
+				moreStatus: 'loadmore',
+				selector: [0]
 			}
 		},
 		onLoad () {
 			this.member_id = uni.getStorageSync('member_info').id;
 			this.getAllCategory();
+		},
+		onReachBottom() {
+			if (this.queryParams.last_page === this.queryParams.page) {
+				this.moreStatus = 'nomore';
+				return;
+			} else {
+				this.moreStatus = 'loadmore';
+				this.queryParams.page += 1;
+				this.queryList();
+			}
 		},
 		methods: {
 			getAllCategory() {
@@ -95,6 +108,7 @@
 					if (res.status == 1) {
 						this.firstList = res.data;
 						this.secondList = this.firstList[this.first].children;
+						this.isCustom = this.firstList[this.first] && this.firstList[this.first].member_id > 0 ? 1 : 0;
 						this.queryList();
 					}
 				}).catch(() => {
@@ -102,7 +116,7 @@
 				})
 			},
 			queryList () {
-				if (this.isCustom) {
+				if (this.isCustom === 1) {
 					this.$api.get('shop/getAllGood', {
 						cate_id: this.firstList[this.first].id,
 						cate_second_id: this.secondList && this.secondList[this.second] && this.secondList[this.second].id,
@@ -114,7 +128,7 @@
 					}).then((res) => {
 						uni.hideLoading()
 						if (res.status == 1) {
-							this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, res.data.data];
+							this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, ...res.data.data];
 							this.queryParams.last_page = res.data.last_page;
 						}
 					}).catch(() => {
@@ -122,36 +136,32 @@
 					})
 				} else {
 					this.$api.get('shop/getSurmerGood', {
-						cate_id: this.firstList[this.first].id,
+						cate_first_id: this.firstList[this.first].id,
+						cate_id: this.secondList && this.secondList[this.second] && this.secondList[this.second].id,
 						member_id: this.member_id,
 						page: this.queryParams.page,
 						limit: this.queryParams.limit,
 					}).then((res) => {
-						current_page: 1
-						data: []
-						last_page: 0
-						per_page: 10
-						total: 0
 						uni.hideLoading()
 						if (res.status == 1) {
-							this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, res.data.data];
+							this.shop_list = this.queryParams.page === 1 ? res.data.data : [...this.shop_list, ...res.data.data];
 							this.queryParams.last_page = res.data.last_page;
 						}
 					}).catch(() => {
 						uni.hideLoading()
 					})
 				}
-				
 			},
 			// 编辑当前item
 			editIndex (item) {
 				this.editShow = true;
 				this.current = item;
+				this.selector = [item.sort];
 			},
 			// 一级目录切换
 			changeFirst (index) {
 				this.first = index;
-				this.isCustom = this.firstList[index] && this.firstList[index].member_id > 0;
+				this.isCustom = this.firstList[index] && this.firstList[index].member_id > 0 ? 1 : 0;
 				this.second = 0;
 				this.secondList = this.firstList[index].children;
 				this.queryList();
@@ -163,7 +173,7 @@
 			},
 			// 确认修改
 			confirmItemOrder (i) {
-				const index = Number(i) + 1;
+				const index = Number(i);
 				const item = this.sort_list.find((item) => item.id === this.current.id)
 				if (item) {
 					item.sort = index;
@@ -186,7 +196,7 @@
 			// 保存排序
 			saveOrder () {
 				this.$api.post('custom/setWeight',{
-					type: 0,
+					type: this.isCustom,
 					sort_list: this.sort_list
 				}, { json: true }).then(res=>{
 					if (res.status == 1) {
@@ -194,6 +204,7 @@
 							title: '修改成功',
 							icon: 'none'
 						});
+						this.sort_list = [];
 						this.isOrder = false;
 						this.queryList();
 					}
@@ -208,7 +219,6 @@
 	.goods-list {
 		width: 100%;
 		border-top: 1px solid #eee;
-		padding-bottom: 100rpx;
 		.cont_item {
 			margin: 0 32rpx;
 			background-color: white;
@@ -218,6 +228,7 @@
 			border-bottom: 1px solid #eee;
 			color: rgb(96, 98, 102);
 			.images {
+				margin: 20rpx 0;
 				width: 180rpx;
 				border-radius: 10rpx;
 				height: 180rpx;
