@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './App'
 
-import VueWorker from 'vue-worker';
-Vue.use(VueWorker)
+// import VueWorker from 'vue-worker';
+// Vue.use(VueWorker)
 
 //uview引入
 import uView from 'uview-ui';
@@ -12,6 +12,7 @@ Vue.config.productionTip = false
 
 App.mpType = 'app'
 
+// 360963104@qq   zl238231
 // 13260880929    18920417395
 import com from 'utils/common.js'
 Vue.prototype.com = com

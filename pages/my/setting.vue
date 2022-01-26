@@ -73,7 +73,7 @@
 							uni.removeStorageSync('menber_json')
 							uni.removeStorageSync('user_infotit')
 							uni.removeStorageSync('viptype')
-							uni.navigateTo({
+							uni.reLaunch({
 								url:'../login/login'
 							})
 						}else if(res.cancel) {
