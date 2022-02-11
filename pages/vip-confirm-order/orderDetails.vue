@@ -12,7 +12,7 @@
 				<view class="address_l">
 					收货人
 				</view>
-				{{shop_det.address_id.contact}} {{shop_det.address_id.mobile}}
+				{{shop_det.address_id && shop_det.address_id.contact}} {{shop_det.address_id && shop_det.address_id.mobile}}
 			</view>
 			<view class="address_b">
 				<view class="address_l">
@@ -32,13 +32,13 @@
 		<view class="shop">
 			<view class="shop_title">
 				<view class="title_l">
-					订单编号：{{shop_det.bn}}
+					订单编号：{{bn}}
 				</view>
 				<!-- <view class="title_r">
 					待付款
 				</view> -->
 			</view>
-			<view class="shop_list"  v-for="(its,ind) in shop_det.order_goods">
+			<view class="shop_list" v-if="!isCustom" v-for="(its,ind) in shop_det.order_goods">
 				<image :src="its.image" mode="aspectFill" @click="order_detail(item.id,10)"></image>
 				<view class="list_right">
 					<view @click="order_detail(item.id)">
@@ -52,9 +52,15 @@
 					</view>
 				</view>
 			</view>
-			<view class="heji">
-				<text  class="heji_l">共 {{shop_det.count}} 件</text>
-				<text class="heji_r"> 合计：<text>￥{{shop_det.total}}</text></text>
+			<view class="shop_list" v-if="isCustom" v-for="(its,ind) in shop_det.goods">
+				<image v-if="its.image" :src="its.image.split(',')[0]" mode="aspectFill"></image>
+				<view class="list_right">
+					<view>
+						<view class="title">{{its.title}}</view>
+						<view class="Specifications"></view>
+						<view class="list_right_its"></view>
+					</view>
+				</view>
 			</view>
 		</view>
 		<!-- 商品汇总 -->
@@ -68,7 +74,7 @@
 				</view>
 			</view>
 			<!-- 工费 -->
-			<view class="statis">
+			<view class="statis" v-if="!isCustom">
 				<view class="statis_l">
 					工费
 				</view>
@@ -87,7 +93,7 @@
 					订单编号
 				</view>
 				<view class="statis_r">
-					<text @click="make(shop_det.bn)">复制</text>{{shop_det.bn}}
+					<text @click="make(bn)">复制</text>{{bn}}
 				</view>
 			</view>
 			<view class="statis">
@@ -107,12 +113,12 @@
 					<view class="toast_but_no" @click="no_order(shop_det.id)">
 						取消订单
 					</view>
-					<view class="toast_but_pay" @click="goto_pages(shop_det.bn)">
+					<view class="toast_but_pay" @click="goto_pages(bn)">
 						平台下单
 					</view>
 				</view>
 				<view  class="toast_but_r"  v-if="shop_det.status == 30">
-					<view class="toast_but_no" @click="order_logist_wl(shop_det.bn)">查看物流</view> <!-- // -->
+					<view class="toast_but_no" @click="order_logist_wl(bn)">查看物流</view> <!-- // -->
 					<view class="toast_but_pay" @click="sure_details(shop_det.id)">确认收货</view> <!-- // -->
 				</view>
 				<view class="toast_but_r"  v-if="shop_det.status == 50">
@@ -151,18 +157,36 @@
 		},
 		onLoad(op) {
 			console.log(op)
+			this.order_type = op.order_type
 			this.order_id = op.page_type
 			this.page_reader()
+		},
+		computed: {
+			isCustom() {
+				return this.order_type == 1;
+			},
+			bn() {
+				return this.shop_det && (this.shop_det.bn_id || this.shop_det.bn)
+			}
 		},
 		methods:{
 			
 			page_reader(){
-				this.$api.get('order_goods',{id:this.order_id,is_h5:1}).then(res=>{
-					console.log(res)
-					if(res.status == 1){
-						this.shop_det = res.data
-					}
-				})
+				if (this.isCustom) {
+					this.$api.get('shop/order/getOrderDetail',{bn:this.order_id,type:1}).then(res=>{
+						console.log(res)
+						if(res.status == 1){
+							this.shop_det = res.data[0]
+						}
+					})
+				} else {
+					this.$api.get('order_goods',{id:this.order_id,is_h5:1}).then(res=>{
+						console.log(res)
+						if(res.status == 1){
+							this.shop_det = res.data
+						}
+					})
+				}
 			},
 			//物流
 			order_logist_wl(e){
@@ -237,6 +261,10 @@
 				})
 			},
 			goto_pages(e){
+				if (this.isCustom) {
+					this.com.navto('../vip-confirm-order/custom-confirm-order?bn=' + e)
+					return
+				}
 				// console.log(e)
 				let data = {
 					bn: e,

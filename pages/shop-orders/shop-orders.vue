@@ -10,8 +10,9 @@
  		</view>
  		<view class="box" v-if="page_show">
 			<view v-if="list.length != 0">
-				<zs-order-list-two :list="list" @order_detail="order_detail" v-if="current_ind != 1" @del_order="del_order" @cancel_detail="cancel_detail"></zs-order-list-two>
-				<zs-order-df-two :list="list" @order_detail="order_detail" @cancel_detail="cancel_detail" v-else></zs-order-df-two>
+				<zs-order-list-two :list="list" @order_detail="order_detail" @del_order="del_order" @cancel_detail="cancel_detail"></zs-order-list-two>
+				<!-- <zs-order-list-two :list="list" @order_detail="order_detail" v-if="current_ind != 1" @del_order="del_order" @cancel_detail="cancel_detail"></zs-order-list-two>
+				<zs-order-df-two :list="list" @order_detail="order_detail" @cancel_detail="cancel_detail" v-else></zs-order-df-two> -->
 				<view style="width: 100%;height: 80rpx;">
 					<uni-load-more :status="status" :content-text="contentText"></uni-load-more>
 				</view>
@@ -72,12 +73,12 @@
 			
 			page_cont(e){
 				
-				this.$api.get('orders',{page:e,status:this.current,store:1,is_h5:1}).then(res=>{
+				this.$api.get('shop/order/getAllOrder',{page:e,status:this.current,store:1}).then(res=>{
 					// console.log(res.data.data)
 					if(res.status == 1){
 						this.list = this.list.concat(res.data.data)
 						this.page_show = true
-						if(res.data.data.length < 10){
+						if(res.data.last_page === res.data.current_page){
 							this.status = 'noMore'
 							return false
 						}
@@ -87,6 +88,9 @@
 						var date = new Date()
 						var nowTime = date.getTime(); // 当前时间的时间戳
 						res.data.data.forEach(i=>{
+							if (i.order_type == 1) {
+								return
+							}
 							// console.log(i)
 							i.data[0].forEach(j=>{
 								let arr = j.end_time*1000
@@ -106,8 +110,8 @@
 				})
 			},
 			//订单详情
-			order_detail(e){
-				this.com.navto('../vip-confirm-order/orderDetails?page_type='+e)
+			order_detail(e, order_type){
+				this.com.navto('../vip-confirm-order/orderDetails?page_type='+e+'&order_type=' + order_type)
 				
 			},
 			cancel_detail(e,i){

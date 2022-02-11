@@ -1,12 +1,12 @@
 <template>
 	<view class="">
-		<view class="order_time" v-for="(item,ind) of list" :key="ind" v-if="item.status != 10">
+		<view class="order_time" v-for="(item,ind) of list" :key="ind">
 			<view class="order_box">
-				<view class="order_head" @click="order_detail(item.id)">
+				<view class="order_head" @click="order_detail(item.bn_id, item.order_type)">
 					订单编号：<text class="time">{{item.bn_id}}</text> 
 					
 					<text class="sure" v-if="item.status == 10">待付款</text>
-					<text class="sure" v-if="item.status == 20">待发货</text>
+					<text class="sure" v-if="item.status == 20">待确认</text>
 					<text class="sure" v-if="item.status == 30">待收货</text>
 					<text class="sure" v-if="item.status == 40">待评价</text>
 					<text class="sure" v-if="item.status == 50">已完成</text>
@@ -15,10 +15,10 @@
 					<text class="sure" v-if="item.status == 60 && item.return_type == 3">售后成功</text> -->
 					<text class="sure" v-if="item.status ==70">已取消</text>
 				</view>
-				<view class="shop_list" v-if="item.goods">
-					<image :src="item.goods.image" mode="aspectFill" @click="order_detail(item.id)"></image>
+				<view class="shop_list" v-if="item.order_type != 1 && item.goods">
+					<image :src="item.goods.image" mode="aspectFill" @click="order_detail(item.bn_id, item.order_type)"></image>
 					<view class="list_right">
-						<view @click="order_detail(item.id)">
+						<view @click="order_detail(item.bn_id, item.order_type)">
 							<view class="title">{{item.goods.title}}</view>
 							<view class="Specifications">金重：{{item.goods.weight}}g<text class="num"> 条码：{{item.goods.bar_code}}</text></view>
 							<view class="shop_list_label">
@@ -30,6 +30,24 @@
 						
 					</view>
 				</view>
+				<view v-if="item.order_type == 1 && item.goods[0]">
+					<view class="shop_list">
+						<image v-if="item.goods[0].image" :src="item.goods[0].image.split(',')[0]" mode="aspectFill" @click="order_detail(item.bn_id, item.order_type)"></image>
+						<view class="list_right">
+							<view @click="order_detail(item.bn_id, item.order_type)">
+								<view class="title">{{item.goods[0].title}}</view>
+								<view class="Specifications">共{{item.goods.length || 1}}件</view>
+								<view class="shop_list_label">
+								</view>
+								<view class="price">
+									<!-- <text>￥{{(item.price)}}</text>
+									<text style="color: #999;"> *{{its.count}}</text> -->
+								</view>
+							</view>
+								
+						</view>
+					</view>
+				</view>
 				
 				<view class="foot_s">
 					<view class="around">
@@ -39,16 +57,16 @@
 						<view>合计:<text class="money">￥{{item.total}}</text></view>
 					</view>
 					<view class="foot_child">
-						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id,ind)">取消订单</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 10" @click="order_details_x(item.bn_id,item.bn)">平台下单</view> <!-- // -->
+						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id, item.order_type, ind)">取消订单</view> <!-- // -->
+						<view class="go_buy" v-if="item.status == 10" @click="order_details_x(item.bn_id, item.order_type)">平台下单</view> <!-- // -->
 						<!-- <view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  -->
-						<view class="go_buy_s" v-if="item.status == 30" @click="order_logist_wl(item.bn_id,item.bn)">查看物流</view>
-						<view class="go_buy" v-if="item.status == 30" @click="sure_details(item.id)">确认收货</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 40" @click="go_immed(item)">立即评价</view>
-						<view class="go_buy_s" v-if="item.status == 50" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
+						<view class="go_buy_s" v-if="item.order_type != 1 && item.status == 30" @click="order_logist_wl(item.bn_id)">查看物流</view>
+						<view class="go_buy" v-if="item.order_type != 1 && item.status == 30" @click="sure_details(item.id)">确认收货</view> <!-- // -->
+						<view class="go_buy" v-if="item.order_type != 1 && item.status == 40" @click="go_immed(item)">立即评价</view>
+						<view class="go_buy_s" v-if="item.order_type != 1 && item.status == 50" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
 						<!-- <view class="go_buy" v-if="item.status == 50" @click="shouh">售后服务</view> -->
-						<view class="go_buy" v-if="item.status == 60 && item.return_type == 2" @click="shouh">再次申请</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 60 && item.return_type == 3" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
+						<view class="go_buy" v-if="item.order_type != 1 && item.status == 60 && item.return_type == 2" @click="shouh">再次申请</view> <!-- // -->
+						<view class="go_buy" v-if="item.order_type != 1 && item.status == 60 && item.return_type == 3" @click="del_order(item.id,item.status)">删除订单</view> <!-- // -->
 					</view>
 				</view>
 			</view>
@@ -70,7 +88,7 @@
 		},
 		methods:{
 			//取消订单
-			no_order(e,i){
+			no_order(e, order_type, i){
 				let _that = this
 				uni.showModal({
 					content:'确认取消该订单吗？',
@@ -82,17 +100,20 @@
 				})
 			},
 			//平台下单
-			order_details_x(e,a){
-				console.log(e,a)
+			order_details_x(e, order_type){
+				if (order_type == 1) {
+					this.com.navto('../vip-confirm-order/custom-confirm-order?bn=' + e)
+					return
+				}
 				let data = {
-					bn: e === undefined ? a : e,
+					bn: e,
 					current:1
 				}
 				this.com.navto('../vip-confirm-order/vip-confirm-order?data=' + JSON.stringify(data))
 			},
 			//订单详情
-			order_detail(e){
-				this.$emit('order_detail',e)
+			order_detail(e, order_type){
+				this.$emit('order_detail',e,order_type)
 			},
 			//售后
 			shouh(){
@@ -152,9 +173,8 @@
 				// this.com.navto('./applyRefund?cont='+JSON.stringify(e))
 			},
 			//物流
-			order_logist_wl(e,b){
-				let arr = e === undefined ? b : e
-				this.com.navto('../../pages/my/logistr?cont='+arr)
+			order_logist_wl(e){
+				this.com.navto('../../pages/my/logistr?cont='+e)
 				
 			}
 		}
@@ -222,9 +242,13 @@
 						line-height: 53rpx;z-index: 20;
 					}
 					.title{
-						line-height: 60rpx;font-weight: bold;
+						line-height: 60rpx;
+						font-weight: bold;
 						width: 100%;
-						
+						height: 60rpx;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 					.price{
 						width: 100%;line-height: 70rpx;
