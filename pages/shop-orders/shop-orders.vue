@@ -30,7 +30,7 @@
  	export default { 	
  		data() {
  			return {
- 				tabs: [{name:'全部',id:0}, {name:'待确认',id:10}, {name:'待收货',id:30},{name:'已完成',id:50}],
+ 				tabs: [{name:'全部',id:0}, {name:'待确认',id:20}, {name:'待收货',id:30},{name:'已完成',id:50}],
  				list:[],
  				current: 0,
 				current_ind:0,
@@ -185,7 +185,7 @@
  			padding:0 2%;
  			background-color: #fff;color: #999999;
  			text-align: center;
-			position: fixed;left: 0;top: 100rpx;z-index: 20;
+			position: fixed;left: 0;top: 80rpx;z-index: 20;
 			.swiper-box{
 				
 				display: flex;white-space: nowrap;

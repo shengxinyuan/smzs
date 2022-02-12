@@ -7,6 +7,7 @@
 					
 					<text class="sure" v-if="item.status == 10">待付款</text>
 					<text class="sure" v-if="item.status == 20">待确认</text>
+					<text class="sure" v-if="item.status == 25">已确认收款，待发货</text>
 					<text class="sure" v-if="item.status == 30">待收货</text>
 					<text class="sure" v-if="item.status == 40">待评价</text>
 					<text class="sure" v-if="item.status == 50">已完成</text>
@@ -30,12 +31,12 @@
 						
 					</view>
 				</view>
-				<view v-if="item.order_type == 1 && item.goods[0]">
+				<view v-if="item.order_type == 1 && item.goods">
 					<view class="shop_list">
-						<image v-if="item.goods[0].image" :src="item.goods[0].image.split(',')[0]" mode="aspectFill" @click="order_detail(item.bn_id, item.order_type)"></image>
+						<image v-if="item.goods.image" :src="item.goods.image.split(',')[0]" mode="aspectFill" @click="order_detail(item.bn_id, item.order_type)"></image>
 						<view class="list_right">
 							<view @click="order_detail(item.bn_id, item.order_type)">
-								<view class="title">{{item.goods[0].title}}</view>
+								<view class="title">{{item.goods.title}}</view>
 								<view class="Specifications">共{{item.goods.length || 1}}件</view>
 								<view class="shop_list_label">
 								</view>
@@ -57,8 +58,9 @@
 						<view>合计:<text class="money">￥{{item.total}}</text></view>
 					</view>
 					<view class="foot_child">
-						<view class="go_buy_s" v-if="item.status == 10" @click="no_order(item.id, item.order_type, ind)">取消订单</view> <!-- // -->
-						<view class="go_buy" v-if="item.status == 10" @click="order_details_x(item.bn_id, item.order_type)">平台下单</view> <!-- // -->
+						<view class="go_buy_s" v-if="item.order_type != 1 && item.status == 10" @click="no_order(item.id, item.order_type, ind)">取消订单</view> <!-- // -->
+						<view class="go_buy" v-if="item.order_type != 1 && item.status == 10" @click="order_details_x(item.bn_id, item.order_type)">平台下单</view> <!-- // -->
+						<view class="go_buy" v-if="item.order_type == 1 && item.status == 20" @click="order_detail(item.bn_id, item.order_type)">确认收款</view>
 						<!-- <view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  -->
 						<view class="go_buy_s" v-if="item.order_type != 1 && item.status == 30" @click="order_logist_wl(item.bn_id)">查看物流</view>
 						<view class="go_buy" v-if="item.order_type != 1 && item.status == 30" @click="sure_details(item.id)">确认收货</view> <!-- // -->
