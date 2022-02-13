@@ -50,7 +50,6 @@
 			<view class="btn" v-else @click="saveOrder">保存排序</view>
 		</view>
 		
-		<u-picker v-model="editShow" mode="selector" :selector="selector" :range="[0,1,2,3,4,5,6,7,8,9,10]" @confirm="confirmItemOrder"></u-picker>
 	</view>
 </template>
 
@@ -73,7 +72,6 @@
 				list: [],
 				first: 0,
 				second: 0,
-				editShow: false,
 				isOrder: false,
 				sort_list: [],
 				current: {},
@@ -85,7 +83,6 @@
 					last_page: 1
 				},
 				moreStatus: 'loadmore',
-				selector: [0]
 			}
 		},
 		onLoad () {
@@ -160,9 +157,25 @@
 			},
 			// 编辑当前item
 			editIndex (item) {
-				this.editShow = true;
 				this.current = item;
-				this.selector = [item.sort];
+				uni.showModal({
+					title: '输入新的权重',
+					editable: true,
+					showCancel: true,
+					success: (res) => {
+						if (res.confirm) {
+							const num = Number(res.content)
+							if (num > 0 && num < 1000) {
+								this.confirmItemOrder(num);
+							} else {
+								uni.showToast({
+									icon: 'error',
+									title: '请输入1-999的数字'
+								})
+							}
+						}
+					},
+				})
 			},
 			// 一级目录切换
 			changeFirst (index) {
