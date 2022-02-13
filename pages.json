@@ -730,7 +730,9 @@
 			}
 		}, {
 			"path": "pages/vip-confirm-order/orderDetails",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
 		}, {
 			"path": "pages/service/my-dp-html",
 			"style": {}

@@ -9,12 +9,11 @@
 							<image :src="order.image" mode="aspectFill"></image>
 						</view>
 						<view class="goods-details">
-							<view class="goods-title">{{order.title}} sadas</view>
+							<view class="goods-title">{{order.title}}</view>
 							<view class="money-box" style="display: flex;justify-content: space-between;">
 								<view class="">
 									<text class="rmb">￥</text>
-									<text class="integer" v-if="!viptype">{{order.goods_money_normal}}</text>
-									<text class="integer" v-else>{{order.goods_money_vip}}</text>
+									<text class="integer">{{order.price}}</text>
 								</view>
 								<view style="color: #999;">
 									*{{order.order_count}}
@@ -46,6 +45,8 @@
 			<view class="second-box-five">
 				<view class="bottom-v">
 					<view class="money-box">
+						<text class="rmb">￥</text>
+						<text class="integer">{{order.total}}</text>
 					</view>
 					<view class="bottom-v-right" >
 						<view class="right-right" @click="submit_order">
@@ -62,21 +63,62 @@
 	export default {
 		data() {
 			return {
+				bn: '',
 				input_val:'',
 				input_show:false,//输入框
 				order: {},
 			}
 		},
 		onLoad(op) {
-			
+			this.bn = op.bn;
+			this.queryData()
 		},
 		methods: {
-			go_pages_add(){
-				this.com.navto('../my/receiving?is_mine='+ 1 +'&type='+0 + '&current='+ this.current)
+			queryData(id) {
+				uni.showLoading({
+					mask: true
+				})
+				this.$api.get('custom/queryOrderDetail', { // TODO
+					bn: this.bn,
+				}).then((res) => {
+					uni.hideLoading()
+					if (res.status == 1) {
+						const image = res.data.image.split(',')[0]
+						this.order = {
+							...this.order,
+							...res.data,
+							image,
+						}
+					}
+				}).catch(() => {
+					uni.hideLoading()
+				})
 			},
 			//提交订单
 			submit_order(){
-				
+				uni.showLoading({
+					mask: true
+				})
+				this.$api.post('shop/order/set_express', {
+					bn: this.bn,
+					express_no: this.input_val,
+				}).then((res) => {
+					uni.hideLoading()
+					if (res.status == 1) {
+						uni.navigateBack()
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: res.message || '发货失败，请重试'
+						})
+					}
+				}).catch(() => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: '发货失败，请重试'
+					})
+				})
 			}
 		}
 	}
@@ -130,21 +172,23 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
-
-			.money-box {
-				.rmb {
-					font-size: 22upx;
-				}
-
-				.integer {
-					font-size: 30upx;
-					font-weight: bold;
-				}
-
-				.fractional-part {
-					font-size: 22upx;
-				}
-			}
+		}
+	}
+	
+	.money-box {
+		color: #ea3a4a;
+	
+		.rmb {
+			font-size: 22upx;
+		}
+	
+		.integer {
+			font-size: 30upx;
+			font-weight: bold;
+		}
+	
+		.fractional-part {
+			font-size: 22upx;
 		}
 	}
 

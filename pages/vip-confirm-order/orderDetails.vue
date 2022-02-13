@@ -1,8 +1,7 @@
 <template>
 	<view>
-		<view class="sure" v-if="shop_det.status == 10">
-			待确认
-		</view>
+		<view class="sure" v-if="shop_det.status == 10">待确认</view>
+		<text class="sure" v-if="shop_det.status == 25">已确认收款，待发货</text>
 		<text class="sure" v-if="shop_det.status == 30">待完成</text>
 		<text class="sure" v-if="shop_det.status == 50">已完成</text>
 		
@@ -12,7 +11,7 @@
 				<view class="address_l">
 					收货人
 				</view>
-				{{shop_det.address_id.contact}} {{shop_det.address_id.mobile}}
+				{{shop_det.address_id && shop_det.address_id.contact}} {{shop_det.address_id && shop_det.address_id.mobile}}
 			</view>
 			<view class="address_b">
 				<view class="address_l">
@@ -32,13 +31,13 @@
 		<view class="shop">
 			<view class="shop_title">
 				<view class="title_l">
-					订单编号：{{shop_det.bn}}
+					订单编号：{{bn}}
 				</view>
 				<!-- <view class="title_r">
 					待付款
 				</view> -->
 			</view>
-			<view class="shop_list"  v-for="(its,ind) in shop_det.order_goods">
+			<view class="shop_list" v-if="!isCustom" v-for="(its,ind) in shop_det.order_goods">
 				<image :src="its.image" mode="aspectFill" @click="order_detail(item.id,10)"></image>
 				<view class="list_right">
 					<view @click="order_detail(item.id)">
@@ -52,9 +51,15 @@
 					</view>
 				</view>
 			</view>
-			<view class="heji">
-				<text  class="heji_l">共 {{shop_det.count}} 件</text>
-				<text class="heji_r"> 合计：<text>￥{{shop_det.total}}</text></text>
+			<view class="shop_list" v-if="isCustom && shop_det.order_goods">
+				<image v-if="shop_det.order_goods.image" :src="shop_det.order_goods.image.split(',')[0]" mode="aspectFill"></image>
+				<view class="list_right">
+					<view>
+						<view class="title">{{shop_det.order_goods.title}}</view>
+						<view class="Specifications"></view>
+						<view class="list_right_its"></view>
+					</view>
+				</view>
 			</view>
 		</view>
 		<!-- 商品汇总 -->
@@ -68,7 +73,7 @@
 				</view>
 			</view>
 			<!-- 工费 -->
-			<view class="statis">
+			<view class="statis" v-if="!isCustom">
 				<view class="statis_l">
 					工费
 				</view>
@@ -87,7 +92,7 @@
 					订单编号
 				</view>
 				<view class="statis_r">
-					<text @click="make(shop_det.bn)">复制</text>{{shop_det.bn}}
+					<text @click="make(bn)">复制</text>{{bn}}
 				</view>
 			</view>
 			<view class="statis">
@@ -103,29 +108,59 @@
 		<view class="toast_order">
 			<view class="toast_but">
 				<view></view>
-				<view class="toast_but_r"  v-if="shop_det.status == 10">
+				<view class="toast_but_r"  v-if="shop_det.status == 10 && !isCustom">
 					<view class="toast_but_no" @click="no_order(shop_det.id)">
 						取消订单
 					</view>
-					<view class="toast_but_pay" @click="goto_pages(shop_det.bn)">
+					<view class="toast_but_pay" @click="goto_pages(bn)">
 						平台下单
 					</view>
 				</view>
-				<view  class="toast_but_r"  v-if="shop_det.status == 30">
-					<view class="toast_but_no" @click="order_logist_wl(shop_det.bn)">查看物流</view> <!-- // -->
-					<view class="toast_but_pay" @click="sure_details(shop_det.id)">确认收货</view> <!-- // -->
+				<view class="toast_but_r"  v-if="isCustom && (shop_det.status == 10 || shop_det.status == 20)">
+					<view class="toast_but_pay" @click="comfirmPay">确认收款</view>
 				</view>
-				<view class="toast_but_r"  v-if="shop_det.status == 50">
-					<view class="toast_but_no" @click="shouh">售后服务</view> <!-- // -->
-					<view class="toast_but_pay" @click="del_order(shop_det.id,shop_det.status)">删除订单</view> <!-- // -->
+				
+				<view class="toast_but_r"  v-if="isCustom && shop_det.status == 25">
+					<view class="toast_but_pay" @click="comfirmSend">确认发货</view>
+					<view class="toast_but_pay" @click="editLogistics">修改物流单号</view>
+				</view>
+				
+				<view  class="toast_but_r"  v-if="isCustom && shop_det.status == 30">
+					<view class="toast_but_pay" @click="editLogistics">修改物流单号</view>
+				</view>
+				
+				<view  class="toast_but_r"  v-if="!isCustom && shop_det.status == 30">
+					<view class="toast_but_no" @click="order_logist_wl(bn)">查看物流</view>
+					<view class="toast_but_pay" @click="sure_details(shop_det.id)">确认收货</view>
+				</view>
+				<view class="toast_but_r"  v-if="!isCustom && shop_det.status == 50">
+					<view class="toast_but_no" @click="shouh">售后服务</view>
+					<view class="toast_but_pay" @click="del_order(shop_det.id,shop_det.status)">删除订单</view>
 				</view>
 				<view class="toast_but_r"  v-if="shop_det.status == 60">
 					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 1" @click="shen_details(shop_det.id)">撤销</view>
-					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 2" @click="order_logist(shop_det)">再次申请</view> <!-- // -->
-					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 3" @click="del_order(shop_det.id,shop_det.status)">删除订单</view> <!-- // -->
+					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 2" @click="order_logist(shop_det)">再次申请</view>
+					<view class="toast_but_pay" v-if="shop_det.status == 60 && shop_det.return_type == 3" @click="del_order(shop_det.id,shop_det.status)">删除订单</view>
 				</view>
 			</view>
 		</view>
+		
+		<u-popup v-model="showLogist" mode="center" closeable border-radius="10" width="500">
+			<view class="logist-cont">
+				<view class="logist-title">
+					设置物流单号
+				</view>
+				<u-field
+					class="logist-input"
+					:border-bottom="false"
+					v-model="express_no"
+					label="物流单号"
+					placeholder="请填写物流单号"
+				/>
+				<u-button type="primary" @click="confirmLogist">确认</u-button>
+			</view>
+			
+		</u-popup>
 	</view>
 </template>
 
@@ -137,7 +172,9 @@
 				timestamp:0,
 				order_id:0,
 				shop_det:'',
-				status:''
+				status:'',
+				showLogist: false,
+				express_no: ''
 			}
 		},
 		watch:{
@@ -151,18 +188,37 @@
 		},
 		onLoad(op) {
 			console.log(op)
+			this.order_type = op.order_type
 			this.order_id = op.page_type
 			this.page_reader()
+		},
+		computed: {
+			isCustom() {
+				return this.order_type == 1;
+			},
+			bn() {
+				return this.shop_det && (this.shop_det.bn_id || this.shop_det.bn)
+			}
 		},
 		methods:{
 			
 			page_reader(){
-				this.$api.get('order_goods',{id:this.order_id,is_h5:1}).then(res=>{
-					console.log(res)
-					if(res.status == 1){
-						this.shop_det = res.data
-					}
-				})
+				if (this.isCustom) {
+					this.$api.get('shop/order/getOrderDetail',{bn:this.order_id,type:1}).then(res=>{
+						console.log(res)
+						if(res.status == 1){
+							this.shop_det = res.data[0];
+							this.shop_det.address_id = this.shop_det.address;
+						}
+					})
+				} else {
+					this.$api.get('order_goods',{id:this.order_id,is_h5:1}).then(res=>{
+						console.log(res)
+						if(res.status == 1){
+							this.shop_det = res.data
+						}
+					})
+				}
 			},
 			//物流
 			order_logist_wl(e){
@@ -171,6 +227,52 @@
 			shouh(){
 				this.com.navto('../service/service')
 			},
+			// 自定义商品修改物料单号
+			editLogistics() {
+				this.showLogist = true;
+			},
+			confirmLogist() {
+				this.showLogist = false;
+				this.$api.post('shop/order/set_express',{
+					bn: this.bn,
+					express_no: this.express_no
+				}).then(res=>{
+					if (res.status == 1){
+						this.page_reader()
+					}
+				})
+			},
+			// 自定义商品确认发货
+			comfirmSend() {
+				uni.showModal({
+					content:'请您确认商品已经发货',
+					success: (status) => {
+						if(status.confirm){
+							this.$api.post('shop/order/set_express',{bn: this.bn}).then(res=>{
+								if (res.status == 1){
+									this.page_reader()
+								}
+							})
+						}
+					}
+				})
+			},
+			// 自定义商品确认收钱
+			comfirmPay() {
+				uni.showModal({
+					content:'请您登录收款账户，并确对方已将金额支付到账户中！',
+					success: (status) => {
+						if(status.confirm){
+							this.$api.post('shop/order/paymentConfirm',{bn: this.bn}).then(res=>{
+								if (res.status == 1){
+									this.page_reader()
+								}
+							})
+						}
+					}
+				})
+			},
+			
 			//确认收货
 			sure_details(e){
 				let that = this
@@ -237,6 +339,10 @@
 				})
 			},
 			goto_pages(e){
+				if (this.isCustom) {
+					this.com.navto('../vip-confirm-order/custom-confirm-order?bn=' + e)
+					return
+				}
 				// console.log(e)
 				let data = {
 					bn: e,
@@ -254,6 +360,16 @@
 	}
 </style>
 <style scoped lang="scss">
+	.logist-cont {
+		padding: 30rpx 60rpx;
+		.logist-title {
+			font-size: 30rpx;
+			text-align: center;
+		}
+		.logist-input {
+			padding: 40rpx 0;
+		}
+	}
 	.sure{
 		padding: 3%;font-size: 38rpx;font-weight: bold;
 	}
@@ -339,7 +455,7 @@
 			display: flex;
 			// align-items: center;
 			border-bottom: 1rpx solid #f6f6f6;
-			padding-top: 20rpx;
+			padding: 20rpx 0;
 			image{
 				width: 200rpx;
 				height: 200rpx;
