@@ -186,6 +186,9 @@
     },
     "h5" : {
         "template" : "",
-        "domain" : "https://zuanshi.semoh.cn/smsj/"
+        "domain" : "https://zuanshi.semoh.cn/smsj/",
+        "devServer" : {
+            "port" : 8082
+        }
     }
 }

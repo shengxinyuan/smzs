@@ -36,11 +36,11 @@
 						@click="checked(index)">
 							<view class="left">
 								<view class="left-title">{{it.title || '工费'}}</view>
-								<view class="left-price">￥{{it.total_wage}}/g</view>
+								<view class="left-price">￥{{it.wage_price.toFixed(2)}}/g</view>
 							</view>
 							<view class="right">
 								<view class="right-symbol">+</view>
-								<input class="input" type="digit" v-model="it.commerical_wage" :placeholder="it.commerical_wage" @input="checkb" />
+								<input class="input" type="digit" v-model="it.difference_price.toFixed(2)" :placeholder="it.difference_price.toFixed(2)" @input="checkb" />
 								<view class="right-symbol">=</view>
 							</view>
 							<view class="right-price">￥{{(it.sumPrice/1).toFixed(2)}}/g</view>
@@ -132,14 +132,18 @@
 					if(res.status == 1){
 						this.item = res.data
 						this.value01 = res.data.price //料价
-						this.value02 = JSON.parse(res.data.commerical_wage)+''
+						// this.value02 = JSON.parse(res.data.commerical_wage)+''
 						this.la =  JSON.parse(res.data.wage)
 						console.log(this.la)
 						this.lb =  JSON.parse(res.data.new_price)
 						res.data.other.forEach(item=>{
-							item.sumPrice = item.total_wage/1 + item.commerical_wage/1
+							item.wage_price = item.shop_label_wage * 1 + item.shop_label_wage_add * 1
+							item.difference_price = item.commerical_wage * 1
+							// item.difference_price = item.total_wage * 1 - item.wage_price
+							item.sumPrice = item.wage_price + item.difference_price
 						})
 						this.list = res.data.other
+						console.log(this.list);
 					}
 				})
 			},
@@ -335,7 +339,7 @@
 		font-size: 22upx;
 		color: #999999;
 		display: flex;
-
+		margin-bottom: 100rpx;
 		.explain-title {
 			width: 12%;
 		}

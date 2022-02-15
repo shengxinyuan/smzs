@@ -2,7 +2,7 @@
 	<view class="">
 		<view class="order_time" v-for="(item,ind) of list" :key="ind">
 			<view class="order_box">
-				<view class="order_head" @click="order_detail(item.id)">
+				<view class="order_head" @click="order_detail(item.bn_id)">
 					订单编号：<text class="time">{{item.bn_id}}</text> 
 					
 					<text class="sure" v-if="item.status == 10">待付款</text>
@@ -16,9 +16,9 @@
 				</view>
 				<view class="shop_list" v-if="item.goods">
 					<image :src="item.goods.image" mode="aspectFill" 
-					@click="order_detail(item.id)"></image>
+					@click="order_detail(item.bn_id)"></image>
 					<view class="list_right">
-						<view @click="order_detail(item.id)">
+						<view @click="order_detail(item.bn_id)">
 							<view class="title">{{item.goods.title}}</view>
 							<view class="Specifications">金重：{{item.goods.weight}}g<text class="num"> 条码：{{item.goods.bar_code}}</text></view>
 							<view class="shop_list_label">

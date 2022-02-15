@@ -44,7 +44,7 @@
 							</view>
 							<view class="user_invite">
 								<view class="inviter" @click="qrcode_show = true">
-									<text>邀请码</text>
+									<text>邀请二维码</text>
 									<u-icon name="arrow-right" color="#666"></u-icon>
 								</view>
 								<view class="inviter" @click="copy_yqm(menber.bn)">
@@ -313,6 +313,12 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 邀请码 -->
+		<u-popup v-model="invitCode" mode="center">
+			<view class="invit_code">
+				{{menber.bn}}
+			</view>
+		</u-popup>
 		<!-- 分享 -->
 		<!-- <zs-share ref="share" @shaer_app="shaer_app" :contentHeight="400" :hasTabbar="true"></zs-share> -->
 		<!-- tabbar -->
@@ -330,6 +336,7 @@
 				commercial_count:0,
 				backgroundColor:"",//导航背景
 				huiy_show:false,//会员状态
+				invitCode:false, //邀请码
 				show:false,//我的邀请人
 				bgimage:'https://zuanshi.semoh.cn/applet_static/my/qiandao.png',
 				qd_show:false,//popup组件显示
@@ -672,6 +679,8 @@
 			},
 			copy_yqm(e){
 				console.log(e)
+				// this.qrcode_show = true
+				this.invitCode = true
 				uni.setClipboardData({
 				    data: e,
 				    success: function () {
@@ -761,6 +770,15 @@
 	}
 </style>
 <style lang="scss" scoped>
+	.invit_code{
+		width: 300rpx;
+		height: 300rpx;
+		background-color: #FFFFFF;
+		line-height: 300rpx;
+		border-radius: 100rpx;
+		text-align: center;
+		font-size: 36rpx;
+	}
 	.tuij{
 		margin-top: 16rpx;
 		width: 100%;height: 80rpx;
@@ -955,12 +973,14 @@
 					display: flex;align-items: center;
 					.inviter{
 						margin-right: 16rpx;
-						padding-left: 16rpx;
-						padding-right: 6rpx;
+						// padding-left: 16rpx;
+						padding: 10rpx 6rpx;
+						box-sizing: border-box;
+						// padding-right: 6rpx;
 						line-height: 40rpx;
 						background-color: #ffed9c;border-radius: 40rpx;
 						text{
-							margin-right: 6rpx;
+							// margin-right: 6rpx;
 						}
 					}
 				}
