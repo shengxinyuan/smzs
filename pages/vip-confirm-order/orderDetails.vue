@@ -86,13 +86,20 @@
 			<view class="statis" v-if="shop_det.message">
 				<textarea :placeholder="'备注'+shop_det.message" :disabled="true" />
 			</view>
-			<!-- 工费 -->
 			<view class="statis">
 				<view class="statis_l">
 					订单编号
 				</view>
 				<view class="statis_r">
 					<text @click="make(bn)">复制</text>{{bn}}
+				</view>
+			</view>
+			<view class="statis" v-if="shop_det.ship_bn">
+				<view class="statis_l">
+					物流单号
+				</view>
+				<view class="statis_r">
+					<text @click="make(shop_det.ship_bn)">复制</text>{{shop_det.ship_bn}}
 				</view>
 			</view>
 			<view class="statis">

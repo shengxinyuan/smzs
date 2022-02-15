@@ -30,7 +30,7 @@
  	export default { 	
  		data() {
  			return {
- 				tabs: [{name:'全部',id:0}, {name:'待确认',id:20}, {name:'待收货',id:30},{name:'已完成',id:50}],
+ 				tabs: [{name:'全部',id:0}, {name:'待确认',id:20}, {name:'收货/发货',id:30},{name:'已完成',id:50}],
  				list:[],
  				current: 0,
 				current_ind:0,
