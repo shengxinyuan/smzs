@@ -135,7 +135,7 @@
 				moreStatus: 'loadmore',
 			}
 		},
-		onLoad () {
+		onShow () {
 			this.queryList();
 		},
 		onReachBottom() {
