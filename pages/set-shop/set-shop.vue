@@ -119,7 +119,7 @@
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
-			<view style="padding: 30rpx;">
+			<!-- <view style="padding: 30rpx;">
 				<view style="display: flex;align-items: center;justify-content: space-between;">
 					<text>店铺照片</text>
 					<view @click="skip_up">
@@ -127,7 +127,7 @@
 						<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		
 		<view class="box-there">
