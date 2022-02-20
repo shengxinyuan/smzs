@@ -1,68 +1,68 @@
 <template>
 	<view>
+		
 		<view style="padding: 30rpx;display: flex;align-items: center;justify-content: center;">
-			<u-upload
-				ref="uUpload"
-				max-count="9"
-				:file-list="previewList"
-				:action="upload_url"
-				:name="'file'"
-				:auto-upload="true"
-				:header="header"
-			></u-upload>
+			<u-upload ref="uUpload" max-count="9" :file-list="previewList" :action="upload_url" :name="'file'"
+				:auto-upload="true" :header="header"></u-upload>
 		</view>
 		<view class="save_btn" @click="save">
 			<button>保存</button>
 		</view>
+		<view class="tips">*建议banner图片像素：750*400 或等比例缩放的尺寸</view>
 	</view>
 </template>
 
 <script>
-	import { commonUrl } from '../../api.js'
+	import {
+		commonUrl
+	} from '../../api.js'
 	export default {
 		data() {
 			return {
+				member_info: {},
 				previewList: [],
-				// upload_url: 'https://zuanshi.semoh.cn/api/uploads',
 				upload_url: `${commonUrl}common/upload_alioss`,
 				header: {
 					'token': uni.getStorageSync('token')
 				}
 			}
 		},
-		onLoad(e){
-			uni.showLoading({ mask: true })
-			this.$api.get('shop/banner/query_picture').then((res) => {
-				console.log(res);
-				uni.hideLoading()
-				if (res.status == 1) {
-					this.previewList = res.data.map(url => ({ url }))
-				}
-			}).catch(() => {
-				uni.hideLoading()
-			})
+		onLoad(e) {
+			this.getImgs()
 		},
 		methods: {
-			save(){
+			getImgs() {
+				uni.showLoading({
+					mask: true
+				})
+				this.member_info = uni.getStorageSync('member_info');
+				this.$api.get('manage', {
+					member_id: this.member_info.id
+				}).then((res) => {
+					uni.hideLoading()
+					if (res.status == 1) {
+						this.previewList = res.data.banner_list.map(item => ({
+							url: item.image_url
+						}))
+						console.log(this.previewList);
+					}
+				}).catch(() => {
+					uni.hideLoading()
+				})
+			},
+			save() {
 				const files = this.$refs.uUpload.lists.filter(val => {
 					return val.progress == 100;
-				// }).map((val) => val.response ? val.response.data : val.url)
 				}).map((val) => val.response ? val.response.data.url : val.url)
 				console.log(files)
-				if (files.length === 0) {
-					uni.showToast({
-						title: 'banner不能为空!',
-						icon: 'none'
-					});
-					return
-				}
-				this.$api.post('shop/banner/set_picture',{img_url:files}).then(res=>{
+				this.$api.post('manage', {
+					'banner_list': files.join(',')
+				}).then(res => {
 					if (res.status == 1) {
 						uni.showToast({
 							title: '修改成功',
 							icon: 'none'
 						});
-						uni.navigateBack()
 					}
 				})
 			}
@@ -71,10 +71,11 @@
 </script>
 
 <style>
-	.save_btn{
+	.save_btn {
 		padding: 30rpx;
 		margin-top: 20rpx;
 	}
+
 	.save_btn button {
 		font-size: 30upx;
 		color: #FFFFFF;
@@ -82,5 +83,8 @@
 				#2b3f7d 0%,
 				#1b2c60 100%);
 		border-radius: 40upx;
+	}
+	.tips {
+		text-align: center;
 	}
 </style>
