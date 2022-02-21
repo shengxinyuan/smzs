@@ -84,6 +84,7 @@ page{
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  padding: 0 3%;
 }
 .shop_list .lsit_item .item_shop .item_shop_it.data-v-db88de74 {
   width: 32%;

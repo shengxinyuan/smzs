@@ -10,6 +10,12 @@
 					<view class="child_l_but" v-if="type == 2">来源 {{it.member}}</view>
 					<view class="child_l_but">{{it.update_time}}</view>
 				</view>
+				<view class="child_c">
+					<view class="" style="color: #FF0000;padding-top: 14rpx;" v-if="it.pass == 0">拒绝</view>
+					<view class="" style="color: #FF0000;padding-top: 14rpx;" v-if="it.pass == 1">审核中</view>
+					<view class="" style="color: #FF0000;padding-top: 14rpx;" v-if="it.pass == 1">{{it.remark}}</view>
+					<view class="" style="color: #FF0000;padding-top: 14rpx;" v-if="it.pass == 2">通过</view>
+				</view>
 				<view class="child_r">
 					<view v-if="type==2">
 						<view class="child_r_top" style="color: #dd2626;">

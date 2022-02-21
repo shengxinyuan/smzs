@@ -57,10 +57,16 @@ page {
 }
 .textrus.data-v-7d283bec {
   width: 100%;
+  height: 110rpx;
+  position: fixed;
+  background: #ffffff;
+  top: calc(25px + 82rpx);
+  z-index: 50;
+  left: 0;
 }
 .contes.data-v-7d283bec {
   width: 100%;
-  margin-top: 10rpx;
+  margin-top: 90rpx;
   background-color: #F6F6F6;
 }
 .scroll.data-v-7d283bec {

@@ -29,16 +29,23 @@ page {
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.postionTop.data-v-0535e6e4 {
+  position: fixed;
+  background: #ffffff;
+  top: calc(25px + 190rpx);
+  z-index: 50;
+  left: 0;
+}
 .popups.data-v-0535e6e4 {
-  padding: 80rpx 30rpx 130rpx 30rpx;
+  padding: calc(25px + 80rpx) 30rpx calc(0px + 130rpx) 30rpx;
   width: 640rpx;
   position: relative;
 }
 .popups .but.data-v-0535e6e4 {
-  position: absolute;
+  margin-top: 50rpx;
   left: 0;
   right: 0;
-  bottom: 20rpx;
+  bottom: calc(0px + 20rpx);
   width: 100%;
   font-size: 26rpx;
   display: flex;

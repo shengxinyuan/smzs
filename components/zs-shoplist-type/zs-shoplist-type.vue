@@ -306,7 +306,7 @@
 			screen_label_list: {},
 		},
 		mounted(){
-			console.log(this.lv);
+			console.log(this.lv,'111');
 		},
 		// mounted() {
 		// 	console.log('mounted 组件挂载完毕状态===============》');

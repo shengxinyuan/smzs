@@ -836,6 +836,8 @@
 					// #endif
 				}
 			},
+			onShareAppMessage() {},
+			onShareTimeline() {},
 			//收藏
 			toFavorite() {
 				this.favorite = !this.favorite;
