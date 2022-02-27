@@ -135,7 +135,7 @@
 					<view class="" style="flex: 1;" v-if="!conf.search"></view>
 					<!-- #endif -->
 
-
+					<!-- #ifndef MP -->
 					<view class="hx-navbar__content__main_right"
 						:style="{padding: conf.rightSlot ? '0' : '0 13px 0 9px;'}" v-if="conf.rightButton">
 						<block v-for="(btn,index) in conf.rightButton" :key="index">
@@ -165,6 +165,7 @@
 						<slot name="right" />
 					</view> -->
 					</view>
+					<!-- #endif -->
 				</view>
 
 			</view>

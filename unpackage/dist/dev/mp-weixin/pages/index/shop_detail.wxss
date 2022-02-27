@@ -485,6 +485,7 @@ page {
   border-radius: 20rpx;
   margin: 10rpx 0;
   border: 1rpx solid #f6f6f6;
+  position: relative;
 }
 .attr-content .jg_sty.jactive.data-v-392f5254 {
   color: #2d407a;
@@ -508,6 +509,7 @@ page {
   justify-content: space-between;
 }
 .attr-content .jg_sty .jg_sty_b view.data-v-392f5254 {
+  width: 50%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -516,6 +518,16 @@ page {
   color: #ef2d2d;
 }
 .attr-content .jg_sty .jg_sty_b .jg_r text.data-v-392f5254 {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.attr-content .jg_sty .jg_r.data-v-392f5254 {
+  color: #ef2d2d;
+  position: absolute;
+  top: 38%;
+  right: 0;
+}
+.attr-content .jg_sty .jg_r text.data-v-392f5254 {
   font-size: 32rpx;
   font-weight: bold;
 }

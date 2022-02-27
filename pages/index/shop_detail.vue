@@ -251,16 +251,22 @@
 								</view>
 							</template>
 							<view class="">库存：{{it.stock}}</view>
-							<view class="jg_r" v-if="!vip_type">
+							<!-- <view class="jg_r" v-if="!vip_type">
 								￥<text>{{it.price_normal}}</text>
 							</view>
 							<view class="jg_r" v-else>
 								￥<text>{{it.price_vip}}</text>
-							</view>
+							</view> -->
 						</view>
 						<view class="jg_sty_t" style="line-height: 40rpx;">
-							<text style="width: 50%;">尺寸：{{it.ring_arm_size || '无'}}</text>
+							<text style="width: 50%;">手寸：{{it.ring_arm_size || '无'}}</text>
 							<text style="width: 50%;">备注：{{it.remark || '无'}}</text>
+						</view>
+						<view class="jg_r" v-if="!vip_type">
+							￥<text>{{it.price_normal}}</text>
+						</view>
+						<view class="jg_r" v-else>
+							￥<text>{{it.price_vip}}</text>
 						</view>
 						<!-- <view style="line-height: 40rpx;">
 							尺寸：{{it.ring_arm_size || '无'}}
@@ -830,6 +836,8 @@
 					// #endif
 				}
 			},
+			onShareAppMessage() {},
+			onShareTimeline() {},
 			//收藏
 			toFavorite() {
 				this.favorite = !this.favorite;
@@ -1461,7 +1469,7 @@
 			border-radius: 20rpx;
 			margin: 10rpx 0;
 			border: 1rpx solid #f6f6f6;
-
+			position: relative;
 			&.jactive {
 				color: #2d407a;
 				background-color: #f6f8ff;
@@ -1491,6 +1499,7 @@
 				justify-content: space-between;
 
 				view {
+					width: 50%;
 					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
@@ -1503,6 +1512,16 @@
 						font-size: 32rpx;
 						font-weight: bold;
 					}
+				}
+			}
+			.jg_r {
+				color: #ef2d2d;
+				position: absolute;
+				top: 38%;
+				right: 0;
+				text {
+					font-size: 32rpx;
+					font-weight: bold;
 				}
 			}
 		}

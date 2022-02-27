@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 
+// import VueWorker from 'vue-worker';
+// Vue.use(VueWorker)
+
 //uview引入
 import uView from 'uview-ui';
 Vue.use(uView);
@@ -9,7 +12,8 @@ Vue.config.productionTip = false
 
 App.mpType = 'app'
 
-
+// 360963104@qq   zl238231
+// 13260880929    18920417395
 import com from 'utils/common.js'
 Vue.prototype.com = com
 
@@ -54,4 +58,23 @@ Vue.prototype.throttle = function(fn,delay){
 	      fn.apply(this, args)
 	    }
 	}
+}
+
+Vue.prototype.compare = function(property){
+	return function(a,b){
+		return a[property] - b[property];
+	}
+}
+
+Vue.prototype.bubbleSort = function(arr){
+	for(let i=0;i<arr.length;i++){
+		for(let j=1;j<arr.length;j++){
+			if(arr[i].price * 1 < arr[j].price * 1){
+				let max = arr[j];
+				arr[j] = arr[i];
+				arr[j+1] = max;
+			}
+		}
+	}
+	// return arr
 }

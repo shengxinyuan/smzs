@@ -28,10 +28,8 @@
   width: 100%;
   position: relative;
   text-align: center;
-
   display: flex;
   flex-direction: row;
-
   justify-content: center;
   align-items: center;
   overflow: hidden;

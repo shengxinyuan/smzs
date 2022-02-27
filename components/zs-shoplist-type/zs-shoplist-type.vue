@@ -258,9 +258,9 @@
 			return {
 				type: 1, //商品列表
 				heat_ind: -1, // 导航
-				price_type: 0, //排序 1-降序 2-升序		
+				price_type: '', //排序 1-降序 2-升序		
 				show: false,
-				sale: 0, //	排序 1-降序 2-升序			
+				sale: '', //	排序 1-降序 2-升序			
 				key: '', //	关键字
 				cate_id: 0, //分类id
 				shop_label_cate_id: 0, //筛选款式id
@@ -306,7 +306,7 @@
 			screen_label_list: {},
 		},
 		mounted(){
-			console.log(this.lv);
+			console.log(this.lv,'111');
 		},
 		// mounted() {
 		// 	console.log('mounted 组件挂载完毕状态===============》');
@@ -466,19 +466,25 @@
 				if (e == 1) {
 					if (type == 0) {
 						this.sale = 1
+						this.price_type = ''
 					} else if (type == 1) {
 						this.sale = 2
+						this.price_type = ''
 					} else {
 						this.sale = 1
+						this.price_type = ''
 					}
 					this.shop_remder()
 				} else {
 					if (type == 0) {
 						this.price_type = 1
+						this.sale = ''
 					} else if (type == 1) {
 						this.price_type = 2
+						this.sale = ''
 					} else {
 						this.price_type = 1
+						this.sale = ''
 					}
 					this.shop_remder()
 				}

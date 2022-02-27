@@ -25,7 +25,6 @@
 /* 透明度 */
 /* 文章场景相关 */
 .u-steps.data-v-6d4cf9e0 {
-
   display: flex;
   flex-direction: row;
 }
@@ -36,19 +35,15 @@
   min-width: 100rpx;
   font-size: 26rpx;
   color: #8799a3;
-
   display: flex;
   flex-direction: row;
-
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
 .u-steps .u-steps__item--row.data-v-6d4cf9e0 {
-
   display: flex;
   flex-direction: row;
-
   flex-direction: column;
 }
 .u-steps .u-steps__item--row .u-steps__item__line.data-v-6d4cf9e0 {
@@ -64,10 +59,8 @@
   top: calc(44rpx / 2);
 }
 .u-steps .u-steps__item--column.data-v-6d4cf9e0 {
-
   display: flex;
   flex-direction: row;
-
   flex-direction: row;
   justify-content: flex-start;
   min-height: 120rpx;
@@ -85,10 +78,8 @@
   left: calc(44rpx / 2);
 }
 .u-steps .u-steps__item__num.data-v-6d4cf9e0 {
-
   display: flex;
   flex-direction: row;
-
   align-items: center;
   justify-content: center;
   width: 44rpx;
@@ -100,10 +91,8 @@
 .u-steps .u-steps__item__dot.data-v-6d4cf9e0 {
   width: 20rpx;
   height: 20rpx;
-
   display: flex;
   flex-direction: row;
-
   border-radius: 50%;
 }
 .u-steps .u-steps__item__text--row.data-v-6d4cf9e0 {

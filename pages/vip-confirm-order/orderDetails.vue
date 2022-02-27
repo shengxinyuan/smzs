@@ -37,17 +37,17 @@
 					待付款
 				</view> -->
 			</view>
-			<view class="shop_list" v-if="!isCustom" v-for="(its,ind) in shop_det.order_goods">
+			<view class="shop_list" v-if="!isCustom" v-for="(its,ind) in shop_det.order_goods" :key="ind">
 				<image :src="its.image" mode="aspectFill" @click="order_detail(item.id,10)"></image>
 				<view class="list_right">
 					<view @click="order_detail(item.id)">
 						<view class="title">{{its.title}}</view>
 						<view class="Specifications">金重：{{its.sku.weight}}g<text class="num"> 条码：{{its.sku.bar_code}}</text></view>
 						<view class="list_right_its">
-							<text >金料:￥{{its.gold_price}} </text>	
-							<text >工费:￥{{its.labor_price}}/g </text>
+							<!-- <text >金料:￥{{its.gold_price}} </text>	
+							<text >工费:￥{{its.labor_price}}/g </text> -->
 						</view>
-						<view class="price">￥{{its.total}} <text>*{{its.count}}</text></view>
+						<!-- <view class="price">￥{{its.total}} <text>*{{its.count}}</text></view> -->
 					</view>
 				</view>
 			</view>
@@ -64,14 +64,14 @@
 		</view>
 		<!-- 商品汇总 -->
 		<view class="st_data">
-			<view class="statis">
+			<!-- <view class="statis">
 				<view class="statis_l">
 					商品汇总
 				</view>
 				<view class="statis_r">
 					共 {{shop_det.count}} 件 ￥{{shop_det.total}}
 				</view>
-			</view>
+			</view> -->
 			<!-- 工费 -->
 			<view class="statis" v-if="!isCustom">
 				<view class="statis_l">
@@ -80,7 +80,7 @@
 				<view class="statis_r">
 					￥{{shop_det.total_labor_price}}
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view class="st_data" style="margin-bottom: 60rpx;">
 			<view class="statis" v-if="shop_det.message">
