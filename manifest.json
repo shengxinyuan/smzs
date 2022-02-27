@@ -189,6 +189,14 @@
         "domain" : "https://zuanshi.semoh.cn/smsj/",
         "devServer" : {
             "port" : 8082
+        },
+        "router" : {
+            "mode" : "hash"
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
         }
     }
 }
