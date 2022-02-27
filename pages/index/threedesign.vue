@@ -6,6 +6,7 @@
 
 <script>
 import { THREE_D_H5_URL } from '../../utils/constant'
+import { commonUrl } from '../../api.js'
 export default {
 	data() {
 		return {
@@ -15,9 +16,10 @@ export default {
 		};
 	},
 	onLoad(options) {
-		let token = ''
+		let query = ''
+		let env = commonUrl.includes('zuanshi.dis.wanheweb.com') ? 'prod' : 'test'
 		if (uni.getStorageSync('token')) {
-			token = `?token=${uni.getStorageSync('token')}`
+			query = `?token=${uni.getStorageSync('token')}&env=${env}`
 		} else {
 			uni.showModal({
 				content: '您还未登录,是否登录?',
@@ -32,9 +34,9 @@ export default {
 		}
 
 		if (options.url) {
-			this.h5Url += `${options.url}/${token}`
+			this.h5Url += `${options.url}/${query}`
 		} else {
-			this.h5Url += `${token}`
+			this.h5Url += `${query}`
 		}
 		this.loaded = true
 	},
