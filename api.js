@@ -1,7 +1,7 @@
-// const commonUrl  = "https://zuanshi.semoh.cn/api/"; // 新路径
+const commonUrl  = "https://zuanshi.semoh.cn/api/"; // 新路径
 
 // const commonUrl  = "http://zuanshi.dis.wanheweb.com/api/"; // 公共路径
-const commonUrl  = "http://zuanshi.nxm.wanheweb.com/api/"; // 公共路径
+// const commonUrl  = "http://zuanshi.nxm.wanheweb.com/api/"; // 公共路径
 
 var that = this
 //post请求封装
