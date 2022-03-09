@@ -302,6 +302,7 @@
 </template>
 
 <script>
+	import { config } from '../../config.js'
 	export default {
 		data() {
 			return {
@@ -790,13 +791,12 @@
 					// #ifdef MP-WEIXIN
 					this.wxShare();
 					// #endif
-					console.log('https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share_shop_detail?shop_id='+this.shop_id)
 					// #ifdef APP
 					uni.share({
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share_shop_detail?shop_id='+this.shop_id,
+						href: `${config.h5Url}smsj/index.html#/pages/index/share_shop_detail?shop_id=`+this.shop_id,
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,
 						imageUrl: this.shop_det.image,
@@ -819,7 +819,7 @@
 						provider: "weixin",
 						scene: "WXSenceTimeline",
 						type: 0,
-						href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share_shop_detail?data=' +
+						href: `${config.h5Url}smsj/index.html#/pages/index/share_shop_detail?data=` +
 							JSON.stringify(data),
 						title: this.shop_det.title,
 						summary: this.shop_det.remark,

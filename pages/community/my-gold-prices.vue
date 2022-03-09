@@ -90,6 +90,7 @@
 
 <script>
 	import stzhangTab from "@/components/stzhang-tab/stzhang-tab.vue"
+	import { config } from '../../config.js'
 	
 	export default {
 		components: {
@@ -143,7 +144,7 @@
 			//分享
 			shares(e){
 				// pages/community/my-gold-prices
-				let arr = 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店'
+				let arr = `${config.h5Url}smsj/index.html#/pages/community/my-gold-prices?goldname=` + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店'
 				
 				if(e == 0){
 					// #ifdef MP-WEIXIN
@@ -154,7 +155,7 @@
 					    provider: "weixin",
 					    scene: "WXSceneSession", 
 					    type: 0, 
-					    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
+					    href: `${config.h5Url}smsj/index.html#/pages/community/my-gold-prices?goldname=` + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
 					    title: '今日金价',
 					    summary: "以上金价仅供参考，结算以实时金价为准！",
 					    imageUrl: this.goldname.avatar,
@@ -175,7 +176,7 @@
 					    provider: "weixin",
 					    scene: "WXSenceTimeline",
 					    type: 0,
-					    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
+					    href: `${config.h5Url}smsj/index.html#/pages/community/my-gold-prices?goldname=` + this.goldname.title+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码进店',
 					    title: '今日金价',
 					    summary: "以上金价仅供参考，结算以实时金价为准！",
 					    imageUrl: this.goldname.avatar,

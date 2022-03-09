@@ -52,6 +52,8 @@
 </template>
 
 <script>
+	import { config } from '../../config.js'
+	
 	export default {
 		data() {
 			return {
@@ -329,7 +331,7 @@
 						provider: "weixin",
 						scene: "WXSceneSession",
 						type: 0,
-						href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/index?data=' + JSON.stringify(data),
+						href: `${config.h5Url}smsj/index.html#/pages/index/index?data=` + JSON.stringify(data),
 						title: this.datas.title,
 						summary: this.datas.remark,
 						// imageUrl: this.datas.avatar,

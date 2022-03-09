@@ -84,7 +84,7 @@
 			</view>
 		</view>
 		<view class="box-there">
-			<view class="zl-heads" @click="">
+			<!-- <view class="zl-heads" @click="">
 				<view class="heads">
 					<text>模板管理</text>
 				</view>
@@ -94,7 +94,7 @@
 						<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 					</view>
 				</picker>
-			</view>
+			</view> -->
 			<view class="zl-heads" @click="skipSetPayee">
 				<view class="heads">
 					<text>收款设置</text>
@@ -111,14 +111,7 @@
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
-			<view class="zl-heads" @click="skipSetWithdraw">
-				<view class="heads">
-					<text>提现设置</text>
-				</view>
-				<view class="nick-name">
-					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
-				</view>
-			</view>
+			
 			<!-- <view style="padding: 30rpx;">
 				<view style="display: flex;align-items: center;justify-content: space-between;">
 					<text>店铺照片</text>

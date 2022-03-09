@@ -89,6 +89,7 @@
 
 <script>
 	import stzhangTab from "@/components/stzhang-tab/stzhang-tab.vue"
+	import { config } from '../../config.js'
 	
 	export default {
 		components: {
@@ -128,7 +129,7 @@
 			//分享
 			shares(e){
 				// pages/community/my-gold-prices
-				let arr = 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' +'奢美饰界' +'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码注册下载'
+				let arr = `${config.h5Url}smsj/index.html#/pages/community/my-gold-prices?goldname=` +'奢美饰界' +'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码注册下载'
 				if(e == 0){
 					// #ifdef MP-WEIXIN
 					this.wxShare();
@@ -138,7 +139,7 @@
 					    provider: "weixin",
 					    scene: "WXSceneSession", 
 					    type: 0,
-					    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/community/my-gold-prices?goldname=' +'奢美饰界'+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码注册下载',
+					    href: `${config.h5Url}smsj/index.html#/pages/community/my-gold-prices?goldname=` +'奢美饰界'+'&gold_price='+JSON.stringify(this.gold_price)+'&tiptext='+'扫码注册下载',
 					    title: '在这里采购黄金，一件起批，省钱省事！',
 					    summary: "款式多/有图片/有视频/有尺寸/有克重,工厂工费，实时金价",
 					    imageUrl: 'https://zuanshi.semoh.cn/applet_static/logos.jpg',

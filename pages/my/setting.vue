@@ -27,6 +27,7 @@
 </template>
 
 <script>
+	import { config } from '../../config.js'
 	export default{
 		data(){
 			return{
@@ -97,7 +98,7 @@
 					    provider: "weixin",
 					    scene: "WXSceneSession",
 					    type: 0,
-					    href: 'https://zuanshi.semoh.cn/smsj/index.html#/pages/index/share?invcode='+ this.pag_data.bn,
+					    href: `${config.h5Url}smsj/index.html#/pages/index/share?invcode=`+ this.pag_data.bn,
 					    title: '奢美饰界',
 					    summary: "我在奢美饰界发现好物，快来看看！",
 					    imageUrl: 'https://zuanshi.semoh.cn/applet_static/logos.jpg',

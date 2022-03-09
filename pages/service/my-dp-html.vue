@@ -1,23 +1,21 @@
 <template>
 	<view>
-		<web-view :src="'https://zuanshi.semoh.cn/smsj/?token='+tok+'&name='+name"></web-view>
+		<web-view v-if="url" :src="url"></web-view>
 	</view>
 </template>
 
 <script>
+	import { config } from '../../config.js' 
 	export default {
 		data() {
 			return {
-				tok:'',
-				name:'',
+				url: '',
 			};
 		},
 		onLoad() {
-			this.tok = uni.getStorageSync('token')
-			console.log(this.tok)
-			let a = uni.getStorageSync('member_info')
-			this.name = a.id
-			console.log(this.name)
+			const token = uni.getStorageSync('token')
+			const member_info = uni.getStorageSync('member_info')
+			this.url = `${config.h5Url}smsj/?token=${token}&name=${member_info.id}`
 		}
 	}
 </script>

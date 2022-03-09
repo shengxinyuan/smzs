@@ -22,9 +22,11 @@
 				<u-form-item label="初始销量" prop="sale">
 					<u-input v-model="form.sale" type="number" placeholder="请输入初始销量" />
 				</u-form-item>
+				
 				<u-form-item label="类目" prop="cate">
 					<u-input v-model="form.cate" type="select" @click="cateSelectShow = true" />
 				</u-form-item>
+				<text class="tips">类目需有自定义2级类目</text>
 				<u-form-item label="详情介绍" prop="content" label-position="top">
 					<u-input v-model="form.content" type="textarea" placeholder="请输入详情介绍" />
 				</u-form-item>
@@ -258,5 +260,9 @@
 
 	.form-wrap {
 		padding: 12rpx 24rpx;
+	}
+	.tips {
+		font-size: 10rpx;
+		color: #2979ff;
 	}
 </style>
