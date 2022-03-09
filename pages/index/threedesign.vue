@@ -1,23 +1,21 @@
 <template>
 	<view>
-		<web-view id="threeDesignRef" v-if="loaded" :src="h5Url"></web-view>
+		<web-view id="threeDesignRef" v-if="loaded" :src="design3dUrl"></web-view>
 	</view>
 </template>
 
 <script>
-import { THREE_D_H5_URL } from '../../utils/constant'
-import { commonUrl } from '../../api.js'
+import { config, env } from '../../config'
 export default {
 	data() {
 		return {
-			h5Url: THREE_D_H5_URL,
+			design3dUrl: config.design3dUrl,
 			loaded: false,
 			wv: null,
 		};
 	},
 	onLoad(options) {
 		let query = ''
-		let env = commonUrl.includes('test') ? 'test' : 'prod'
 		if (uni.getStorageSync('token')) {
 			query = `?token=${uni.getStorageSync('token')}&env=${env}`
 		} else {
@@ -34,9 +32,9 @@ export default {
 		}
 
 		if (options.url) {
-			this.h5Url += `${options.url}/${query}`
+			this.design3dUrl += `${options.url}/${query}`
 		} else {
-			this.h5Url += `${query}`
+			this.design3dUrl += `${query}`
 		}
 		this.loaded = true
 	},

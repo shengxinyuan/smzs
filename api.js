@@ -1,6 +1,6 @@
-const env = 'prod' // prod：正式 test：测试
+import { config } from './config'
 
-const commonUrl = env === 'prod' ? 'https://zuanshi.semoh.cn/api/' : "http://test-zuanshi.semoh.cn/api/";
+const commonUrl = config.apiUrl;
 
 var that = this
 //post请求封装
@@ -152,7 +152,6 @@ function delRequest(url,data){
 	return promise;
 }
 module.exports = {
-	env,
 	commonUrl,
     post: postRequest,
     get: getRequest,
