@@ -1,5 +1,6 @@
-// const commonUrl  = "http://test-zuanshi.semoh.cn/api/"; // 测试
-const commonUrl  = "https://zuanshi.semoh.cn/api/"; // 正式
+const env = 'prod' // prod：正式 test：测试
+
+const commonUrl = env === 'prod' ? 'https://zuanshi.semoh.cn/api/' : "http://test-zuanshi.semoh.cn/api/";
 
 var that = this
 //post请求封装
@@ -151,17 +152,10 @@ function delRequest(url,data){
 	return promise;
 }
 module.exports = {
+	env,
 	commonUrl,
     post: postRequest,
     get: getRequest,
 	put: putRequest,
 	del: delRequest
 };
-
-// request.get('HomePageController/selectShoppingList.do',data).then(res=>{
-// 	console.log(res,444444444444444);	
-// 	this.goods = []
-// 	if(res.data.code == 200){
-// 		  this.goods = that.data.goods.concat(res.data.data)
-// 	  }
-// })  
