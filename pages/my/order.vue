@@ -44,7 +44,7 @@
  		},
 		onNavigationBarButtonTap() {
 			uni.navigateTo({
-				url:'/pages/index/threedesign?url=#/myOrderList'
+				url:'/pages/index/threedesign?url=myOrderList'
 			})
 		},
  		onLoad(op) {

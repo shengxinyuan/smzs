@@ -17,7 +17,7 @@ export default {
 	},
 	onLoad(options) {
 		let query = ''
-		let env = commonUrl.includes('zuanshi.dis.wanheweb.com') ? 'prod' : 'test'
+		let env = commonUrl.includes('test') ? 'test' : 'prod'
 		if (uni.getStorageSync('token')) {
 			query = `?token=${uni.getStorageSync('token')}&env=${env}`
 		} else {

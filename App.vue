@@ -44,7 +44,7 @@
 		onShow: function() {
 			console.log('App Show')
 			// 加载3d设计baseUrl
-			getThreeDesignH5Url()
+			// getThreeDesignH5Url()
 		},
 		onHide: function() {
 			console.log('App Hide')
