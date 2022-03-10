@@ -31,8 +31,11 @@
 			<!-- /////////// -->
 			<view class="shop_tab">
 				<view class="tab_it" v-for="(it,ind) in tableList" :key="ind" @click="go_detail(it.id,it.ratio,it.title,it)">
-					{{it.title}} <u-icon name="arrow-right"></u-icon>
+					<view class="" >
+						{{it.title}} <u-icon name="arrow-right"></u-icon>
+					</view>
 				</view>
+				
 			</view>
 		</view>
 
@@ -108,6 +111,9 @@
 				console.log()
 			}
 		},
+		onHide() {
+			this.tableList = []
+		},
 		methods: {
 			radioChange(evt) {
 				for (let i = 0; i < this.length; i++) {
@@ -121,7 +127,19 @@
 				this.$api.get('managegold').then(res=>{
 					console.log(res)
 					if(res.status == 1){
+						// let list = res.data
+						// list.forEach(item => {
+						// 	if(item.is_gold == 1){
+						// 		this.tableList.push(item)
+						// 	}
+						// })
+						// for(let i = 0;i<res.data.length;i++){
+						// 	if(res.data[i].is_gold == 1){
+						// 		return this.tableList.push(res.data[i])
+						// 	}
+						// }
 						this.tableList = res.data
+						console.log(this.tableList);
 					}
 				})
 			},
