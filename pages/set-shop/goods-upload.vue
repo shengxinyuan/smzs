@@ -1,5 +1,8 @@
 <template>
 	<view>
+		<view class="top-tips">
+			提交发布时，需有更改内容
+		</view>
 		<view class="right-line">
 			<u-button class="custom-btn-mr" size="mini" @click="saveDraft" v-if="canDraft">存草稿</u-button>
 			<u-button class="custom-btn" type="primary" size="mini" @click="publish">发布</u-button>
@@ -242,6 +245,7 @@
 </script>
 
 <style scoped>
+	
 	.right-line {
 		display: flex;
 		align-items: center;
@@ -262,6 +266,11 @@
 		padding: 12rpx 24rpx;
 	}
 	.tips {
+		font-size: 10rpx;
+		color: #2979ff;
+	}
+	.top-tips {
+		padding-left: 16rpx;
 		font-size: 10rpx;
 		color: #2979ff;
 	}
