@@ -266,12 +266,12 @@
 		padding: 12rpx 24rpx;
 	}
 	.tips {
-		font-size: 10rpx;
+		font-size: 20rpx;
 		color: #2979ff;
 	}
 	.top-tips {
 		padding-left: 16rpx;
-		font-size: 10rpx;
+		font-size: 20rpx;
 		color: #2979ff;
 	}
 </style>
