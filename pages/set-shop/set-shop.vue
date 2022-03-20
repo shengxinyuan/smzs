@@ -158,7 +158,7 @@
 			</view>
 			<view class="zl-heads" @click="goGoodsIndex">
 				<view class="heads">
-					<text>商品顺序修改</text>
+					<text>自定义商品顺序</text>
 				</view>
 				<view class="nick-name">
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>

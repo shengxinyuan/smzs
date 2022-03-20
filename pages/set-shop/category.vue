@@ -9,14 +9,14 @@
 		</view>
 		<view class="item" v-for="item in list">
 			<view class="first">
-				<view>{{item.title}}</view>
+				<view>{{item.title}}<text v-if="item.member_id === 0" class="tip">(商城默认)</text></view>
 				<view class="handle">
 					排序权重：{{item.sort}}
 					<u-button class="custom-btn" size="mini" @click="editFirst(item)">编辑</u-button>
 				</view>
 			</view>
 			
-			<view v-if="item.children && item.children.length" class="second">
+			<view v-if="item.children && item.children.length && item.member_id > 0" class="second">
 				<view class="item" v-for="sub in item.children">
 					<view class="first">
 						<view>{{sub.title}}</view>
@@ -275,6 +275,11 @@
 		justify-content: space-between;
 		align-items: center;
 		word-break: break-all;
+		.tip {
+			font-size: 24rpx;
+			color: #666;
+			margin-left: 10rpx;
+		}
 	}
 
 	.handle {

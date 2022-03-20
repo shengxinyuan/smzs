@@ -1,10 +1,12 @@
 <template>
 	<view class="goods-index">
 		<view v-show="!isOrder">
-			<u-tabs ref="tabs" :is-scroll="true" name="title" :list="firstList" active-color="#ff5810" inactive-color="#606266" font-size="30" :current="first" @change="changeFirst"></u-tabs>
-			<u-tabs ref="tabs" :is-scroll="true" name="title" :list="secondList" active-color="#ff5810" inactive-color="#606266" font-size="24" :current="second" @change="changeSecond"></u-tabs>
+			<u-tabs ref="tabs" :is-scroll="true" name="title" :list="firstList" active-color="#ff5810"
+				inactive-color="#606266" font-size="30" :current="first" @change="changeFirst"></u-tabs>
+			<u-tabs ref="tabs" :is-scroll="true" name="title" :list="secondList" active-color="#ff5810"
+				inactive-color="#606266" font-size="24" :current="second" @change="changeSecond"></u-tabs>
 		</view>
-		
+
 		<view style="padding-top: 200rpx;" v-if="shop_list.length === 0">
 			<u-empty text="暂无商品" mode="list"></u-empty>
 		</view>
@@ -34,10 +36,10 @@
 					</view>
 				</view>
 			</view>
-			<u-loadmore :status="moreStatus" margin-bottom="120" margin-top="20"/>
+			<u-loadmore :status="moreStatus" margin-bottom="120" margin-top="20" />
 		</scroll-view>
-		
-		
+
+
 		<view class="status-btn-cont">
 			<view class="">
 				提示：
@@ -49,7 +51,7 @@
 			<view class="btn" v-if="!isOrder" @click="startOrder">调整排序权重</view>
 			<view class="btn" v-else @click="saveOrder">保存排序</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -58,16 +60,7 @@
 		data() {
 			return {
 				shop_list: [],
-				firstList: [
-					{name: '目录1', children: [{name: '目录1-1'}, {name: '目录1-2'}, {name: '目录1-3'}]},
-					{name: '目录2', children: [{name: '目录2-1'}, {name: '目录2-2'}, {name: '目录2-3'}]},
-					{name: '目录3', children: [{name: '目录3-1'}, {name: '目录3-2'}, {name: '目录3-3'}]},
-					{name: '目录4', children: [{name: '目录4-1'}, {name: '目录4-2'}, {name: '目录4-3'}]},
-					{name: '目录5', children: [{name: '目录5-1'}, {name: '目录5-2'}, {name: '目录5-3'}]},
-					{name: '目录6', children: [{name: '目录6-1'}, {name: '目录6-2'}, {name: '目录6-3'}]},
-					{name: '目录7', children: [{name: '目录7-1'}, {name: '目录7-2'}, {name: '目录7-3'}]},
-					{name: '目录8', children: [{name: '目录8-1'}, {name: '目录8-2'}, {name: '目录8-3'}]},
-				],
+				firstList: [],
 				secondList: [],
 				list: [],
 				first: 0,
@@ -85,16 +78,14 @@
 				moreStatus: 'loadmore',
 			}
 		},
-		onLoad () {
+		onLoad() {
 			this.member_id = uni.getStorageSync('member_info').id;
 			this.getAllCategory();
 		},
 		onReachBottom() {
 			if (this.queryParams.last_page === this.queryParams.page) {
-				
 				return;
 			} else {
-				
 				this.queryParams.page += 1;
 				this.queryList();
 			}
@@ -104,19 +95,22 @@
 				uni.showLoading({
 					mask: true
 				})
-				this.$api.get('category/getAllCategory').then((res) => {
+				this.$api.get('category/getAllCategory', {
+					custom_only: 1
+				}).then((res) => {
 					uni.hideLoading()
 					if (res.status == 1) {
-						this.firstList = res.data;
+						this.firstList = res.data.filter(item => item.member_id > 0);
 						this.secondList = this.firstList[this.first].children;
-						this.isCustom = this.firstList[this.first] && this.firstList[this.first].member_id > 0 ? 1 : 0;
+						this.isCustom = this.firstList[this.first] && this.firstList[this.first].member_id > 0 ?
+							1 : 0;
 						this.queryList();
 					}
 				}).catch(() => {
 					uni.hideLoading()
 				})
 			},
-			queryList () {
+			queryList() {
 				if (this.isCustom === 1) {
 					this.$api.get('shop/getAllGood', {
 						cate_id: this.firstList[this.first].id,
@@ -156,7 +150,7 @@
 				}
 			},
 			// 编辑当前item
-			editIndex (item) {
+			editIndex(item) {
 				this.current = item;
 				uni.showModal({
 					title: '输入新的权重',
@@ -178,7 +172,7 @@
 				})
 			},
 			// 一级目录切换
-			changeFirst (index) {
+			changeFirst(index) {
 				this.first = index;
 				this.isCustom = this.firstList[index] && this.firstList[index].member_id > 0 ? 1 : 0;
 				this.second = 0;
@@ -189,7 +183,7 @@
 				}, 0)
 			},
 			// 二级目录切换
-			changeSecond (index) {
+			changeSecond(index) {
 				this.second = index;
 				this.queryParams.page = 1;
 				setTimeout(() => {
@@ -197,7 +191,7 @@
 				}, 0)
 			},
 			// 确认修改
-			confirmItemOrder (i) {
+			confirmItemOrder(i) {
 				const index = Number(i);
 				const item = this.sort_list.find((item) => item.id === this.current.id)
 				if (item) {
@@ -216,15 +210,17 @@
 				})
 			},
 			// 开始排序
-			startOrder () {
+			startOrder() {
 				this.isOrder = true;
 			},
 			// 保存排序
-			saveOrder () {
-				this.$api.post('custom/setWeight',{
+			saveOrder() {
+				this.$api.post('custom/setWeight', {
 					type: this.isCustom,
 					sort_list: this.sort_list
-				}, { json: true }).then(res=>{
+				}, {
+					json: true
+				}).then(res => {
 					if (res.status == 1) {
 						uni.showToast({
 							title: '修改成功',
@@ -235,7 +231,7 @@
 						this.queryList();
 					}
 				})
-				
+
 			}
 		}
 	}
@@ -245,6 +241,7 @@
 	.goods-list {
 		width: 100%;
 		border-top: 1px solid #eee;
+
 		.cont_item {
 			margin: 0 32rpx;
 			background-color: white;
@@ -253,6 +250,7 @@
 			align-items: center;
 			border-bottom: 1px solid #eee;
 			color: rgb(96, 98, 102);
+
 			.images {
 				margin: 20rpx 0;
 				width: 180rpx;
@@ -261,20 +259,23 @@
 				display: block;
 				margin-right: 16rpx;
 			}
-			
+
 			.base-cont {
 				flex: 1;
 				font-size: 24rpx;
+
 				.title {
 					font-size: 32rpx;
 					margin-bottom: 8rpx;
 					color: #414141;
 				}
 			}
+
 			.index-cont {
 				width: 200rpx;
 				font-size: 24rpx;
 				text-align: right;
+
 				.index-btn {
 					margin-top: 10px;
 					color: #2979ff;
@@ -282,6 +283,7 @@
 			}
 		}
 	}
+
 	.status-btn-cont {
 		position: fixed;
 		left: 0;
@@ -293,10 +295,12 @@
 		display: flex;
 		align-items: center;
 		border-top: 1px solid #eee;
+
 		.txt {
 			flex: 1;
 			font-size: 20rpx;
 		}
+
 		.btn {
 			color: #fff;
 			padding: 4px 8px;
@@ -305,5 +309,4 @@
 			background-color: #ff5810;
 		}
 	}
-
 </style>
