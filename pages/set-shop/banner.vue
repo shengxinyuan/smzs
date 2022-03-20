@@ -8,7 +8,7 @@
 		<view class="save_btn" @click="save">
 			<button>保存</button>
 		</view>
-		<view class="tips">*建议banner图片像素：750*500 或等比例缩放的尺寸</view>
+		<view class="tips">*建议banner图片像素：750*400 或等比例缩放的尺寸</view>
 	</view>
 </template>
 
