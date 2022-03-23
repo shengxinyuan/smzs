@@ -694,7 +694,9 @@
 			}
 		}, {
 			"path": "pages/service/service",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "联系客服"
+			}
 		}, {
 			"path": "pages/index/Activityshop_detail",
 			"style": {
