@@ -188,7 +188,7 @@
         "template" : "",
         "domain" : "http://3d.semoh.cn/smsj/",
         "devServer" : {
-            "port" : 8082
+            "port" : 8093
         },
         "router" : {
             "mode" : "hash"

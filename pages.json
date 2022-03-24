@@ -11,6 +11,15 @@
 		// 	}
 		// },
 		{
+			"path": "pages/login/start_page",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -53,15 +62,7 @@
 				// "navigationBarTitleText": "uni-app"
 				"navigationStyle": "custom"
 			}
-		}, {
-			"path": "pages/login/start_page",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom"
-			}
-
-		},
+		}, 
 		{
 			"path": "pages/index/shop_detail",
 			"style": {
