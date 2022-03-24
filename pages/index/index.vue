@@ -409,6 +409,8 @@
 			if (b) {
 				this.avatar = b.avatar
 				this.lv = b.lv
+				// 更新会员金价
+				this.updata_member_gold_price(b.id);
 			}
 			let vip = uni.getStorageSync('viptype')
 			// 会员
@@ -562,6 +564,7 @@
 								uni.setStorageSync("viptype", true)
 							}
 							uni.setStorageSync("member_info", res.data)
+							
 						}
 					})
 				}
@@ -583,6 +586,10 @@
 						this.gold_price = res
 					}
 				})
+			},
+			updata_member_gold_price(id) {
+				//实时金价
+				this.$api.get('gold_price', {id});
 			},
 			//轮播 跳转
 			bann_nav(e, i) {
