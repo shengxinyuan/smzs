@@ -18,9 +18,8 @@
 		</view>
 		<view class="tab_c" @click="cli_tab(3)">
 			<view class="tab_c_child">
-				<image src="https://zuanshi.semoh.cn/applet_static/tabbar/shopsale.png" mode=""></image>
+				<image src="https://sermer-app-oss.oss-cn-hangzhou.aliyuncs.com/front-end-static/3d.png" mode=""></image>
 				<view :class="tab_ind == 3 ? 'act_s' : ''">
-					3D定制
 				</view>
 			</view>
 		</view>
