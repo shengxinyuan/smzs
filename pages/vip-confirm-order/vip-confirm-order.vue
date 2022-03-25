@@ -857,6 +857,13 @@
 								this.hezi = arr
 							}
 						})
+					} else {
+						uni.showToast({
+							title: `${res.message}, 请到我的订单->待付款查看问题！`,
+							mask: true,
+							icon: 'none',
+							duration: 5000
+						})
 					}
 				})
 			},
