@@ -487,7 +487,7 @@
 			clearInterval(this.time)
 		},
 		onLoad(op) {
-			console.log(op)
+			console.log(op,1111)
 			// console.log(JSON.parse(op.data))
 			if(op.data){
 				this.types = op.types
@@ -653,6 +653,7 @@
 			},
 		},
 		onShow() {
+			console.log(2222)
 			//获取地址
 			if(uni.getStorageSync('address')){
 				this.address = uni.getStorageSync('address') //自己的
@@ -663,13 +664,14 @@
 			// 获取寄件人地址
 			if(uni.getStorageSync('address_send')){
 				this.address_send = uni.getStorageSync('address_send') 
-				
+				console.log(this.address_send);
 				//运费
 				this.freight()
 			}
 			// console.log(this.address)
 			if(uni.getStorageSync('address_bier')){
 				this.address_bier = uni.getStorageSync('address_bier')//别人的
+				console.log(this.address_bier);
 				this.freight()
 			}
 			
@@ -921,6 +923,7 @@
 			},
 			//提交订单
 			submit_order(){
+				console.log(this.address.id,this.current);
 				if(this.address.id === undefined && this.current != 2){
 					this.com.msg('请添加收货地址')
 					return false
