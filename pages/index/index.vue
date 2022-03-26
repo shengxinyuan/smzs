@@ -581,7 +581,7 @@
 					}
 				})
 				//实时金价
-				this.$api.get('gold_price?id=' + uni.getStorageSync('member_info').id).then(res => {
+				this.$api.get('gold_price').then(res => {
 					if (res.status == 1) {
 						this.gold_price = res
 					}

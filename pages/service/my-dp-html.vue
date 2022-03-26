@@ -15,7 +15,7 @@
 		onLoad() {
 			const token = uni.getStorageSync('token')
 			const member_info = uni.getStorageSync('member_info')
-			this.url = `${config.h5Url}smsj/?token=${token}&name=${member_info.id}`
+			this.url = `${config.h5Url}smsj/?inApp=1&token=${token}&name=${member_info.id}`
 		}
 	}
 </script>
