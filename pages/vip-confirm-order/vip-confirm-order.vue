@@ -654,9 +654,10 @@
 		},
 		onShow() {
 			//获取地址
+			console.log('onshow this.address', uni.getStorageSync('address'))
 			if(uni.getStorageSync('address')){
 				this.address = uni.getStorageSync('address') //自己的
-				
+				console.log('onshow this.address', this.address)
 				//运费
 				this.freight()
 			}
@@ -928,14 +929,19 @@
 			},
 			//提交订单
 			submit_order(){
-				if(this.address.id === undefined && this.current != 2){
+				if(this.current == 0 && this.address.id === undefined) { // 邮寄
 					this.com.msg('请添加收货地址')
 					return false
+				} else if (this.current == 1) {
+					if (this.address_send.id === undefined) { // 代发 寄
+						this.com.msg('请添加代发邮寄地址')
+						return false
+					} else if (this.address_bier.id === undefined) { // 代发 收
+						this.com.msg('请添加代发收货地址')
+						return false
+					}
 				}
-				if(this.address_bier.id === undefined && this.current == 1){
-					this.com.msg('请添加代发收货地址')
-					return false
-				}
+				
 				let data = {
 					valuation:this.nums_bj,							//保价金额（不保价则不传）
 					goods_id:this.datas.goods_id === undefined?0:this.datas.goods_id,//主商品id(购物车则不传
@@ -947,7 +953,7 @@
 					shop_accessories_counts:this.hezi.count=== undefined?1:this.hezi.count,//配件数量,隔开
 					vip:this.viptype_num,					//是否开vip 1-是 0-不开	是
 					message:this.textarea_val,				//备注 有则传
-					store_address_id:this.current == 1 ? this.address.id : 0,	//代发时 选择代发地址id	是
+					store_address_id:this.current == 1 ? this.address_send.id : 0,	//代发时 选择代发地址id	是
 					sf_change:this.ind,						//0-到付 1-寄付	是
 					sign_certificate:this.sign_certificate,	//判断是否有证书 1需要 否则 0	是
 					sign:this.sign_num,						//判断是否挂签 1需要 否则 0是
