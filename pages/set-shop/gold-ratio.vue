@@ -4,7 +4,7 @@
 		
 		<view class="gold-ratio-box">
 			<view class="title">{{title}}</view>
-			<input class="input" type="number" v-model="value" @input="chack"/>
+			<input class="input" type="digit" v-model="value" @input="chack"/>
 		</view>
 		<view class="explain">
 			<view class="explain-title">{{explainTitle}}</view>
@@ -76,10 +76,10 @@
 				})
 			},
 			chack(e){
-				// e.target.value = parseInt(e.target.value)
 				//重新赋值给input
 				this.$nextTick(() => {
-					this.value= e.target.value+''
+					const val = e.target.value.replace(/[^\d\.]/g,'');
+					this.value= val + ''
 				})
 			},
 			//返回

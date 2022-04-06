@@ -931,12 +931,7 @@
 			},
 			//提交订单
 			submit_order(){
-<<<<<<< HEAD
-				console.log(this.address.id,this.current);
-				if(this.address.id === undefined && this.current != 2){
-=======
 				if(this.current == 0 && this.address.id === undefined) { // 邮寄
->>>>>>> f8f2c008397990b7799bb2e0c367ca7b69f9d639
 					this.com.msg('请添加收货地址')
 					return false
 				} else if (this.current == 1) {
