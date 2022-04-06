@@ -2,8 +2,8 @@
     "name" : "奢美饰界",
     "appid" : "__UNI__CDBC20A",
     "description" : "奢侈品交易平台",
-    "versionName" : "1.1.20",
-    "versionCode" : 1120,
+    "versionName" : "1.1.21",
+    "versionCode" : 1121,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {

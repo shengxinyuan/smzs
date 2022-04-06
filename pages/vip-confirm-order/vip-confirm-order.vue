@@ -9,23 +9,24 @@
 		<view class="tabs-box">
 			<view class="tabs-box_top">
 				<view class="top_left">
-					<u-tabs :list="list" :is-scroll="false" :current="current" @change="changeTabs" :height="60" :font-size="26"
-					 :bar-width="34" :bar-height="4" :active-color="activeColor" :style="{'border-radius':borderRadius}"></u-tabs>
+					<u-tabs :list="list" :is-scroll="false" :current="current" @change="changeTabs" :height="60"
+						:font-size="26" :bar-width="34" :bar-height="4" :active-color="activeColor"
+						:style="{'border-radius':borderRadius}"></u-tabs>
 				</view>
 				<view class="top_right" v-if="current == 3" @click="show = true">
 					配送范围
 				</view>
 			</view>
-			<u-popup v-model="show" mode="center"  border-radius="10">
+			<u-popup v-model="show" mode="center" border-radius="10">
 				<view class="pesfwei">
 					<image :src="zhanshi.door_delivery" mode="aspectFill"></image>
 				</view>
 			</u-popup>
-			<!-- 邮寄 --> 
-			<view class="tabs-first-box" > 
-				<!-- 邮寄地址 --> 
+			<!-- 邮寄 -->
+			<view class="tabs-first-box">
+				<!-- 邮寄地址 -->
 				<view class="first-box-one" v-if="current == 0 || current == 3" @click="go_pages_add">
-					<view > 
+					<view>
 						<view v-if="address">
 							<view class="user-box">
 								<view class="user-name">{{address.contact}}</view>
@@ -42,19 +43,22 @@
 							<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 						</view>
 					</view>
-					
+
 					<view>
-						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image>
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix">
+						</image>
 					</view>
 				</view>
 				<!-- 代发 -->
 				<view v-if="current == 1">
 					<!-- 寄件地址 -->
 					<view class="second-box-one">
-						<view @click="go_pages('../my/receiving?is_mine=1' +'&type=0' + '&isShow=1' + '&current='+ current)">
+						<view
+							@click="go_pages('../my/receiving?is_mine=1' +'&type=0' + '&isShow=1' + '&current='+ current)">
 							<view>
 								<view class="send-image">
-									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/ji.png" mode="widthFix"></image>
+									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/ji.png"
+										mode="widthFix"></image>
 								</view>
 								<view class="mail-box" v-if="address_send">
 									<view class="user-box">
@@ -74,14 +78,17 @@
 							</view>
 						</view>
 						<view>
-							<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix">
+							</image>
 						</view>
 					</view>
-					<view class="second-box-one" @click="go_pages('../my/receiving?is_mine=0' +'&type=0' + '&isShow=2' + '&current='+ current)">
+					<view class="second-box-one"
+						@click="go_pages('../my/receiving?is_mine=0' +'&type=0' + '&isShow=2' + '&current='+ current)">
 						<view>
 							<view>
 								<view class="send-image">
-									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/shou.png" mode="widthFix"></image>
+									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/shou.png"
+										mode="widthFix"></image>
 								</view>
 								<view class="mail-box" v-if="address_bier">
 									<view class="user-box">
@@ -101,11 +108,12 @@
 							</view>
 						</view>
 						<view>
-							<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image>
+							<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix">
+							</image>
 						</view>
 					</view>
 				</view>
-				<!-- 自提 --> 
+				<!-- 自提 -->
 				<view class="first-box-one" v-if="current == 2">
 					<view>
 						<view>
@@ -118,7 +126,8 @@
 						</view>
 					</view>
 					<view>
-						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix"></image> 
+						<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_01.png" mode="widthFix">
+						</image>
 					</view>
 				</view>
 				<!-- 送货上门 -->
@@ -151,8 +160,8 @@
 							<view v-show="current == 0">
 								<view class="express-left">
 									<view class="express-sf">
-										<image src="https://zuanshi.semoh.cn/applet_static/vip-order/sf_01.png" 
-										mode="aspectFill"></image>
+										<image src="https://zuanshi.semoh.cn/applet_static/vip-order/sf_01.png"
+											mode="aspectFill"></image>
 									</view>
 									<view class="sf">顺丰速运</view>
 								</view>
@@ -163,9 +172,9 @@
 							</view>
 							<view>
 								<view class="" style="display: flex;align-items: center;">
-									<image style="width: 35rpx;height: 35rpx;flex-shrink: 0;" 
-									src="https://zuanshi.semoh.cn/applet_static/vip-order/bao_01.png"
-									mode="aspectFill"></image>
+									<image style="width: 35rpx;height: 35rpx;flex-shrink: 0;"
+										src="https://zuanshi.semoh.cn/applet_static/vip-order/bao_01.png"
+										mode="aspectFill"></image>
 									<view class="baojia" style="margin: 0 10rpx;">保价</view>
 								</view>
 							</view>
@@ -176,8 +185,8 @@
 							<view class="parcel-btns">
 								<view class="parcel-sf" :class="{backimg:imgind == 0}" @click="baojia_cli(0)">
 									<text class="sf-title">顺丰保价</text>
-									<text class="sf-cost" 
-									style="display: block;">（保费{{ zhanshi.sf_valuation /10}}%）</text>
+									<text class="sf-cost"
+										style="display: block;">（保费{{ zhanshi.sf_valuation /10}}%）</text>
 								</view>
 								<!-- <view class="parcel-tpy" :class="{backimg:imgind == 1}" @click="baojia_cli(1)">
 									<text class="tpy-title">太平洋保价</text>
@@ -198,10 +207,12 @@
 							</view>
 						</view>
 					</view>
-					
+
 					<!-- 挂签 证书 -->
 					<view class="first-box-there">
-						<view>
+
+						<!-- 挂签 入口关闭，功能由证书一起完成 -->
+						<!-- <view>
 							<view class="hang-sign-box">
 								<view class="hang-sign-title">挂签</view>
 								<view class="hang-sign-text" @click="openPopup01(0)">价格&样本</view>
@@ -215,24 +226,26 @@
 								</view>
 								<view class="log-title">{{hangSignTitle}}</view>
 							</view>
-						</view>
+						</view> -->
 						<view class="certificate">
 							<view class="hang-sign-box">
 								<view class="hang-sign-title">证书</view>
 								<view class="hang-sign-text" @click="openPopup01(1)">价格&样本</view>
 								<view class="hang-sign-switch">
-									<u-switch v-model="checked02" size="26" active-color="#2d407a" @change="guaq_pic" inactive-color="#cccccc"></u-switch>
+									<u-switch v-model="checked02" size="26" active-color="#2d407a" @change="guaq_pic"
+										inactive-color="#cccccc"></u-switch>
 								</view>
 							</view>
 							<view class="log-box zhengshu">
 								<view class="log">
-									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/zhengshu.png" mode="widthFix"></image>
+									<image src="https://zuanshi.semoh.cn/applet_static/vip-order/zhengshu.png"
+										mode="widthFix"></image>
 								</view>
 								<view class="log-title">{{zhengshuTitle}}</view>
 							</view>
 						</view>
 					</view>
-					
+
 					<!-- 盒子手绳挑选 -->
 					<view class="first-box-four">
 						<view @click="skipAddedServices">
@@ -267,7 +280,8 @@
 									</view>
 									<view class="goods-text-two">
 										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 1">
-											<text v-if="!viptype">金价：￥{{(firstItem.gold_g_normal/1).toFixed(2)}}/g</text>
+											<text
+												v-if="!viptype">金价：￥{{(firstItem.gold_g_normal/1).toFixed(2)}}/g</text>
 											<text v-else>金价：￥{{(firstItem.gold_g_vip/1).toFixed(2)}}/g</text>
 										</view>
 										<view class="goods-text-two-min-box" v-if="firstItem.is_height == 2">
@@ -289,7 +303,8 @@
 									<view class="money-box" style="display: flex;justify-content: space-between;">
 										<view class="">
 											<text class="rmb">￥</text>
-											<text class="integer" v-if="!viptype">{{firstItem.goods_money_normal}}</text>
+											<text class="integer"
+												v-if="!viptype">{{firstItem.goods_money_normal}}</text>
 											<text class="integer" v-else>{{firstItem.goods_money_vip}}</text>
 										</view>
 										<view style="color: #999;">
@@ -299,7 +314,7 @@
 								</view>
 							</view>
 						</block>
-						
+
 						<!-- <view class="aggregate-box">
 							<text class="aggregate-title">总计</text>
 							<text class="aggregate-text">金料￥{{goldPrice}}</text>
@@ -314,9 +329,9 @@
 						<view>商品金额</view>
 						<view>￥{{shop_price}}</view>
 					</view>
-					<view class="first-box-six-min-v">	
+					<view class="first-box-six-min-v">
 						<view>
-							金币抵扣 
+							金币抵扣
 						</view>
 						<view>-￥ {{goldBuckle}}({{(goldBuckle * zhanshi.gold_money).toFixed(0)}}金币)</view>
 					</view>
@@ -350,9 +365,10 @@
 				</view>
 				<!-- 价格样本 -->
 				<view>
-					<u-popup v-model="popupShow01" mode="center" border-radius="10" :zoom="false" :closeable="true" width="85%">
+					<u-popup v-model="popupShow01" mode="center" border-radius="10" :zoom="false" :closeable="true"
+						width="85%">
 						<view class="popup-one-box">
-							
+
 							<view class="popup-one-title" v-if="popupnum != 3">
 								<text>{{popupnum == 0 ? "挂签": "证书"}}价格说明</text>
 							</view>
@@ -361,7 +377,7 @@
 								<image :src="zhanshi.sign_image" mode="aspectFill"></image>
 							</view>
 							<!-- 证书 -->
-							<view class="popup_img" v-else-if="popupnum == 1"> 
+							<view class="popup_img" v-else-if="popupnum == 1">
 								<image :src="zhanshi.certificate_image" mode="aspectFill"></image>
 							</view>
 						</view>
@@ -370,7 +386,7 @@
 			</view>
 		</view>
 		<!--  底部-->
-		<view class="tabs-second-box" >
+		<view class="tabs-second-box">
 			<!-- 代发底部展示 -->
 			<view class="second-box-five">
 				<view class="notice-text">
@@ -382,7 +398,8 @@
 					<view class="open-super-members-box">
 						<view>
 							<view class="open-super-members-log">
-								<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_02.png" mode="widthFix"></image>
+								<image src="https://zuanshi.semoh.cn/applet_static/vip-order/vip_02.png"
+									mode="widthFix"></image>
 							</view>
 							<view class="open-super-members-title">
 								<text>开通超级会员360/年，本单预计可省</text>
@@ -392,11 +409,8 @@
 							</view>
 						</view>
 						<view style="flex-shrink: 1;">
-							<u-switch v-model="checked03"
-							size="26" 
-							@change="vip_kait" 
-							active-color="#2d407a" 
-							inactive-color="#cccccc"></u-switch>
+							<u-switch v-model="checked03" size="26" @change="vip_kait" active-color="#2d407a"
+								inactive-color="#cccccc"></u-switch>
 						</view>
 					</view>
 				</view>
@@ -404,14 +418,15 @@
 					<view class="money-box">
 						<text class="rmb">￥</text>
 						<text class="integer">{{total <= 0? 0.01 : total.toFixed(2)}}</text>
-						<text v-if="!viptype" style="font-size: 24rpx;">(保价费及其他￥{{hezi_pic/1+sign_num/1+sign_certificate/1+nums_bj/1}})</text>
+						<text v-if="!viptype"
+							style="font-size: 24rpx;">(保价费及其他￥{{hezi_pic/1+sign_num/1+sign_certificate/1+nums_bj/1}})</text>
 					</view>
-					<view class="bottom-v-right" >
+					<view class="bottom-v-right">
 						<view class="right-left" v-if="viptype">
 							<text>本单可省：￥{{liread}}</text>
 						</view>
-						<view class="right-right"  @click="submit_order">
-							<view >提交订单
+						<view class="right-right" @click="submit_order">
+							<view>提交订单
 								<text v-if="zhanshi.data"> ({{zhanshi.data.length}}) </text>
 							</view>
 						</view>
@@ -426,90 +441,89 @@
 	export default {
 		data() {
 			return {
-				textarea_val:'',
-				input_show:false,//输入框
-				show:false,//配送范围
+				textarea_val: '',
+				input_show: false, //输入框
+				show: false, //配送范围
 				list: [{
-						name: '邮寄'
-					}, {
-						name: '代发'
-					}, {
-						name: '自提'
-					}
-				],
+					name: '邮寄'
+				}, {
+					name: '代发'
+				}, {
+					name: '自提'
+				}],
 				current: 0,
 				activeColor: '#2d407a',
 				borderRadius: '30upx',
-				checked: true,
-				checked02: true,
-				checked03: false,
+				// checked: true,
+				checked02: true, // 挂牵和证书
+				checked03: false, // 会员
 				popupShow01: false,
-				premiumPay:'',
-				hangSignTitle:'国家珠宝玉石适量监督检验中心',
-				zhengshuTitle:'北京市中工商联珠宝检测中心',
-				packingChargePay:'1.0',
-				goodsMoney:'14748.32',
+				premiumPay: '',
+				hangSignTitle: '国家珠宝玉石适量监督检验中心',
+				zhengshuTitle: '北京市中工商联珠宝检测中心',
+				packingChargePay: '1.0',
+				goodsMoney: '14748.32',
 				noticeTexts01: '*因珠宝产品属于贵重物品，一旦出库，产品无质量问题暂不退换货品！建议您对已购买产品进行保价，未保价的包裹丢失或毁损的，不予赔偿，公司无需承担赔偿责任！',
 				noticeTexts02: '*因珠宝产品属于贵重物品，一旦出库，产品无质量问题暂不退换货品！',
-				ind:1,
-				datas:'',//传递数据
-				imgind:0,
-				zhanshi:'',//数据展示
-				popupnum:0,
-				viptype:false ,
-				total : 0 ,
-				address:'',//我的
-				address_send:'',//寄件人地址
-				address_bier:'',//别人的
-				postage : 0 ,
-				hezi:"",//盒子数据
-				hezi_pic:0,
-				coupon:0,//优惠券价格
-				viptype_num:0, // 是否开通vip
-				sign_num:0,//挂签
-				sign_certificate:0,//证书
-				goldBuckle:0,//金币
-				cantuan_id:'',//参团低
-				shoptypes:0 ,//type类型
-				time:'',
-				nums_bj:0,//保价
-				coupon_id:0,//优惠券低
-				guaq_pic_show:false,
-				guaq_show:false,
-				cli_type:true,//防抖
-				hezi_ids:0,
-				guaqian:0,
-				zhens:0,
-				types:0,
+				ind: 1,
+				datas: '', //传递数据
+				imgind: 0,
+				zhanshi: '', //数据展示
+				popupnum: 0,
+				viptype: false,
+				total: 0,
+				address: '', //我的
+				address_send: '', //寄件人地址
+				address_bier: '', //别人的
+				postage: 0,
+				hezi: "", //盒子数据
+				hezi_pic: 0,
+				coupon: 0, //优惠券价格
+				viptype_num: 0, // 是否开通vip
+				sign_num: 0, //挂签
+				sign_certificate: 0, //证书
+				goldBuckle: 0, //金币
+				cantuan_id: '', //参团低
+				shoptypes: 0, //type类型
+				time: '',
+				nums_bj: 0, //保价
+				coupon_id: 0, //优惠券低
+				guaq_pic_show: false,
+				guaq_show: false,
+				cli_type: true, //防抖
+				hezi_ids: 0,
+				guaqian: 0,
+				zhens: 0,
+				types: 0,
 			}
 		},
 		onUnload() {
 			clearInterval(this.time)
 		},
 		onLoad(op) {
-			console.log(op,1111)
+			console.log(op, 1111)
 			// console.log(JSON.parse(op.data))
-			if(op.data){
+			if (op.data) {
 				this.types = op.types
 				this.datas = JSON.parse(op.data)
-				if(this.datas && this.datas.cantuan !== undefined){
+				if (this.datas && this.datas.cantuan !== undefined) {
 					this.cantuan_id = this.datas.cantuan
 				}
-				if(this.datas && this.datas.activity == 1){
+				if (this.datas && this.datas.activity == 1) {
 					this.shoptypes = this.datas.activity
-				}else{
+				} else {
 					this.shoptypes = this.datas.type
 				}
 				//回流类型
-				if(this.datas && this.datas.current){
+				if (this.datas && this.datas.current) {
 					this.current = this.datas.current
 				}
 				this.page_reader()
-			}else{
+			} else {
 				this.page_reader()
 			}
 			//vip状态
-			this.viptype = uni.getStorageSync('viptype') 
+			this.viptype = uni.getStorageSync('viptype')
 			// console.log(this.viptype)
 			//删除地址
 			uni.removeStorageSync('address')
@@ -518,134 +532,146 @@
 			uni.removeStorageSync('ids')
 			uni.removeStorageSync("coupon")
 		},
-		watch:{
-			zj_pic(a,b){
-				console.log(a,b)
+		watch: {
+			zj_pic(a, b) {
+				console.log(a, b)
 			},
 			//vip状态
-			viptype(){
-				if(this.viptype_num == 1){
+			viptype() {
+				if (this.viptype_num == 1) {
 					this.total = this.total + JSON.parse(this.zhanshi.vip)
 				}
 			},
-			deep:true
+			deep: true
 		},
-		computed:{
-			liread(){
+		computed: {
+			liread() {
 				let arr = 0
-				if(this.zhanshi){
-					this.zhanshi.data.forEach(i=>{
+				if (this.zhanshi) {
+					this.zhanshi.data.forEach(i => {
 						arr += i.goods_money_normal - i.goods_money_vip
 					})
 				}
 				return arr.toFixed(2)
 			},
 			//商品价格
-			shop_price(){
+			shop_price() {
 				let arr = 0
-				if(this.viptype){
-					arr = this.zhanshi.money_vip 
-				}else{
+				if (this.viptype) {
+					arr = this.zhanshi.money_vip
+				} else {
 					arr = this.zhanshi.money
 				}
 				return arr
 			},
 			//最终价格
-			zj_pic(){
-				if(this.current == 0 || this.current == 1){ //有邮费的
-					if(this.ind == 1){ //寄付 0到付
+			zj_pic() {
+				if (this.current == 0 || this.current == 1) { //有邮费的
+					if (this.ind == 1) { //寄付 0到付
 						//证书为true
-						if(this.guaq_pic_show == true){
+						if (this.guaq_pic_show == true) {
 							//挂签
-							if(this.guaq_show == true){
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.nums_bj + this.zhens + this.guaqian
-							}else{
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.nums_bj + this.zhens
+							if (this.guaq_show == true) {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(
+									this.postage) + this.nums_bj + this.zhens + this.guaqian
+							} else {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(
+									this.postage) + this.nums_bj + this.zhens
 							}
-						}else{
+						} else {
 							//挂签为
-							if(this.guaq_show == true){
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.nums_bj + this.guaqian
-							}else{
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.nums_bj
+							if (this.guaq_show == true) {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(
+									this.postage) + this.nums_bj + this.guaqian
+							} else {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(
+									this.postage) + this.nums_bj
 							}
 						}
-					}else{
+					} else {
 						//证书为true
-						if(this.guaq_pic_show == true){
+						if (this.guaq_pic_show == true) {
 							//挂签
-							if(this.guaq_show == true){
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.nums_bj + this.zhens + this.guaqian
-							}else{
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.nums_bj + this.zhens
+							if (this.guaq_show == true) {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this
+									.nums_bj + this.zhens + this.guaqian
+							} else {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this
+									.nums_bj + this.zhens
 							}
-						}else{
+						} else {
 							//挂签为
-							if(this.guaq_show == true){
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.nums_bj + this.guaqian
-							}else{
+							if (this.guaq_show == true) {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this
+									.nums_bj + this.guaqian
+							} else {
 								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.nums_bj
 							}
 						}
 					}
-				}else{ //自提
-					if(this.current == 2){
+				} else { //自提
+					if (this.current == 2) {
 						//证书为true
-						if(this.guaq_pic_show == true){
+						if (this.guaq_pic_show == true) {
 							//挂签
-							if(this.guaq_show == true){
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon  + this.zhens + this.guaqian
-							}else{
+							if (this.guaq_show == true) {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.zhens +
+									this.guaqian
+							} else {
 								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.zhens
 							}
-						}else{
+						} else {
 							//挂签为
-							if(this.guaq_show == true){
+							if (this.guaq_show == true) {
 								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + this.guaqian
-							}else{
+							} else {
 								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon
 							}
 						}
-					}else if(this.current == 3){  //送货上门
+					} else if (this.current == 3) { //送货上门
 						//证书为true
-						if(this.guaq_pic_show == true){
+						if (this.guaq_pic_show == true) {
 							//挂签
-							if(this.guaq_show == true){
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage)  + this.zhens + this.guaqian
-							}else{
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.zhens
+							if (this.guaq_show == true) {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(
+									this.postage) + this.zhens + this.guaqian
+							} else {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(
+									this.postage) + this.zhens
 							}
-						}else{
+						} else {
 							//挂签为
-							if(this.guaq_show == true){
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage) + this.guaqian
-							}else{
-								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(this.postage)
+							if (this.guaq_show == true) {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(
+									this.postage) + this.guaqian
+							} else {
+								this.total = this.shop_price + this.hezi_pic - this.goldBuckle - this.coupon + parseFloat(
+									this.postage)
 							}
 						}
 					}
 				}
 			},
 			//金料
-			goldPrice(){
+			goldPrice() {
 				let arr = 0
-				if(this.zhanshi.data){
-					this.zhanshi.data.forEach(i=>{
-						if(this.viptype){
+				if (this.zhanshi.data) {
+					this.zhanshi.data.forEach(i => {
+						if (this.viptype) {
 							arr += JSON.parse(i.gold_g_vip)
-						}else{
-							arr += JSON.parse(i.gold_g_normal) 
+						} else {
+							arr += JSON.parse(i.gold_g_normal)
 						}
 					})
 				}
 				return arr.toFixed(2)
 			},
 			//工费
-			processCost(){
+			processCost() {
 				let arr = 0
-				if(this.zhanshi.data){
-					this.zhanshi.data.forEach(i=>{
-						arr += JSON.parse(i.labor_money) 
+				if (this.zhanshi.data) {
+					this.zhanshi.data.forEach(i => {
+						arr += JSON.parse(i.labor_money)
 					})
 				}
 				// console.log(arr)
@@ -656,33 +682,33 @@
 			console.log(2222)
 			//获取地址
 			console.log('onshow this.address', uni.getStorageSync('address'))
-			if(uni.getStorageSync('address')){
+			if (uni.getStorageSync('address')) {
 				this.address = uni.getStorageSync('address') //自己的
 				console.log('onshow this.address', this.address)
 				//运费
 				this.freight()
 			}
 			// 获取寄件人地址
-			if(uni.getStorageSync('address_send')){
-				this.address_send = uni.getStorageSync('address_send') 
+			if (uni.getStorageSync('address_send')) {
+				this.address_send = uni.getStorageSync('address_send')
 				console.log(this.address_send);
 				//运费
 				this.freight()
 			}
 			// console.log(this.address)
-			if(uni.getStorageSync('address_bier')){
-				this.address_bier = uni.getStorageSync('address_bier')//别人的
+			if (uni.getStorageSync('address_bier')) {
+				this.address_bier = uni.getStorageSync('address_bier') //别人的
 				console.log(this.address_bier);
 				this.freight()
 			}
-			
+
 			//盒子手绳等
-			if(uni.getStorageSync('ids')){
+			if (uni.getStorageSync('ids')) {
 				this.hezi = uni.getStorageSync('ids')
 				this.hezi_pic = this.zhanshi.packing_money + this.hezi.total
 			}
 			//优惠券
-			if(uni.getStorageSync('coupon')){
+			if (uni.getStorageSync('coupon')) {
 				let arr = uni.getStorageSync('coupon')
 				this.coupon = arr.price
 				this.coupon_id = arr.id
@@ -691,36 +717,36 @@
 		},
 		methods: {
 			//开vip
-			vip_kait(e){
+			vip_kait(e) {
 				console.log(e)
-				if(e == true){
+				if (e == true) {
 					this.viptype_num = 1
-					this.viptype = true 
-				}else{
+					this.viptype = true
+				} else {
 					this.viptype_num = 0
 					this.total = this.total - JSON.parse(this.zhanshi.vip)
 					this.viptype = false
 				}
 			},
 			//邮费
-			freight(){
+			freight() {
 				let arr = 0
-				if(this.current == 0){
-					if(this.address.province){
-						if(this.address.province == this.zhanshi.province){ //省内邮费
+				if (this.current == 0) {
+					if (this.address.province) {
+						if (this.address.province == this.zhanshi.province) { //省内邮费
 							arr = JSON.parse(this.zhanshi.in_province)
-						}else{ //省外邮费
+						} else { //省外邮费
 							arr = JSON.parse(this.zhanshi.out_province)
 						}
 					}
 					this.postage = arr.toFixed(2)
 				}
-				if(this.current == 1){
-					if(this.address_bier.province){
+				if (this.current == 1) {
+					if (this.address_bier.province) {
 						console.log(this.address_bier.province)
-						if(this.address_bier.province == this.zhanshi.province){ //省内邮费
+						if (this.address_bier.province == this.zhanshi.province) { //省内邮费
 							arr = JSON.parse(this.zhanshi.in_province)
-						}else{ //省外邮费
+						} else { //省外邮费
 							arr = JSON.parse(this.zhanshi.out_province)
 						}
 					}
@@ -728,79 +754,76 @@
 				}
 			},
 			//页面跳转
-			go_pages(e){
+			go_pages(e) {
 				this.com.navto(e)
 			},
-			go_pages_add(){
-				this.com.navto('../my/receiving?is_mine='+ 1 +'&type='+0 + '&current='+ this.current)
+			go_pages_add() {
+				this.com.navto('../my/receiving?is_mine=' + 1 + '&type=' + 0 + '&current=' + this.current)
 			},
 			//挂签
-			guaq(e){
-				this.guaq_show = e
-				let ar = 0
-				this.zhanshi.data.forEach(i=>{
-					ar += i.order_count * i.sign
-				})
-				console.log(ar)
-				this.guaqian = ar
-				if(e == true){
-					this.sign_num = 1
-				// 	this.total = this.total + ar
-				}else{
-					this.sign_num = 0
-				// 	this.total = this.total - ar
-				}
-				// console.log(this.total)
-			},
+			// guaq(e){
+
+			// },
 			//证书
-			guaq_pic(e){
+			guaq_pic(e) {
 				this.guaq_pic_show = e
 				let ar = 0
-				this.zhanshi.data.forEach(i=>{
+				this.zhanshi.data.forEach(i => {
 					ar += i.order_count * i.sign_certificate
 				})
-				console.log(ar)
-				if(e == true){
+				if (e == true) {
 					this.sign_certificate = 1
 					this.zhens = ar
-				}else{
+				} else {
 					this.sign_certificate = 0
 					// this.total = this.total - ar
 				}
-				console.log(this.total)
+
+				this.guaq_show = e
+				let arr = 0
+				this.zhanshi.data.forEach(i => {
+					arr += i.order_count * i.sign
+				})
+				this.guaqian = arr
+				if (e == true) {
+					this.sign_num = 1
+				} else {
+					this.sign_num = 0
+				}
+
 			},
-			baojia_cli(e){
+			baojia_cli(e) {
 				this.imgind = e
-				if(e == 0){ //0顺丰
+				if (e == 0) { //0顺丰
 					// let ar = Math.floor(this.shop_price) / 1000
 					let ar = this.shop_price / 1000
 					// console.log(Math.floor(ar))
-					if(ar <=1 && this.zhanshi){
+					if (ar <= 1 && this.zhanshi) {
 						this.nums_bj = this.zhanshi.sf_valuation
 						// console.log(this.nums_bj)
-					}else if(ar >1 && ar <=2 && this.zhanshi) {
+					} else if (ar > 1 && ar <= 2 && this.zhanshi) {
 						this.nums_bj = 2 * this.zhanshi.sf_valuation
 						// console.log(this.nums_bj)
-					}else{
+					} else {
 						// this.nums_bj = (Math.floor(ar) + 1) * this.zhanshi.sf_valuation
-						this.nums_bj = Math.floor(ar* this.zhanshi.sf_valuation)
+						this.nums_bj = Math.floor(ar * this.zhanshi.sf_valuation)
 					}
-				}else{
+				} else {
 					let ar = Math.floor(this.shop_price) / 10000
-						console.log(ar)
-					if(ar <=1 && this.zhanshi){
+					console.log(ar)
+					if (ar <= 1 && this.zhanshi) {
 						this.nums_bj = this.zhanshi.ocean_valuation
 						// console.log(this.nums_bj)
-					}else if(ar >1 && ar <=2 && this.zhanshi) {
+					} else if (ar > 1 && ar <= 2 && this.zhanshi) {
 						this.nums_bj = 2 * this.zhanshi.ocean_valuation
 						// console.log(this.nums_bj)
-					}else{
+					} else {
 						this.nums_bj = (Math.floor(ar) + 1) * this.zhanshi.ocean_valuation
 					}
 				}
-			}, 
+			},
 			//配送方式
-			fuk(e){
+			fuk(e) {
 				// 1寄付 0到付
 				this.ind = e
 				if (e == 0) {
@@ -811,51 +834,50 @@
 				}
 			},
 			//页面渲染
-			page_reader(){
-				this.$api.post('orderdetail',this.datas).then(res=>{
+			page_reader() {
+				this.$api.post('orderdetail', this.datas).then(res => {
 					console.log(res)
-					if(res.status == 1){
-						this.zhanshi =res.data
+					if (res.status == 1) {
+						this.zhanshi = res.data
 						this.address = res.data.address_mine //我的默认
 						console.log(this.types)
-						if(this.types == 1 ){
+						if (this.types == 1) {
 							this.address_bier = res.data.address_not_mine
 						}
-						if(this.types == 0){
+						if (this.types == 0) {
 							this.address_bier = res.data.address_not_mine
 							this.address_send = res.data.address_not_mine
 						}
-						
+
 						this.hezi_pic = res.data.packing_money + JSON.parse(res.data.peijian_price) //盒子价格
-						if(uni.getStorageSync('viptype')){
+						if (uni.getStorageSync('viptype')) {
 							this.zhanshi.viptype = true
-						}else{
+						} else {
 							this.zhanshi.viptype = false
 						}
 						//运费
-						
+
 						this.freight()
-						this.golds()//金币抵扣
-						this.baojia_cli(0)//保价
-						this.guaq(this.checked) //挂签
-						this.guaq_pic(this.checked02) //证书
+						this.golds() //金币抵扣
+						this.baojia_cli(0) //保价
+						this.guaq_pic(this.checked02) //证书 挂签
 						this.baojia_cli(0)
 						//盒子
-						this.$api.get('accessories').then(res=>{
+						this.$api.get('accessories').then(res => {
 							console.log(res)
-							if(res.status == 1){
-								res.data.forEach(i=>{
+							if (res.status == 1) {
+								res.data.forEach(i => {
 									i.counds = 0
 								})
 								for (var i = 0; i < res.data.length; i++) {
-									if(i == 0){
+									if (i == 0) {
 										res.data[i].counds = 1
-									}else{
+									} else {
 										res.data[i].counds = 0
 									}
 								}
 								let arr = {
-									list:res.data
+									list: res.data
 								}
 								this.hezi = arr
 							}
@@ -871,11 +893,11 @@
 				})
 			},
 			//金币抵扣
-			golds(){
+			golds() {
 				let num = 0
-				if(this.zhanshi.gold - this.zhanshi.gold_num >= 0){
+				if (this.zhanshi.gold - this.zhanshi.gold_num >= 0) {
 					num = this.zhanshi.gold_num / this.zhanshi.gold_money
-				}else{
+				} else {
 					num = this.zhanshi.gold / this.zhanshi.gold_money
 				}
 				// console.log(num)
@@ -885,7 +907,7 @@
 			changeTabs(index) {
 				console.log(index)
 				this.current = index
-				if(index == 1){
+				if (index == 1) {
 					this.ind = 1
 				}
 				this.freight()
@@ -898,40 +920,41 @@
 				this.popupShow01 = true
 			},
 			//盒子手绳		
-			skipAddedServices(){
-				if(this.hezi != ''){
+			skipAddedServices() {
+				if (this.hezi != '') {
 					uni.navigateTo({
-						url:'added-services?price='+this.zhanshi.packing_money+'&data='+JSON.stringify(this.hezi)
+						url: 'added-services?price=' + this.zhanshi.packing_money + '&data=' + JSON.stringify(this
+							.hezi)
 					})
-				}else{
+				} else {
 					uni.navigateTo({
-						url:'added-services?price='+this.zhanshi.packing_money
+						url: 'added-services?price=' + this.zhanshi.packing_money
 					})
 				}
 			},
-			skipDiscountSelect(){
+			skipDiscountSelect() {
 				//ids
 				let cate_ids = ''
 				let arr = ''
 				let ids = ''
 				let price = ''
-				if(this.zhanshi.data){
-					this.zhanshi.data.forEach(i=>{
-						cate_ids += i.cate_id +','
-						arr += i.goods_money_normal +','
+				if (this.zhanshi.data) {
+					this.zhanshi.data.forEach(i => {
+						cate_ids += i.cate_id + ','
+						arr += i.goods_money_normal + ','
 						// console.log(cate_ids)
-						ids = cate_ids.substr(0,cate_ids.length - 1)
-						price = arr.substr(0,arr.length - 1)
+						ids = cate_ids.substr(0, cate_ids.length - 1)
+						price = arr.substr(0, arr.length - 1)
 					})
-					
+
 				}
 				uni.navigateTo({
-					url:'../my/discount_select?ids='+ids+'&price='+price
+					url: '../my/discount_select?ids=' + ids + '&price=' + price
 				})
 			},
 			//提交订单
-			submit_order(){
-				if(this.current == 0 && this.address.id === undefined) { // 邮寄
+			submit_order() {
+				if (this.current == 0 && this.address.id === undefined) { // 邮寄
 					this.com.msg('请添加收货地址')
 					return false
 				} else if (this.current == 1) {
@@ -943,82 +966,85 @@
 						return false
 					}
 				}
-				
+
 				let data = {
-					valuation:this.nums_bj,							//保价金额（不保价则不传）
-					goods_id:this.datas.goods_id === undefined?0:this.datas.goods_id,//主商品id(购物车则不传
-					sku_id:this.datas.sku_id === undefined?0:this.datas.sku_id,		//skuid(购物车则不传			
-					count:this.datas.count === undefined?0:this.datas.count,	//数量(购物车则不传	是	[string]		
-					type:this.shoptypes === undefined ? 0 :this.shoptypes,			//0-普通商品 1-团购 2-秒杀	是	[string]
-					address_id:this.current == 1 ? this.address_bier.id : this.address.id,				//收货地址	是	[string]
-					shop_accessories_ids:this.hezi.id === undefined?this.zhanshi.peijian_id:this.hezi.id,		//传入配件ids
-					shop_accessories_counts:this.hezi.count=== undefined?1:this.hezi.count,//配件数量,隔开
-					vip:this.viptype_num,					//是否开vip 1-是 0-不开	是
-					message:this.textarea_val,				//备注 有则传
-					store_address_id:this.current == 1 ? this.address_send.id : 0,	//代发时 选择代发地址id	是
-					sf_change:this.ind,						//0-到付 1-寄付	是
-					sign_certificate:this.sign_certificate,	//判断是否有证书 1需要 否则 0	是
-					sign:this.sign_num,						//判断是否挂签 1需要 否则 0是
-					gold:this.goldBuckle < 1 ? 0 : 1,  			//判断是否使用金币 1使用 否则0 
-					group_id:this.cantuan_id,	 			//拼团则传拼团id(加入拼团
-					activity_id:this.datas.kaituan === undefined?0:this.datas.kaituan,	//创建拼团时传 拼团活动id	是
-					sf_type:this.current + 1 ,//	1-邮寄 2-代发 3-自提 4-送货上门
-					coupon_id:this.coupon_id,
-					bn:this.datas.bn === undefined ? '' : this.datas.bn
+					valuation: this.nums_bj, //保价金额（不保价则不传）
+					goods_id: this.datas.goods_id === undefined ? 0 : this.datas.goods_id, //主商品id(购物车则不传
+					sku_id: this.datas.sku_id === undefined ? 0 : this.datas.sku_id, //skuid(购物车则不传			
+					count: this.datas.count === undefined ? 0 : this.datas.count, //数量(购物车则不传	是	[string]		
+					type: this.shoptypes === undefined ? 0 : this.shoptypes, //0-普通商品 1-团购 2-秒杀	是	[string]
+					address_id: this.current == 1 ? this.address_bier.id : this.address.id, //收货地址	是	[string]
+					shop_accessories_ids: this.hezi.id === undefined ? this.zhanshi.peijian_id : this.hezi
+					.id, //传入配件ids
+					shop_accessories_counts: this.hezi.count === undefined ? 1 : this.hezi.count, //配件数量,隔开
+					vip: this.viptype_num, //是否开vip 1-是 0-不开	是
+					message: this.textarea_val, //备注 有则传
+					store_address_id: this.current == 1 ? this.address_send.id : 0, //代发时 选择代发地址id	是
+					sf_change: this.ind, //0-到付 1-寄付	是
+					sign_certificate: this.sign_certificate, //判断是否有证书 1需要 否则 0	是
+					sign: this.sign_num, //判断是否挂签 1需要 否则 0是
+					gold: this.goldBuckle < 1 ? 0 : 1, //判断是否使用金币 1使用 否则0 
+					group_id: this.cantuan_id, //拼团则传拼团id(加入拼团
+					activity_id: this.datas.kaituan === undefined ? 0 : this.datas.kaituan, //创建拼团时传 拼团活动id	是
+					sf_type: this.current + 1, //	1-邮寄 2-代发 3-自提 4-送货上门
+					coupon_id: this.coupon_id,
+					bn: this.datas.bn === undefined ? '' : this.datas.bn
 				}
-				console.log(data) 
-				let payment_data={
-					vip:this.viptype_num,
-					menber_price:this.zhanshi.member_money,
-					shop_price:this.total <=0 ? 0.01 : this.total
+				console.log(data)
+				let payment_data = {
+					vip: this.viptype_num,
+					menber_price: this.zhanshi.member_money,
+					shop_price: this.total <= 0 ? 0.01 : this.total
 				}
 				//送货上门
-				if(this.cli_type){
+				if (this.cli_type) {
 					this.cli_type = false
 					this.com.msg('正在生成订单')
-					if(this.current == 3){
-						if(this.address.area == this.zhanshi.area){
-							this.$api.post('orders',data).then(res=>{
+					if (this.current == 3) {
+						if (this.address.area == this.zhanshi.area) {
+							this.$api.post('orders', data).then(res => {
 								console.log(res)
 								this.com.msg(res.message)
-								if(res.status == 1){
+								if (res.status == 1) {
 									let arr = 2
-									this.time = setInterval(()=>{
-										if(arr == 0){
+									this.time = setInterval(() => {
+										if (arr == 0) {
 											clearInterval(this.time)
 											uni.redirectTo({
-												url:'../my/payments?data='+res.data.data.bn+'&shop='+JSON.stringify(payment_data)
+												url: '../my/payments?data=' + res.data.data.bn +
+													'&shop=' + JSON.stringify(payment_data)
 											})
-										}else{
+										} else {
 											arr -= 1
 										}
-									},1000)
+									}, 1000)
 								}
 							})
-						}else{
+						} else {
 							this.com.msg('超出配送范围')
 						}
-					}else{
-						this.$api.post('orders',data).then(res=>{
+					} else {
+						this.$api.post('orders', data).then(res => {
 							console.log(res)
-							this.com.msg(res.message+',请勿操作')
-							if(res.status == 1){
-								
+							this.com.msg(res.message + ',请勿操作')
+							if (res.status == 1) {
+
 								let arr = 2
-								this.time = setInterval(()=>{
-									if(arr == 0){
+								this.time = setInterval(() => {
+									if (arr == 0) {
 										clearInterval(this.time)
 										uni.redirectTo({
-											url:'../my/payments?data='+res.data.data.bn+'&shop='+JSON.stringify(payment_data)
+											url: '../my/payments?data=' + res.data.data.bn +
+												'&shop=' + JSON.stringify(payment_data)
 										})
-									}else{
+									} else {
 										arr -= 1
 									}
-								},1000)
+								}, 1000)
 							}
 						})
 					}
-				}else{
+				} else {
 					this.com.msg('请勿重复点击')
 				}
 			}
@@ -1027,21 +1053,23 @@
 </script>
 
 <style>
-	page{
+	page {
 		background-color: #F6F6F6
 	}
 </style>
 <style lang="scss" scoped>
-	.pesfwei{
+	.pesfwei {
 		width: 600rpx;
 		height: 800rpx;
-		image{
-			width: 100%;height: 100%;
+
+		image {
+			width: 100%;
+			height: 100%;
 		}
 	}
-	.zl-page{
-		
-	}
+
+	.zl-page {}
+
 	.xiangyou {
 		font-size: 30upx;
 		color: #666666;
@@ -1051,7 +1079,12 @@
 		background-color: #2d407a;
 		padding: 10upx 30upx;
 		color: #feebc0;
-		z-index: 20;position: fixed;left: 0;top: 0;width: 100%;
+		z-index: 20;
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+
 		.warning {
 			font-size: 32upx;
 			margin-right: 10upx;
@@ -1065,13 +1098,19 @@
 	.tabs-box {
 		// margin-top: 60rpx;
 		padding: 2% 3%;
-		.tabs-box_top{
-			width: 100%;display: flex;justify-content: space-between;
-			.top_left{
+
+		.tabs-box_top {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+
+			.top_left {
 				width: 80%;
 			}
-			.top_right{
-				line-height: 60rpx;color: #dd2626;
+
+			.top_right {
+				line-height: 60rpx;
+				color: #dd2626;
 			}
 		}
 	}
@@ -1165,19 +1204,21 @@
 			text-align: center;
 			justify-content: flex-end;
 			align-items: center;
+
 			.express-send {
 				padding: 6rpx 20rpx 2rpx 20rpx;
 				line-height: 34upx;
 				background-color: #eeeeee;
 				border-radius: 18upx;
 				color: #666666;
-				margin:0 10upx;
+				margin: 0 10upx;
+
 				&.express_go {
 					background-color: #2d407a;
 					color: white;
 				}
 			}
-			
+
 		}
 	}
 
@@ -1197,10 +1238,11 @@
 			}
 		}
 	}
+
 	.parcel-right {
 		font-size: 26upx;
 		color: #999999;
-	
+
 		.zhuyi {
 			color: #f8c35c;
 		}
@@ -1227,20 +1269,23 @@
 			flex: 1;
 			padding: 20upx 0;
 			text-align: center;
-			
+
 			border-radius: 6upx;
 			box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.04);
 			position: relative;
-			
+
 			.triangle-topright-box {
 				position: absolute;
 				top: 0;
 				right: 0;
 			}
 		}
-		.backimg{
-			background-image: url(https://zuanshi.semoh.cn/applet_static/index/back.png);background-size: 100% 100%;
+
+		.backimg {
+			background-image: url(https://zuanshi.semoh.cn/applet_static/index/back.png);
+			background-size: 100% 100%;
 		}
+
 		.parcel-tpy {
 			width: 46%;
 			padding: 18upx 0;
@@ -1334,8 +1379,11 @@
 
 			.yuan {
 				width: 30upx;
-				height: 30upx;line-height: 30rpx;
-				border-radius: 100%;color: white;text-align: center;
+				height: 30upx;
+				line-height: 30rpx;
+				border-radius: 100%;
+				color: white;
+				text-align: center;
 				background-color: #dd2626;
 			}
 
@@ -1374,7 +1422,8 @@
 
 			image {
 				width: 166rpx;
-				height: 166rpx;background-color: #eee;
+				height: 166rpx;
+				background-color: #eee;
 				border-radius: 10upx;
 			}
 		}
@@ -1408,7 +1457,8 @@
 					background-color: #f6f6f6;
 					margin-right: 20upx;
 					border-radius: 6upx;
-					text{
+
+					text {
 						white-space: nowrap;
 					}
 				}
@@ -1517,11 +1567,15 @@
 				color: #666666;
 				margin-left: 20upx;
 			}
-			
+
 		}
-		textarea{
-			width: 100%;font-size: 28rpx;padding: 10rpx;
-			background-color: #eee;height: 240rpx;
+
+		textarea {
+			width: 100%;
+			font-size: 28rpx;
+			padding: 10rpx;
+			background-color: #eee;
+			height: 240rpx;
 		}
 	}
 
@@ -1589,21 +1643,25 @@
 			}
 		}
 	}
-	
-	.popup-one-box{
+
+	.popup-one-box {
 		padding: 30upx;
-		.popup-one-title{
+
+		.popup-one-title {
 			margin-top: 20upx;
 			margin-bottom: 30upx;
 			font-size: 30upx;
 			font-weight: bold;
 			text-align: center;
 		}
-		.popup_img{
+
+		.popup_img {
 			width: 100%;
 			height: 880rpx;
-			image{
-				width: 100%;height: 100%;
+
+			image {
+				width: 100%;
+				height: 100%;
 			}
 		}
 	}
@@ -1788,8 +1846,8 @@
 			padding: 4upx 10upx;
 			margin-left: 10upx;
 			background-image: linear-gradient(90deg,
-				#2b3f7d 0%,
-				#1b2c60 100%);
+					#2b3f7d 0%,
+					#1b2c60 100%);
 			font-size: 24upx;
 			color: #fff0cd;
 			border-radius: 4upx;
