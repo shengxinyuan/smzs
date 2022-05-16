@@ -501,6 +501,13 @@
 				"navigationBarBackgroundColor": "#FFFFFF"
 			}
 		}, {
+			"path": "pages/set-shop/shop-3d-price",
+			"style": {
+				"navigationBarTitleText": "商城3d定制价格",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF"
+			}
+		}, {
 			"path": "pages/set-shop/set-payee",
 			"style": {
 				"navigationBarTitleText": "收款设置",

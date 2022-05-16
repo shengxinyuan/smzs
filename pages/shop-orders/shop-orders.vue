@@ -30,7 +30,7 @@
  	export default { 	
  		data() {
  			return {
- 				tabs: [{name:'全部',id:0}, {name:'待确认',id:20}, {name:'收货/发货',id:30},{name:'已完成',id:50}],
+ 				tabs: [{name:'全部',id:0}, {name:'待确认',id:20}, {name:'收货/发货',id:30},{name:'已完成',id:50}, {name:'3D订单',id: '3d'}],
  				list:[],
  				current: 0,
 				current_ind:0,
@@ -134,8 +134,16 @@
 				this.page_cont(this.page)
 			},
 			// 点击上方状态按钮
- 			tabClick(id,index) {
-				// console.log(index)
+ 			tabClick(id, index) {
+				if (id === '3d') {
+					const data = {
+						isShop: 1
+					}
+					uni.navigateTo({
+						url:`/pages/index/threedesign?url=myOrderList&data=${JSON.stringify(data)}`
+					})
+					return
+				}
 				this.page_show = false
 				this.page = 1
 				this.list = []
@@ -191,7 +199,7 @@
 				display: flex;white-space: nowrap;
 				.swiper_it{
 					display: inline-block;
-					width: 25%;
+					width: 20%;
 				}
 			}
  			.title {

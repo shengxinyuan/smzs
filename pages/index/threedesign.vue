@@ -18,6 +18,13 @@ export default {
 		let query = ''
 		if (uni.getStorageSync('token')) {
 			query = `?token=${uni.getStorageSync('token')}&env=${env}`
+			if (options.data) {
+				const data = JSON.parse(options.data)
+				for (let item in data) {
+					query += `&${item}=${data[item]}`
+				}
+			}
+			
 		} else {
 			uni.showModal({
 				content: '您还未登录,是否登录?',
@@ -36,6 +43,7 @@ export default {
 		} else {
 			this.design3dUrl += `${query}`
 		}
+		console.log('url', this.design3dUrl)
 		this.loaded = true
 	},
 	onReady() {

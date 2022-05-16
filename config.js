@@ -8,13 +8,13 @@ const prod = {
 }
 // 预发
 const pre = {
-	apiUrl: 'http://app-api.shengxinyuan.online/api/',
+	apiUrl: 'https://zuanshi.semoh.cn/api/',
 	design3dUrl: 'http://test-3d.semoh.cn/',
 	h5Url: 'http://test-h5.semoh.cn/'
 }
 // 测试
 const test = {
-	apiUrl: 'http://test-zuanshi.semoh.cn/api/',
+	apiUrl: 'http://47.99.137.73/api/',
 	design3dUrl: 'http://test-3d.semoh.cn/',
 	h5Url: 'http://test-h5.semoh.cn/'
 }

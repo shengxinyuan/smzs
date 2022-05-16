@@ -82,6 +82,14 @@
 					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
 				</view>
 			</view>
+			<view class="zl-heads">
+				<view class="heads">
+					<text>商城3d定制价格</text>
+				</view>
+				<view class="nick-name" @click="skipShop3DPrice">
+					<u-icon class="icon xiangyou" name="arrow-right"></u-icon>
+				</view>
+			</view>
 		</view>
 		<view class="box-there">
 			<!-- <view class="zl-heads" @click="">
@@ -296,6 +304,11 @@
 			skipShopGoldPrice() {
 				uni.navigateTo({
 					url: 'shop-gold-price'
+				})
+			},
+			skipShop3DPrice() {
+				uni.navigateTo({
+					url: '/pages/set-shop/shop-3d-price'
 				})
 			},
 			//收款设置
