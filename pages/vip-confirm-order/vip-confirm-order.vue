@@ -839,7 +839,7 @@
 					console.log(res)
 					if (res.status == 1) {
 						this.zhanshi = res.data
-						this.address = res.data.address_mine //我的默认
+						
 						console.log(this.types)
 						if (this.types == 1) {
 							this.address_bier = res.data.address_not_mine
@@ -847,6 +847,12 @@
 						if (this.types == 0) {
 							this.address_bier = res.data.address_not_mine
 							this.address_send = res.data.address_not_mine
+						}
+						if (this.current) {
+							this.address_bier = res.data.address_not_mine
+							this.address = res.data.address_not_mine
+						} else {
+							this.address = res.data.address_mine //我的默认
 						}
 
 						this.hezi_pic = res.data.packing_money + JSON.parse(res.data.peijian_price) //盒子价格
@@ -909,6 +915,9 @@
 				this.current = index
 				if (index == 1) {
 					this.ind = 1
+				}
+				if (this.current) {
+					this.address = this.zhanshi.address_not_mine
 				}
 				this.freight()
 			},
