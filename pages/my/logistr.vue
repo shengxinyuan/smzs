@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view style="background-color: #fff;font-size: 36rpx;font-weight: bold;padding: 2% 0;">
+		<view style="background-color: #fff;font-size: 36rpx;font-weight: bold;padding: 2% 20rpx;">
 			待签收
 		</view>
 		<view style="margin: 20rpx 0;font-weight: bold;" v-if="numList.ship_bn">
@@ -8,9 +8,10 @@
 			<text style="color: #EE453F" @click="copy(numList.ship_bn)">复制</text>
 		</view>
 		<view class="p1">
-			<u-steps :list="numList.logistic_detail" 
-			:current="wuliu.length" 
-			activeColor="#000" direction="column"></u-steps>
+			<view class="step-item" v-for="(item, index) in wuliu" :key="index">
+				<view>{{item.time}}</view>
+				<view>{{item.status}}</view>
+			</view>
 		</view>
 		<!-- <view class="box">
 			<view class="p1 text">
@@ -24,14 +25,14 @@
 </template>
 
 <script>
-	export default{	
-		data(){
+	export default {
+		data() {
 			return {
-				options:[],
-				page_cont:'',
-				wl_cont:'',
+				options: [],
+				page_cont: '',
+				wl_cont: '',
 				numList: [],
-				mailNo:'',
+				mailNo: '',
 				wuliu: [],
 			}
 		},
@@ -43,36 +44,44 @@
 		onShow() {
 			// this.page_type()
 		},
-		methods:{
-			page_type(){
+		methods: {
+			page_type() {
 				// this.page_cont.bn
-				this.$api.post('logistics',{bn_id:this.page_cont}).then(res=>{
+				this.$api.post('logistics', {
+					bn_id: this.page_cont
+				}).then(res => {
 					console.log(res.data)
 					this.numList = res.data
 					this.wuliu = res.data.logistic_detail
 				})
 			},
-			copy(e){
+			copy(e) {
 				console.log(e)
 				uni.setClipboardData({
-				    data: e,
-				    success: function () {
-				        console.log('success');
-				    }
+					data: e,
+					success: function() {
+						console.log('success');
+					}
 				});
 			},
 		}
 	}
 </script>
 <style>
-	page{
+	page {
 		background-color: #F6F6F6;
 	}
 </style>
 <style lang="scss" scoped>
-	.content{
+	.step-item {
+		margin-bottom: 42rpx;
+		font-size: 24rpx
+	}
+	
+	.content {
 		padding: 3%;
-		.shop_list{
+
+		.shop_list {
 			width: 100%;
 			height: 250rpx;
 			display: flex;
@@ -82,51 +91,62 @@
 			padding: 10rpx 20rpx;
 			border-radius: 10rpx;
 			margin: 20rpx 0;
-			image{
+
+			image {
 				width: 200rpx;
 				height: 200rpx;
 			}
-			.list_right{
+
+			.list_right {
 				display: flex;
 				width: 420rpx;
 				height: 200rpx;
 				margin-left: 20rpx;
 				flex-wrap: wrap;
-				.title{
+
+				.title {
 					width: 100%;
-					text{
+
+					text {
 						color: #c7ab6e;
 					}
 				}
-				.price{
+
+				.price {
 					width: 100%;
 					color: #ba1a30;
-					text{
+
+					text {
 						color: #999999;
 						text-decoration: line-through;
 						margin-left: 20rpx;
 					}
 				}
-				.Specifications{
+
+				.Specifications {
 					width: 100%;
 					display: flex;
 					justify-content: space-between;
 					color: #999;
-					.num{
+
+					.num {
 						color: #999;
 					}
 				}
 			}
 		}
-		.p1{
+
+		.p1 {
 			background-color: #fff;
 			padding: 30rpx 30rpx;
 			border-radius: 12rpx;
-			.item{
+
+			.item {
 				display: flex;
 				align-items: center;
 				margin-top: 30rpx;
-				image{
+
+				image {
 					width: 80rpx;
 					height: 80rpx;
 					// background-color: pink;
@@ -134,17 +154,21 @@
 				}
 			}
 		}
-		.box{
+
+		.box {
 			background-color: #fff;
 			margin-top: 30rpx;
-			.address{
+
+			.address {
 				margin-left: 18rpx;
 				color: #333333;
 			}
-			.text{
+
+			.text {
 				color: #999999;
 			}
-			.p2{
+
+			.p2 {
 				padding-right: 30rpx;
 			}
 		}
