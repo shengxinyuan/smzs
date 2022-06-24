@@ -10,7 +10,7 @@
  		</view>
  		<view class="box" v-if="page_show">
 			<view v-if="list.length != 0">
-				<zs-order-list-two :list="list" @order_detail="order_detail" @del_order="del_order" @cancel_detail="cancel_detail"></zs-order-list-two>
+				<zs-order-list-two :list="list" @order_detail="order_detail" @del_order="del_order" @cancel_detail="cancel_detail" @confirm_case="confirm_case"></zs-order-list-two>
 				<!-- <zs-order-list-two :list="list" @order_detail="order_detail" v-if="current_ind != 1" @del_order="del_order" @cancel_detail="cancel_detail"></zs-order-list-two>
 				<zs-order-df-two :list="list" @order_detail="order_detail" @cancel_detail="cancel_detail" v-else></zs-order-df-two> -->
 				<view style="width: 100%;height: 80rpx;">
@@ -162,6 +162,19 @@
 								console.log(res)
 								that.tabClick(that.current)
 								that.com.msg(res.message)
+							})
+						}
+					}
+				})
+			},
+			// 确认收款
+			confirm_case(e){
+				uni.showModal({
+					content:'您确定微信内的订单已经收到货款？',
+					success:(a) => {
+						if(a.confirm){
+							this.$api.post('receivemoney',{ bn: e }).then(res=>{
+								this.tabClick(this.current)
 							})
 						}
 					}

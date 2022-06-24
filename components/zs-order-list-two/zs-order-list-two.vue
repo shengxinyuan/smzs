@@ -6,6 +6,7 @@
 					订单编号：<text class="time">{{item.bn_id}}</text> 
 					
 					<text class="sure" v-if="item.status == 10">待付款</text>
+					<text class="sure" v-if="item.status == 15">已确认顾客付款</text>
 					<text class="sure" v-if="item.status == 20">待确认</text>
 					<text class="sure" v-if="item.status == 25">已确认收款，待发货</text>
 					<text class="sure" v-if="item.status == 30">待收货</text>
@@ -60,7 +61,8 @@
 					</view>
 					<view class="foot_child">
 						<view class="go_buy_s" v-if="item.order_type != 1 && item.status == 10" @click="no_order(item.id, item.order_type, ind)">取消订单</view> <!-- // -->
-						<view class="go_buy" v-if="item.order_type != 1 && item.status == 10" @click="order_details_x(item.bn_id, item.order_type)">平台下单</view> <!-- // -->
+						<view class="go_buy" v-if="item.order_type != 1 && item.status == 10" @click="confirm_case(item.bn_id)">确认收款</view>
+						<view class="go_buy" v-if="item.order_type != 1 && item.status == 15" @click="order_details_x(item.bn_id, item.order_type)">平台下单</view>
 						<view class="go_buy" v-if="item.order_type == 1 && item.status == 20" @click="order_detail(item.bn_id, item.order_type)">确认收款</view>
 						<!-- <view class="go_buy_s" v-if="item.status == 30" @click="order_logist(item)">退款</view>  -->
 						<view class="go_buy_s" v-if="item.order_type != 1 && item.status == 30" @click="order_logist_wl(item.bn_id)">查看物流</view>
@@ -90,6 +92,10 @@
 			}
 		},
 		methods:{
+			// 确认收款
+			confirm_case(bn) {
+				this.$emit('confirm_case', bn)
+			},
 			//取消订单
 			no_order(e, order_type, i){
 				let _that = this

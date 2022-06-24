@@ -1,68 +1,25 @@
 <template>
 	<!-- 店铺二维码 -->
 	<view class="content">
-		<view class="nav_head">
-			<view class="nav_l" @click="it_cli(1)" :class="{act:navnum == 1}">图文二维码</view>
-			<view class="nav_l" @click="it_cli(2)" :class="{act:navnum == 2}">极简二维码</view>
+		<view class="tip">
+			分享微信小程序给好友，吸引更多客流
 		</view>
-		<!-- 图文二维码 -->
-		<view class="tabs-first" v-if="isShow01">
-			<u-swiper height="980" :effect3d="true" :list="swiperList" :mode="mode" :autoplay="false" :bg-color="bgColor"
-			:effect3d-previous-margin="120" @change="changeimg"></u-swiper>
-			<view class="share-text">
-				<text>{{shareText}}</text>
+		<view class="mini-card">
+			<view class="title">
+				{{ info.title }}
 			</view>
-			<view class="bottom-btn">
-				<button class="btn" @click="openPopup">分享</button>
-			</view>
-		</view>
-		<view v-show="canvas_hb_show" @click="canvas_hb_show = false" class="canvas_a">
-			<canvas style="width: 520rpx; height: 980rpx;" canvas-id="my_codes" id="my_codes" type="2d"></canvas>
-		</view>
-		<!-- 极简二维码 -->
-		<view class="tabs-second" v-if="!isShow01">
-			<view class="code-box">
-				<view class="code-logo">
-					<image :src="swiperList[0].member_id" mode="widthFix"></image>
-				</view>
-			</view>
-			<view class="bottom-btn">
-				<button class="btn" @click="openPopup">分享</button>
-			</view>
+			<image class="img" src="https://prod-front-end-oss-h5.oss-cn-shanghai.aliyuncs.com/images/1.png" mode="widthFix"></image>
 		</view>
 		
-		
-		<!-- 分享 弹出层 -->
-		<view>
-			<u-popup v-model="popupShow" mode="bottom" border-radius="20" :closeable="false">
-				<view class="share-popup">
-					<view class="divider-box">
-						<u-divider half-width="60" fontSize="24">分享至</u-divider>
-					</view>
-					<view class="share-logo-box">
-						<view class="left" @click="share(0)">
-							<view class="share-logo">
-								<image src="https://zuanshi.semoh.cn/applet_static/community/haoyou.png" mode="widthFix"></image>
-								<view class="share-title">微信好友</view>
-							</view>
-						</view>
-						<view class="right"  @click="share(1)">
-							<view class="share-logo">
-								<image src="https://zuanshi.semoh.cn/applet_static/community/pyq.png" mode="widthFix"></image>
-								<view class="share-title">朋友圈</view>
-							</view>
-						</view>
-					</view>
-					<view class="popup-btn">
-						<button class="btn" @click="closePopup">取消</button>
-					</view>
-				</view>
-			</u-popup>
+		<view class="bottom-btn">
+			<button class="btn" @click="shareWxmini">分享</button>
 		</view>
+
 	</view>
 </template>
 
 <script>
+	import { config } from '../../config.js'
 	export default {
 		data() {
 			return {
@@ -79,188 +36,216 @@
 				codeImg:'',
 				qrcode_img:'',
 				canvas_hb_show:false,
-				navnum:1
+				navnum:1,
+				info: {},
+				member: {}
 			}
 		},
 		onLoad() {
-			this.page_reader()
+			this.getUserInfo()
 		},
 		methods: {
+			getUserInfo() {
+				this.member = uni.getStorageSync('member_info')
+				this.$api.get('manage',{ member_id: this.member.id }).then(res=>{
+					this.info = res.data
+				})
+			},
+			shareWxmini() {
+				uni.share({
+					provider: "weixin",
+					scene: "WXSceneSession",
+					type: 5,
+					imageUrl: 'https://prod-front-end-oss-h5.oss-cn-shanghai.aliyuncs.com/banner.jpg',
+					title: this.info.title,
+					miniProgram: {
+						id: 'gh_dd4c8bde95bf',
+						path: `pages/index/index?shopkeeperId=${this.member.id}`,
+						type: 0,
+						webUrl: `${config.h5Url}smsj/index.html#/pages/index/index?data=` + JSON.stringify({name: this.member.id})
+					},
+					success: (res) => {
+					},
+					fail: (err) => {
+					}
+				});
+			},
 			//点击切换
-			it_cli(e){
-				this.navnum = e
-				if(e == 1){
-					this.isShow01 = true
-				}else{
-					this.isShow01 = false
-				}
-			},
-			changeimg(e){
-				this.canvas_hb_show = false
-				console.log(e)
-				if(this.swiperList){
-					console.log(this.swiperList)
-					this.codeImg = this.swiperList[e].image
-					this.qrcode_img =  this.swiperList[e].member_id
-				}
-			},
-			canvas(){
-				let that = this
-				var ctx = uni.createCanvasContext('my_codes',this)
-				ctx.fillStyle='#CE3C39';
-				ctx.fillRect(0,0,260,330);
-				ctx.drawImage(that.codeImg, 0, 0, 260, 490)
-				ctx.drawImage(that.qrcode_img, 95, 385, 70, 70)
-				ctx.draw(false,(res)=>{
-					// console.log(res)
-					that.canvas_hb_show = true
-					that.popupShow = true
-					// that.com.msg('已生成')
-				})
-			},
-			//
-			page_reader(){
-				this.$api.get('qrcode').then(res=>{
-					console.log(res)
-					if(res.status == 1){
-						//循环生成画布
-						// if(res.data[0].is_qrcode==0){
-						// 	uni.showModal({
-						// 		title:'提示',
-						// 		content:'您的二维码已失效,请重新生成',
-						// 		showCancel:false,
-						// 		success: function (res) {
-						// 		        if (res.confirm) {
-						// 		            console.log('用户点击确定');
-						// 		        } else if (res.cancel) {
-						// 		            console.log('用户点击取消');
-						// 		        }
-						// 		    }
-						// 	})
-						// }
-						this.swiperList = res.data
-						this.changeimg(0)
-					}
-				})
-			},
-			//分享
-			openPopup(){
-				// this.com.msg('正在生成')
-				this.canvas()
-				console.log(this.codeImg)
-			},
-			//取消
-			closePopup(){
-				this.popupShow = false
-			},
-			share(e){
-				this.canvas()
-				let that = this
-				if(this.navnum == 1 ){
-					if(e == 0){
-						uni.canvasToTempFilePath({
-							canvasId:'my_codes',
-							success(re) {
-								console.log(re)
-								// #ifdef MP-WEIXIN
-								this.wxShare();
-								// #endif
-								// #ifdef APP
-								uni.share({
-								    provider: "weixin",
-								    scene: "WXSceneSession",
-								    type: 2,
-								    imageUrl:re.tempFilePath,
-								    success: function (res) {
-								        console.log("success:" + JSON.stringify(res));
-								    },
-								    fail: function (err) {
-								        console.log("fail:" + JSON.stringify(err));
-								    }
-								});
-								// #endif
-							},fail(err){
-								console.log(err)
-							},complete(es){
-								console.log(es)
-							}
-						})
-					}else{
-						uni.canvasToTempFilePath({
-							canvasId:'my_codes',
-							success(re) {
-								console.log(re)
-								// #ifdef MP-WEIXIN
-								this.wxShare();
-								// #endif
-								// #ifdef APP
-								uni.share({
-								    provider: "weixin",
-								    scene: "WXSenceTimeline",
-								    type: 2,
-								    imageUrl: re.tempFilePath,
-								    success: function (res) {
-								        console.log("success:" + JSON.stringify(res));
-								    },
-								    fail: function (err) {
-								        console.log("fail:" + JSON.stringify(err));
-								    }
-								});
-								// #endif
-							},fail(err){
-								console.log(err)
-							},complete(es){
-								console.log(es)
-							}
-						})
-					}
-				}else{ // 简单二维码
-					if(e == 0){
-						// #ifdef MP-WEIXIN
-						this.wxShare();
-						// #endif
-						// #ifdef APP
-						uni.share({
-						    provider: "weixin",
-						    scene: "WXSceneSession",
-						    type: 2,
-						    imageUrl:that.swiperList[0].member_id,
-						    success: function (res) {
-						        console.log("success:" + JSON.stringify(res));
-						    },
-						    fail: function (err) {
-						        console.log("fail:" + JSON.stringify(err));
-						    }
-						});
-						// #endif
-					}else{
-						// #ifdef MP-WEIXIN
-						this.wxShare();
-						// #endif
-						// #ifdef APP
-						uni.share({
-						    provider: "weixin",
-						    scene: "WXSenceTimeline",
-						    type: 2,
-						    imageUrl: that.swiperList[0].member_id,
-						    success: function (res) {
-						        console.log("success:" + JSON.stringify(res));
-						    },
-						    fail: function (err) {
-						        console.log("fail:" + JSON.stringify(err));
-						    }
-						});
-						// #endif
-					}
-				}
-			}
+			// it_cli(e){
+			// 	this.navnum = e
+			// 	if(e == 1){
+			// 		this.isShow01 = true
+			// 	}else{
+			// 		this.isShow01 = false
+			// 	}
+			// },
+			// changeimg(e){
+			// 	this.canvas_hb_show = false
+			// 	console.log(e)
+			// 	if(this.swiperList){
+			// 		console.log(this.swiperList)
+			// 		this.codeImg = this.swiperList[e].image
+			// 		this.qrcode_img =  this.swiperList[e].member_id
+			// 	}
+			// },
+			// canvas(){
+			// 	let that = this
+			// 	var ctx = uni.createCanvasContext('my_codes',this)
+			// 	ctx.fillStyle='#CE3C39';
+			// 	ctx.fillRect(0,0,260,330);
+			// 	ctx.drawImage(that.codeImg, 0, 0, 260, 490)
+			// 	ctx.drawImage(that.qrcode_img, 95, 385, 70, 70)
+			// 	ctx.draw(false,(res)=>{
+			// 		// console.log(res)
+			// 		that.canvas_hb_show = true
+			// 		that.popupShow = true
+			// 		// that.com.msg('已生成')
+			// 	})
+			// },
+			// //
+			// page_reader(){
+			// 	this.$api.get('qrcode').then(res=>{
+			// 		console.log(res)
+			// 		if(res.status == 1){
+			// 			//循环生成画布
+			// 			// if(res.data[0].is_qrcode==0){
+			// 			// 	uni.showModal({
+			// 			// 		title:'提示',
+			// 			// 		content:'您的二维码已失效,请重新生成',
+			// 			// 		showCancel:false,
+			// 			// 		success: function (res) {
+			// 			// 		        if (res.confirm) {
+			// 			// 		            console.log('用户点击确定');
+			// 			// 		        } else if (res.cancel) {
+			// 			// 		            console.log('用户点击取消');
+			// 			// 		        }
+			// 			// 		    }
+			// 			// 	})
+			// 			// }
+			// 			this.swiperList = res.data
+			// 			this.changeimg(0)
+			// 		}
+			// 	})
+			// },
+			// //分享
+			// openPopup(){
+			// 	// this.com.msg('正在生成')
+			// 	this.canvas()
+			// 	console.log(this.codeImg)
+			// },
+			// //取消
+			// closePopup(){
+			// 	this.popupShow = false
+			// },
+			// share(e){
+			// 	this.canvas()
+			// 	let that = this
+			// 	if(this.navnum == 1 ){
+			// 		if(e == 0){
+			// 			uni.canvasToTempFilePath({
+			// 				canvasId:'my_codes',
+			// 				success(re) {
+			// 					console.log(re)
+			// 					// #ifdef MP-WEIXIN
+			// 					this.wxShare();
+			// 					// #endif
+			// 					// #ifdef APP
+			// 					uni.share({
+			// 					    provider: "weixin",
+			// 					    scene: "WXSceneSession",
+			// 					    type: 2,
+			// 					    imageUrl:re.tempFilePath,
+			// 					    success: function (res) {
+			// 					        console.log("success:" + JSON.stringify(res));
+			// 					    },
+			// 					    fail: function (err) {
+			// 					        console.log("fail:" + JSON.stringify(err));
+			// 					    }
+			// 					});
+			// 					// #endif
+			// 				},fail(err){
+			// 					console.log(err)
+			// 				},complete(es){
+			// 					console.log(es)
+			// 				}
+			// 			})
+			// 		}else{
+			// 			uni.canvasToTempFilePath({
+			// 				canvasId:'my_codes',
+			// 				success(re) {
+			// 					console.log(re)
+			// 					// #ifdef MP-WEIXIN
+			// 					this.wxShare();
+			// 					// #endif
+			// 					// #ifdef APP
+			// 					uni.share({
+			// 					    provider: "weixin",
+			// 					    scene: "WXSenceTimeline",
+			// 					    type: 2,
+			// 					    imageUrl: re.tempFilePath,
+			// 					    success: function (res) {
+			// 					        console.log("success:" + JSON.stringify(res));
+			// 					    },
+			// 					    fail: function (err) {
+			// 					        console.log("fail:" + JSON.stringify(err));
+			// 					    }
+			// 					});
+			// 					// #endif
+			// 				},fail(err){
+			// 					console.log(err)
+			// 				},complete(es){
+			// 					console.log(es)
+			// 				}
+			// 			})
+			// 		}
+			// 	}else{ // 简单二维码
+			// 		if(e == 0){
+			// 			// #ifdef MP-WEIXIN
+			// 			this.wxShare();
+			// 			// #endif
+			// 			// #ifdef APP
+			// 			uni.share({
+			// 			    provider: "weixin",
+			// 			    scene: "WXSceneSession",
+			// 			    type: 2,
+			// 			    imageUrl:that.swiperList[0].member_id,
+			// 			    success: function (res) {
+			// 			        console.log("success:" + JSON.stringify(res));
+			// 			    },
+			// 			    fail: function (err) {
+			// 			        console.log("fail:" + JSON.stringify(err));
+			// 			    }
+			// 			});
+			// 			// #endif
+			// 		}else{
+			// 			// #ifdef MP-WEIXIN
+			// 			this.wxShare();
+			// 			// #endif
+			// 			// #ifdef APP
+			// 			uni.share({
+			// 			    provider: "weixin",
+			// 			    scene: "WXSenceTimeline",
+			// 			    type: 2,
+			// 			    imageUrl: that.swiperList[0].member_id,
+			// 			    success: function (res) {
+			// 			        console.log("success:" + JSON.stringify(res));
+			// 			    },
+			// 			    fail: function (err) {
+			// 			        console.log("fail:" + JSON.stringify(err));
+			// 			    }
+			// 			});
+			// 			// #endif
+			// 		}
+			// 	}
+			// }
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.content{
-		padding-bottom: 100upx;
+		background-color: #ededed;
+		height: calc(100vh - 80rpx);
 	}
 	.nav_head{
 		height: 90rpx;line-height: 86rpx;
@@ -367,6 +352,26 @@
 				font-size: 30upx;
 				background-color: #FFFFFF;
 			}
+		}
+	}
+	
+	.tip {
+		font-size: 32rpx;
+		text-align: center;
+		padding: 30rpx 0;
+	}
+	.mini-card {
+		position: relative;
+		.title {
+			position: absolute;
+			left: 46upx;
+			top: 120upx;
+			z-index: 100;
+			font-size: 32rpx;
+			color: #737373;
+		}
+		.img{
+			width: 750upx;
 		}
 	}
 </style>

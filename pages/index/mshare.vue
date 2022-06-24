@@ -22,9 +22,9 @@
 			</u-checkbox-group>
 		</view>
 		<view class="bottom-box">
-			<view class="min-box" @click="share(0)">
+			<view class="min-box" @click="share(0)" v-if="vip_type">
 				<image src="https://zuanshi.semoh.cn/applet_static/index/haoyou.png" mode="aspectFill"></image>
-				<view style="margin-top: 6upx;">微信好友</view>
+				<view style="margin-top: 6upx;">微信小程序</view>
 			</view>
 			<view class="min-box" @click="share(1)">
 				<image src="https://zuanshi.semoh.cn/applet_static/index/pyq.png" mode="aspectFill"></image>
@@ -279,8 +279,27 @@
 				let that = this
 				let data = this.datas.title + "\n" + this.datas.remark + '\n' + '成色：' + this.datas.texture + '\n' + '克重：' +
 					this.datas.min_g + '-' + this.datas.max_g
-				console.log(data)
-				if (e == 0 || e == 1) {
+				// console.log(data)
+				if (e === 0) {
+					console.log(this.datas.image)
+					uni.share({
+						provider: "weixin",
+						scene: "WXSceneSession",
+						type: 5,
+						imageUrl: this.datas.image,
+						title: data,
+						miniProgram: {
+							id: 'gh_dd4c8bde95bf',
+							path: `pages/index/index?shopkeeperId=${this.member.id}`,
+							type: 0,
+							webUrl: `${config.h5Url}smsj/index.html#/pages/index/index?data=` + JSON.stringify({name: this.member.id})
+						},
+						success: (res) => {
+						},
+						fail: (err) => {
+						}
+					});
+				} else if (e === 1) {
 					uni.setClipboardData({
 						data: data,
 						success: function() {
