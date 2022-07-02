@@ -32,6 +32,14 @@
 							</view>
 							<view class="right-price">￥{{sumPrice01.toFixed(2)}}/g</view>
 						</view>
+						
+						<view>
+							<button type="default" size="mini" @click="setCommonPrice">设置工费均价</button>
+							<view class="common-tips">
+								工费均价: 设置后统一调整下面各个项的工费
+							</view>
+						</view>
+						
 						<view class="price-min-box" v-for="(it,index) in list" :key="index" 
 						@click="checked(index)">
 							<view class="left">
@@ -103,6 +111,7 @@
 				}
 				return arr
 			},
+			
 			//工费
 			// sumPrice02(){
 			// 	let arr = 0
@@ -126,6 +135,34 @@
 			this.page_reader()
 		},
 		methods: {
+			setCommonPrice() {
+				uni.showModal({
+					title: '输入工费均价(￥/g)',
+					editable: true,
+					showCancel: true,
+					success: (res) => {
+						if (res.confirm) {
+							const num = Number(res.content)
+							console.log(num)
+							if (num > 0 && num < 100000) {
+								const newList = this.list.map((item) => {
+									item.difference_price = num
+									item.commerical_wage = num
+									item.sumPrice = (item.wage/1 + num)
+									return item
+								})
+								this.list = newList
+							} else {
+								uni.showToast({
+									icon: 'error',
+									title: '请输入数字'
+								})
+							}
+						} else {
+						}
+					},
+				})
+			},
 			page_reader(){
 				this.$api.get('managegold',{id:this.gold_id}).then(res=>{
 					console.log(res)
@@ -360,5 +397,10 @@
 				#1b2c60 100%);
 			border-radius: 40upx;
 		}
+	}
+	
+	.common-tips {
+		font-size: 24upx;
+		margin-bottom: 24upx;
 	}
 </style>
