@@ -4,7 +4,11 @@
 		<view style="padding: 30rpx;display: flex;align-items: center;justify-content: center;">
 			<u-upload ref="uUpload" max-count="9" :file-list="previewList" :action="upload_url" :name="'file'"
 				:auto-upload="true" :header="header"></u-upload>
+				
 		</view>
+		<u-form-item label="链接" prop="price" style="margin: 30rpx;">
+			<u-input v-model="shop_url" placeholder="请输入图片banner跳转链接" />
+		</u-form-item>
 		<view class="save_btn" @click="save">
 			<button>保存</button>
 		</view>
@@ -19,6 +23,7 @@
 	export default {
 		data() {
 			return {
+				shop_url: '',
 				member_info: {},
 				previewList: [],
 				upload_url: `${commonUrl}common/upload_alioss`,
@@ -44,7 +49,7 @@
 						this.previewList = res.data.banner_list.map(item => ({
 							url: item.image_url
 						}))
-						console.log(this.previewList);
+						this.shop_url = res.data.shop_url || ''
 					}
 				}).catch(() => {
 					uni.hideLoading()
@@ -56,7 +61,8 @@
 				}).map((val) => val.response ? val.response.data.url : val.url)
 				console.log(files)
 				this.$api.post('manage', {
-					'banner_list': files.join(',')
+					'banner_list': files.join(','),
+					'shop_url': this.shop_url
 				}).then(res => {
 					if (res.status == 1) {
 						uni.showToast({

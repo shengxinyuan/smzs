@@ -1,10 +1,14 @@
 <script>
+	import APPUpdate, { getCurrentNo } from './uni_modules/zhouWei-APPUpdate/js_sdk/appUpdate';
 	import { getThreeDesignH5Url } from './utils/constant'
 
 	export default {
 		onLaunch: function() {
+			console.log('APPUpdate')
+			APPUpdate()
+			
 			console.log('App Launch')
-			// app锁定竖屏方向
+			app锁定竖屏方向
 			// #ifdef APP-VUE
 			plus.screen.lockOrientation('portrait-primary');
 			plus.push.getClientInfoAsync((info) => {

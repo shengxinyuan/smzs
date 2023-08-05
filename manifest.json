@@ -2,8 +2,8 @@
     "name" : "奢美饰界",
     "appid" : "__UNI__CDBC20A",
     "description" : "奢侈品交易平台",
-    "versionName" : "1.1.26",
-    "versionCode" : 1126,
+    "versionName" : "1.1.28",
+    "versionCode" : 1128,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -76,7 +76,9 @@
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.INSTALL_PACKAGES\"/>",
+                    "<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\"/>"
                 ],
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ]
             },

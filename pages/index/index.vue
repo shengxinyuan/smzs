@@ -538,7 +538,7 @@
 				this.$api.get('site').then(res => {
 					if (res.status == 1) {
 						this.banben = res.message.banben
-						this.updateVersion(res.message.banben)
+						// this.updateVersion(res.message.banben)
 					}
 				})
 			},
